@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 export default function Hero({ onGetStarted }) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -24,7 +23,6 @@ export default function Hero({ onGetStarted }) {
 
       <div className="relative max-w-7xl mx-auto px-6 py-32 md:py-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,7 +62,10 @@ export default function Hero({ onGetStarted }) {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
-                onClick={() => document.getElementById("pricing").scrollIntoView({ behavior: "smooth" })}
+                onClick={() => {
+                  const el = document.getElementById("pricing");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
                 size="lg"
                 variant="outline"
                 className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-lg px-8 py-6"
@@ -73,7 +74,6 @@ export default function Hero({ onGetStarted }) {
               </Button>
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-3 gap-6">
               <div>
                 <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
@@ -90,7 +90,6 @@ export default function Hero({ onGetStarted }) {
             </div>
           </motion.div>
 
-          {/* Right Content - Visual Elements */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -98,7 +97,6 @@ export default function Hero({ onGetStarted }) {
             className="hidden lg:block relative"
           >
             <div className="relative">
-              {/* Floating Cards */}
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: [-10, 10, -10] }}
@@ -121,7 +119,6 @@ export default function Hero({ onGetStarted }) {
                 <p className="text-sm text-gray-600">Powerful online stores</p>
               </motion.div>
 
-              {/* Central Circle */}
               <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
                 <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
                   <Sparkles className="w-20 h-20 text-blue-900" />
@@ -132,7 +129,6 @@ export default function Hero({ onGetStarted }) {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

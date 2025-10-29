@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Globe, ShoppingCart, Smartphone, Zap, Shield, HeadphonesIcon } from "lucide-react";
+import { Globe, ShoppingCart, Smartphone, Zap, Shield, Headphones } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
@@ -35,7 +35,7 @@ const services = [
     color: "from-blue-700 to-blue-500"
   },
   {
-    icon: HeadphonesIcon,
+    icon: Headphones,
     title: "24/7 Support",
     description: "Continuous maintenance and support to keep your website running smoothly at all times.",
     color: "from-red-600 to-red-500"
@@ -46,7 +46,6 @@ export default function Services() {
   return (
     <section id="services" className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +63,6 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <motion.div
