@@ -1,0 +1,40 @@
+{
+  "name": "PricingPlan",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Plan name (Basic, Standard, Premium)"
+    },
+    "price": {
+      "type": "number",
+      "description": "Monthly price in USD"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the plan"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of features included in this plan"
+    },
+    "recommended": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this plan is recommended"
+    },
+    "cta_text": {
+      "type": "string",
+      "default": "Get Started",
+      "description": "Call to action button text"
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "features"
+  ]
+}
