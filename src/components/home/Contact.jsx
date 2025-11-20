@@ -10,7 +10,7 @@ import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useLanguage } from "@/components/LanguageContext";
-import { translations } from "@/translations";
+import { translations } from "@/components/translations";
 
 export default function Contact() {
   const { language } = useLanguage();

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Globe, ShoppingCart, Smartphone, Zap, Shield, Headphones } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/components/LanguageContext";
-import { translations } from "@/translations";
+import { translations } from "@/components/translations";
 
 export default function Services() {
   const { language } = useLanguage();

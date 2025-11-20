@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLanguage } from "@/components/LanguageContext";
-import { translations } from "@/translations";
+import { translations } from "@/components/translations";
 
 export default function Pricing({ onGetStarted }) {
   const { language } = useLanguage();

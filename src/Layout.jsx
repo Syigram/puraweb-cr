@@ -4,7 +4,7 @@ import { createPageUrl } from "@/utils";
 import { Menu, X, Code2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
-import { translations } from "@/translations";
+import { translations } from "@/components/translations";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);

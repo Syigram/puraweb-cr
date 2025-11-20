@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Target, Users, Award, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
-import { translations } from "@/translations";
+import { translations } from "@/components/translations";
 
 export default function Benefits() {
   const { language } = useLanguage();
