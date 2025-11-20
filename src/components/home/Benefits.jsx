@@ -1,31 +1,35 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Target, Users, Award, TrendingUp } from "lucide-react";
-
-const benefits = [
-  {
-    icon: Target,
-    title: "Results-Driven Approach",
-    description: "We focus on delivering measurable outcomes that directly impact your bottom line and business growth."
-  },
-  {
-    icon: Users,
-    title: "Dedicated Team",
-    description: "Work with experienced professionals who are committed to bringing your vision to life with precision."
-  },
-  {
-    icon: Award,
-    title: "Quality Guaranteed",
-    description: "Every project undergoes rigorous testing to ensure flawless functionality and exceptional user experience."
-  },
-  {
-    icon: TrendingUp,
-    title: "Scalable Solutions",
-    description: "Our platforms grow with your business, adapting to increased traffic and expanding requirements."
-  }
-];
+import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
 export default function Benefits() {
+  const { language } = useLanguage();
+  const t = translations[language].benefits;
+
+  const benefits = [
+    {
+      icon: Target,
+      title: t.resultsDriven.title,
+      description: t.resultsDriven.description
+    },
+    {
+      icon: Users,
+      title: t.dedicatedTeam.title,
+      description: t.dedicatedTeam.description
+    },
+    {
+      icon: Award,
+      title: t.quality.title,
+      description: t.quality.description
+    },
+    {
+      icon: TrendingUp,
+      title: t.scalable.title,
+      description: t.scalable.description
+    }
+  ];
   return (
     <section id="benefits" className="py-24 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950 text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -46,10 +50,10 @@ export default function Benefits() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Why Choose WebCraft CR
+            {t.title}
           </h2>
           <p className="text-xl text-blue-200 max-w-2xl mx-auto">
-            Partner with Costa Rica's premier web development agency for exceptional digital solutions
+            {t.subtitle}
           </p>
         </motion.div>
 
@@ -89,25 +93,25 @@ export default function Benefits() {
             <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
               5+
             </div>
-            <div className="text-blue-200">Years Experience</div>
+            <div className="text-blue-200">{t.years}</div>
           </div>
           <div className="text-center">
             <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
               150+
             </div>
-            <div className="text-blue-200">Happy Clients</div>
+            <div className="text-blue-200">{t.clients}</div>
           </div>
           <div className="text-center">
             <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
               200+
             </div>
-            <div className="text-blue-200">Projects Done</div>
+            <div className="text-blue-200">{t.projects}</div>
           </div>
           <div className="text-center">
             <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
               98%
             </div>
-            <div className="text-blue-200">Satisfaction Rate</div>
+            <div className="text-blue-200">{t.satisfaction}</div>
           </div>
         </motion.div>
       </div>

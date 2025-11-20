@@ -2,8 +2,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
 export default function Hero({ onGetStarted }) {
+  const { language } = useLanguage();
+  const t = translations[language].hero;
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
       <div className="absolute inset-0 overflow-hidden">
@@ -35,21 +39,21 @@ export default function Hero({ onGetStarted }) {
               className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">Premium Web Solutions</span>
+              <span className="text-sm font-medium">{t.badge}</span>
             </motion.div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
-                Transform Your
+                {t.title1}
               </span>
               <br />
               <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                Digital Presence
+                {t.title2}
               </span>
             </h1>
 
             <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-              We craft stunning websites and powerful e-commerce platforms that help businesses in Costa Rica thrive in the digital world. From concept to launch, we deliver excellence.
+              {t.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -58,7 +62,7 @@ export default function Hero({ onGetStarted }) {
                 size="lg"
                 className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all"
               >
-                Get Started
+                {t.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
@@ -70,22 +74,22 @@ export default function Hero({ onGetStarted }) {
                 variant="outline"
                 className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-lg px-8 py-6"
               >
-                View Plans
+                {t.viewPlans}
               </Button>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
               <div>
                 <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
-                <div className="text-sm text-gray-600">Projects Delivered</div>
+                <div className="text-sm text-gray-600">{t.stat1}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
-                <div className="text-sm text-gray-600">Client Satisfaction</div>
+                <div className="text-sm text-gray-600">{t.stat2}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
-                <div className="text-sm text-gray-600">Support Available</div>
+                <div className="text-sm text-gray-600">{t.stat3}</div>
               </div>
             </div>
           </motion.div>
@@ -104,8 +108,12 @@ export default function Hero({ onGetStarted }) {
                 className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform"
               >
                 <Globe className="w-12 h-12 text-blue-900 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">Web Development</h3>
-                <p className="text-sm text-gray-600">Custom responsive sites</p>
+                <h3 className="font-bold text-gray-900 mb-1">
+                  {translations[language].services.webDev.title}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+                </p>
               </motion.div>
 
               <motion.div
@@ -115,8 +123,12 @@ export default function Hero({ onGetStarted }) {
                 className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform"
               >
                 <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">E-Commerce</h3>
-                <p className="text-sm text-gray-600">Powerful online stores</p>
+                <h3 className="font-bold text-gray-900 mb-1">
+                  {translations[language].services.ecommerce.title}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+                </p>
               </motion.div>
 
               <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">

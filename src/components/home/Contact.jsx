@@ -9,8 +9,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
 export default function Contact() {
+  const { language } = useLanguage();
+  const t = translations[language].contact;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,7 +45,7 @@ export default function Contact() {
       });
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
-      setError("Failed to send message. Please try again.");
+      setError(t.form.errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -60,11 +64,11 @@ export default function Contact() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-              Let's Build Something Great
+              {t.title}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Ready to transform your digital presence? Get in touch with us today
+            {t.subtitle}
           </p>
         </motion.div>
 
@@ -82,7 +86,7 @@ export default function Contact() {
                   <Alert className="mb-6 bg-green-50 border-green-200">
                     <CheckCircle className="w-4 h-4 text-green-600" />
                     <AlertDescription className="text-green-800">
-                      Thank you! We'll get back to you within 24 hours.
+                      {t.form.successMessage}
                     </AlertDescription>
                   </Alert>
                 )}
@@ -96,7 +100,7 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name *</Label>
+                      <Label htmlFor="name">{t.form.name} *</Label>
                       <Input
                         id="name"
                         required
@@ -107,7 +111,7 @@ export default function Contact() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email *</Label>
+                      <Label htmlFor="email">{t.form.email} *</Label>
                       <Input
                         id="email"
                         type="email"
@@ -122,17 +126,17 @@ export default function Contact() {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="company">Company</Label>
+                      <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        placeholder="Your Company"
+                        placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
                         className="border-gray-300"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone</Label>
+                      <Label htmlFor="phone">{t.form.phone}</Label>
                       <Input
                         id="phone"
                         type="tel"
@@ -145,31 +149,31 @@ export default function Contact() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="service">Service Interest</Label>
+                    <Label htmlFor="service">{t.form.service}</Label>
                     <Select
                       value={formData.service_interest}
                       onValueChange={(value) => setFormData({ ...formData, service_interest: value })}
                     >
                       <SelectTrigger className="border-gray-300">
-                        <SelectValue placeholder="Select a service" />
+                        <SelectValue placeholder={t.form.selectService} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="web_development">Web Development</SelectItem>
-                        <SelectItem value="ecommerce">E-Commerce</SelectItem>
-                        <SelectItem value="both">Both</SelectItem>
-                        <SelectItem value="custom">Custom Solution</SelectItem>
+                        <SelectItem value="web_development">{t.form.webDevelopment}</SelectItem>
+                        <SelectItem value="ecommerce">{t.form.ecommerce}</SelectItem>
+                        <SelectItem value="both">{t.form.both}</SelectItem>
+                        <SelectItem value="custom">{t.form.custom}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                    <Label htmlFor="message">{t.form.message} *</Label>
                     <Textarea
                       id="message"
                       required
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell us about your project..."
+                      placeholder={t.form.messagePlaceholder}
                       rows={5}
                       className="border-gray-300 resize-none"
                     />
@@ -181,10 +185,10 @@ export default function Contact() {
                     className="w-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg py-6"
                   >
                     {isSubmitting ? (
-                      "Sending..."
+                      t.form.sending
                     ) : (
                       <>
-                        Send Message
+                        {t.form.send}
                         <Send className="w-5 h-5 ml-2" />
                       </>
                     )}
@@ -201,11 +205,11 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-8"
-          >
+            >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.getInTouch}</h3>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Have a project in mind? We'd love to hear from you. Our team is ready to help bring your vision to life with cutting-edge web solutions.
+                {t.description}
               </p>
             </div>
 
@@ -215,7 +219,7 @@ export default function Contact() {
                   <Mail className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.email}</h4>
                   <p className="text-gray-600">info@webcraftcr.com</p>
                   <p className="text-gray-600">support@webcraftcr.com</p>
                 </div>
@@ -226,9 +230,9 @@ export default function Contact() {
                   <Phone className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
+                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.phone}</h4>
                   <p className="text-gray-600">+506 1234 5678</p>
-                  <p className="text-gray-600">Available Mon-Fri, 8am-6pm</p>
+                  <p className="text-gray-600">{t.info.phoneAvailable}</p>
                 </div>
               </div>
 
@@ -237,13 +241,13 @@ export default function Contact() {
                   <MapPin className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
-                  <p className="text-gray-600">San José, Costa Rica</p>
-                  <p className="text-gray-600">Serving clients nationwide</p>
+                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.location}</h4>
+                  <p className="text-gray-600">{t.info.locationCity}</p>
+                  <p className="text-gray-600">{t.info.locationServing}</p>
                 </div>
               </div>
             </div>
-          </motion.div>
+            </motion.div>
         </div>
       </div>
     </section>

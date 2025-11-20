@@ -7,8 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
 export default function Pricing({ onGetStarted }) {
+  const { language } = useLanguage();
+  const t = translations[language].pricing;
   const { data: plans, isLoading } = useQuery({
     queryKey: ['pricing-plans'],
     queryFn: () => base44.entities.PricingPlan.list(),
@@ -49,11 +53,11 @@ export default function Pricing({ onGetStarted }) {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-              Choose Your Plan
+              {t.title}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Flexible pricing options to match your business needs and budget
+            {t.subtitle}
           </p>
         </motion.div>
 
@@ -79,7 +83,7 @@ export default function Pricing({ onGetStarted }) {
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-1 text-sm flex items-center gap-1">
                       <Star className="w-3 h-3" />
-                      Most Popular
+                      {t.mostPopular}
                     </Badge>
                   </div>
                 )}
@@ -97,7 +101,7 @@ export default function Pricing({ onGetStarted }) {
                     <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                       ${plan.price}
                     </span>
-                    <span className="text-gray-600">/month</span>
+                    <span className="text-gray-600">{t.perMonth}</span>
                   </div>
                 </CardHeader>
 
@@ -146,7 +150,7 @@ export default function Pricing({ onGetStarted }) {
           className="text-center mt-12"
         >
           <p className="text-gray-600">
-            All plans include free SSL certificate, hosting, and domain assistance
+            {t.additionalInfo}
           </p>
         </motion.div>
       </div>

@@ -2,47 +2,51 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Globe, ShoppingCart, Smartphone, Zap, Shield, Headphones } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
-const services = [
-  {
-    icon: Globe,
-    title: "Web Development",
-    description: "Custom-built websites tailored to your brand, fully responsive and optimized for performance.",
-    color: "from-blue-900 to-blue-700"
-  },
-  {
-    icon: ShoppingCart,
-    title: "E-Commerce Solutions",
-    description: "Powerful online stores with secure payment gateways, inventory management, and seamless checkout.",
-    color: "from-red-600 to-red-700"
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile-First Design",
-    description: "Beautiful interfaces that work flawlessly across all devices and screen sizes.",
-    color: "from-blue-800 to-blue-600"
-  },
-  {
-    icon: Zap,
-    title: "Performance Optimization",
-    description: "Lightning-fast loading times and superior SEO to help your business rank higher.",
-    color: "from-red-700 to-red-800"
-  },
-  {
-    icon: Shield,
-    title: "Security & SSL",
-    description: "Enterprise-grade security with SSL certificates, data encryption, and regular backups.",
-    color: "from-blue-700 to-blue-500"
-  },
-  {
-    icon: Headphones,
-    title: "24/7 Support",
-    description: "Continuous maintenance and support to keep your website running smoothly at all times.",
-    color: "from-red-600 to-red-500"
-  }
-];
+import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
 export default function Services() {
+  const { language } = useLanguage();
+  const t = translations[language].services;
+
+  const services = [
+    {
+      icon: Globe,
+      title: t.webDev.title,
+      description: t.webDev.description,
+      color: "from-blue-900 to-blue-700"
+    },
+    {
+      icon: ShoppingCart,
+      title: t.ecommerce.title,
+      description: t.ecommerce.description,
+      color: "from-red-600 to-red-700"
+    },
+    {
+      icon: Smartphone,
+      title: t.mobile.title,
+      description: t.mobile.description,
+      color: "from-blue-800 to-blue-600"
+    },
+    {
+      icon: Zap,
+      title: t.performance.title,
+      description: t.performance.description,
+      color: "from-red-700 to-red-800"
+    },
+    {
+      icon: Shield,
+      title: t.security.title,
+      description: t.security.description,
+      color: "from-blue-700 to-blue-500"
+    },
+    {
+      icon: Headphones,
+      title: t.support.title,
+      description: t.support.description,
+      color: "from-red-600 to-red-500"
+    }
+  ];
   return (
     <section id="services" className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-6">
@@ -55,11 +59,11 @@ export default function Services() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-              Our Services
+              {t.title}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Comprehensive web solutions designed to elevate your business and deliver measurable results
+            {t.subtitle}
           </p>
         </motion.div>
 

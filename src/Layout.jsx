@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X, Code2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/translations";
 
-export default function Layout({ children, currentPageName }) {
+function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,31 +68,39 @@ export default function Layout({ children, currentPageName }) {
                 onClick={() => scrollToSection("services")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
-                Services
+                {t.nav.services}
               </button>
               <button
                 onClick={() => scrollToSection("pricing")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
-                Pricing
+                {t.nav.pricing}
               </button>
               <button
                 onClick={() => scrollToSection("benefits")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
-                Why Us
+                {t.nav.benefits}
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
-                Contact
+                {t.nav.contact}
+              </button>
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-2 text-gray-700 hover:text-blue-900 transition-colors font-medium"
+                title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+              >
+                <Globe className="w-5 h-5" />
+                <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
               >
-                Get Started
+                {t.nav.getStarted}
               </Button>
             </div>
 
@@ -112,31 +124,38 @@ export default function Layout({ children, currentPageName }) {
                 onClick={() => scrollToSection("services")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
-                Services
+                {t.nav.services}
               </button>
               <button
                 onClick={() => scrollToSection("pricing")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
-                Pricing
+                {t.nav.pricing}
               </button>
               <button
                 onClick={() => scrollToSection("benefits")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
-                Why Us
+                {t.nav.benefits}
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
-                Contact
+                {t.nav.contact}
+              </button>
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+              >
+                <Globe className="w-5 h-5" />
+                {language === 'es' ? 'English' : 'Español'}
               </button>
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
               >
-                Get Started
+                {t.nav.getStarted}
               </Button>
             </div>
           )}
@@ -158,38 +177,38 @@ export default function Layout({ children, currentPageName }) {
                 <span className="text-xl font-bold">WebCraft CR</span>
               </div>
               <p className="text-blue-200 text-sm">
-                Crafting exceptional digital experiences for businesses in Costa Rica and beyond.
+                {t.footer.description}
               </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Services</h3>
+              </div>
+              <div>
+              <h3 className="font-semibold mb-4">{t.footer.servicesTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
-                <li>Web Development</li>
-                <li>E-Commerce Solutions</li>
-                <li>Custom Web Apps</li>
-                <li>Maintenance & Support</li>
+                <li>{t.footer.webDev}</li>
+                <li>{t.footer.ecommerce}</li>
+                <li>{t.footer.customApps}</li>
+                <li>{t.footer.maintenance}</li>
               </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Company</h3>
+              </div>
+              <div>
+              <h3 className="font-semibold mb-4">{t.footer.companyTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
-                <li>About Us</li>
-                <li>Our Process</li>
-                <li>Case Studies</li>
-                <li>Contact</li>
+                <li>{t.footer.about}</li>
+                <li>{t.footer.process}</li>
+                <li>{t.footer.caseStudies}</li>
+                <li>{t.footer.contact}</li>
               </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Contact</h3>
+              </div>
+              <div>
+              <h3 className="font-semibold mb-4">{t.footer.contactTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
-                <li>San José, Costa Rica</li>
+                <li>{t.footer.location}</li>
                 <li>info@webcraftcr.com</li>
                 <li>+506 1234 5678</li>
               </ul>
-            </div>
-          </div>
-          <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-blue-200">
-            <p>© 2025 WebCraft CR. All rights reserved. Built with ❤️ in Costa Rica</p>
+              </div>
+              </div>
+              <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-blue-200">
+              <p>{t.footer.copyright}</p>
           </div>
         </div>
       </footer>
