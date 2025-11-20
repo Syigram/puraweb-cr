@@ -215,3 +215,11 @@ function LayoutContent({ children, currentPageName }) {
     </div>
   );
 }
+
+export default function Layout({ children, currentPageName }) {
+  return (
+    <LanguageProvider>
+      <LayoutContent children={children} currentPageName={currentPageName} />
+    </LanguageProvider>
+  );
+}
