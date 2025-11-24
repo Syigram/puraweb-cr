@@ -104,7 +104,8 @@ export default function Checkout() {
         // Don't show error immediately if it's just missing email
         if (email) setError(err.message || "Error configurando el pago");
       } finally {
-        setLoading(false);
+        // Do not set loading to false here to prevent mounting before the element is ready
+        // We will handle mounting in the other effect
       }
     };
 
@@ -125,27 +126,39 @@ export default function Checkout() {
   useEffect(() => {
     if (!clientSecret || !stripe) return;
 
-    const appearance = {
-      theme: 'stripe',
-      variables: {
-        colorPrimary: '#002B7F',
-        borderRadius: '8px',
-      },
-    };
-    const options = {
-      clientSecret,
-      appearance,
-    };
+    // Once we have the client secret and stripe, we can stop loading to render the container div
+    setLoading(false);
 
-    const newElements = stripe.elements(options);
-    const paymentElement = newElements.create("payment", {
-      layout: 'tabs'
-    });
-    paymentElement.mount("#payment-element");
-    setElements(newElements);
+    // Use a small timeout to allow the DOM to update and render the #payment-element div
+    const timer = setTimeout(() => {
+      const element = document.getElementById("payment-element");
+      if (!element) {
+        console.error("Payment element container not found");
+        return;
+      }
+
+      const appearance = {
+        theme: 'stripe',
+        variables: {
+          colorPrimary: '#002B7F',
+          borderRadius: '8px',
+        },
+      };
+      const options = {
+        clientSecret,
+        appearance,
+      };
+
+      const newElements = stripe.elements(options);
+      const paymentElement = newElements.create("payment", {
+        layout: 'tabs'
+      });
+      paymentElement.mount("#payment-element");
+      setElements(newElements);
+    }, 100);
 
     return () => {
-      paymentElement.unmount();
+      clearTimeout(timer);
     };
   }, [clientSecret, stripe]);
 
