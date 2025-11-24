@@ -27,23 +27,27 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const url = new URL(req.url);
     const path = url.pathname.split('/').pop();
+    
+    // Support both path-based routing (direct) and body-action routing (invoke SDK)
+    let body = {};
+    try {
+      if (req.method === "POST") {
+        body = await req.json();
+      }
+    } catch (e) {
+      // ignore json parse error for empty body
+    }
+    
+    const action = body.action || path;
 
-    // Helper to get user or throw
-    const getUser = async () => {
-      const user = await base44.auth.me();
-      // Allow guest checkout? Prefer auth, but for conversion let's create a customer from email if possible
-      // For this implementation, we'll require basic auth or use a provided email if guest
-      return user;
-    };
-
-    if (path === 'getStripeConfig') {
+    if (action === 'getConfig' || action === 'getStripeConfig') {
       return Response.json({ 
         publishableKey: Deno.env.get("STRIPE_PUBLISHABLE_KEY") 
       });
     }
 
-    if (path === 'createPaymentIntent') {
-      const { planName, paymentMode, email, name } = await req.json();
+    if (action === 'createPaymentIntent') {
+      const { planName, paymentMode, email, name } = body;
       const priceId = PLAN_PRICES[planName] || PLAN_PRICES["Básico"];
       
       // 1. Find or Create Customer
@@ -112,7 +116,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    return Response.json({ error: "Not found" }, { status: 404 });
+    return Response.json({ error: "Action not found" }, { status: 404 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
