@@ -10,6 +10,7 @@ import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
 
 export default function Checkout() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const planName = searchParams.get("plan") || "Básico";
   
@@ -169,7 +170,7 @@ export default function Checkout() {
     setProcessing(true);
     setError(null);
 
-    const { error } = await stripe.confirmPayment({
+    const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: new URL(createPageUrl("PaymentSuccess"), window.location.origin).toString(),
@@ -180,11 +181,14 @@ export default function Checkout() {
           }
         }
       },
+      redirect: "if_required",
     });
 
     if (error) {
       setError(error.message);
       setProcessing(false);
+    } else if (paymentIntent && (paymentIntent.status === "succeeded" || paymentIntent.status === "processing")) {
+      navigate(createPageUrl("PaymentSuccess") + `?payment_intent_client_secret=${paymentIntent.client_secret}`);
     }
   };
 
