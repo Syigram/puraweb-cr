@@ -172,7 +172,7 @@ export default function Checkout() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: window.location.origin + createPageUrl("PaymentSuccess"),
+        return_url: new URL(createPageUrl("PaymentSuccess"), window.location.origin).toString(),
         payment_method_data: {
           billing_details: {
             name: name,
