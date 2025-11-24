@@ -1,9 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+
+const Typewriter = ({ words }) => {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  useEffect(() => {
+    const handleType = () => {
+      const i = loopNum % words.length;
+      const fullText = words[i];
+
+      setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1));
+
+      setTypingSpeed(isDeleting ? 30 : 150);
+
+      if (!isDeleting && text === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && text === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+      }
+    };
+
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, words, typingSpeed]);
+
+  return (
+    <span>
+      {text}
+      <span className="animate-pulse border-r-2 border-red-600 ml-1 h-full inline-block align-middle">&nbsp;</span>
+    </span>
+  );
+};
 
 export default function Hero({ onGetStarted }) {
   const { language } = useLanguage();
@@ -47,8 +82,8 @@ export default function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                {t.title2}
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block md:inline-block">
+                <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </h1>
 
