@@ -128,9 +128,7 @@ export default function Hero({ onGetStarted }) {
                 <div className="text-sm text-gray-600">{t.stat2}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">
-                  <CountUp value={24} suffix="/7" />
-                </div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
                 <div className="text-sm text-gray-600">{t.stat3}</div>
               </div>
             </div>
