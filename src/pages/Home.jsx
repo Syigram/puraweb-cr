@@ -4,6 +4,7 @@ import Services from "../components/home/Services";
 import Pricing from "../components/home/Pricing";
 import Benefits from "../components/home/Benefits";
 import Contact from "../components/home/Contact";
+import CyberpunkTerrain from "../components/home/CyberpunkTerrain";
 
 export default function Home() {
   const scrollToContact = () => {
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <div>
       <Hero onGetStarted={scrollToContact} />
+      <CyberpunkTerrain />
       <Services />
       <Pricing onGetStarted={scrollToContact} />
       <Benefits />
