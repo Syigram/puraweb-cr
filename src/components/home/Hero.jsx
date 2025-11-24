@@ -134,44 +134,37 @@ export default function Hero({ onGetStarted }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:block relative"
+            className="hidden lg:block relative h-[500px] flex items-center justify-center"
           >
-            <div className="relative">
-              <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform"
+            <div className="absolute inset-0 z-0">
+                <TechShape3D />
+            </div>
+            
+            {/* Overlay Cards for Context */}
+            <div className="relative z-10 w-full h-full pointer-events-none">
+               <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.5 }}
+                className="absolute top-10 right-0 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 transform rotate-3 max-w-[200px]"
               >
-                <Globe className="w-12 h-12 text-blue-900 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">
+                <Globe className="w-8 h-8 text-blue-900 mb-2" />
+                <p className="text-xs font-bold text-gray-900">
                   {translations[language].services.webDev.title}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
                 </p>
               </motion.div>
 
               <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.5 }}
+                className="absolute bottom-20 left-0 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-4 transform -rotate-3 max-w-[200px]"
               >
-                <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">
+                <ShoppingCart className="w-8 h-8 text-red-600 mb-2" />
+                <p className="text-xs font-bold text-gray-900">
                   {translations[language].services.ecommerce.title}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
                 </p>
               </motion.div>
-
-              <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
-                <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
-                  <Sparkles className="w-20 h-20 text-blue-900" />
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
