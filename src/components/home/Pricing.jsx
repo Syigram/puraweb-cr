@@ -1,41 +1,17 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useQuery } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
 export default function Pricing({ onGetStarted }) {
   const { language } = useLanguage();
   const t = translations[language].pricing;
-  const { data: plans, isLoading } = useQuery({
-    queryKey: ['pricing-plans'],
-    queryFn: () => base44.entities.PricingPlan.list(),
-    initialData: [],
-  });
-
-  if (isLoading) {
-    return (
-      <section id="pricing" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <Skeleton className="h-12 w-64 mx-auto mb-4" />
-            <Skeleton className="h-6 w-96 mx-auto" />
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-96" />
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const plans = t.plans || [];
 
   return (
     <section id="pricing" className="py-24 bg-white relative overflow-hidden">

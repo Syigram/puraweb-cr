@@ -52,7 +52,33 @@ export const translations = {
       subtitle: "Opciones de precios flexibles para adaptarse a las necesidades y presupuesto de su negocio",
       mostPopular: "Más Popular",
       perMonth: "/mes",
-      additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio"
+      additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio",
+      plans: [
+        {
+          name: "Básico",
+          price: "499",
+          description: "Perfecto para pequeños negocios que inician su presencia digital",
+          features: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
+          recommended: false,
+          cta_text: "Comenzar Ahora"
+        },
+        {
+          name: "Estándar",
+          price: "899",
+          description: "Ideal para empresas en crecimiento que necesitan más potencia",
+          features: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
+          recommended: true,
+          cta_text: "Elegir Estándar"
+        },
+        {
+          name: "Premium",
+          price: "1499",
+          description: "Solución completa para negocios establecidos y tiendas online",
+          features: ["Todo lo del Estándar", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
+          recommended: false,
+          cta_text: "Contactar Ventas"
+        }
+      ]
     },
     benefits: {
       title: "Por Qué Elegir PuraWeb CR",
@@ -181,7 +207,33 @@ export const translations = {
       subtitle: "Flexible pricing options to match your business needs and budget",
       mostPopular: "Most Popular",
       perMonth: "/month",
-      additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance"
+      additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance",
+      plans: [
+        {
+          name: "Basic",
+          price: "499",
+          description: "Perfect for small businesses starting their digital journey",
+          features: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"],
+          recommended: false,
+          cta_text: "Get Started Now"
+        },
+        {
+          name: "Standard",
+          price: "899",
+          description: "Ideal for growing companies needing more power and flexibility",
+          features: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"],
+          recommended: true,
+          cta_text: "Choose Standard"
+        },
+        {
+          name: "Premium",
+          price: "1499",
+          description: "Complete solution for established businesses and online stores",
+          features: ["Everything in Standard", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
+          recommended: false,
+          cta_text: "Contact Sales"
+        }
+      ]
     },
     benefits: {
       title: "Why Choose PuraWeb CR",
