@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
@@ -7,10 +6,17 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 
 export default function Pricing({ onGetStarted }) {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const t = translations[language].pricing;
+
+  const handlePlanSelect = (planName) => {
+    navigate(createPageUrl(`Checkout?plan=${encodeURIComponent(planName)}`));
+  };
   const plans = t.plans || [];
 
   return (
@@ -102,7 +108,7 @@ export default function Pricing({ onGetStarted }) {
                   </ul>
 
                   <Button
-                    onClick={onGetStarted}
+                    onClick={() => handlePlanSelect(plan.name)}
                     className={`w-full text-lg py-6 ${
                       plan.recommended
                         ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
