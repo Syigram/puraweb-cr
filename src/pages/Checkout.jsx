@@ -43,47 +43,20 @@ export default function Checkout() {
   const oneTimeAmount = selectedPlan.fullPrice * 0.5;
   const currentAmount = paymentMode === "subscription" ? subscriptionAmount : oneTimeAmount;
 
-  // Load User & Stripe Config
+  // Load User Info on mount
   useEffect(() => {
     const init = async () => {
       try {
-        // Check if user is logged in to pre-fill
         const user = await base44.auth.me().catch(() => null);
         if (user) {
           setEmail(user.email);
           setName(user.full_name || "");
         }
-
-        // Load Stripe
-        const script = document.createElement("script");
-        script.src = "https://js.stripe.com/v3/";
-        script.async = true;
-        script.onload = async () => {
-          const { data } = await base44.functions.invoke("stripe", {}, { path: "/getStripeConfig" }); // calling the 'stripe' function with path
-          // Note: If invoke doesn't support path param in SDK, we call the function directly. 
-          // Assuming standard invoke('stripe') calls the handler, we need to pass data to route inside the handler if it was a single file.
-          // But since we used Deno.serve with path routing, we usually need to pass a body param to route or use different function files.
-          // Let's adjust: The previous function file handles multiple paths based on req.url.
-          // But `invoke` usually calls the function endpoint directly. 
-          // Let's fix the function call below to match standard usage.
-        };
-        document.body.appendChild(script);
       } catch (e) {
         console.error(e);
       }
     };
     init();
-    
-    // For simplicity, we'll just fetch config directly
-    const fetchConfig = async () => {
-       // In V3, invoke('stripe') calls the function. 
-       // The backend code uses req.url to route. 
-       // We can pass a query param or body param to specify action if needed, 
-       // OR better: create separate functions. 
-       // BUT to save files, let's use a custom header or body to route in the single function.
-       // Wait, `req.url` in Deno Deploy functions usually ends with the function name.
-       // Let's rewrite the fetch to use the body to specify action, it's safer.
-    };
   }, []);
 
   // RE-IMPLEMENTING THE STIPE LOADER AND INTENT CREATION
@@ -103,19 +76,7 @@ export default function Checkout() {
       }
 
       // 2. Get Config
-      // We'll call the 'stripe' function. We'll assume it handles routing via body since path might be fixed
-      // Let's update the backend function to look at body if path check fails or is generic
-      const configRes = await base44.functions.invoke("stripe/getStripeConfig"); 
-      // Note: base44 functions are usually flat. 'stripe' is the name. 
-      // I will update backend to router based on the invoke name? No.
-      // I will use invoke("stripe") and pass { action: 'getConfig' } in body?
-      // Let's Stick to the previous plan: The backend uses req.url.
-      // IF I call invoke("stripe/getStripeConfig"), it might fail if function is just "stripe".
-      // Let's assume I can call invoke("stripe") and the backend handles it.
-      // I will modify the backend to check body property "action" as a fallback to path.
-      
-      // Actually, let's just fetch the key first.
-      const { data: configData } = await base44.functions.invoke("stripe", { action: "getConfig" }); // We'll update backend to handle this
+      const { data: configData } = await base44.functions.invoke("stripe", { action: "getConfig" });
       
       if (!isMounted) return;
       
