@@ -24,19 +24,21 @@ export default function TechShape3D() {
     // Main Shape (Icosahedron)
     const geometry = new THREE.IcosahedronGeometry(2, 1);
     const material = new THREE.MeshPhongMaterial({
-      color: 0x002B7F, // Costa Blue
-      emissive: 0x001a4d,
-      specular: 0x111111,
+      color: 0xFFFFFF, // White
+      emissive: 0xdddddd,
+      specular: 0xffffff,
       shininess: 30,
       flatShading: true,
-      wireframe: false
+      wireframe: false,
+      transparent: true,
+      opacity: 0.9
     });
     const shape = new THREE.Mesh(geometry, material);
     group.add(shape);
 
     // Wireframe overlay
     const wireframeGeo = new THREE.WireframeGeometry(geometry);
-    const wireframeMat = new THREE.LineBasicMaterial({ color: 0x4ea5ff, transparent: true, opacity: 0.3 });
+    const wireframeMat = new THREE.LineBasicMaterial({ color: 0x002B7F, transparent: true, opacity: 0.1 });
     const wireframe = new THREE.LineSegments(wireframeGeo, wireframeMat);
     group.add(wireframe);
 
