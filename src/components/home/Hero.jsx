@@ -44,19 +44,49 @@ export default function Hero({ onGetStarted }) {
   const { language } = useLanguage();
   const t = translations[language].hero;
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.1, scale: 1 }}
-          transition={{ duration: 1.5 }}
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[20%] -right-[10%] w-[800px] h-[800px] bg-gradient-to-br from-blue-100/50 to-blue-50/30 rounded-full blur-3xl"
+        />
+        
+        <motion.div
+          animate={{
+            x: [0, 30, 0],
+            y: [0, 40, 0],
+            scale: [1, 1.1, 1],
+            opacity: [0.08, 0.15, 0.08]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl"
         />
+
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.1, scale: 1 }}
-          transition={{ duration: 1.5, delay: 0.3 }}
+          animate={{
+            x: [0, -30, 0],
+            y: [0, -40, 0],
+            scale: [1, 1.1, 1],
+            opacity: [0.08, 0.15, 0.08]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl"
+        />
+
+         <motion.div
+          animate={{
+            x: [0, 50, 0],
+            y: [0, 20, 0],
+            scale: [1, 1.2, 1],
+            opacity: [0.05, 0.1, 0.05]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-200 rounded-full blur-3xl"
         />
       </div>
 
