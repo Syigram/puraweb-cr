@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
+import CountUp from "@/components/ui/CountUp";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
@@ -115,15 +116,21 @@ export default function Hero({ onGetStarted }) {
 
             <div className="grid grid-cols-3 gap-6">
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">
+                  <CountUp value={150} suffix="+" />
+                </div>
                 <div className="text-sm text-gray-600">{t.stat1}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">
+                  <CountUp value={98} suffix="%" />
+                </div>
                 <div className="text-sm text-gray-600">{t.stat2}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">
+                  <CountUp value={24} suffix="/7" />
+                </div>
                 <div className="text-sm text-gray-600">{t.stat3}</div>
               </div>
             </div>
