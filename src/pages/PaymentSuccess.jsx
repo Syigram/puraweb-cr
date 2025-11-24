@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Download } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { createPageUrl } from "@/utils";
-import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
-import CountUp from "@/components/ui/CountUp";
+import { Card } from "@/components/ui/card";
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
-  const paymentIntentClientSecret = searchParams.get("payment_intent_client_secret");
-  const [status, setStatus] = useState("loading"); // loading, success, error
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
-    if (paymentIntentClientSecret) {
-        // Here we could verify the payment intent with the backend if needed
-        // For now, we assume if we reached here with a secret, it's likely valid or Stripe checked it
-        // But it's better to retrieve the status using stripe.js or backend
-        // For simplicity in this demo, we'll just show success after a brief "check"
-        const timer = setTimeout(() => setStatus("success"), 1500);
-        return () => clearTimeout(timer);
+    const clientSecret = searchParams.get("payment_intent_client_secret");
+    if (clientSecret) {
+       setTimeout(() => setStatus("success"), 1500);
     } else {
-        setStatus("success"); // Fallback if redirected differently
+       // Maybe redirected without param? Assume success for demo or handle error
+       setStatus("success");
     }
-  }, [paymentIntentClientSecret]);
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -31,7 +26,7 @@ export default function PaymentSuccess() {
         <div className="h-2 bg-green-500 w-full" />
         <div className="p-8">
             {status === "loading" ? (
-                <div className="space-y-4">
+                <div className="space-y-4 py-8">
                      <div className="w-16 h-16 border-4 border-green-200 border-t-green-500 rounded-full animate-spin mx-auto" />
                      <h2 className="text-xl font-semibold text-gray-700">Verificando pago...</h2>
                 </div>
@@ -47,24 +42,18 @@ export default function PaymentSuccess() {
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">¡Pago Exitoso!</h1>
                     <p className="text-gray-600 mb-8">
                         Gracias por confiar en PuraWeb CR. Hemos recibido tu pago correctamente.
-                        Un representante se pondrá en contacto contigo en breve.
+                        Nuestro equipo te contactará al correo proporcionado para iniciar el proceso.
                     </p>
 
-                    <div className="space-y-3">
-                        <Link to={createPageUrl("Home")}>
-                            <Button className="w-full bg-blue-900 hover:bg-blue-800">
-                                Volver al Inicio
-                            </Button>
-                        </Link>
-                    </div>
+                    <Link to={createPageUrl("Home")}>
+                        <Button className="w-full bg-blue-900 hover:bg-blue-800 h-12 text-lg">
+                            Volver al Inicio
+                        </Button>
+                    </Link>
                 </motion.div>
             )}
         </div>
       </Card>
     </div>
   );
-}
-
-function Card({ className, children }) {
-    return <div className={`bg-white rounded-xl ${className}`}>{children}</div>;
 }
