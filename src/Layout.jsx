@@ -58,7 +58,7 @@ function LayoutContent({ children, currentPageName }) {
                 <Code2 className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-              PuraWeb Soluciones
+                WebCraft CR
               </span>
             </Link>
 
@@ -174,7 +174,7 @@ function LayoutContent({ children, currentPageName }) {
                 <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
                   <Code2 className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xl font-bold">PuraWeb Soluciones</span>
+                <span className="text-xl font-bold">WebCraft CR</span>
               </div>
               <p className="text-blue-200 text-sm">
                 {t.footer.description}
@@ -202,7 +202,7 @@ function LayoutContent({ children, currentPageName }) {
               <h3 className="font-semibold mb-4">{t.footer.contactTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
                 <li>{t.footer.location}</li>
-                <li>info@purawebsoluciones.com</li>
+                <li>info@webcraftcr.com</li>
                 <li>+506 1234 5678</li>
               </ul>
               </div>

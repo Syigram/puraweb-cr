@@ -9,9 +9,9 @@ export const translations = {
     },
     hero: {
       badge: "Soluciones Web Premium",
-      title1: "PuraWeb -",
-      title2: "Costa Rica venta aplicaciones y páginas Web",
-      typewriterWords: ["Costa Rica venta aplicaciones y páginas Web", "Desarrollo de Software a Medida", "Expertos en E-Commerce", "Transformación Digital"],
+      title1: "Transforma Tu",
+      title2: "Presencia Digital",
+      typewriterWords: ["Presencia Digital", "Sitio Web Único", "Tienda Online", "Identidad Web"],
       description: "Creamos sitios web impresionantes y plataformas de comercio electrónico poderosas que ayudan a las empresas en Costa Rica a prosperar en el mundo digital. Desde el concepto hasta el lanzamiento, entregamos excelencia.",
       getStarted: "Comenzar",
       viewPlans: "Ver Planes",
@@ -55,7 +55,7 @@ export const translations = {
       additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio"
     },
     benefits: {
-      title: "Por Qué Elegir PuraWeb Soluciones",
+      title: "Por Qué Elegir WebCraft CR",
       subtitle: "Asóciate con la agencia de desarrollo web premier de Costa Rica para soluciones digitales excepcionales",
       resultsDriven: {
         title: "Enfoque en Resultados",
@@ -125,7 +125,7 @@ export const translations = {
       contactTitle: "Contacto",
       location: "San José, Costa Rica",
       serving: "Atendiendo clientes a nivel nacional",
-      copyright: "© 2025 PuraWeb Soluciones. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
+      copyright: "© 2025 WebCraft CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
     }
   },
   en: {
@@ -138,9 +138,9 @@ export const translations = {
     },
     hero: {
       badge: "Premium Web Solutions",
-      title1: "PuraWeb -",
-      title2: "Costa Rica Web Applications and Pages Sales",
-      typewriterWords: ["Costa Rica Web Applications and Pages Sales", "Custom Software Development", "E-Commerce Experts", "Digital Transformation"],
+      title1: "Transform Your",
+      title2: "Digital Presence",
+      typewriterWords: ["Digital Presence", "Unique Website", "Online Store", "Web Identity"],
       description: "We craft stunning websites and powerful e-commerce platforms that help businesses in Costa Rica thrive in the digital world. From concept to launch, we deliver excellence.",
       getStarted: "Get Started",
       viewPlans: "View Plans",
@@ -184,7 +184,7 @@ export const translations = {
       additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance"
     },
     benefits: {
-      title: "Why Choose PuraWeb Solutions",
+      title: "Why Choose WebCraft CR",
       subtitle: "Partner with Costa Rica's premier web development agency for exceptional digital solutions",
       resultsDriven: {
         title: "Results-Driven Approach",
@@ -254,7 +254,7 @@ export const translations = {
       contactTitle: "Contact",
       location: "San José, Costa Rica",
       serving: "Serving clients nationwide",
-      copyright: "© 2025 PuraWeb Soluciones. All rights reserved. Built with ❤️ in Costa Rica"
+      copyright: "© 2025 WebCraft CR. All rights reserved. Built with ❤️ in Costa Rica"
     }
   }
 };
