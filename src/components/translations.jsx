@@ -55,7 +55,7 @@ export const translations = {
       additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio"
     },
     benefits: {
-      title: "Por Qué Elegir WebCraft CR",
+      title: "Por Qué Elegir PuraWeb CR",
       subtitle: "Asóciate con la agencia de desarrollo web premier de Costa Rica para soluciones digitales excepcionales",
       resultsDriven: {
         title: "Enfoque en Resultados",
@@ -125,10 +125,10 @@ export const translations = {
       contactTitle: "Contacto",
       location: "San José, Costa Rica",
       serving: "Atendiendo clientes a nivel nacional",
-      copyright: "© 2025 WebCraft CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
-    }
-  },
-  en: {
+      copyright: "© 2025 PuraWeb CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
+      }
+      },
+      en: {
     nav: {
       services: "Services",
       pricing: "Pricing",
@@ -184,7 +184,7 @@ export const translations = {
       additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance"
     },
     benefits: {
-      title: "Why Choose WebCraft CR",
+      title: "Why Choose PuraWeb CR",
       subtitle: "Partner with Costa Rica's premier web development agency for exceptional digital solutions",
       resultsDriven: {
         title: "Results-Driven Approach",
@@ -254,7 +254,7 @@ export const translations = {
       contactTitle: "Contact",
       location: "San José, Costa Rica",
       serving: "Serving clients nationwide",
-      copyright: "© 2025 WebCraft CR. All rights reserved. Built with ❤️ in Costa Rica"
-    }
-  }
+      copyright: "© 2025 PuraWeb CR. All rights reserved. Built with ❤️ in Costa Rica"
+      }
+      }
 };

@@ -58,7 +58,7 @@ function LayoutContent({ children, currentPageName }) {
                 <Code2 className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                WebCraft CR
+                PuraWeb CR
               </span>
             </Link>
 
@@ -174,9 +174,9 @@ function LayoutContent({ children, currentPageName }) {
                 <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
                   <Code2 className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xl font-bold">WebCraft CR</span>
-              </div>
-              <p className="text-blue-200 text-sm">
+                <span className="text-xl font-bold">PuraWeb CR</span>
+                </div>
+                <p className="text-blue-200 text-sm">
                 {t.footer.description}
               </p>
               </div>
