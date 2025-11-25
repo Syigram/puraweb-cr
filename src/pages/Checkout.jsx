@@ -182,7 +182,7 @@ export default function Checkout() {
     return () => {
       clearTimeout(timer);
     };
-  }, [clientSecret, stripe]);
+  }, [clientSecret, stripe, language]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
