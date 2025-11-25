@@ -317,8 +317,9 @@ export default function Checkout() {
               <Tabs value={paymentMode} onValueChange={(value) => {
                 setPaymentMode(value);
                 setLoading(true);
-                setClientSecret("");
                 setElements(null);
+                // Delay clearing clientSecret to show loading animation first
+                setTimeout(() => setClientSecret(""), 100);
               }} className="w-full mb-8">
                 <TabsList className="grid w-full grid-cols-2 h-12">
                   <TabsTrigger value="subscription" className="text-sm">{t.subscriptionTab}</TabsTrigger>
