@@ -64,7 +64,7 @@ export default function Pricing({ onGetStarted }) {
                 onClick={() => handleCardClick(plan.name)}
                 className={`relative h-full transition-all duration-300 cursor-pointer ${
                   selectedPlan === plan.name
-                    ? "border-2 border-blue-600 shadow-2xl scale-105 ring-4 ring-blue-100"
+                    ? "border-2 border-red-600 shadow-2xl scale-105"
                     : selectedPlan === null && plan.recommended
                     ? "border-2 border-red-600 shadow-2xl scale-105"
                     : "border-gray-200 hover:shadow-xl hover:scale-102"
