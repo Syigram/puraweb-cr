@@ -8,10 +8,12 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { language } = useLanguage();
   const planId = searchParams.get("plan") || "basic";
   const initialPaymentMode = searchParams.get("mode") || "subscription";
   
@@ -53,10 +55,7 @@ export default function Checkout() {
   };
 
   const selectedPlan = plans[planId] || plans["basic"];
-  
-  // Detect language from browser or default to Spanish
-  const browserLang = navigator.language?.startsWith('en') ? 'en' : 'es';
-  const displayName = selectedPlan.displayName[browserLang] || selectedPlan.displayName.es;
+  const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   
   // Calculate amounts
   const subscriptionAmount = selectedPlan.fullPrice;
