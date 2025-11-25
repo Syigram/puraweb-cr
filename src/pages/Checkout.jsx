@@ -9,6 +9,7 @@ import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock } from "lucide-re
 import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
 import { useLanguage } from "@/components/LanguageContext";
+import { translations } from "@/components/translations";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export default function Checkout() {
 
   const selectedPlan = plans[planId] || plans["basic"];
   const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
+  const t = translations[language].checkout;
   
   // Calculate amounts
   const subscriptionAmount = selectedPlan.fullPrice;
