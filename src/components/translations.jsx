@@ -60,7 +60,7 @@ export const translations = {
           description: "Perfecto para pequeños negocios que inician su presencia digital",
           features: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
           recommended: false,
-          cta_text: "Comenzar Ahora"
+          cta_text: "Seleccionar Plan"
         },
         {
           name: "Profesional",
@@ -76,7 +76,7 @@ export const translations = {
           description: "Solución completa para negocios establecidos y tiendas online",
           features: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
           recommended: false,
-          cta_text: "Contactar Ventas"
+          cta_text: "Seleccionar Plan"
         }
       ]
     },
@@ -215,7 +215,7 @@ export const translations = {
           description: "Perfect for small businesses starting their digital journey",
           features: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"],
           recommended: false,
-          cta_text: "Get Started Now"
+          cta_text: "Select Plan"
         },
         {
           name: "Professional",
@@ -231,7 +231,7 @@ export const translations = {
           description: "Complete solution for established businesses and online stores",
           features: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
           recommended: false,
-          cta_text: "Contact Sales"
+          cta_text: "Select Plan"
         }
       ]
     },
