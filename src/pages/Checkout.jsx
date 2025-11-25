@@ -277,7 +277,7 @@ export default function Checkout() {
               <div className="flex justify-between items-start">
                 <div>
                    <CardTitle className="text-xl text-blue-900">{displayName}</CardTitle>
-                   <CardDescription className="mt-1">{t.serviceDescription}</CardDescription>
+                   <CardDescription className="mt-1">{selectedPlan.description[language]}</CardDescription>
                 </div>
                 <div className="text-right">
                   <span className="block text-2xl font-bold text-gray-900">
@@ -288,6 +288,19 @@ export default function Checkout() {
               </div>
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
+              
+              {/* Plan Features */}
+              <div className="space-y-2">
+                <h4 className="font-medium text-gray-900 text-sm">{t.includedFeatures}</h4>
+                <ul className="space-y-2">
+                  {selectedPlan.features[language].map((feature, index) => (
+                    <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
+                      <Check className="w-4 h-4 text-green-600 shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                 <div className="flex items-center justify-between mb-2">
