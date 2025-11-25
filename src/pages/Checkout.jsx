@@ -38,18 +38,42 @@ export default function Checkout() {
     "basic": { 
       fullPrice: 60000, 
       displayName: { es: "Plan Básico", en: "Basic Plan" },
+      description: { 
+        es: "Perfecto para pequeños negocios que inician su presencia digital", 
+        en: "Perfect for small businesses starting their digital journey" 
+      },
+      features: {
+        es: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
+        en: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"]
+      },
       stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G",
       backendPlanName: "Básico"
     },
     "professional": { 
       fullPrice: 100000, 
       displayName: { es: "Plan Profesional", en: "Professional Plan" },
+      description: { 
+        es: "Ideal para empresas en crecimiento que necesitan más potencia", 
+        en: "Ideal for growing companies needing more power and flexibility" 
+      },
+      features: {
+        es: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
+        en: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"]
+      },
       stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c",
       backendPlanName: "Profesional"
     },
     "business": { 
       fullPrice: 150000, 
       displayName: { es: "Plan Empresa", en: "Business Plan" },
+      description: { 
+        es: "Solución completa para negocios establecidos y tiendas online", 
+        en: "Complete solution for established businesses and online stores" 
+      },
+      features: {
+        es: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
+        en: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"]
+      },
       stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N",
       backendPlanName: "Empresa"
     },
