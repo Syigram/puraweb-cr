@@ -155,6 +155,33 @@ export const translations = {
       location: "San José, Costa Rica",
       serving: "Atendiendo clientes a nivel nacional",
       copyright: "© 2025 PuraWeb CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
+      },
+      checkout: {
+        title: "Finalizar Compra",
+        subtitle: "Completa tus datos para comenzar a transformar tu negocio con PuraWeb CR.",
+        serviceDescription: "Servicio de diseño web",
+        totalPriceLabel: "precio total / mes",
+        paymentMode: "Modo de Pago",
+        subscriptionMode: "Suscripción Mensual",
+        onetimeMode: "Pago Inicial 50%",
+        subscriptionDescription: "Acceso completo inmediato. Facturación recurrente automática cada mes.",
+        onetimeDescription: "Pago del 50% para iniciar el desarrollo. El restante se abona contra entrega.",
+        subtotal: "Subtotal",
+        taxes: "Impuestos",
+        totalToday: "Total a Pagar Hoy",
+        encryptedTransaction: "Transacción encriptada de 256-bits",
+        secureData: "Datos seguros y confidenciales",
+        subscriptionTab: "Suscripción",
+        onetimeTab: "Pago Único (50%)",
+        emailLabel: "Correo Electrónico",
+        emailPlaceholder: "tu@email.com",
+        nameLabel: "Nombre Completo",
+        namePlaceholder: "Juan Pérez",
+        preparingGateway: "Preparando pasarela segura...",
+        enterEmailToContinue: "Ingresa tu correo para continuar",
+        loginButton: "Iniciar Sesión",
+        processing: "Procesando Pago...",
+        payButton: "Pagar"
       }
       },
       en: {
@@ -313,6 +340,33 @@ export const translations = {
       location: "San José, Costa Rica",
       serving: "Serving clients nationwide",
       copyright: "© 2025 PuraWeb CR. All rights reserved. Built with ❤️ in Costa Rica"
+          },
+      checkout: {
+        title: "Complete Your Purchase",
+        subtitle: "Fill in your details to start transforming your business with PuraWeb CR.",
+        serviceDescription: "Web design service",
+        totalPriceLabel: "total price / month",
+        paymentMode: "Payment Mode",
+        subscriptionMode: "Monthly Subscription",
+        onetimeMode: "Initial Payment 50%",
+        subscriptionDescription: "Immediate full access. Automatic recurring billing every month.",
+        onetimeDescription: "50% payment to start development. The remainder is paid upon delivery.",
+        subtotal: "Subtotal",
+        taxes: "Taxes",
+        totalToday: "Total Due Today",
+        encryptedTransaction: "256-bit encrypted transaction",
+        secureData: "Secure and confidential data",
+        subscriptionTab: "Subscription",
+        onetimeTab: "One-time (50%)",
+        emailLabel: "Email Address",
+        emailPlaceholder: "you@email.com",
+        nameLabel: "Full Name",
+        namePlaceholder: "John Doe",
+        preparingGateway: "Preparing secure gateway...",
+        enterEmailToContinue: "Enter your email to continue",
+        loginButton: "Log In",
+        processing: "Processing Payment...",
+        payButton: "Pay"
       }
-      }
-};
+          }
+      };
