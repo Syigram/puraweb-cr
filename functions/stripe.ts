@@ -3,21 +3,30 @@ import Stripe from 'npm:stripe@^14.0.0';
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
 
-// Map plans to Stripe Price IDs
-const PLAN_PRICES = {
-  "Básico": "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-  "Profesional": "price_1SUE2DFA0Fkjjug3euWqaW5c", 
-  "Empresa": "price_1SUE32FA0Fkjjug3khKfal6N",
-  // English mappings
-  "Basic": "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-  "Professional": "price_1SUE2DFA0Fkjjug3euWqaW5c",
-  "Business": "price_1SUE32FA0Fkjjug3khKfal6N"
+// Constantes estandarizadas para tipos de pago
+const PAYMENT_MODES = {
+  SUBSCRIPTION: 'subscription',
+  ONETIME: 'onetime'
 };
 
+const PLAN_IDS = {
+  BASIC: 'basic',
+  PROFESSIONAL: 'professional',
+  BUSINESS: 'business'
+};
+
+// Mapeo de Plan IDs estandarizados a Stripe Price IDs
+const PLAN_PRICES = {
+  [PLAN_IDS.BASIC]: 'price_1SUE0bFA0Fkjjug3eDCGxI4G',
+  [PLAN_IDS.PROFESSIONAL]: 'price_1SUE2DFA0Fkjjug3euWqaW5c',
+  [PLAN_IDS.BUSINESS]: 'price_1SUE32FA0Fkjjug3khKfal6N'
+};
+
+// Precios en centavos CRC
 const PLAN_AMOUNTS = {
-  "price_1SUE0bFA0Fkjjug3eDCGxI4G": 6000000, // 60,000 CRC
-  "price_1SUE2DFA0Fkjjug3euWqaW5c": 10000000, // 100,000 CRC
-  "price_1SUE32FA0Fkjjug3khKfal6N": 15000000  // 150,000 CRC
+  [PLAN_IDS.BASIC]: 6000000,      // 60,000 CRC
+  [PLAN_IDS.PROFESSIONAL]: 10000000, // 100,000 CRC
+  [PLAN_IDS.BUSINESS]: 15000000   // 150,000 CRC
 };
 
 Deno.serve(async (req) => {
@@ -45,8 +54,11 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'createPaymentIntent') {
-      const { planName, paymentMode, email, name } = body;
-      const priceId = PLAN_PRICES[planName] || PLAN_PRICES["Básico"];
+      const { planId, paymentMode, email, name } = body;
+      
+      // Usar planId estandarizado, con fallback a basic
+      const normalizedPlanId = planId || PLAN_IDS.BASIC;
+      const priceId = PLAN_PRICES[normalizedPlanId] || PLAN_PRICES[PLAN_IDS.BASIC];
       
       // 1. Find or Create Customer
       let customerId;
@@ -72,8 +84,8 @@ Deno.serve(async (req) => {
         customerId = customer.id;
       }
 
-      // 2. Handle Subscription vs One-time
-      if (paymentMode === 'subscription') {
+      // 2. Handle Subscription vs One-time usando constantes estandarizadas
+      if (paymentMode === PAYMENT_MODES.SUBSCRIPTION) {
         // Create a subscription
         const subscription = await stripe.subscriptions.create({
           customer: customerId,
@@ -82,7 +94,8 @@ Deno.serve(async (req) => {
           payment_settings: { save_default_payment_method: 'on_subscription' },
           expand: ['latest_invoice.payment_intent'],
           metadata: {
-            planName
+            planId: normalizedPlanId,
+            paymentMode: PAYMENT_MODES.SUBSCRIPTION
           }
         });
 
@@ -93,7 +106,7 @@ Deno.serve(async (req) => {
 
       } else {
         // One-time payment (50%)
-        const fullAmount = PLAN_AMOUNTS[priceId];
+        const fullAmount = PLAN_AMOUNTS[normalizedPlanId];
         const chargeAmount = Math.round(fullAmount * 0.5); // 50%
 
         const paymentIntent = await stripe.paymentIntents.create({
@@ -102,8 +115,11 @@ Deno.serve(async (req) => {
           customer: customerId,
           automatic_payment_methods: { enabled: true },
           metadata: {
-            planName,
-            type: 'down_payment_50_percent'
+            planId: normalizedPlanId,
+            paymentMode: PAYMENT_MODES.ONETIME,
+            type: 'down_payment_50_percent',
+            email: userEmail,
+            name: userName
           }
         });
 

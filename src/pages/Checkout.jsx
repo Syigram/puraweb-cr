@@ -10,16 +10,17 @@ import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { PAYMENT_MODES, PLAN_IDS } from "@/components/paymentConstants";
 
 export default function Checkout() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { language } = useLanguage();
-  const planId = searchParams.get("plan") || "basic";
-  const initialPaymentMode = searchParams.get("mode") || "subscription";
-  
-  // State
-  const [paymentMode, setPaymentMode] = useState(initialPaymentMode); // subscription | onetime
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const { language } = useLanguage();
+    const planId = searchParams.get("plan") || PLAN_IDS.BASIC;
+    const initialPaymentMode = searchParams.get("mode") || PAYMENT_MODES.SUBSCRIPTION;
+
+    // State - usando constantes estandarizadas
+    const [paymentMode, setPaymentMode] = useState(initialPaymentMode);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -31,11 +32,11 @@ export default function Checkout() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  // Configuration for plans using plan IDs (language-agnostic)
+  // Configuration for plans using plan IDs estandarizados
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
   // Display prices: 60,000 / 100,000 / 150,000 CRC
   const plans = {
-    "basic": { 
+    [PLAN_IDS.BASIC]: { 
       fullPrice: 60000, 
       displayName: { es: "Plan Básico", en: "Basic Plan" },
       description: { 
@@ -45,11 +46,9 @@ export default function Checkout() {
       features: {
         es: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
         en: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"]
-      },
-      stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-      backendPlanName: "Básico"
+      }
     },
-    "professional": { 
+    [PLAN_IDS.PROFESSIONAL]: { 
       fullPrice: 100000, 
       displayName: { es: "Plan Profesional", en: "Professional Plan" },
       description: { 
@@ -59,11 +58,9 @@ export default function Checkout() {
       features: {
         es: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
         en: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"]
-      },
-      stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c",
-      backendPlanName: "Profesional"
+      }
     },
-    "business": { 
+    [PLAN_IDS.BUSINESS]: { 
       fullPrice: 150000, 
       displayName: { es: "Plan Empresa", en: "Business Plan" },
       description: { 
@@ -73,20 +70,18 @@ export default function Checkout() {
       features: {
         es: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
         en: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"]
-      },
-      stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N",
-      backendPlanName: "Empresa"
+      }
     },
   };
 
-  const selectedPlan = plans[planId] || plans["basic"];
+  const selectedPlan = plans[planId] || plans[PLAN_IDS.BASIC];
   const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const t = translations[language].checkout;
   
   // Calculate amounts
   const subscriptionAmount = selectedPlan.fullPrice;
   const oneTimeAmount = selectedPlan.fullPrice * 0.5;
-  const currentAmount = paymentMode === "subscription" ? subscriptionAmount : oneTimeAmount;
+  const currentAmount = paymentMode === PAYMENT_MODES.SUBSCRIPTION ? subscriptionAmount : oneTimeAmount;
 
   // Load User Info on mount
   useEffect(() => {
@@ -135,7 +130,7 @@ export default function Checkout() {
       try {
         const { data: intentData } = await base44.functions.invoke("stripe", {
           action: "createPaymentIntent",
-          planName: selectedPlan.backendPlanName,
+          planId, // Usando planId estandarizado
           paymentMode,
           email,
           name
@@ -303,18 +298,18 @@ export default function Checkout() {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-blue-900">{t.paymentMode}</span>
-                  <span className="text-sm font-bold text-blue-700">
-                    {paymentMode === 'subscription' ? t.subscriptionMode : t.onetimeMode}
-                  </span>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-medium text-blue-900">{t.paymentMode}</span>
+                    <span className="text-sm font-bold text-blue-700">
+                      {paymentMode === PAYMENT_MODES.SUBSCRIPTION ? t.subscriptionMode : t.onetimeMode}
+                    </span>
+                  </div>
+                  <p className="text-sm text-blue-700/80 leading-relaxed">
+                    {paymentMode === PAYMENT_MODES.SUBSCRIPTION 
+                      ? t.subscriptionDescription 
+                      : t.onetimeDescription}
+                  </p>
                 </div>
-                <p className="text-sm text-blue-700/80 leading-relaxed">
-                  {paymentMode === 'subscription' 
-                    ? t.subscriptionDescription 
-                    : t.onetimeDescription}
-                </p>
-              </div>
 
               <div className="space-y-3 pt-4 border-t">
                 <div className="flex justify-between text-sm">
@@ -352,17 +347,17 @@ export default function Checkout() {
           <Card className="shadow-xl">
             <CardContent className="p-6 sm:p-8">
               <Tabs value={paymentMode} onValueChange={(value) => {
-                setPaymentMode(value);
-                setLoading(true);
-                setElements(null);
-                // Delay clearing clientSecret to show loading animation first
-                setTimeout(() => setClientSecret(""), 100);
-              }} className="w-full mb-8">
-                <TabsList className="grid w-full grid-cols-2 h-12">
-                  <TabsTrigger value="subscription" className="text-sm">{t.subscriptionTab}</TabsTrigger>
-                  <TabsTrigger value="onetime" className="text-sm">{t.onetimeTab}</TabsTrigger>
-                </TabsList>
-              </Tabs>
+                    setPaymentMode(value);
+                    setLoading(true);
+                    setElements(null);
+                    // Delay clearing clientSecret to show loading animation first
+                    setTimeout(() => setClientSecret(""), 100);
+                  }} className="w-full mb-8">
+                    <TabsList className="grid w-full grid-cols-2 h-12">
+                      <TabsTrigger value={PAYMENT_MODES.SUBSCRIPTION} className="text-sm">{t.subscriptionTab}</TabsTrigger>
+                      <TabsTrigger value={PAYMENT_MODES.ONETIME} className="text-sm">{t.onetimeTab}</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
 
               <div className="space-y-4 mb-8">
                 <div className="grid gap-2">
