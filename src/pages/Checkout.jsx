@@ -143,12 +143,14 @@ export default function Checkout() {
     };
   }, [paymentMode, planId, email]); // Re-run when these change
 
-  // Track previous language to detect changes
+  // Track previous language to detect changes and control remounting
   const [prevLanguage, setPrevLanguage] = useState(language);
+  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
 
-  // Handle language change - reset payment element
+  // Handle language change - reset payment element with loading animation
   useEffect(() => {
     if (prevLanguage !== language && clientSecret && stripe) {
+      setIsChangingLanguage(true);
       setLoading(true);
       setElements(null);
       setPrevLanguage(language);
@@ -159,42 +161,50 @@ export default function Checkout() {
   useEffect(() => {
     if (!clientSecret || !stripe) return;
 
-    // Once we have the client secret and stripe, we can stop loading to render the container div
-    setLoading(false);
+    // If changing language, add a delay for the loading animation
+    const initialDelay = isChangingLanguage ? 800 : 0;
 
-    // Use a small timeout to allow the DOM to update and render the #payment-element div
-    const timer = setTimeout(() => {
-      const element = document.getElementById("payment-element");
-      if (!element) {
-        console.error("Payment element container not found");
-        return;
-      }
+    const mountTimer = setTimeout(() => {
+      // Once we have the client secret and stripe, we can stop loading to render the container div
+      setLoading(false);
+      setIsChangingLanguage(false);
 
-      const appearance = {
-        theme: 'stripe',
-        variables: {
-          colorPrimary: '#002B7F',
-          borderRadius: '8px',
-        },
-      };
-      const options = {
-        clientSecret,
-        appearance,
-        locale: language, // 'es' or 'en' based on user selection
-      };
+      // Use a small timeout to allow the DOM to update and render the #payment-element div
+      const elementTimer = setTimeout(() => {
+        const element = document.getElementById("payment-element");
+        if (!element) {
+          console.error("Payment element container not found");
+          return;
+        }
 
-      const newElements = stripe.elements(options);
-      const paymentElement = newElements.create("payment", {
-        layout: 'tabs'
-      });
-      paymentElement.mount("#payment-element");
-      setElements(newElements);
-    }, 100);
+        const appearance = {
+          theme: 'stripe',
+          variables: {
+            colorPrimary: '#002B7F',
+            borderRadius: '8px',
+          },
+        };
+        const options = {
+          clientSecret,
+          appearance,
+          locale: language, // 'es' or 'en' based on user selection
+        };
+
+        const newElements = stripe.elements(options);
+        const paymentElement = newElements.create("payment", {
+          layout: 'tabs'
+        });
+        paymentElement.mount("#payment-element");
+        setElements(newElements);
+      }, 100);
+
+      return () => clearTimeout(elementTimer);
+    }, initialDelay);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(mountTimer);
     };
-  }, [clientSecret, stripe, language]);
+  }, [clientSecret, stripe, language, isChangingLanguage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
