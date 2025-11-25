@@ -110,7 +110,7 @@ export default function Checkout() {
       try {
         const { data: intentData } = await base44.functions.invoke("stripe", {
           action: "createPaymentIntent",
-          planName,
+          planName: selectedPlan.backendPlanName,
           paymentMode,
           email,
           name
@@ -140,7 +140,7 @@ export default function Checkout() {
       isMounted = false;
       clearTimeout(timer);
     };
-  }, [paymentMode, planName, email]); // Re-run when these change
+  }, [paymentMode, planId, email]); // Re-run when these change
 
   // Mount Elements
   useEffect(() => {
@@ -228,7 +228,7 @@ export default function Checkout() {
             <CardHeader className="bg-gray-50/50 border-b pb-6">
               <div className="flex justify-between items-start">
                 <div>
-                   <CardTitle className="text-xl text-blue-900">{selectedPlan.displayName}</CardTitle>
+                   <CardTitle className="text-xl text-blue-900">{displayName}</CardTitle>
                    <CardDescription className="mt-1">Servicio de diseño web</CardDescription>
                 </div>
                 <div className="text-right">
@@ -345,7 +345,7 @@ export default function Checkout() {
                                             variant="outline"
                                             size="sm"
                                             onClick={() => {
-                                              const returnUrl = `${createPageUrl("Checkout")}?plan=${encodeURIComponent(planName)}&mode=${paymentMode}`;
+                                              const returnUrl = `${createPageUrl("Checkout")}?plan=${planId}&mode=${paymentMode}`;
                                               base44.auth.redirectToLogin(returnUrl);
                                             }}
                                             className="text-blue-900 border-blue-900 hover:bg-blue-50"
