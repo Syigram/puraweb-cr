@@ -28,15 +28,16 @@ export default function Checkout() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  // Configuration for plans (in CRC)
-  // Note: These are for display. Real validation happens on backend.
+  // Configuration for plans (in CRC - matching Stripe prices)
+  // Stripe stores amounts in smallest currency unit (centavos for CRC)
+  // Display prices: 60,000 / 100,000 / 150,000 CRC
   const plans = {
-    "Básico": { fullPrice: 60000, name: "Básico", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
-    "Profesional": { fullPrice: 100000, name: "Profesional", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
-    "Empresa": { fullPrice: 150000, name: "Empresa", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
-    "Basic": { fullPrice: 60000, name: "Basic", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
-    "Professional": { fullPrice: 100000, name: "Professional", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
-    "Business": { fullPrice: 150000, name: "Business", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
+    "Básico": { fullPrice: 60000, displayName: "Plan Básico", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
+    "Profesional": { fullPrice: 100000, displayName: "Plan Profesional", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
+    "Empresa": { fullPrice: 150000, displayName: "Plan Empresa", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
+    "Basic": { fullPrice: 60000, displayName: "Basic Plan", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
+    "Professional": { fullPrice: 100000, displayName: "Professional Plan", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
+    "Business": { fullPrice: 150000, displayName: "Business Plan", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
   };
 
   const selectedPlan = plans[planName] || plans["Básico"];
@@ -211,8 +212,8 @@ export default function Checkout() {
             <CardHeader className="bg-gray-50/50 border-b pb-6">
               <div className="flex justify-between items-start">
                 <div>
-                   <CardTitle className="text-xl text-blue-900">{selectedPlan.name}</CardTitle>
-                   <CardDescription className="mt-1">Plan {planName}</CardDescription>
+                   <CardTitle className="text-xl text-blue-900">{selectedPlan.displayName}</CardTitle>
+                   <CardDescription className="mt-1">Servicio de diseño web</CardDescription>
                 </div>
                 <div className="text-right">
                   <span className="block text-2xl font-bold text-gray-900">
