@@ -143,6 +143,18 @@ export default function Checkout() {
     };
   }, [paymentMode, planId, email]); // Re-run when these change
 
+  // Track previous language to detect changes
+  const [prevLanguage, setPrevLanguage] = useState(language);
+
+  // Handle language change - reset payment element
+  useEffect(() => {
+    if (prevLanguage !== language && clientSecret && stripe) {
+      setLoading(true);
+      setElements(null);
+      setPrevLanguage(language);
+    }
+  }, [language, prevLanguage, clientSecret, stripe]);
+
   // Mount Elements
   useEffect(() => {
     if (!clientSecret || !stripe) return;
