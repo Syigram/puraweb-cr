@@ -215,13 +215,13 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
-        
+
         {/* Left Column: Order Details */}
         <div className="space-y-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Finalizar Compra</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">{t.title}</h1>
             <p className="text-gray-600">
-              Completa tus datos para comenzar a transformar tu negocio con PuraWeb CR.
+              {t.subtitle}
             </p>
           </div>
 
@@ -230,43 +230,43 @@ export default function Checkout() {
               <div className="flex justify-between items-start">
                 <div>
                    <CardTitle className="text-xl text-blue-900">{displayName}</CardTitle>
-                   <CardDescription className="mt-1">Servicio de diseño web</CardDescription>
+                   <CardDescription className="mt-1">{t.serviceDescription}</CardDescription>
                 </div>
                 <div className="text-right">
                   <span className="block text-2xl font-bold text-gray-900">
                     ₡{selectedPlan.fullPrice.toLocaleString()}
                   </span>
-                  <span className="text-xs text-gray-500">precio total / mes</span>
+                  <span className="text-xs text-gray-500">{t.totalPriceLabel}</span>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
-              
+
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-blue-900">Modo de Pago</span>
+                  <span className="font-medium text-blue-900">{t.paymentMode}</span>
                   <span className="text-sm font-bold text-blue-700">
-                    {paymentMode === 'subscription' ? 'Suscripción Mensual' : 'Pago Inicial 50%'}
+                    {paymentMode === 'subscription' ? t.subscriptionMode : t.onetimeMode}
                   </span>
                 </div>
                 <p className="text-sm text-blue-700/80 leading-relaxed">
                   {paymentMode === 'subscription' 
-                    ? "Acceso completo inmediato. Facturación recurrente automática cada mes." 
-                    : "Pago del 50% para iniciar el desarrollo. El restante se abona contra entrega."}
+                    ? t.subscriptionDescription 
+                    : t.onetimeDescription}
                 </p>
               </div>
 
               <div className="space-y-3 pt-4 border-t">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-600">{t.subtotal}</span>
                   <span>₡{currentAmount.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Impuestos</span>
+                  <span className="text-gray-600">{t.taxes}</span>
                   <span>₡0</span>
                 </div>
                 <div className="flex justify-between items-center pt-3 border-t">
-                  <span className="font-bold text-lg">Total a Pagar Hoy</span>
+                  <span className="font-bold text-lg">{t.totalToday}</span>
                   <span className="font-bold text-3xl text-blue-900">
                     ₡{currentAmount.toLocaleString()}
                   </span>
@@ -276,11 +276,11 @@ export default function Checkout() {
               <div className="grid grid-cols-1 gap-3 pt-4">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                     <ShieldCheck className="w-5 h-5 text-green-600 shrink-0" />
-                    <span>Transacción encriptada de 256-bits</span>
+                    <span>{t.encryptedTransaction}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Lock className="w-5 h-5 text-blue-600 shrink-0" />
-                    <span>Datos seguros y confidenciales</span>
+                    <span>{t.secureData}</span>
                 </div>
               </div>
             </CardContent>
@@ -298,29 +298,29 @@ export default function Checkout() {
                 setElements(null);
               }} className="w-full mb-8">
                 <TabsList className="grid w-full grid-cols-2 h-12">
-                  <TabsTrigger value="subscription" className="text-sm">Suscripción</TabsTrigger>
-                  <TabsTrigger value="onetime" className="text-sm">Pago Único (50%)</TabsTrigger>
+                  <TabsTrigger value="subscription" className="text-sm">{t.subscriptionTab}</TabsTrigger>
+                  <TabsTrigger value="onetime" className="text-sm">{t.onetimeTab}</TabsTrigger>
                 </TabsList>
               </Tabs>
 
               <div className="space-y-4 mb-8">
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Correo Electrónico</Label>
+                  <Label htmlFor="email">{t.emailLabel}</Label>
                   <Input 
                     id="email" 
                     type="email" 
-                    placeholder="tu@email.com" 
+                    placeholder={t.emailPlaceholder} 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)}
                     className="h-11"
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="name">Nombre Completo</Label>
+                  <Label htmlFor="name">{t.nameLabel}</Label>
                   <Input 
                     id="name" 
                     type="text" 
-                    placeholder="Juan Pérez" 
+                    placeholder={t.namePlaceholder} 
                     value={name} 
                     onChange={(e) => setName(e.target.value)}
                     className="h-11"
@@ -336,30 +336,30 @@ export default function Checkout() {
               )}
 
               {loading ? (
-                                    <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
-                                      <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
-                                      <p className="font-medium">Preparando pasarela segura...</p>
-                                      {!email && (
-                                        <div className="text-center mt-3">
-                                          <p className="text-xs mb-3">Ingresa tu correo para continuar</p>
-                                          <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => {
-                                              const returnUrl = `${createPageUrl("Checkout")}?plan=${planId}&mode=${paymentMode}`;
-                                              base44.auth.redirectToLogin(returnUrl);
-                                            }}
-                                            className="text-blue-900 border-blue-900 hover:bg-blue-50"
-                                          >
-                                            Iniciar Sesión
-                                          </Button>
+                                        <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
+                                          <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
+                                          <p className="font-medium">{t.preparingGateway}</p>
+                                          {!email && (
+                                            <div className="text-center mt-3">
+                                              <p className="text-xs mb-3">{t.enterEmailToContinue}</p>
+                                              <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => {
+                                                  const returnUrl = `${createPageUrl("Checkout")}?plan=${planId}&mode=${paymentMode}`;
+                                                  base44.auth.redirectToLogin(returnUrl);
+                                                }}
+                                                className="text-blue-900 border-blue-900 hover:bg-blue-50"
+                                              >
+                                                {t.loginButton}
+                                              </Button>
+                                            </div>
+                                          )}
                                         </div>
-                                      )}
-                                    </div>
-                                  ) : (
+                                      ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div id="payment-element" className="min-h-[250px]" />
-                  
+
                   <Button 
                     type="submit" 
                     disabled={!stripe || !elements || processing}
@@ -368,10 +368,10 @@ export default function Checkout() {
                     {processing ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                        Procesando Pago...
+                        {t.processing}
                       </>
                     ) : (
-                      `Pagar ₡${currentAmount.toLocaleString()}`
+                      `${t.payButton} ₡${currentAmount.toLocaleString()}`
                     )}
                   </Button>
                 </form>
