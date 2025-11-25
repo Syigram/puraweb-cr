@@ -30,11 +30,11 @@ export default function Checkout() {
   // Configuration for plans (in CRC)
   // Note: These are for display. Real validation happens on backend.
   const plans = {
-    "Básico": { fullPrice: 60000, name: "Web Design 1" },
-    "Estándar": { fullPrice: 100000, name: "Web Design 2" },
-    "Premium": { fullPrice: 150000, name: "Web Design 3" },
-    "Basic": { fullPrice: 60000, name: "Web Design 1" },
-    "Standard": { fullPrice: 100000, name: "Web Design 2" },
+    "Básico": { fullPrice: 60000, name: "Web Design 1", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
+    "Estándar": { fullPrice: 100000, name: "Web Design 2", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
+    "Premium": { fullPrice: 150000, name: "Web Design 3", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
+    "Basic": { fullPrice: 60000, name: "Web Design 1", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
+    "Standard": { fullPrice: 100000, name: "Web Design 2", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
   };
 
   const selectedPlan = plans[planName] || plans["Básico"];

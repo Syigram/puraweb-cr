@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,10 +13,16 @@ export default function Pricing({ onGetStarted }) {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = translations[language].pricing;
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   const handlePlanSelect = (planName) => {
     navigate(createPageUrl(`Checkout?plan=${encodeURIComponent(planName)}`));
   };
+
+  const handleCardClick = (planName) => {
+    setSelectedPlan(planName);
+  };
+
   const plans = t.plans || [];
 
   return (
@@ -47,7 +53,7 @@ export default function Pricing({ onGetStarted }) {
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
-              key={plan.id}
+              key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -55,10 +61,13 @@ export default function Pricing({ onGetStarted }) {
               className={plan.recommended ? "md:-mt-4" : ""}
             >
               <Card
-                className={`relative h-full transition-all duration-300 ${
-                  plan.recommended
+                onClick={() => handleCardClick(plan.name)}
+                className={`relative h-full transition-all duration-300 cursor-pointer ${
+                  selectedPlan === plan.name
+                    ? "border-2 border-blue-600 shadow-2xl scale-105 ring-4 ring-blue-100"
+                    : plan.recommended
                     ? "border-2 border-red-600 shadow-2xl scale-105"
-                    : "border-gray-200 hover:shadow-xl hover:scale-105"
+                    : "border-gray-200 hover:shadow-xl hover:scale-102"
                 }`}
               >
                 {plan.recommended && (
