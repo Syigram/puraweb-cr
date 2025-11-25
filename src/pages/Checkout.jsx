@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
-import { createPageUrl } from "@/utils";
 
 export default function Checkout() {
   const navigate = useNavigate();
