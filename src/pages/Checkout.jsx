@@ -168,6 +168,7 @@ export default function Checkout() {
       const options = {
         clientSecret,
         appearance,
+        locale: language, // 'es' or 'en' based on user selection
       };
 
       const newElements = stripe.elements(options);
