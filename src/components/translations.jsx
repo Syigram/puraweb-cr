@@ -55,6 +55,7 @@ export const translations = {
       additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio",
       plans: [
         {
+          id: "basic",
           name: "Básico",
           price: "60,000",
           description: "Perfecto para pequeños negocios que inician su presencia digital",
@@ -63,6 +64,7 @@ export const translations = {
           cta_text: "Elegir Básico"
         },
         {
+          id: "professional",
           name: "Profesional",
           price: "100,000",
           description: "Ideal para empresas en crecimiento que necesitan más potencia",
@@ -71,6 +73,7 @@ export const translations = {
           cta_text: "Elegir Profesional"
         },
         {
+          id: "business",
           name: "Empresa",
           price: "150,000",
           description: "Solución completa para negocios establecidos y tiendas online",
@@ -210,6 +213,7 @@ export const translations = {
       additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance",
       plans: [
         {
+          id: "basic",
           name: "Basic",
           price: "60,000",
           description: "Perfect for small businesses starting their digital journey",
@@ -218,6 +222,7 @@ export const translations = {
           cta_text: "Choose Basic"
         },
         {
+          id: "professional",
           name: "Professional",
           price: "100,000",
           description: "Ideal for growing companies needing more power and flexibility",
@@ -226,6 +231,7 @@ export const translations = {
           cta_text: "Choose Professional"
         },
         {
+          id: "business",
           name: "Business",
           price: "150,000",
           description: "Complete solution for established businesses and online stores",
