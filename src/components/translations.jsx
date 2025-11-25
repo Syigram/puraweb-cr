@@ -160,6 +160,7 @@ export const translations = {
         title: "Finalizar Compra",
         subtitle: "Completa tus datos para comenzar a transformar tu negocio con PuraWeb CR.",
         serviceDescription: "Servicio de diseño web",
+        includedFeatures: "Características incluidas:",
         totalPriceLabel: "precio total / mes",
         paymentMode: "Modo de Pago",
         subscriptionMode: "Suscripción Mensual",
