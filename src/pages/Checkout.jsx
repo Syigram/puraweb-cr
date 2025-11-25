@@ -8,14 +8,16 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
+import { createPageUrl } from "@/utils";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const planName = searchParams.get("plan") || "Básico";
+  const initialPaymentMode = searchParams.get("mode") || "subscription";
   
   // State
-  const [paymentMode, setPaymentMode] = useState("subscription"); // subscription | onetime
+  const [paymentMode, setPaymentMode] = useState(initialPaymentMode); // subscription | onetime
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -312,12 +314,27 @@ export default function Checkout() {
               )}
 
               {loading ? (
-                <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
-                  <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
-                  <p className="font-medium">Preparando pasarela segura...</p>
-                  {!email && <p className="text-xs mt-2">Ingresa tu correo para continuar</p>}
-                </div>
-              ) : (
+                                    <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
+                                      <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
+                                      <p className="font-medium">Preparando pasarela segura...</p>
+                                      {!email && (
+                                        <div className="text-center mt-3">
+                                          <p className="text-xs mb-3">Ingresa tu correo para continuar</p>
+                                          <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => {
+                                              const returnUrl = `${createPageUrl("Checkout")}?plan=${encodeURIComponent(planName)}&mode=${paymentMode}`;
+                                              base44.auth.redirectToLogin(returnUrl);
+                                            }}
+                                            className="text-blue-900 border-blue-900 hover:bg-blue-50"
+                                          >
+                                            Iniciar Sesión
+                                          </Button>
+                                        </div>
+                                      )}
+                                    </div>
+                                  ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div id="payment-element" className="min-h-[250px]" />
                   
