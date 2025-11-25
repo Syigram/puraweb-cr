@@ -65,7 +65,7 @@ export default function Pricing({ onGetStarted }) {
                 className={`relative h-full transition-all duration-300 cursor-pointer ${
                   selectedPlan === plan.name
                     ? "border-2 border-blue-600 shadow-2xl scale-105 ring-4 ring-blue-100"
-                    : plan.recommended
+                    : selectedPlan === null && plan.recommended
                     ? "border-2 border-red-600 shadow-2xl scale-105"
                     : "border-gray-200 hover:shadow-xl hover:scale-102"
                 }`}
