@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'createPaymentIntent') {
-      const { planId, paymentMode, email, name, serviceName } = body;
+      const { planId, paymentMode, email, name } = body;
       
       // Usar planId estandarizado, con fallback a basic
       const normalizedPlanId = planId || PLAN_IDS.BASIC;
@@ -95,10 +95,7 @@ Deno.serve(async (req) => {
           expand: ['latest_invoice.payment_intent'],
           metadata: {
             planId: normalizedPlanId,
-            paymentMode: PAYMENT_MODES.SUBSCRIPTION,
-            serviceName: serviceName || '',
-            email: userEmail,
-            name: userName
+            paymentMode: PAYMENT_MODES.SUBSCRIPTION
           }
         });
 
@@ -121,7 +118,6 @@ Deno.serve(async (req) => {
             planId: normalizedPlanId,
             paymentMode: PAYMENT_MODES.ONETIME,
             type: 'down_payment_50_percent',
-            serviceName: serviceName || '',
             email: userEmail,
             name: userName
           }
@@ -149,76 +145,6 @@ Deno.serve(async (req) => {
         amount: paymentIntent.amount,
         currency: paymentIntent.currency,
         metadata: paymentIntent.metadata
-      });
-    }
-
-    // Cancelar suscripción
-    if (action === 'cancelSubscription') {
-      const { subscriptionId } = body;
-      
-      if (!subscriptionId) {
-        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
-      }
-
-      // Verify user is authenticated
-      const user = await base44.auth.me();
-      if (!user) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
-      }
-
-      // Cancel the subscription at period end (user keeps access until end of billing period)
-      const subscription = await stripe.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: true
-      });
-
-      return Response.json({
-        status: subscription.status,
-        cancel_at_period_end: subscription.cancel_at_period_end,
-        current_period_end: subscription.current_period_end
-      });
-    }
-
-    // Reactivar suscripción (si fue cancelada pero aún no terminó el período)
-    if (action === 'reactivateSubscription') {
-      const { subscriptionId } = body;
-      
-      if (!subscriptionId) {
-        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
-      }
-
-      const user = await base44.auth.me();
-      if (!user) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
-      }
-
-      const subscription = await stripe.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: false
-      });
-
-      return Response.json({
-        status: subscription.status,
-        cancel_at_period_end: subscription.cancel_at_period_end
-      });
-    }
-
-    // Obtener detalles de suscripción
-    if (action === 'getSubscription') {
-      const { subscriptionId } = body;
-      
-      if (!subscriptionId) {
-        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
-      }
-
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-
-      return Response.json({
-        id: subscription.id,
-        status: subscription.status,
-        cancel_at_period_end: subscription.cancel_at_period_end,
-        current_period_start: subscription.current_period_start,
-        current_period_end: subscription.current_period_end,
-        canceled_at: subscription.canceled_at,
-        metadata: subscription.metadata
       });
     }
 

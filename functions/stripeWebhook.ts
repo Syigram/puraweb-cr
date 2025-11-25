@@ -109,7 +109,6 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   
   // Determine plan from metadata
   const planId = metadata?.planId || 'basic';
-  const serviceName = metadata?.serviceName || '';
   
   // Check if payment record exists
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -119,13 +118,11 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   if (existingPayments.length > 0) {
     // Update existing record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: PAYMENT_STATUS.SUCCEEDED,
-      service_name: serviceName || existingPayments[0].service_name
+      status: PAYMENT_STATUS.SUCCEEDED
     });
   } else {
     // Create new payment record
     await base44.asServiceRole.entities.Payment.create({
-      service_name: serviceName,
       customer_email: customerData?.email || metadata?.email || 'unknown',
       customer_name: customerData?.name || metadata?.name || 'Unknown',
       plan_id: planId,
@@ -167,7 +164,6 @@ async function handleInvoicePaid(base44, invoice) {
   const subscriptionData = await stripe.subscriptions.retrieve(subscription);
   const priceId = subscriptionData.items.data[0]?.price?.id;
   const planId = PRICE_TO_PLAN[priceId] || 'basic';
-  const serviceName = subscriptionData.metadata?.serviceName || '';
 
   // Check if payment record exists for this subscription
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -178,13 +174,11 @@ async function handleInvoicePaid(base44, invoice) {
     // Update existing subscription payment record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
       status: PAYMENT_STATUS.SUCCEEDED,
-      amount: amount_paid,
-      service_name: serviceName || existingPayments[0].service_name
+      amount: amount_paid
     });
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
-      service_name: serviceName,
       customer_email: customerData?.email || 'unknown',
       customer_name: customerData?.name || 'Unknown',
       plan_id: planId,
