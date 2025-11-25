@@ -231,7 +231,7 @@ export const translations = {
           description: "Complete solution for established businesses and online stores",
           features: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
           recommended: false,
-          cta_text: "Select Plan"
+          cta_text: "Choose Business"
         }
       ]
     },
