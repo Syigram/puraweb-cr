@@ -31,6 +31,7 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [serviceName, setServiceName] = useState("");
 
   // Configuration for plans using plan IDs estandarizados
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
@@ -130,10 +131,11 @@ export default function Checkout() {
       try {
         const { data: intentData } = await base44.functions.invoke("stripe", {
           action: "createPaymentIntent",
-          planId, // Usando planId estandarizado
+          planId,
           paymentMode,
           email,
-          name
+          name,
+          serviceName
         });
 
         if (intentData.error) throw new Error(intentData.error);
@@ -381,6 +383,18 @@ export default function Checkout() {
                     onChange={(e) => setName(e.target.value)}
                     className="h-11"
                   />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="serviceName">{t.serviceNameLabel}</Label>
+                  <Input 
+                    id="serviceName" 
+                    type="text" 
+                    placeholder={t.serviceNamePlaceholder} 
+                    value={serviceName} 
+                    onChange={(e) => setServiceName(e.target.value)}
+                    className="h-11"
+                  />
+                  <p className="text-xs text-gray-500">{t.serviceNameHint}</p>
                 </div>
               </div>
 
