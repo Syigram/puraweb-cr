@@ -12,7 +12,9 @@ import { base44 } from "@/api/base44Client";
 export default function Checkout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const planName = searchParams.get("plan") || "Básico";
+  const rawPlanName = searchParams.get("plan") || "Básico";
+  // Decode URL-encoded plan name (e.g., "B%C3%A1sico" -> "Básico")
+  const planName = decodeURIComponent(rawPlanName);
   const initialPaymentMode = searchParams.get("mode") || "subscription";
   
   // State
