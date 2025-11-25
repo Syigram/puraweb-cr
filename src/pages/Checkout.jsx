@@ -12,9 +12,7 @@ import { base44 } from "@/api/base44Client";
 export default function Checkout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const rawPlanName = searchParams.get("plan") || "Básico";
-  // Decode URL-encoded plan name (e.g., "B%C3%A1sico" -> "Básico")
-  const planName = decodeURIComponent(rawPlanName);
+  const planId = searchParams.get("plan") || "basic";
   const initialPaymentMode = searchParams.get("mode") || "subscription";
   
   // State
@@ -30,19 +28,35 @@ export default function Checkout() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  // Configuration for plans (in CRC - matching Stripe prices)
+  // Configuration for plans using plan IDs (language-agnostic)
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
   // Display prices: 60,000 / 100,000 / 150,000 CRC
   const plans = {
-    "Básico": { fullPrice: 60000, displayName: "Plan Básico", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
-    "Profesional": { fullPrice: 100000, displayName: "Plan Profesional", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
-    "Empresa": { fullPrice: 150000, displayName: "Plan Empresa", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
-    "Basic": { fullPrice: 60000, displayName: "Basic Plan", stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G" },
-    "Professional": { fullPrice: 100000, displayName: "Professional Plan", stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c" },
-    "Business": { fullPrice: 150000, displayName: "Business Plan", stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N" },
+    "basic": { 
+      fullPrice: 60000, 
+      displayName: { es: "Plan Básico", en: "Basic Plan" },
+      stripePriceId: "price_1SUE0bFA0Fkjjug3eDCGxI4G",
+      backendPlanName: "Básico"
+    },
+    "professional": { 
+      fullPrice: 100000, 
+      displayName: { es: "Plan Profesional", en: "Professional Plan" },
+      stripePriceId: "price_1SUE2DFA0Fkjjug3euWqaW5c",
+      backendPlanName: "Profesional"
+    },
+    "business": { 
+      fullPrice: 150000, 
+      displayName: { es: "Plan Empresa", en: "Business Plan" },
+      stripePriceId: "price_1SUE32FA0Fkjjug3khKfal6N",
+      backendPlanName: "Empresa"
+    },
   };
 
-  const selectedPlan = plans[planName] || plans["Básico"];
+  const selectedPlan = plans[planId] || plans["basic"];
+  
+  // Detect language from browser or default to Spanish
+  const browserLang = navigator.language?.startsWith('en') ? 'en' : 'es';
+  const displayName = selectedPlan.displayName[browserLang] || selectedPlan.displayName.es;
   
   // Calculate amounts
   const subscriptionAmount = selectedPlan.fullPrice;
