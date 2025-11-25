@@ -273,7 +273,12 @@ export default function Checkout() {
         <div className="space-y-6">
           <Card className="shadow-xl">
             <CardContent className="p-6 sm:p-8">
-              <Tabs value={paymentMode} onValueChange={setPaymentMode} className="w-full mb-8">
+              <Tabs value={paymentMode} onValueChange={(value) => {
+                setPaymentMode(value);
+                setLoading(true);
+                setClientSecret("");
+                setElements(null);
+              }} className="w-full mb-8">
                 <TabsList className="grid w-full grid-cols-2 h-12">
                   <TabsTrigger value="subscription" className="text-sm">Suscripción</TabsTrigger>
                   <TabsTrigger value="onetime" className="text-sm">Pago Único (50%)</TabsTrigger>
