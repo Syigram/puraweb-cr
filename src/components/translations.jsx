@@ -51,30 +51,30 @@ export const translations = {
       title: "Elige Tu Plan",
       subtitle: "Opciones de precios flexibles para adaptarse a las necesidades y presupuesto de su negocio",
       mostPopular: "Más Popular",
-      perMonth: "/mes",
+      perMonth: "₡/mes",
       additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio",
       plans: [
         {
           name: "Básico",
-          price: "499",
+          price: "60,000",
           description: "Perfecto para pequeños negocios que inician su presencia digital",
           features: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
           recommended: false,
           cta_text: "Comenzar Ahora"
         },
         {
-          name: "Estándar",
-          price: "899",
+          name: "Profesional",
+          price: "100,000",
           description: "Ideal para empresas en crecimiento que necesitan más potencia",
           features: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
           recommended: true,
-          cta_text: "Elegir Estándar"
+          cta_text: "Elegir Profesional"
         },
         {
-          name: "Premium",
-          price: "1499",
+          name: "Empresa",
+          price: "150,000",
           description: "Solución completa para negocios establecidos y tiendas online",
-          features: ["Todo lo del Estándar", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
+          features: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
           recommended: false,
           cta_text: "Contactar Ventas"
         }
@@ -206,30 +206,30 @@ export const translations = {
       title: "Choose Your Plan",
       subtitle: "Flexible pricing options to match your business needs and budget",
       mostPopular: "Most Popular",
-      perMonth: "/month",
+      perMonth: "₡/month",
       additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance",
       plans: [
         {
           name: "Basic",
-          price: "499",
+          price: "60,000",
           description: "Perfect for small businesses starting their digital journey",
           features: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"],
           recommended: false,
           cta_text: "Get Started Now"
         },
         {
-          name: "Standard",
-          price: "899",
+          name: "Professional",
+          price: "100,000",
           description: "Ideal for growing companies needing more power and flexibility",
           features: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"],
           recommended: true,
-          cta_text: "Choose Standard"
+          cta_text: "Choose Professional"
         },
         {
-          name: "Premium",
-          price: "1499",
+          name: "Business",
+          price: "150,000",
           description: "Complete solution for established businesses and online stores",
-          features: ["Everything in Standard", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
+          features: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
           recommended: false,
           cta_text: "Contact Sales"
         }
