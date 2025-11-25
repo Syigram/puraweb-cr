@@ -130,6 +130,24 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Verificar estado del pago
+    if (action === 'verifyPayment') {
+      const { paymentIntentId } = body;
+      
+      if (!paymentIntentId) {
+        return Response.json({ error: "Payment Intent ID is required" }, { status: 400 });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      
+      return Response.json({
+        status: paymentIntent.status,
+        amount: paymentIntent.amount,
+        currency: paymentIntent.currency,
+        metadata: paymentIntent.metadata
+      });
+    }
+
     return Response.json({ error: "Action not found" }, { status: 404 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
