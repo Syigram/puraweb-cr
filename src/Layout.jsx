@@ -70,12 +70,12 @@ function LayoutContent({ children, currentPageName }) {
               >
                 {t.nav.services}
               </button>
-              <button
-                onClick={() => scrollToSection("pricing")}
+              <Link
+                to={createPageUrl("Planes")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
                 {t.nav.pricing}
-              </button>
+              </Link>
               <button
                 onClick={() => scrollToSection("benefits")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -126,12 +126,13 @@ function LayoutContent({ children, currentPageName }) {
               >
                 {t.nav.services}
               </button>
-              <button
-                onClick={() => scrollToSection("pricing")}
+              <Link
+                to={createPageUrl("Planes")}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
                 {t.nav.pricing}
-              </button>
+              </Link>
               <button
                 onClick={() => scrollToSection("benefits")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
