@@ -89,10 +89,10 @@ export default function Pricing({ onGetStarted }) {
                     </p>
                   )}
                   <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-4xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                      {plan.price}
+                    <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                      ₡{plan.price}
                     </span>
-                    <span className="text-gray-600">{t.perMonth}</span>
+                    <span className="text-gray-600">/mes</span>
                   </div>
                 </CardHeader>
 
