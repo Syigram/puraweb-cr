@@ -6,14 +6,12 @@ const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
 // Map plans to Stripe Price IDs
 const PLAN_PRICES = {
   "Básico": "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-  "Estándar": "price_1SUE2DFA0Fkjjug3euWqaW5c", 
-  "Premium": "price_1SUE32FA0Fkjjug3khKfal6N",
-  // English/Fallback mappings
+  "Profesional": "price_1SUE2DFA0Fkjjug3euWqaW5c", 
+  "Empresa": "price_1SUE32FA0Fkjjug3khKfal6N",
+  // English mappings
   "Basic": "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-  "Standard": "price_1SUE2DFA0Fkjjug3euWqaW5c",
-  "Web Design 1": "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-  "Web Design 2": "price_1SUE2DFA0Fkjjug3euWqaW5c",
-  "Web Design 3": "price_1SUE32FA0Fkjjug3khKfal6N"
+  "Professional": "price_1SUE2DFA0Fkjjug3euWqaW5c",
+  "Business": "price_1SUE32FA0Fkjjug3khKfal6N"
 };
 
 const PLAN_AMOUNTS = {
