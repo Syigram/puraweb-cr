@@ -15,8 +15,8 @@ export default function Pricing({ onGetStarted }) {
   const t = translations[language].pricing;
   const [selectedPlan, setSelectedPlan] = useState(null);
 
-  const handlePlanSelect = (planName) => {
-    navigate(createPageUrl(`Checkout?plan=${encodeURIComponent(planName)}`));
+  const handlePlanSelect = (planId) => {
+    navigate(createPageUrl(`Checkout?plan=${planId}`));
   };
 
   const handleCardClick = (planName) => {
@@ -117,7 +117,10 @@ export default function Pricing({ onGetStarted }) {
                   </ul>
 
                   <Button
-                    onClick={() => handlePlanSelect(plan.name)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePlanSelect(plan.id);
+                    }}
                     className={`w-full text-lg py-6 ${
                       plan.recommended
                         ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
