@@ -199,15 +199,47 @@ async function handlePaymentIntentFailed(base44, paymentIntent) {
 }
 
 async function handleInvoicePaid(base44, invoice) {
-  const { id, subscription, customer, amount_paid, currency } = invoice;
+  const { id, subscription, customer, amount_paid, currency, payment_intent } = invoice;
   
-  if (!subscription) return; // Not a subscription invoice
+  console.log(`🔍 Processing invoice.paid: ${id}`);
+  console.log(`   subscription: ${subscription}`);
+  console.log(`   payment_intent: ${payment_intent}`);
+  
+  if (!subscription) {
+    console.log(`⏭️ Invoice ${id} has no subscription, skipping`);
+    return; // Not a subscription invoice
+  }
   
   const customerData = await stripe.customers.retrieve(customer);
   const subscriptionData = await stripe.subscriptions.retrieve(subscription);
   const priceId = subscriptionData.items.data[0]?.price?.id;
   const planId = subscriptionData.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
   const subscriptionName = subscriptionData.metadata?.subscriptionName || null;
+
+  // PRIMERO: Buscar si existe un registro incorrecto creado por payment_intent.succeeded
+  // usando el payment_intent_id de este invoice
+  if (payment_intent) {
+    const incorrectPayments = await base44.asServiceRole.entities.Payment.filter({
+      stripe_payment_intent_id: payment_intent
+    });
+    
+    if (incorrectPayments.length > 0) {
+      // Corregir el registro existente - convertirlo a suscripción
+      console.log(`🔧 Fixing incorrect payment record ${incorrectPayments[0].id} -> subscription`);
+      await base44.asServiceRole.entities.Payment.update(incorrectPayments[0].id, {
+        payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+        subscription_name: subscriptionName,
+        plan_id: planId,
+        status: PAYMENT_STATUS.SUCCEEDED,
+        amount: amount_paid,
+        stripe_subscription_id: subscription,
+        subscription_status: subscriptionData.status,
+        current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
+      });
+      console.log(`✅ Subscription invoice paid (fixed existing): ${id}`);
+      return;
+    }
+  }
 
   // Check if payment record exists for this subscription
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -233,7 +265,7 @@ async function handleInvoicePaid(base44, invoice) {
       amount: amount_paid,
       currency: currency,
       status: PAYMENT_STATUS.SUCCEEDED,
-      stripe_payment_intent_id: invoice.payment_intent,
+      stripe_payment_intent_id: payment_intent,
       stripe_subscription_id: subscription,
       stripe_customer_id: customer,
       user_id: customerData?.metadata?.userId || null,
