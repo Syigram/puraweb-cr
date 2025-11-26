@@ -79,6 +79,14 @@ export default function Checkout() {
   // Subscription Name State
   const defaultSubscriptionName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const [subscriptionName, setSubscriptionName] = useState(defaultSubscriptionName);
+  const [hasCustomName, setHasCustomName] = useState(false);
+
+  // Update subscription name when language changes (only if user hasn't customized it)
+  useEffect(() => {
+    if (!hasCustomName) {
+      setSubscriptionName(selectedPlan.displayName[language] || selectedPlan.displayName.es);
+    }
+  }, [language, selectedPlan, hasCustomName]);
 
   const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const t = translations[language].checkout;
@@ -406,7 +414,10 @@ export default function Checkout() {
                       type="text" 
                       placeholder={t.subscriptionNamePlaceholder} 
                       value={subscriptionName} 
-                      onChange={(e) => setSubscriptionName(e.target.value)}
+                      onChange={(e) => {
+                        setSubscriptionName(e.target.value);
+                        setHasCustomName(true);
+                      }}
                       className="h-11"
                     />
                     <p className="text-xs text-gray-500">{t.subscriptionNameHint}</p>

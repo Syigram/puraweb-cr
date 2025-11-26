@@ -169,20 +169,22 @@ export default function UserSubscriptions({ user }) {
   };
 
   const handleStartEdit = (subscription) => {
-    setEditingId(subscription.id);
+    // Use stripe_subscription_id as unique identifier for editing
+    setEditingId(subscription.stripe_subscription_id);
     setEditName(subscription.subscription_name || PLAN_LABELS[language][subscription.plan_id] || subscription.plan_id);
   };
 
-  const handleSaveName = async (subscriptionId) => {
+  const handleSaveName = async (subscription) => {
     setSavingName(true);
     try {
-      await base44.entities.Payment.update(subscriptionId, {
+      // Use stripe_subscription_id as unique identifier
+      await base44.entities.Payment.update(subscription.id, {
         subscription_name: editName
       });
       
       setSubscriptions(prev =>
         prev.map(sub =>
-          sub.id === subscriptionId
+          sub.stripe_subscription_id === subscription.stripe_subscription_id
             ? { ...sub, subscription_name: editName }
             : sub
         )
@@ -238,17 +240,17 @@ export default function UserSubscriptions({ user }) {
         <CardContent className="space-y-4">
           {subscriptions.map((subscription) => (
             <SubscriptionCard
-              key={subscription.id}
+              key={subscription.stripe_subscription_id || subscription.id}
               subscription={subscription}
               language={language}
               dateLocale={dateLocale}
               t={t}
-              isEditing={editingId === subscription.id}
+              isEditing={editingId === subscription.stripe_subscription_id}
               editName={editName}
               setEditName={setEditName}
               savingName={savingName}
               onStartEdit={() => handleStartEdit(subscription)}
-              onSaveName={() => handleSaveName(subscription.id)}
+              onSaveName={() => handleSaveName(subscription)}
               onCancelEdit={() => setEditingId(null)}
               onCancelSubscription={() => setCancelDialog({ open: true, subscription })}
             />
