@@ -502,7 +502,7 @@ function SubscriptionCard({
         {/* Actions */}
         {status !== "canceled" && (
           <div className="pt-4 border-t flex justify-end gap-2">
-            {isIncomplete ? (
+            {isIncomplete && (
               <Button
                 size="sm"
                 className="bg-blue-900 hover:bg-blue-800 text-white"
@@ -521,16 +521,15 @@ function SubscriptionCard({
                   </>
                 )}
               </Button>
-            ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-                onClick={onCancelSubscription}
-              >
-                {t.cancelSubscription}
-              </Button>
             )}
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+              onClick={onCancelSubscription}
+            >
+              {t.cancelSubscription}
+            </Button>
           </div>
         )}
       </div>
