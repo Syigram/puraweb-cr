@@ -70,7 +70,7 @@ const translations = {
       incomplete: "Incompleta",
       incomplete_expired: "Expirada"
     },
-    incompleteTooltip: "Esta suscripción no se completó porque el pago inicial falló o fue abandonado. Haz clic en 'Completar Pago' para activarla.",
+    incompleteTooltip: "Esta suscripción no se completó porque el pago inicial falló o fue abandonado. Haz clic en 'Completar Pago' para activarla. Las suscripciones incompletas se eliminan automáticamente después de 24 horas si no se completa el pago.",
     subscriptionName: "Nombre de la suscripción"
   },
   en: {
@@ -103,7 +103,7 @@ const translations = {
       incomplete: "Incomplete",
       incomplete_expired: "Expired"
     },
-    incompleteTooltip: "This subscription was not completed because the initial payment failed or was abandoned. Click 'Complete Payment' to activate it.",
+    incompleteTooltip: "This subscription was not completed because the initial payment failed or was abandoned. Click 'Complete Payment' to activate it. Incomplete subscriptions are automatically deleted after 24 hours if payment is not completed.",
     subscriptionName: "Subscription name"
   }
 };
