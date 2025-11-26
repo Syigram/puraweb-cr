@@ -303,16 +303,34 @@ Deno.serve(async (req) => {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
       }
 
-      // Cancelar al final del período actual
-      const subscription = await stripe.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: true
-      });
+      // Obtener la suscripción para verificar el estado
+      const currentSubscription = await stripe.subscriptions.retrieve(subscriptionId);
+      
+      // Verificar que la suscripción pertenece al usuario
+      const customer = await stripe.customers.retrieve(currentSubscription.customer);
+      if (customer.email !== user.email) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      let subscription;
+      
+      // Si la suscripción está incompleta, cancelar inmediatamente
+      if (currentSubscription.status === 'incomplete') {
+        subscription = await stripe.subscriptions.cancel(subscriptionId);
+      } else {
+        // Si está activa, cancelar al final del período actual
+        subscription = await stripe.subscriptions.update(subscriptionId, {
+          cancel_at_period_end: true
+        });
+      }
       
       return Response.json({
         success: true,
         status: subscription.status,
         cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
+        currentPeriodEnd: subscription.current_period_end 
+          ? new Date(subscription.current_period_end * 1000).toISOString() 
+          : null
       });
     }
 

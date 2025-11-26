@@ -54,7 +54,9 @@ const translations = {
     saveName: "Guardar",
     cancelEdit: "Cancelar",
     confirmCancel: "Confirmar Cancelación",
-    confirmCancelDesc: "¿Estás seguro de que deseas cancelar esta suscripción? Seguirás teniendo acceso hasta el final del período actual.",
+    confirmCancelDesc: "¿Estás seguro de que deseas cancelar esta suscripción?",
+    confirmCancelDescActive: "Seguirás teniendo acceso hasta el final del período actual.",
+    confirmCancelDescIncomplete: "Esta suscripción se cancelará inmediatamente.",
     keepSubscription: "Mantener Suscripción",
     yesCancel: "Sí, Cancelar",
     canceling: "Cancelando...",
@@ -85,7 +87,9 @@ const translations = {
     saveName: "Save",
     cancelEdit: "Cancel",
     confirmCancel: "Confirm Cancellation",
-    confirmCancelDesc: "Are you sure you want to cancel this subscription? You will continue to have access until the end of the current period.",
+    confirmCancelDesc: "Are you sure you want to cancel this subscription?",
+    confirmCancelDescActive: "You will continue to have access until the end of the current period.",
+    confirmCancelDescIncomplete: "This subscription will be canceled immediately.",
     keepSubscription: "Keep Subscription",
     yesCancel: "Yes, Cancel",
     canceling: "Canceling...",
@@ -338,7 +342,12 @@ export default function UserSubscriptions({ user }) {
               <AlertTriangle className="w-5 h-5" />
               {t.confirmCancel}
             </DialogTitle>
-            <DialogDescription>{t.confirmCancelDesc}</DialogDescription>
+            <DialogDescription>
+              {t.confirmCancelDesc}{" "}
+              {cancelDialog.subscription?.subscription_status === 'incomplete' 
+                ? t.confirmCancelDescIncomplete 
+                : t.confirmCancelDescActive}
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button
