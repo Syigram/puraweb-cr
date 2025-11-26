@@ -14,6 +14,66 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
 
+function GetStartedButtonMobile({ scrollToSection, t }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await base44.auth.me();
+        setIsAuthenticated(true);
+      } catch (e) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  if (loading || isAuthenticated) return null;
+
+  return (
+    <Button
+      onClick={() => scrollToSection("contact")}
+      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+    >
+      {t.nav.getStarted}
+    </Button>
+  );
+}
+
+function GetStartedButton({ scrollToSection, t }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await base44.auth.me();
+        setIsAuthenticated(true);
+      } catch (e) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  if (loading || isAuthenticated) return null;
+
+  return (
+    <Button
+      onClick={() => scrollToSection("contact")}
+      className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
+    >
+      {t.nav.getStarted}
+    </Button>
+  );
+}
+
 function UserMenuButton() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -183,12 +243,7 @@ function LayoutContent({ children, currentPageName }) {
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
               <UserMenuButton />
-              <Button
-                onClick={() => scrollToSection("contact")}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
-              >
-                {t.nav.getStarted}
-              </Button>
+              <GetStartedButton scrollToSection={scrollToSection} t={t} />
               </div>
 
             {/* Mobile Menu Button */}
@@ -250,12 +305,7 @@ function LayoutContent({ children, currentPageName }) {
               <div className="flex justify-center">
                 <UserMenuButton />
               </div>
-              <Button
-                onClick={() => scrollToSection("contact")}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
-              >
-                {t.nav.getStarted}
-              </Button>
+              <GetStartedButtonMobile scrollToSection={scrollToSection} t={t} />
               </div>
               )}
               </div>
