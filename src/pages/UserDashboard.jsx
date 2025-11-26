@@ -46,8 +46,8 @@ export default function UserDashboard() {
 
         // Fetch User Data
         const [subs, pays] = await Promise.all([
-            base44.entities.Subscription.filter({ user_id: currentUser.id }),
-            base44.entities.Payment.filter({ user_id: currentUser.id }, "-created_date")
+            base44.entities.Subscription.list({ user_id: currentUser.id }),
+            base44.entities.Payment.list({ user_id: currentUser.id }, "-created_date")
         ]);
 
         setSubscriptions(subs);
