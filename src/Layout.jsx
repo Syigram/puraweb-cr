@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { Menu, X, Code2, Globe, User, LogOut, LayoutDashboard, Shield, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -167,6 +167,13 @@ function LayoutContent({ children, currentPageName }) {
               >
                 {t.nav.contact}
               </button>
+              <Link
+                to={createPageUrl("Support")}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium flex items-center gap-1"
+              >
+                <HelpCircle className="w-4 h-4" />
+                {language === 'es' ? 'Soporte' : 'Support'}
+              </Link>
               <button
                 onClick={toggleLanguage}
                 className="flex items-center gap-2 text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -225,6 +232,14 @@ function LayoutContent({ children, currentPageName }) {
               >
                 {t.nav.contact}
               </button>
+              <Link
+                to={createPageUrl("Support")}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+              >
+                <HelpCircle className="w-4 h-4" />
+                {language === 'es' ? 'Soporte' : 'Support'}
+              </Link>
               <button
                 onClick={toggleLanguage}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
