@@ -4,6 +4,7 @@ import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
+import Support from './pages/Support';
 import __Layout from './Layout.jsx';
 
 
@@ -14,6 +15,7 @@ export const PAGES = {
     "Planes": Planes,
     "AdminDashboard": AdminDashboard,
     "UserDashboard": UserDashboard,
+    "Support": Support,
 }
 
 export const pagesConfig = {
