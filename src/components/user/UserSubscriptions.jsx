@@ -287,18 +287,24 @@ export default function UserSubscriptions({ user }) {
 
   if (subscriptions.length === 0) {
     return (
-      <Card>
-        <CardContent className="py-12 text-center">
-          <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            {t.noSubscriptions}
-          </h3>
-          <p className="text-gray-500 mb-6">{t.noSubscriptionsDesc}</p>
-          <Link to={createPageUrl("Planes")}>
-            <Button className="bg-blue-900 hover:bg-blue-800">
-              {t.viewPlans}
-            </Button>
-          </Link>
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-white overflow-hidden">
+        <CardContent className="py-16 text-center relative">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100/50 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-red-100/30 rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="relative z-10">
+            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-900 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+              <Package className="w-10 h-10 text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              {t.noSubscriptions}
+            </h3>
+            <p className="text-gray-500 mb-8 max-w-sm mx-auto">{t.noSubscriptionsDesc}</p>
+            <Link to={createPageUrl("Planes")}>
+              <Button className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 shadow-lg hover:shadow-xl transition-all px-8 py-3 h-auto text-base">
+                {t.viewPlans}
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     );
@@ -306,7 +312,7 @@ export default function UserSubscriptions({ user }) {
 
   return (
     <>
-      <Card className="border-0 shadow-xl overflow-hidden">
+      <Card className="border-0 shadow-lg overflow-hidden">
         {/* Header con gradiente */}
         <CardHeader className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white pb-6 pt-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -326,7 +332,7 @@ export default function UserSubscriptions({ user }) {
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6 space-y-4 bg-white">
+        <CardContent className="p-4 sm:p-6 space-y-4 bg-gradient-to-b from-gray-50 to-white">
           {subscriptions.map((subscription) => (
             <SubscriptionCard
               key={subscription.stripe_subscription_id || subscription.id}
@@ -416,7 +422,7 @@ function SubscriptionCard({
 
   return (
     <TooltipProvider>
-      <div className="bg-white border-2 border-gray-100 rounded-xl p-4 sm:p-6 space-y-4 shadow-md hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+      <div className="bg-white border border-gray-100 rounded-xl p-4 sm:p-6 space-y-4 shadow-sm hover:shadow-md transition-shadow duration-300">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div className="flex-1">
