@@ -306,27 +306,17 @@ export default function UserSubscriptions({ user }) {
 
   return (
     <>
-      <Card className="border-0 shadow-lg overflow-hidden">
-        {/* Header con fondo blanco y bordes elegantes */}
-        <CardHeader className="bg-white border-b border-gray-100 pb-6 pt-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl flex items-center justify-center shadow-md">
-                <CreditCard className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <CardTitle className="text-xl text-gray-900">{t.title}</CardTitle>
-                <p className="text-gray-500 text-sm mt-1">
-                  {language === 'es' ? 'Gestiona tus planes activos' : 'Manage your active plans'}
-                </p>
-              </div>
-            </div>
-            <Badge className="bg-blue-50 text-blue-900 border border-blue-200 hover:bg-blue-100 px-4 py-2 text-sm font-medium self-start sm:self-auto">
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <CreditCard className="w-5 h-5" />
+            {t.title}
+            <Badge variant="secondary" className="ml-2">
               {subscriptions.length} {t.activeSubscriptions}
             </Badge>
-          </div>
+          </CardTitle>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6 space-y-4 bg-gray-50/50">
+        <CardContent className="space-y-4">
           {subscriptions.map((subscription) => (
             <SubscriptionCard
               key={subscription.stripe_subscription_id || subscription.id}
