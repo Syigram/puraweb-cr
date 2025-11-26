@@ -383,18 +383,29 @@ export default function Checkout() {
         <div className="space-y-6">
           <Card className="shadow-xl">
             <CardContent className="p-6 sm:p-8">
-              <Tabs value={paymentMode} onValueChange={(value) => {
-                    setPaymentMode(value);
-                    setLoading(true);
-                    setElements(null);
-                    // Delay clearing clientSecret to show loading animation first
-                    setTimeout(() => setClientSecret(""), 100);
-                  }} className="w-full mb-8">
-                    <TabsList className="grid w-full grid-cols-2 h-12">
-                      <TabsTrigger value={PAYMENT_MODES.SUBSCRIPTION} className="text-sm">{t.subscriptionTab}</TabsTrigger>
-                      <TabsTrigger value={PAYMENT_MODES.ONETIME} className="text-sm">{t.onetimeTab}</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+              {!existingSubscriptionId && (
+                <Tabs value={paymentMode} onValueChange={(value) => {
+                      setPaymentMode(value);
+                      setLoading(true);
+                      setElements(null);
+                      setTimeout(() => setClientSecret(""), 100);
+                    }} className="w-full mb-8">
+                      <TabsList className="grid w-full grid-cols-2 h-12">
+                        <TabsTrigger value={PAYMENT_MODES.SUBSCRIPTION} className="text-sm">{t.subscriptionTab}</TabsTrigger>
+                        <TabsTrigger value={PAYMENT_MODES.ONETIME} className="text-sm">{t.onetimeTab}</TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+              )}
+              
+              {existingSubscriptionId && (
+                <div className="mb-6 p-4 bg-blue-50 text-blue-800 rounded-lg border border-blue-200">
+                  <p className="text-sm font-medium">
+                    {language === 'es' 
+                      ? 'Completando pago de suscripción pendiente' 
+                      : 'Completing pending subscription payment'}
+                  </p>
+                </div>
+              )}
 
               <div className="space-y-4 mb-8">
                 <div className="grid gap-2">
