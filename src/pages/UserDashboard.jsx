@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Loader2 } from "lucide-react";
+import { User, Loader2, UserCircle, CreditCard, Receipt } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 import UserProfile from "@/components/user/UserProfile";
 import UserSubscriptions from "@/components/user/UserSubscriptions";
@@ -65,29 +65,45 @@ export default function UserDashboard() {
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-blue-900 rounded-lg flex items-center justify-center">
-              <User className="w-5 h-5 text-white" />
+        <div className="mb-8 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+              <User className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              {t.title}
-            </h1>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold">
+                {t.title}
+              </h1>
+              <p className="text-blue-200 mt-1">{t.subtitle}</p>
+            </div>
           </div>
-          <p className="text-gray-600">{t.subtitle}</p>
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="subscriptions" className="space-y-6">
-          <TabsList className="bg-white border shadow-sm w-full sm:w-auto grid grid-cols-3 sm:flex">
-            <TabsTrigger value="profile" className="text-sm">
-              {t.tabs.profile}
+          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-3 gap-1 h-auto">
+            <TabsTrigger 
+              value="profile" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <UserCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.tabs.profile}</span>
             </TabsTrigger>
-            <TabsTrigger value="subscriptions" className="text-sm">
-              {t.tabs.subscriptions}
+            <TabsTrigger 
+              value="subscriptions" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.tabs.subscriptions}</span>
             </TabsTrigger>
-            <TabsTrigger value="transactions" className="text-sm">
-              {t.tabs.transactions}
+            <TabsTrigger 
+              value="transactions" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <Receipt className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.tabs.transactions}</span>
             </TabsTrigger>
           </TabsList>
 
