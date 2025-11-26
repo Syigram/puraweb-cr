@@ -111,11 +111,26 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
     return;
   }
   
+  // Verificar si el metadata indica que es una suscripción
+  if (metadata?.paymentMode === PAYMENT_MODES.SUBSCRIPTION) {
+    console.log(`⏭️ Payment intent ${id} is a subscription payment, skipping (handled by invoice.paid)`);
+    return;
+  }
+  
   // Get customer details
   const customerData = customer ? await stripe.customers.retrieve(customer) : null;
   
   // Determine plan from metadata
   const planId = metadata?.planId || 'basic';
+  
+  // Verificar que realmente es un pago único usando el metadata
+  const paymentMode = metadata?.paymentMode || PAYMENT_MODES.ONETIME;
+  
+  // Si no es explícitamente onetime, saltar (prevenir duplicados de suscripciones)
+  if (paymentMode !== PAYMENT_MODES.ONETIME) {
+    console.log(`⏭️ Payment intent ${id} mode is ${paymentMode}, skipping`);
+    return;
+  }
   
   // Check if payment record exists
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
