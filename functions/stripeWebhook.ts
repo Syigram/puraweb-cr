@@ -102,7 +102,14 @@ Deno.serve(async (req) => {
 // ============ HANDLER FUNCTIONS ============
 
 async function handlePaymentIntentSucceeded(base44, paymentIntent) {
-  const { id, amount, currency, customer, metadata } = paymentIntent;
+  const { id, amount, currency, customer, metadata, invoice } = paymentIntent;
+  
+  // Si el PaymentIntent está asociado a una factura, es un pago de suscripción
+  // El evento invoice.paid se encargará de registrarlo correctamente
+  if (invoice) {
+    console.log(`⏭️ Payment intent ${id} is linked to invoice, skipping (handled by invoice.paid)`);
+    return;
+  }
   
   // Get customer details
   const customerData = customer ? await stripe.customers.retrieve(customer) : null;
@@ -121,7 +128,7 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
       status: PAYMENT_STATUS.SUCCEEDED
     });
   } else {
-    // Create new payment record
+    // Create new payment record for one-time payment only
     await base44.asServiceRole.entities.Payment.create({
       customer_email: customerData?.email || metadata?.email || 'unknown',
       customer_name: customerData?.name || metadata?.name || 'Unknown',
