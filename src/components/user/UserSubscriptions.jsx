@@ -140,12 +140,15 @@ export default function UserSubscriptions({ user }) {
       });
 
       // Combinar datos de Stripe con nombres guardados localmente
-      const subscriptionsWithNames = data.subscriptions.map(sub => ({
-        ...sub,
-        subscription_name: nameMap[sub.stripe_subscription_id] || sub.subscription_name,
-        // Agregar id local si existe para poder actualizar
-        id: payments.find(p => p.stripe_subscription_id === sub.stripe_subscription_id)?.id
-      }));
+      // Filtrar suscripciones canceladas
+      const subscriptionsWithNames = data.subscriptions
+        .filter(sub => sub.subscription_status !== 'canceled')
+        .map(sub => ({
+          ...sub,
+          subscription_name: nameMap[sub.stripe_subscription_id] || sub.subscription_name,
+          // Agregar id local si existe para poder actualizar
+          id: payments.find(p => p.stripe_subscription_id === sub.stripe_subscription_id)?.id
+        }));
       
       setSubscriptions(subscriptionsWithNames);
     } catch (error) {
@@ -158,34 +161,33 @@ export default function UserSubscriptions({ user }) {
   const handleCancelSubscription = async () => {
     if (!cancelDialog.subscription) return;
     
+    const subscriptionToCancel = cancelDialog.subscription;
     setCanceling(true);
+    
     try {
       const { data } = await base44.functions.invoke("stripe", {
         action: "cancelSubscription",
-        subscriptionId: cancelDialog.subscription.stripe_subscription_id
+        subscriptionId: subscriptionToCancel.stripe_subscription_id
       });
 
       if (data.error) throw new Error(data.error);
 
-      // Update local state
+      // Remove from local state (since we don't show canceled subscriptions)
       setSubscriptions(prev =>
-        prev.map(sub =>
-          sub.id === cancelDialog.subscription.id
-            ? { ...sub, subscription_status: "canceled" }
-            : sub
-        )
+        prev.filter(sub => sub.stripe_subscription_id !== subscriptionToCancel.stripe_subscription_id)
       );
 
-      // Update in database
-      await base44.entities.Payment.update(cancelDialog.subscription.id, {
-        subscription_status: "canceled"
-      });
-
-      setCancelDialog({ open: false, subscription: null });
+      // Update in database if exists
+      if (subscriptionToCancel.id) {
+        await base44.entities.Payment.update(subscriptionToCancel.id, {
+          subscription_status: "canceled"
+        });
+      }
     } catch (error) {
       console.error("Error canceling subscription:", error);
     } finally {
       setCanceling(false);
+      setCancelDialog({ open: false, subscription: null });
     }
   };
 
@@ -298,7 +300,11 @@ export default function UserSubscriptions({ user }) {
       </Card>
 
       {/* Cancel Confirmation Dialog */}
-      <Dialog open={cancelDialog.open} onOpenChange={(open) => setCancelDialog({ open, subscription: null })}>
+      <Dialog open={cancelDialog.open} onOpenChange={(open) => {
+        if (!open && !canceling) {
+          setCancelDialog({ open: false, subscription: null });
+        }
+      }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-red-600">
