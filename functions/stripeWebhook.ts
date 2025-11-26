@@ -226,27 +226,51 @@ async function handleSubscriptionCreated(base44, subscription) {
 }
 
 async function handleSubscriptionUpdated(base44, subscription) {
-  const { id, status, cancel_at_period_end, current_period_end } = subscription;
+  const { id, status, cancel_at_period_end, current_period_end, customer } = subscription;
   
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
     stripe_subscription_id: id
   });
 
-  if (existingPayments.length > 0) {
-    let paymentStatus = PAYMENT_STATUS.PENDING;
-    let subscriptionStatus = status;
-    
-    if (status === 'active') paymentStatus = PAYMENT_STATUS.SUCCEEDED;
-    if (status === 'canceled' || status === 'unpaid') paymentStatus = PAYMENT_STATUS.CANCELED;
-    if (status === 'past_due') paymentStatus = PAYMENT_STATUS.FAILED;
-    
-    // If subscription is set to cancel at period end, mark as canceled
-    if (cancel_at_period_end) {
-      subscriptionStatus = 'canceled';
-    }
+  // Obtener datos adicionales
+  const customerData = customer ? await stripe.customers.retrieve(customer) : null;
+  const priceId = subscription.items?.data[0]?.price?.id;
+  const planId = subscription.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+  const subscriptionName = subscription.metadata?.subscriptionName || null;
 
+  let paymentStatus = PAYMENT_STATUS.PENDING;
+  let subscriptionStatus = status;
+  
+  if (status === 'active') paymentStatus = PAYMENT_STATUS.SUCCEEDED;
+  if (status === 'canceled' || status === 'unpaid') paymentStatus = PAYMENT_STATUS.CANCELED;
+  if (status === 'past_due') paymentStatus = PAYMENT_STATUS.FAILED;
+  
+  // If subscription is set to cancel at period end, mark as canceled
+  if (cancel_at_period_end) {
+    subscriptionStatus = 'canceled';
+  }
+
+  if (existingPayments.length > 0) {
+    // Actualizar registro existente
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
       status: paymentStatus,
+      subscription_status: subscriptionStatus,
+      current_period_end: new Date(current_period_end * 1000).toISOString()
+    });
+  } else if (status === 'active') {
+    // Crear registro si la suscripción pasó de incomplete a active y no existe
+    await base44.asServiceRole.entities.Payment.create({
+      customer_email: customerData?.email || 'unknown',
+      customer_name: customerData?.name || 'Unknown',
+      subscription_name: subscriptionName,
+      plan_id: planId,
+      payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+      amount: subscription.items?.data[0]?.price?.unit_amount || 0,
+      currency: subscription.items?.data[0]?.price?.currency || 'crc',
+      status: paymentStatus,
+      stripe_subscription_id: id,
+      stripe_customer_id: customer,
+      user_id: customerData?.metadata?.userId || null,
       subscription_status: subscriptionStatus,
       current_period_end: new Date(current_period_end * 1000).toISOString()
     });
