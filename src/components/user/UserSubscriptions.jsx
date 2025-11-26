@@ -162,9 +162,9 @@ export default function UserSubscriptions({ user }) {
       });
 
       // Combinar datos de Stripe con nombres guardados localmente
-      // Filtrar suscripciones canceladas e incomplete_expired
+      // Filtrar suscripciones canceladas, incomplete e incomplete_expired
       const subscriptionsWithNames = data.subscriptions
-        .filter(sub => sub.subscription_status !== 'canceled' && sub.subscription_status !== 'incomplete_expired')
+        .filter(sub => sub.subscription_status !== 'canceled' && sub.subscription_status !== 'incomplete' && sub.subscription_status !== 'incomplete_expired')
         .map(sub => ({
           ...sub,
           subscription_name: nameMap[sub.stripe_subscription_id] || sub.subscription_name,
