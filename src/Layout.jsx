@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe } from "lucide-react";
+import { Menu, X, Code2, Globe, User as UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { base44 } from "@/api/base44Client";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+      }
+    };
+    checkUser();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,6 +110,14 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
+              {user && (
+                <Link to={createPageUrl("UserDashboard")}>
+                  <Button variant="outline" className="gap-2">
+                    <UserIcon className="w-4 h-4" />
+                    Mi Panel
+                  </Button>
+                </Link>
+              )}
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
@@ -152,6 +174,14 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 {language === 'es' ? 'English' : 'Español'}
               </button>
+              {user && (
+                <Link to={createPageUrl("UserDashboard")} onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full gap-2">
+                    <UserIcon className="w-4 h-4" />
+                    Mi Panel
+                  </Button>
+                </Link>
+              )}
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
