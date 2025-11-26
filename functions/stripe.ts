@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'createPaymentIntent') {
-      const { planId, paymentMode, email, name, projectName } = body;
+      const { planId, paymentMode, email, name } = body;
       
       // Usar planId estandarizado, con fallback a basic
       const normalizedPlanId = planId || PLAN_IDS.BASIC;
@@ -95,10 +95,7 @@ Deno.serve(async (req) => {
           expand: ['latest_invoice.payment_intent'],
           metadata: {
             planId: normalizedPlanId,
-            paymentMode: PAYMENT_MODES.SUBSCRIPTION,
-            projectName: projectName || '',
-            email: userEmail,
-            userName: userName
+            paymentMode: PAYMENT_MODES.SUBSCRIPTION
           }
         });
 
@@ -122,8 +119,7 @@ Deno.serve(async (req) => {
             paymentMode: PAYMENT_MODES.ONETIME,
             type: 'down_payment_50_percent',
             email: userEmail,
-            name: userName,
-            projectName: projectName || ''
+            name: userName
           }
         });
 
@@ -149,73 +145,6 @@ Deno.serve(async (req) => {
         amount: paymentIntent.amount,
         currency: paymentIntent.currency,
         metadata: paymentIntent.metadata
-      });
-    }
-
-    // Cancelar suscripción
-    if (action === 'cancelSubscription') {
-      const user = await base44.auth.me();
-      if (!user) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
-      }
-
-      const { subscriptionId } = body;
-      if (!subscriptionId) {
-        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
-      }
-
-      // Verificar que la suscripción pertenece al usuario
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-      const customer = await stripe.customers.retrieve(subscription.customer);
-      
-      if (customer.email !== user.email) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
-      }
-
-      // Cancelar al final del período
-      const canceledSubscription = await stripe.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: true
-      });
-
-      return Response.json({
-        status: 'canceled',
-        cancel_at: canceledSubscription.cancel_at,
-        current_period_end: canceledSubscription.current_period_end
-      });
-    }
-
-    // Obtener suscripciones del usuario
-    if (action === 'getUserSubscriptions') {
-      const user = await base44.auth.me();
-      if (!user) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
-      }
-
-      const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-      if (customers.data.length === 0) {
-        return Response.json({ subscriptions: [] });
-      }
-
-      const customerId = customers.data[0].id;
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customerId,
-        status: 'all',
-        expand: ['data.default_payment_method']
-      });
-
-      return Response.json({
-        subscriptions: subscriptions.data.map(sub => ({
-          id: sub.id,
-          status: sub.status,
-          planId: sub.metadata.planId,
-          projectName: sub.metadata.projectName,
-          currentPeriodEnd: sub.current_period_end,
-          cancelAtPeriodEnd: sub.cancel_at_period_end,
-          cancelAt: sub.cancel_at,
-          created: sub.created,
-          amount: sub.items.data[0]?.price?.unit_amount || 0,
-          currency: sub.items.data[0]?.price?.currency || 'crc'
-        }))
       });
     }
 

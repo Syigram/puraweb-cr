@@ -109,7 +109,6 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   
   // Determine plan from metadata
   const planId = metadata?.planId || 'basic';
-  const projectName = metadata?.projectName || '';
   
   // Check if payment record exists
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -119,13 +118,11 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   if (existingPayments.length > 0) {
     // Update existing record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: PAYMENT_STATUS.SUCCEEDED,
-      project_name: projectName || existingPayments[0].project_name
+      status: PAYMENT_STATUS.SUCCEEDED
     });
   } else {
     // Create new payment record
     await base44.asServiceRole.entities.Payment.create({
-      project_name: projectName,
       customer_email: customerData?.email || metadata?.email || 'unknown',
       customer_name: customerData?.name || metadata?.name || 'Unknown',
       plan_id: planId,
@@ -166,8 +163,7 @@ async function handleInvoicePaid(base44, invoice) {
   const customerData = await stripe.customers.retrieve(customer);
   const subscriptionData = await stripe.subscriptions.retrieve(subscription);
   const priceId = subscriptionData.items.data[0]?.price?.id;
-  const planId = subscriptionData.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
-  const projectName = subscriptionData.metadata?.projectName || '';
+  const planId = PRICE_TO_PLAN[priceId] || 'basic';
 
   // Check if payment record exists for this subscription
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -178,14 +174,11 @@ async function handleInvoicePaid(base44, invoice) {
     // Update existing subscription payment record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
       status: PAYMENT_STATUS.SUCCEEDED,
-      amount: amount_paid,
-      subscription_status: subscriptionData.status,
-      current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
+      amount: amount_paid
     });
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
-      project_name: projectName,
       customer_email: customerData?.email || 'unknown',
       customer_name: customerData?.name || 'Unknown',
       plan_id: planId,
@@ -193,8 +186,6 @@ async function handleInvoicePaid(base44, invoice) {
       amount: amount_paid,
       currency: currency,
       status: PAYMENT_STATUS.SUCCEEDED,
-      subscription_status: subscriptionData.status,
-      current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString(),
       stripe_payment_intent_id: invoice.payment_intent,
       stripe_subscription_id: subscription,
       stripe_customer_id: customer,
@@ -229,7 +220,7 @@ async function handleSubscriptionCreated(base44, subscription) {
 }
 
 async function handleSubscriptionUpdated(base44, subscription) {
-  const { id, status, cancel_at, current_period_end } = subscription;
+  const { id, status } = subscription;
   
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
     stripe_subscription_id: id
@@ -241,17 +232,9 @@ async function handleSubscriptionUpdated(base44, subscription) {
     if (status === 'canceled' || status === 'unpaid') paymentStatus = PAYMENT_STATUS.CANCELED;
     if (status === 'past_due') paymentStatus = PAYMENT_STATUS.FAILED;
 
-    const updateData = {
-      status: paymentStatus,
-      subscription_status: status,
-      current_period_end: new Date(current_period_end * 1000).toISOString()
-    };
-    
-    if (cancel_at) {
-      updateData.canceled_at = new Date(cancel_at * 1000).toISOString();
-    }
-
-    await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, updateData);
+    await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
+      status: paymentStatus
+    });
   }
 
   console.log(`🔄 Subscription updated: ${id} - Status: ${status}`);
@@ -266,9 +249,7 @@ async function handleSubscriptionCanceled(base44, subscription) {
 
   if (existingPayments.length > 0) {
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: PAYMENT_STATUS.CANCELED,
-      subscription_status: 'canceled',
-      canceled_at: new Date().toISOString()
+      status: PAYMENT_STATUS.CANCELED
     });
   }
 

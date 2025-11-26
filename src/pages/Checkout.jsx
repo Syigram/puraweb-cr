@@ -31,7 +31,6 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [projectName, setProjectName] = useState("");
 
   // Configuration for plans using plan IDs estandarizados
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
@@ -134,8 +133,7 @@ export default function Checkout() {
           planId, // Usando planId estandarizado
           paymentMode,
           email,
-          name,
-          projectName
+          name
         });
 
         if (intentData.error) throw new Error(intentData.error);
@@ -383,18 +381,6 @@ export default function Checkout() {
                     onChange={(e) => setName(e.target.value)}
                     className="h-11"
                   />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="projectName">{t.projectNameLabel || "Nombre del Proyecto"}</Label>
-                  <Input 
-                    id="projectName" 
-                    type="text" 
-                    placeholder={t.projectNamePlaceholder || "Ej: Mi Tienda Online, Web Restaurante..."} 
-                    value={projectName} 
-                    onChange={(e) => setProjectName(e.target.value)}
-                    className="h-11"
-                  />
-                  <p className="text-xs text-gray-500">{t.projectNameHint || "Un nombre para identificar este proyecto en tu panel"}</p>
                 </div>
               </div>
 

@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe, User, LogIn } from "lucide-react";
+import { Menu, X, Code2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
-import { base44 } from "@/api/base44Client";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
@@ -30,20 +20,6 @@ function LayoutContent({ children, currentPageName }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const currentUser = await base44.auth.me();
-        setUser(currentUser);
-      } catch (e) {
-        setUser(null);
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-    checkAuth();
-  }, [location.pathname]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -120,58 +96,6 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
-              
-              {/* User Menu */}
-              {!authLoading && (
-                user ? (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center text-white font-semibold text-sm hover:opacity-90 transition-opacity">
-                        {user.full_name?.charAt(0)?.toUpperCase() || user.email?.charAt(0)?.toUpperCase()}
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                      <div className="px-2 py-1.5">
-                        <p className="text-sm font-medium truncate">{user.full_name || user.email}</p>
-                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                      </div>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild>
-                        <Link to={createPageUrl("UserDashboard")} className="cursor-pointer">
-                          <User className="w-4 h-4 mr-2" />
-                          {language === 'es' ? 'Mi Panel' : 'My Dashboard'}
-                        </Link>
-                      </DropdownMenuItem>
-                      {user.role === "admin" && (
-                        <DropdownMenuItem asChild>
-                          <Link to={createPageUrl("AdminDashboard")} className="cursor-pointer">
-                            <User className="w-4 h-4 mr-2" />
-                            {language === 'es' ? 'Administración' : 'Admin Panel'}
-                          </Link>
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        onClick={() => base44.auth.logout("/")}
-                        className="text-red-600 cursor-pointer"
-                      >
-                        {language === 'es' ? 'Cerrar Sesión' : 'Log Out'}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                ) : (
-                  <Button
-                    onClick={() => base44.auth.redirectToLogin()}
-                    variant="outline"
-                    size="sm"
-                    className="border-blue-900 text-blue-900 hover:bg-blue-50"
-                  >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    {language === 'es' ? 'Ingresar' : 'Log In'}
-                  </Button>
-                )
-              )}
-              
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
@@ -228,48 +152,6 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 {language === 'es' ? 'English' : 'Español'}
               </button>
-              
-              {/* Mobile User Menu */}
-              {!authLoading && (
-                user ? (
-                  <>
-                    <Link
-                      to={createPageUrl("UserDashboard")}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                    >
-                      <User className="w-5 h-5" />
-                      {language === 'es' ? 'Mi Panel' : 'My Dashboard'}
-                    </Link>
-                    {user.role === "admin" && (
-                      <Link
-                        to={createPageUrl("AdminDashboard")}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                      >
-                        <User className="w-5 h-5" />
-                        {language === 'es' ? 'Administración' : 'Admin Panel'}
-                      </Link>
-                    )}
-                    <button
-                      onClick={() => base44.auth.logout("/")}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                    >
-                      {language === 'es' ? 'Cerrar Sesión' : 'Log Out'}
-                    </button>
-                  </>
-                ) : (
-                  <Button
-                    onClick={() => base44.auth.redirectToLogin()}
-                    variant="outline"
-                    className="w-full border-blue-900 text-blue-900"
-                  >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    {language === 'es' ? 'Ingresar' : 'Log In'}
-                  </Button>
-                )
-              )}
-              
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
