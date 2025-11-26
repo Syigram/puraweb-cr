@@ -306,17 +306,27 @@ export default function UserSubscriptions({ user }) {
 
   return (
     <>
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <CreditCard className="w-5 h-5" />
-            {t.title}
-            <Badge variant="secondary" className="ml-2">
+      <Card className="border-0 shadow-xl overflow-hidden">
+        {/* Header con gradiente */}
+        <CardHeader className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white pb-6 pt-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                <CreditCard className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl text-white">{t.title}</CardTitle>
+                <p className="text-blue-200 text-sm mt-1">
+                  {language === 'es' ? 'Gestiona tus planes activos' : 'Manage your active plans'}
+                </p>
+              </div>
+            </div>
+            <Badge className="bg-white/20 text-white border-white/30 hover:bg-white/30 px-4 py-2 text-sm self-start sm:self-auto">
               {subscriptions.length} {t.activeSubscriptions}
             </Badge>
-          </CardTitle>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="p-4 sm:p-6 space-y-4 bg-white">
           {subscriptions.map((subscription) => (
             <SubscriptionCard
               key={subscription.stripe_subscription_id || subscription.id}
@@ -406,7 +416,7 @@ function SubscriptionCard({
 
   return (
     <TooltipProvider>
-      <div className="border rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border-2 border-gray-100 rounded-xl p-4 sm:p-6 space-y-4 shadow-md hover:shadow-lg hover:border-blue-200 transition-all duration-300">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div className="flex-1">
@@ -478,34 +488,42 @@ function SubscriptionCard({
         </div>
 
         {/* Details */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-500">
-              {status === "canceled" ? t.canceledOn : t.renewsOn}:
-            </span>
-            <span className="font-medium">
-              {subscription.current_period_end
-                ? format(new Date(subscription.current_period_end), "d MMMM yyyy", { locale: dateLocale })
-                : "N/A"}
-            </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+              <Calendar className="w-4 h-4 text-blue-900" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">
+                {status === "canceled" ? t.canceledOn : t.renewsOn}
+              </p>
+              <p className="font-semibold text-gray-900">
+                {subscription.current_period_end
+                  ? format(new Date(subscription.current_period_end), "d MMMM yyyy", { locale: dateLocale })
+                  : "N/A"}
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <CreditCard className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-500">{t.monthlyPayment}:</span>
-            <span className="font-medium">
-              ₡{((subscription.amount || 0) / 100).toLocaleString()}
-            </span>
+          <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
+            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+              <CreditCard className="w-4 h-4 text-green-700" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">{t.monthlyPayment}</p>
+              <p className="font-semibold text-gray-900">
+                ₡{((subscription.amount || 0) / 100).toLocaleString()}
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Actions */}
         {status !== "canceled" && (
-          <div className="pt-4 border-t flex justify-end gap-2">
+          <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-end gap-2">
             {isIncomplete && (
               <Button
                 size="sm"
-                className="bg-blue-900 hover:bg-blue-800 text-white"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white shadow-md hover:shadow-lg transition-all"
                 onClick={onActivateSubscription}
                 disabled={activating}
               >
@@ -524,7 +542,7 @@ function SubscriptionCard({
             )}
             <Button
               size="sm"
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all"
               onClick={onCancelSubscription}
             >
               <XCircle className="w-4 h-4 mr-2" />
