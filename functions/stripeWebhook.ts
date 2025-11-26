@@ -280,7 +280,7 @@ async function handleSubscriptionUpdated(base44, subscription) {
 }
 
 async function handleSubscriptionCanceled(base44, subscription) {
-  const { id } = subscription;
+  const { id, status, canceled_at } = subscription;
   
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
     stripe_subscription_id: id
@@ -288,9 +288,35 @@ async function handleSubscriptionCanceled(base44, subscription) {
 
   if (existingPayments.length > 0) {
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: PAYMENT_STATUS.CANCELED
+      status: PAYMENT_STATUS.CANCELED,
+      subscription_status: 'canceled'
     });
+    console.log(`🚫 Subscription canceled and DB updated: ${id}`);
+  } else {
+    // Si no existe registro pero la suscripción fue cancelada, obtener datos del cliente
+    const customerData = subscription.customer 
+      ? await stripe.customers.retrieve(subscription.customer) 
+      : null;
+    
+    if (customerData?.email) {
+      const priceId = subscription.items?.data[0]?.price?.id;
+      const planId = PRICE_TO_PLAN[priceId] || subscription.metadata?.planId || 'basic';
+      
+      await base44.asServiceRole.entities.Payment.create({
+        customer_email: customerData.email,
+        customer_name: customerData.name || 'Unknown',
+        plan_id: planId,
+        payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+        amount: subscription.items?.data[0]?.price?.unit_amount || 0,
+        currency: subscription.items?.data[0]?.price?.currency || 'crc',
+        status: PAYMENT_STATUS.CANCELED,
+        stripe_subscription_id: id,
+        stripe_customer_id: subscription.customer,
+        subscription_status: 'canceled'
+      });
+      console.log(`🚫 Subscription canceled and new record created: ${id}`);
+    }
   }
 
-  console.log(`🚫 Subscription canceled: ${id}`);
+  console.log(`🚫 Subscription deleted event processed: ${id}`);
 }
