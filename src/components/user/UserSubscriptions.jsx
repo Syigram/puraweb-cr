@@ -257,24 +257,11 @@ export default function UserSubscriptions({ user }) {
     }
   };
 
-  const handleActivateSubscription = async (subscription) => {
-    setActivatingId(subscription.stripe_subscription_id);
-    try {
-      const { data } = await base44.functions.invoke("stripe", {
-        action: "getSubscriptionPaymentUrl",
-        subscriptionId: subscription.stripe_subscription_id
-      });
-
-      if (data.error) throw new Error(data.error);
-
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (error) {
-      console.error("Error activating subscription:", error);
-    } finally {
-      setActivatingId(null);
-    }
+  const handleActivateSubscription = (subscription) => {
+    // Redirigir al Checkout con el subscriptionId para completar el pago
+    const checkoutUrl = createPageUrl("Checkout") + 
+      `?plan=${subscription.plan_id}&mode=subscription&subscriptionId=${subscription.stripe_subscription_id}`;
+    window.location.href = checkoutUrl;
   };
 
   if (loading) {
