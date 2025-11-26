@@ -18,6 +18,7 @@ export default function Checkout() {
     const { language } = useLanguage();
     const planId = searchParams.get("plan") || PLAN_IDS.BASIC;
     const initialPaymentMode = searchParams.get("mode") || PAYMENT_MODES.SUBSCRIPTION;
+    const existingSubscriptionId = searchParams.get("subscriptionId"); // Para suscripciones incompletas
 
     // Configuration for plans using plan IDs estandarizados
     // Stripe stores amounts in smallest currency unit (centavos for CRC)
@@ -138,28 +139,39 @@ export default function Checkout() {
 
       if (!email) return; // Wait for email to be entered if not auth
 
-      // 3. Create Payment Intent
+      // 3. Create Payment Intent or Resume Incomplete Subscription
       setLoading(true);
       try {
-        const { data: intentData } = await base44.functions.invoke("stripe", {
-          action: "createPaymentIntent",
-          planId, // Usando planId estandarizado
-          paymentMode,
-          email,
-          name,
-          subscriptionName
-        });
+        let intentData;
+        
+        if (existingSubscriptionId) {
+          // Resumir pago de suscripción incompleta
+          const { data } = await base44.functions.invoke("stripe", {
+            action: "resumeIncompleteSubscription",
+            subscriptionId: existingSubscriptionId
+          });
+          intentData = data;
+        } else {
+          // Crear nuevo payment intent
+          const { data } = await base44.functions.invoke("stripe", {
+            action: "createPaymentIntent",
+            planId,
+            paymentMode,
+            email,
+            name,
+            subscriptionName
+          });
+          intentData = data;
+        }
 
         if (intentData.error) throw new Error(intentData.error);
         setClientSecret(intentData.clientSecret);
         setError(null);
       } catch (err) {
         console.error(err);
-        // Don't show error immediately if it's just missing email
         if (email) setError(err.message || "Error configurando el pago");
       } finally {
         // Do not set loading to false here to prevent mounting before the element is ready
-        // We will handle mounting in the other effect
       }
     };
 
@@ -174,7 +186,7 @@ export default function Checkout() {
       isMounted = false;
       clearTimeout(timer);
     };
-  }, [paymentMode, planId, email]); // Re-run when these change
+  }, [paymentMode, planId, email, existingSubscriptionId]); // Re-run when these change
 
   // Track previous language to detect changes and control remounting
   const [prevLanguage, setPrevLanguage] = useState(language);

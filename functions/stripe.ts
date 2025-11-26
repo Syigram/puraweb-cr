@@ -201,6 +201,50 @@ Deno.serve(async (req) => {
       return Response.json({ subscriptions: formattedSubscriptions });
     }
 
+    // Resumir suscripción incompleta - obtener client secret del payment intent pendiente
+    if (action === 'resumeIncompleteSubscription') {
+      const { subscriptionId } = body;
+      
+      if (!subscriptionId) {
+        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
+      }
+
+      const user = await base44.auth.me().catch(() => null);
+      if (!user) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Obtener la suscripción con el invoice expandido
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+        expand: ['latest_invoice.payment_intent']
+      });
+
+      // Verificar que la suscripción pertenece al usuario
+      const customer = await stripe.customers.retrieve(subscription.customer);
+      if (customer.email !== user.email) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Verificar que la suscripción está incompleta
+      if (subscription.status !== 'incomplete') {
+        return Response.json({ 
+          error: "Subscription is not incomplete", 
+          status: subscription.status 
+        }, { status: 400 });
+      }
+
+      // Obtener el client secret del payment intent
+      const paymentIntent = subscription.latest_invoice?.payment_intent;
+      if (!paymentIntent?.client_secret) {
+        return Response.json({ error: "No payment intent found" }, { status: 400 });
+      }
+
+      return Response.json({
+        clientSecret: paymentIntent.client_secret,
+        subscriptionId: subscription.id
+      });
+    }
+
     // Obtener URL de pago para suscripción incompleta
     if (action === 'getSubscriptionPaymentUrl') {
       const { subscriptionId } = body;
