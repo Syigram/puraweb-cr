@@ -19,6 +19,50 @@ export default function Checkout() {
     const planId = searchParams.get("plan") || PLAN_IDS.BASIC;
     const initialPaymentMode = searchParams.get("mode") || PAYMENT_MODES.SUBSCRIPTION;
 
+    // Configuration for plans using plan IDs estandarizados
+    // Stripe stores amounts in smallest currency unit (centavos for CRC)
+    // Display prices: 60,000 / 100,000 / 150,000 CRC
+    const plans = {
+      [PLAN_IDS.BASIC]: { 
+        fullPrice: 60000, 
+        displayName: { es: "Plan Básico", en: "Basic Plan" },
+        description: { 
+          es: "Perfecto para pequeños negocios que inician su presencia digital", 
+          en: "Perfect for small businesses starting their digital journey" 
+        },
+        features: {
+          es: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
+          en: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"]
+        }
+      },
+      [PLAN_IDS.PROFESSIONAL]: { 
+        fullPrice: 100000, 
+        displayName: { es: "Plan Profesional", en: "Professional Plan" },
+        description: { 
+          es: "Ideal para empresas en crecimiento que necesitan más potencia", 
+          en: "Ideal for growing companies needing more power and flexibility" 
+        },
+        features: {
+          es: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
+          en: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"]
+        }
+      },
+      [PLAN_IDS.BUSINESS]: { 
+        fullPrice: 150000, 
+        displayName: { es: "Plan Empresa", en: "Business Plan" },
+        description: { 
+          es: "Solución completa para negocios establecidos y tiendas online", 
+          en: "Complete solution for established businesses and online stores" 
+        },
+        features: {
+          es: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
+          en: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"]
+        }
+      },
+    };
+
+    const selectedPlan = plans[planId] || plans[PLAN_IDS.BASIC];
+
     // State - usando constantes estandarizadas
     const [paymentMode, setPaymentMode] = useState(initialPaymentMode);
   const [loading, setLoading] = useState(true);
@@ -36,52 +80,9 @@ export default function Checkout() {
   const defaultSubscriptionName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const [subscriptionName, setSubscriptionName] = useState(defaultSubscriptionName);
 
-  // Configuration for plans using plan IDs estandarizados
-  // Stripe stores amounts in smallest currency unit (centavos for CRC)
-  // Display prices: 60,000 / 100,000 / 150,000 CRC
-  const plans = {
-    [PLAN_IDS.BASIC]: { 
-      fullPrice: 60000, 
-      displayName: { es: "Plan Básico", en: "Basic Plan" },
-      description: { 
-        es: "Perfecto para pequeños negocios que inician su presencia digital", 
-        en: "Perfect for small businesses starting their digital journey" 
-      },
-      features: {
-        es: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
-        en: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"]
-      }
-    },
-    [PLAN_IDS.PROFESSIONAL]: { 
-      fullPrice: 100000, 
-      displayName: { es: "Plan Profesional", en: "Professional Plan" },
-      description: { 
-        es: "Ideal para empresas en crecimiento que necesitan más potencia", 
-        en: "Ideal for growing companies needing more power and flexibility" 
-      },
-      features: {
-        es: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
-        en: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"]
-      }
-    },
-    [PLAN_IDS.BUSINESS]: { 
-      fullPrice: 150000, 
-      displayName: { es: "Plan Empresa", en: "Business Plan" },
-      description: { 
-        es: "Solución completa para negocios establecidos y tiendas online", 
-        en: "Complete solution for established businesses and online stores" 
-      },
-      features: {
-        es: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
-        en: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"]
-      }
-    },
-  };
-
-  const selectedPlan = plans[planId] || plans[PLAN_IDS.BASIC];
   const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const t = translations[language].checkout;
-  
+
   // Calculate amounts
   const subscriptionAmount = selectedPlan.fullPrice;
   const oneTimeAmount = selectedPlan.fullPrice * 0.5;
