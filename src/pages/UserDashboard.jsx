@@ -8,6 +8,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import UserProfile from "@/components/user/UserProfile";
 import UserSubscriptions from "@/components/user/UserSubscriptions";
 import UserTransactions from "@/components/user/UserTransactions";
+import UserDashboardSummary from "@/components/user/UserDashboardSummary";
 
 const translations = {
   es: {
@@ -80,6 +81,9 @@ export default function UserDashboard() {
             </div>
           </div>
         </div>
+
+        {/* Dashboard Summary */}
+        <UserDashboardSummary user={user} />
 
         {/* Tabs */}
         <Tabs defaultValue="subscriptions" className="space-y-6">
