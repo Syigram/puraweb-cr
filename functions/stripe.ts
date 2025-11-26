@@ -148,6 +148,33 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Cancelar suscripción
+    if (action === 'cancelSubscription') {
+      const { subscriptionId } = body;
+      
+      if (!subscriptionId) {
+        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
+      }
+
+      // Verificar que el usuario está autenticado
+      const user = await base44.auth.me().catch(() => null);
+      if (!user) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Cancelar al final del período actual
+      const subscription = await stripe.subscriptions.update(subscriptionId, {
+        cancel_at_period_end: true
+      });
+      
+      return Response.json({
+        success: true,
+        status: subscription.status,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+        currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
+      });
+    }
+
     return Response.json({ error: "Action not found" }, { status: 404 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

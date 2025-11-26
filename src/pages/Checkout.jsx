@@ -31,6 +31,10 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  
+  // Subscription Name State
+  const defaultSubscriptionName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
+  const [subscriptionName, setSubscriptionName] = useState(defaultSubscriptionName);
 
   // Configuration for plans using plan IDs estandarizados
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
@@ -232,10 +236,15 @@ export default function Checkout() {
     setProcessing(true);
     setError(null);
 
+    const successUrl = new URL(createPageUrl("PaymentSuccess"), window.location.origin);
+    successUrl.searchParams.set("subscription_name", subscriptionName);
+    successUrl.searchParams.set("plan_id", planId);
+    successUrl.searchParams.set("payment_mode", paymentMode);
+
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: new URL(createPageUrl("PaymentSuccess"), window.location.origin).toString(),
+        return_url: successUrl.toString(),
         payment_method_data: {
           billing_details: {
             name: name,
@@ -250,8 +259,14 @@ export default function Checkout() {
       setError(error.message);
       setProcessing(false);
     } else if (paymentIntent && (paymentIntent.status === "succeeded" || paymentIntent.status === "processing")) {
-      navigate(createPageUrl("PaymentSuccess") + `?payment_intent_client_secret=${paymentIntent.client_secret}`);
-    }
+        const successParams = new URLSearchParams({
+          payment_intent_client_secret: paymentIntent.client_secret,
+          subscription_name: subscriptionName,
+          plan_id: planId,
+          payment_mode: paymentMode
+        });
+        navigate(createPageUrl("PaymentSuccess") + `?${successParams.toString()}`);
+      }
   };
 
   return (
@@ -372,17 +387,29 @@ export default function Checkout() {
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="name">{t.nameLabel}</Label>
-                  <Input 
-                    id="name" 
-                    type="text" 
-                    placeholder={t.namePlaceholder} 
-                    value={name} 
-                    onChange={(e) => setName(e.target.value)}
-                    className="h-11"
-                  />
+                    <Label htmlFor="name">{t.nameLabel}</Label>
+                    <Input 
+                      id="name" 
+                      type="text" 
+                      placeholder={t.namePlaceholder} 
+                      value={name} 
+                      onChange={(e) => setName(e.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="subscriptionName">{t.subscriptionNameLabel}</Label>
+                    <Input 
+                      id="subscriptionName" 
+                      type="text" 
+                      placeholder={t.subscriptionNamePlaceholder} 
+                      value={subscriptionName} 
+                      onChange={(e) => setSubscriptionName(e.target.value)}
+                      className="h-11"
+                    />
+                    <p className="text-xs text-gray-500">{t.subscriptionNameHint}</p>
+                  </div>
                 </div>
-              </div>
 
               {error && (
                 <div className="mb-6 p-4 bg-red-50 text-red-700 text-sm rounded-lg flex items-start gap-3 border border-red-100">

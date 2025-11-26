@@ -182,10 +182,13 @@ export const translations = {
         enterEmailToContinue: "Ingresa tu correo para continuar",
         loginButton: "Iniciar Sesión",
         processing: "Procesando Pago...",
-        payButton: "Pagar"
-      }
-      },
-      en: {
+        payButton: "Pagar",
+        subscriptionNameLabel: "Nombre de la Suscripción",
+        subscriptionNamePlaceholder: "Ej: Mi Sitio Web Principal",
+        subscriptionNameHint: "Este nombre te ayudará a identificar esta suscripción si tienes varias."
+          }
+          },
+          en: {
     nav: {
       services: "Services",
       pricing: "Pricing",
@@ -368,7 +371,10 @@ export const translations = {
         enterEmailToContinue: "Enter your email to continue",
         loginButton: "Log In",
         processing: "Processing Payment...",
-        payButton: "Pay"
-      }
+        payButton: "Pay",
+        subscriptionNameLabel: "Subscription Name",
+        subscriptionNamePlaceholder: "E.g: My Main Website",
+        subscriptionNameHint: "This name will help you identify this subscription if you have several."
           }
-      };
+              }
+          };
