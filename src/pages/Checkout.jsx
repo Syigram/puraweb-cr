@@ -407,21 +407,23 @@ export default function Checkout() {
                       className="h-11"
                     />
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="subscriptionName">{t.subscriptionNameLabel}</Label>
-                    <Input 
-                      id="subscriptionName" 
-                      type="text" 
-                      placeholder={t.subscriptionNamePlaceholder} 
-                      value={subscriptionName} 
-                      onChange={(e) => {
-                        setSubscriptionName(e.target.value);
-                        setHasCustomName(true);
-                      }}
-                      className="h-11"
-                    />
-                    <p className="text-xs text-gray-500">{t.subscriptionNameHint}</p>
-                  </div>
+                  {paymentMode === PAYMENT_MODES.SUBSCRIPTION && (
+                    <div className="grid gap-2">
+                      <Label htmlFor="subscriptionName">{t.subscriptionNameLabel}</Label>
+                      <Input 
+                        id="subscriptionName" 
+                        type="text" 
+                        placeholder={t.subscriptionNamePlaceholder} 
+                        value={subscriptionName} 
+                        onChange={(e) => {
+                          setSubscriptionName(e.target.value);
+                          setHasCustomName(true);
+                        }}
+                        className="h-11"
+                      />
+                      <p className="text-xs text-gray-500">{t.subscriptionNameHint}</p>
+                    </div>
+                  )}
                 </div>
 
               {error && (
