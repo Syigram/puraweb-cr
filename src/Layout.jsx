@@ -1,10 +1,89 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe } from "lucide-react";
+import { Menu, X, Code2, Globe, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { base44 } from "@/api/base44Client";
+
+function UserMenuButton() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (e) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  if (loading) return null;
+
+  if (!user) {
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => base44.auth.redirectToLogin()}
+        className="text-gray-700 hover:text-blue-900"
+      >
+        <User className="w-4 h-4 mr-2" />
+        {language === 'es' ? 'Iniciar Sesión' : 'Log In'}
+      </Button>
+    );
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-900">
+          <User className="w-4 h-4 mr-2" />
+          {user.full_name || user.email?.split('@')[0]}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <Link to={createPageUrl("UserDashboard")}>
+          <DropdownMenuItem className="cursor-pointer">
+            <LayoutDashboard className="w-4 h-4 mr-2" />
+            {language === 'es' ? 'Mi Panel' : 'My Dashboard'}
+          </DropdownMenuItem>
+        </Link>
+        {user.role === 'admin' && (
+          <Link to={createPageUrl("AdminDashboard")}>
+            <DropdownMenuItem className="cursor-pointer">
+              <Shield className="w-4 h-4 mr-2" />
+              {language === 'es' ? 'Admin' : 'Admin'}
+            </DropdownMenuItem>
+          </Link>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="cursor-pointer text-red-600"
+          onClick={() => base44.auth.logout()}
+        >
+          <LogOut className="w-4 h-4 mr-2" />
+          {language === 'es' ? 'Cerrar Sesión' : 'Log Out'}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -96,13 +175,14 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
+              <UserMenuButton />
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
               >
                 {t.nav.getStarted}
               </Button>
-            </div>
+              </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -152,16 +232,19 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 {language === 'es' ? 'English' : 'Español'}
               </button>
+              <div className="flex justify-center">
+                <UserMenuButton />
+              </div>
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
               >
                 {t.nav.getStarted}
               </Button>
-            </div>
-          )}
-        </div>
-      </nav>
+              </div>
+              )}
+              </div>
+              </nav>
 
       {/* Main Content */}
       <main>{children}</main>

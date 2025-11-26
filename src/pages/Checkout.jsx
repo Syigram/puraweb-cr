@@ -137,7 +137,8 @@ export default function Checkout() {
           planId, // Usando planId estandarizado
           paymentMode,
           email,
-          name
+          name,
+          subscriptionName
         });
 
         if (intentData.error) throw new Error(intentData.error);

@@ -163,7 +163,8 @@ async function handleInvoicePaid(base44, invoice) {
   const customerData = await stripe.customers.retrieve(customer);
   const subscriptionData = await stripe.subscriptions.retrieve(subscription);
   const priceId = subscriptionData.items.data[0]?.price?.id;
-  const planId = PRICE_TO_PLAN[priceId] || 'basic';
+  const planId = subscriptionData.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+  const subscriptionName = subscriptionData.metadata?.subscriptionName || null;
 
   // Check if payment record exists for this subscription
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -174,13 +175,16 @@ async function handleInvoicePaid(base44, invoice) {
     // Update existing subscription payment record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
       status: PAYMENT_STATUS.SUCCEEDED,
-      amount: amount_paid
+      amount: amount_paid,
+      subscription_status: subscriptionData.status,
+      current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
       customer_email: customerData?.email || 'unknown',
       customer_name: customerData?.name || 'Unknown',
+      subscription_name: subscriptionName,
       plan_id: planId,
       payment_mode: PAYMENT_MODES.SUBSCRIPTION,
       amount: amount_paid,
@@ -189,7 +193,9 @@ async function handleInvoicePaid(base44, invoice) {
       stripe_payment_intent_id: invoice.payment_intent,
       stripe_subscription_id: subscription,
       stripe_customer_id: customer,
-      user_id: customerData?.metadata?.userId || null
+      user_id: customerData?.metadata?.userId || null,
+      subscription_status: subscriptionData.status,
+      current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
   }
 
@@ -220,7 +226,7 @@ async function handleSubscriptionCreated(base44, subscription) {
 }
 
 async function handleSubscriptionUpdated(base44, subscription) {
-  const { id, status } = subscription;
+  const { id, status, cancel_at_period_end, current_period_end } = subscription;
   
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
     stripe_subscription_id: id
@@ -228,12 +234,21 @@ async function handleSubscriptionUpdated(base44, subscription) {
 
   if (existingPayments.length > 0) {
     let paymentStatus = PAYMENT_STATUS.PENDING;
+    let subscriptionStatus = status;
+    
     if (status === 'active') paymentStatus = PAYMENT_STATUS.SUCCEEDED;
     if (status === 'canceled' || status === 'unpaid') paymentStatus = PAYMENT_STATUS.CANCELED;
     if (status === 'past_due') paymentStatus = PAYMENT_STATUS.FAILED;
+    
+    // If subscription is set to cancel at period end, mark as canceled
+    if (cancel_at_period_end) {
+      subscriptionStatus = 'canceled';
+    }
 
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: paymentStatus
+      status: paymentStatus,
+      subscription_status: subscriptionStatus,
+      current_period_end: new Date(current_period_end * 1000).toISOString()
     });
   }
 

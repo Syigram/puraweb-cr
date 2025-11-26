@@ -86,6 +86,9 @@ Deno.serve(async (req) => {
 
       // 2. Handle Subscription vs One-time usando constantes estandarizadas
       if (paymentMode === PAYMENT_MODES.SUBSCRIPTION) {
+        // Get subscription name from body or generate default
+        const subscriptionName = body.subscriptionName || null;
+        
         // Create a subscription
         const subscription = await stripe.subscriptions.create({
           customer: customerId,
@@ -95,7 +98,8 @@ Deno.serve(async (req) => {
           expand: ['latest_invoice.payment_intent'],
           metadata: {
             planId: normalizedPlanId,
-            paymentMode: PAYMENT_MODES.SUBSCRIPTION
+            paymentMode: PAYMENT_MODES.SUBSCRIPTION,
+            subscriptionName: subscriptionName
           }
         });
 
