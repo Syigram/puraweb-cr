@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe } from "lucide-react";
+import { Menu, X, Code2, Globe, User, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
 
@@ -31,6 +40,10 @@ function LayoutContent({ children, currentPageName }) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsMobileMenuOpen(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await base44.auth.logout(createPageUrl("Home"));
   };
 
   return (
@@ -102,17 +115,38 @@ function LayoutContent({ children, currentPageName }) {
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
               {user ? (
-                <div className="flex items-center gap-4">
-                  <Link 
-                    to={createPageUrl(user.role === 'admin' ? "AdminDashboard" : "UserDashboard")}
-                    className="text-sm font-medium text-blue-900 hover:text-blue-700"
-                  >
-                    {user.role === 'admin' ? "Admin Panel" : "Mi Cuenta"}
-                  </Link>
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-900 font-bold">
-                    {user.full_name ? user.full_name[0].toUpperCase() : "U"}
-                  </div>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="flex items-center gap-3 hover:opacity-80 transition-opacity focus:outline-none">
+                      <div className="text-right hidden lg:block">
+                        <p className="text-sm font-medium text-gray-900">{user.full_name || "Usuario"}</p>
+                        <p className="text-xs text-gray-500 truncate max-w-[120px]">{user.email}</p>
+                      </div>
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-white shadow-sm flex items-center justify-center text-blue-900 font-bold text-lg">
+                        {user.full_name ? user.full_name[0].toUpperCase() : "U"}
+                      </div>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {user.role === 'admin' && (
+                      <DropdownMenuItem onClick={() => navigate(createPageUrl("AdminDashboard"))}>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        <span>Panel Admin</span>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem onClick={() => navigate(createPageUrl("UserDashboard"))}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Mi Perfil y Pagos</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="text-red-600 focus:text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Cerrar Sesión</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ) : (
                 <Button
                   onClick={() => scrollToSection("contact")}
@@ -171,13 +205,40 @@ function LayoutContent({ children, currentPageName }) {
                 {language === 'es' ? 'English' : 'Español'}
               </button>
               {user ? (
-                <Link
-                  to={createPageUrl(user.role === 'admin' ? "AdminDashboard" : "UserDashboard")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-center px-4 py-2 bg-blue-50 text-blue-900 rounded-lg font-bold"
-                >
-                   {user.role === 'admin' ? "Ir al Panel Admin" : "Ir a Mi Cuenta"}
-                </Link>
+                <>
+                  <div className="px-4 py-2 border-t border-b bg-gray-50 my-2">
+                    <p className="text-sm font-medium text-gray-900">{user.full_name}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                  {user.role === 'admin' && (
+                    <Link
+                      to={createPageUrl("AdminDashboard")}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      Panel Admin
+                    </Link>
+                  )}
+                  <Link
+                    to={createPageUrl("UserDashboard")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg"
+                  >
+                    <User className="w-4 h-4" />
+                    Mi Cuenta
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Cerrar Sesión
+                  </button>
+                </>
               ) : (
                 <Button
                   onClick={() => scrollToSection("contact")}

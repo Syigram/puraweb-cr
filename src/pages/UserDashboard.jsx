@@ -16,14 +16,11 @@ import {
   LogOut, 
   Calendar, 
   CheckCircle2, 
-  XCircle, 
-  AlertCircle,
   Clock
 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { PLAN_LABELS, PAYMENT_STATUS } from "@/components/paymentConstants";
-import { useToast } from "@/components/ui/use-toast";
+import { PLAN_LABELS } from "@/components/paymentConstants";
 
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -32,7 +29,6 @@ export default function UserDashboard() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   // Profile state
   const [fullName, setFullName] = useState("");
@@ -72,9 +68,9 @@ export default function UserDashboard() {
     setUpdating(true);
     try {
       await base44.auth.updateMe({ full_name: fullName });
-      toast({ title: "Perfil actualizado", description: "Tu nombre ha sido guardado." });
+      alert("Perfil actualizado: Tu nombre ha sido guardado.");
     } catch (error) {
-      toast({ title: "Error", description: "No se pudo actualizar el perfil.", variant: "destructive" });
+      alert("Error: No se pudo actualizar el perfil.");
     } finally {
       setUpdating(false);
     }
@@ -96,14 +92,14 @@ export default function UserDashboard() {
 
         if (res.data.error) throw new Error(res.data.error);
 
-        toast({ title: "Suscripción cancelada", description: "Se ha programado la cancelación." });
+        alert("Suscripción cancelada: Se ha programado la cancelación.");
         
         // Refresh list
         const subs = await base44.entities.Subscription.list({ user_id: user.id });
         setSubscriptions(subs);
 
     } catch (error) {
-        toast({ title: "Error", description: error.message || "No se pudo cancelar.", variant: "destructive" });
+        alert("Error: " + (error.message || "No se pudo cancelar."));
     } finally {
         setUpdating(false);
     }
