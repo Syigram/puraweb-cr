@@ -5,6 +5,7 @@ import { Menu, X, Code2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { base44 } from "@/api/base44Client";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -67,14 +68,7 @@ function LayoutContent({ children, currentPageName }) {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {/* Dashboard Link for Authenticated Users */}
-              {base44.auth.isAuthenticated() && ( // Note: This check might be async in real usage, typically handled by state in layout
-                /* Ideally pass auth state from a parent or context. Assuming simplified access for now or checking in useEffect. 
-                   Since layout renders on client, base44.auth.isAuthenticated() returns a promise. 
-                   Better to use a hook/state. Let's add state logic for it in LayoutContent.
-                */
-                null
-              )}
+
                 <button
                   onClick={() => scrollToSection("services")}
                   className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
