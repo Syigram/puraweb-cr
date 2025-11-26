@@ -152,6 +152,55 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Obtener suscripciones activas del usuario desde Stripe
+    if (action === 'getSubscriptions') {
+      const user = await base44.auth.me().catch(() => null);
+      if (!user) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Buscar cliente por email
+      const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+      if (customers.data.length === 0) {
+        return Response.json({ subscriptions: [] });
+      }
+
+      const customerId = customers.data[0].id;
+
+      // Obtener suscripciones activas del cliente
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        status: 'all', // Incluye active, canceled, past_due, etc.
+        expand: ['data.items.data.price']
+      });
+
+      // Mapear price_id a plan_id
+      const PRICE_TO_PLAN = {
+        'price_1SUE0bFA0Fkjjug3eDCGxI4G': PLAN_IDS.BASIC,
+        'price_1SUE2DFA0Fkjjug3euWqaW5c': PLAN_IDS.PROFESSIONAL,
+        'price_1SUE32FA0Fkjjug3khKfal6N': PLAN_IDS.BUSINESS
+      };
+
+      const formattedSubscriptions = subscriptions.data.map(sub => {
+        const priceId = sub.items.data[0]?.price?.id;
+        const planId = PRICE_TO_PLAN[priceId] || sub.metadata?.planId || 'unknown';
+        
+        return {
+          stripe_subscription_id: sub.id,
+          stripe_customer_id: customerId,
+          plan_id: planId,
+          subscription_status: sub.cancel_at_period_end ? 'canceled' : sub.status,
+          current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+          amount: sub.items.data[0]?.price?.unit_amount || 0,
+          currency: sub.items.data[0]?.price?.currency || 'crc',
+          subscription_name: sub.metadata?.subscriptionName || null,
+          created: new Date(sub.created * 1000).toISOString()
+        };
+      });
+
+      return Response.json({ subscriptions: formattedSubscriptions });
+    }
+
     // Cancelar suscripción
     if (action === 'cancelSubscription') {
       const { subscriptionId } = body;

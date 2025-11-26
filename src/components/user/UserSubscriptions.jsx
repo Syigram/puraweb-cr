@@ -116,17 +116,38 @@ export default function UserSubscriptions({ user }) {
 
   const fetchSubscriptions = async () => {
     try {
+      // Obtener suscripciones directamente desde Stripe
+      const { data } = await base44.functions.invoke("stripe", {
+        action: "getSubscriptions"
+      });
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Obtener nombres personalizados guardados en la base de datos
       const payments = await base44.entities.Payment.filter({
         customer_email: user.email,
         payment_mode: PAYMENT_MODES.SUBSCRIPTION
       });
+
+      // Crear mapa de nombres por stripe_subscription_id
+      const nameMap = {};
+      payments.forEach(p => {
+        if (p.stripe_subscription_id && p.subscription_name) {
+          nameMap[p.stripe_subscription_id] = p.subscription_name;
+        }
+      });
+
+      // Combinar datos de Stripe con nombres guardados localmente
+      const subscriptionsWithNames = data.subscriptions.map(sub => ({
+        ...sub,
+        subscription_name: nameMap[sub.stripe_subscription_id] || sub.subscription_name,
+        // Agregar id local si existe para poder actualizar
+        id: payments.find(p => p.stripe_subscription_id === sub.stripe_subscription_id)?.id
+      }));
       
-      // Filter to show only subscriptions (with stripe_subscription_id) that are not failed
-      const activeSubscriptions = payments.filter(
-        p => p.stripe_subscription_id && p.status !== "failed"
-      );
-      
-      setSubscriptions(activeSubscriptions);
+      setSubscriptions(subscriptionsWithNames);
     } catch (error) {
       console.error("Error fetching subscriptions:", error);
     } finally {
@@ -177,15 +198,33 @@ export default function UserSubscriptions({ user }) {
   const handleSaveName = async (subscription) => {
     setSavingName(true);
     try {
-      // Use stripe_subscription_id as unique identifier
-      await base44.entities.Payment.update(subscription.id, {
-        subscription_name: editName
-      });
+      if (subscription.id) {
+        // Si existe en la base de datos, actualizar
+        await base44.entities.Payment.update(subscription.id, {
+          subscription_name: editName
+        });
+      } else {
+        // Si no existe, crear registro con el nombre
+        const newPayment = await base44.entities.Payment.create({
+          customer_email: user.email,
+          plan_id: subscription.plan_id,
+          payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+          amount: subscription.amount,
+          currency: subscription.currency || 'crc',
+          status: 'succeeded',
+          stripe_subscription_id: subscription.stripe_subscription_id,
+          stripe_customer_id: subscription.stripe_customer_id,
+          subscription_status: subscription.subscription_status,
+          current_period_end: subscription.current_period_end,
+          subscription_name: editName
+        });
+        subscription.id = newPayment.id;
+      }
       
       setSubscriptions(prev =>
         prev.map(sub =>
           sub.stripe_subscription_id === subscription.stripe_subscription_id
-            ? { ...sub, subscription_name: editName }
+            ? { ...sub, subscription_name: editName, id: subscription.id }
             : sub
         )
       );
