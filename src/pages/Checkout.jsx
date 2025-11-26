@@ -31,6 +31,7 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [projectName, setProjectName] = useState("");
 
   // Configuration for plans using plan IDs estandarizados
   // Stripe stores amounts in smallest currency unit (centavos for CRC)
@@ -133,7 +134,8 @@ export default function Checkout() {
           planId, // Usando planId estandarizado
           paymentMode,
           email,
-          name
+          name,
+          projectName: projectName || "Sin nombre"
         });
 
         if (intentData.error) throw new Error(intentData.error);
@@ -157,10 +159,10 @@ export default function Checkout() {
     }, 800);
 
     return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
-  }, [paymentMode, planId, email]); // Re-run when these change
+        isMounted = false;
+        clearTimeout(timer);
+      };
+    }, [paymentMode, planId, email, projectName]); // Re-run when these change
 
   // Track previous language to detect changes and control remounting
   const [prevLanguage, setPrevLanguage] = useState(language);
@@ -360,6 +362,19 @@ export default function Checkout() {
                   </Tabs>
 
               <div className="space-y-4 mb-8">
+                <div className="grid gap-2">
+                  <Label htmlFor="projectName">Nombre del Proyecto</Label>
+                  <Input 
+                    id="projectName" 
+                    type="text" 
+                    placeholder="Ej: Mi Tienda de Flores, Blog Personal..." 
+                    value={projectName} 
+                    onChange={(e) => setProjectName(e.target.value)}
+                    className="h-11 bg-blue-50/50 border-blue-100 focus:border-blue-300 focus:ring-blue-200"
+                  />
+                  <p className="text-xs text-gray-500">Dale un nombre para identificarlo en tu panel.</p>
+                </div>
+
                 <div className="grid gap-2">
                   <Label htmlFor="email">{t.emailLabel}</Label>
                   <Input 
