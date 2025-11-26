@@ -104,16 +104,46 @@ Deno.serve(async (req) => {
 async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   const { id, amount, currency, customer, metadata, invoice } = paymentIntent;
   
+  console.log(`🔍 Processing payment_intent.succeeded: ${id}`);
+  console.log(`   invoice field: ${invoice}`);
+  console.log(`   metadata: ${JSON.stringify(metadata)}`);
+  
   // Si el PaymentIntent está asociado a una factura, es un pago de suscripción
   // El evento invoice.paid se encargará de registrarlo correctamente
   if (invoice) {
-    console.log(`⏭️ Payment intent ${id} is linked to invoice, skipping (handled by invoice.paid)`);
+    console.log(`⏭️ Payment intent ${id} is linked to invoice ${invoice}, skipping (handled by invoice.paid)`);
     return;
+  }
+  
+  // IMPORTANTE: Buscar en Stripe si este PaymentIntent está asociado a algún invoice
+  // Esto cubre el caso donde el campo invoice no viene en el webhook pero existe la relación
+  try {
+    const invoices = await stripe.invoices.list({
+      limit: 5,
+      expand: ['data.subscription']
+    });
+    
+    const linkedInvoice = invoices.data.find(inv => inv.payment_intent === id);
+    if (linkedInvoice) {
+      console.log(`⏭️ Payment intent ${id} found linked to invoice ${linkedInvoice.id} via search, skipping (handled by invoice.paid)`);
+      return;
+    }
+  } catch (err) {
+    console.log(`⚠️ Could not search invoices: ${err.message}`);
   }
   
   // Verificar si el metadata indica que es una suscripción
   if (metadata?.paymentMode === PAYMENT_MODES.SUBSCRIPTION) {
-    console.log(`⏭️ Payment intent ${id} is a subscription payment, skipping (handled by invoice.paid)`);
+    console.log(`⏭️ Payment intent ${id} is a subscription payment (metadata), skipping (handled by invoice.paid)`);
+    return;
+  }
+  
+  // Verificar que realmente es un pago único usando el metadata
+  // SOLO procesar si explícitamente tiene paymentMode = 'onetime'
+  const paymentMode = metadata?.paymentMode;
+  
+  if (paymentMode !== PAYMENT_MODES.ONETIME) {
+    console.log(`⏭️ Payment intent ${id} does not have explicit onetime mode (mode: ${paymentMode}), skipping`);
     return;
   }
   
@@ -122,15 +152,6 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   
   // Determine plan from metadata
   const planId = metadata?.planId || 'basic';
-  
-  // Verificar que realmente es un pago único usando el metadata
-  const paymentMode = metadata?.paymentMode || PAYMENT_MODES.ONETIME;
-  
-  // Si no es explícitamente onetime, saltar (prevenir duplicados de suscripciones)
-  if (paymentMode !== PAYMENT_MODES.ONETIME) {
-    console.log(`⏭️ Payment intent ${id} mode is ${paymentMode}, skipping`);
-    return;
-  }
   
   // Check if payment record exists
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
