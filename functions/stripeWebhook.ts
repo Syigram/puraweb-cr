@@ -24,6 +24,32 @@ const PRICE_TO_PLAN = {
   'price_1SUE32FA0Fkjjug3khKfal6N': 'business'
 };
 
+// Montos de planes en centavos para determinar plan por monto
+// Suscripción: monto completo, Pago único: 50%
+const PLAN_AMOUNTS = {
+  basic: { subscription: 6000000, onetime: 3000000 },
+  professional: { subscription: 10000000, onetime: 5000000 },
+  business: { subscription: 15000000, onetime: 7500000 }
+};
+
+// Función para determinar el plan basándose en el monto
+function getPlanIdFromAmount(amount) {
+  // Verificar montos de suscripción (completos)
+  if (amount === PLAN_AMOUNTS.basic.subscription) return 'basic';
+  if (amount === PLAN_AMOUNTS.professional.subscription) return 'professional';
+  if (amount === PLAN_AMOUNTS.business.subscription) return 'business';
+  
+  // Verificar montos de pago único (50%)
+  if (amount === PLAN_AMOUNTS.basic.onetime) return 'basic';
+  if (amount === PLAN_AMOUNTS.professional.onetime) return 'professional';
+  if (amount === PLAN_AMOUNTS.business.onetime) return 'business';
+  
+  // Fallback: determinar por rango de montos
+  if (amount <= 4000000) return 'basic';
+  if (amount <= 8000000) return 'professional';
+  return 'business';
+}
+
 Deno.serve(async (req) => {
   if (req.method !== 'POST') {
     return Response.json({ error: 'Method not allowed' }, { status: 405 });
