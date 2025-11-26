@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe } from "lucide-react";
+import { Menu, X, Code2, Globe, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { base44 } from "@/api/base44Client";
 
 function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (e) {
+        setUser(null);
+      }
+    };
+    checkUser();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,12 +110,22 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
-              <Button
-                onClick={() => scrollToSection("contact")}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
-              >
-                {t.nav.getStarted}
-              </Button>
+              {user ? (
+                <Link
+                  to={createPageUrl("UserDashboard")}
+                  className="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  {language === 'es' ? 'Mi Cuenta' : 'My Account'}
+                </Link>
+              ) : (
+                <Button
+                  onClick={() => scrollToSection("contact")}
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
+                >
+                  {t.nav.getStarted}
+                </Button>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -152,12 +176,23 @@ function LayoutContent({ children, currentPageName }) {
                 <Globe className="w-5 h-5" />
                 {language === 'es' ? 'English' : 'Español'}
               </button>
-              <Button
-                onClick={() => scrollToSection("contact")}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
-              >
-                {t.nav.getStarted}
-              </Button>
+              {user ? (
+                <Link
+                  to={createPageUrl("UserDashboard")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  {language === 'es' ? 'Mi Cuenta' : 'My Account'}
+                </Link>
+              ) : (
+                <Button
+                  onClick={() => scrollToSection("contact")}
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+                >
+                  {t.nav.getStarted}
+                </Button>
+              )}
             </div>
           )}
         </div>
