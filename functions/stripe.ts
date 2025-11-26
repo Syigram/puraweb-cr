@@ -1,7 +1,9 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
 import Stripe from 'npm:stripe@^14.0.0';
 
-// CONFIGURATION
+const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
+
+// Constantes estandarizadas para tipos de pago
 const PAYMENT_MODES = {
   SUBSCRIPTION: 'subscription',
   ONETIME: 'onetime'
@@ -13,164 +15,141 @@ const PLAN_IDS = {
   BUSINESS: 'business'
 };
 
-// Mapping Plan IDs to Stripe Price IDs
-const STRIPE_PRICES = {
-  [PLAN_IDS.BASIC]: {
-    subscription: "price_1SUE0bFA0Fkjjug3eDCGxI4G",
-    onetime: "price_1SLIXLFA0Fkjjug3cjtoEAzT" // Assuming same onetime price for all for now or need specific ones
-  },
-  [PLAN_IDS.PROFESSIONAL]: {
-    subscription: "price_1SUE2DFA0Fkjjug3euWqaW5c",
-    onetime: "price_1SLIXLFA0Fkjjug3cjtoEAzT"
-  },
-  [PLAN_IDS.BUSINESS]: {
-    subscription: "price_1SUE32FA0Fkjjug3khKfal6N",
-    onetime: "price_1SLIXLFA0Fkjjug3cjtoEAzT"
-  }
+// Mapeo de Plan IDs estandarizados a Stripe Price IDs
+const PLAN_PRICES = {
+  [PLAN_IDS.BASIC]: 'price_1SUE0bFA0Fkjjug3eDCGxI4G',
+  [PLAN_IDS.PROFESSIONAL]: 'price_1SUE2DFA0Fkjjug3euWqaW5c',
+  [PLAN_IDS.BUSINESS]: 'price_1SUE32FA0Fkjjug3khKfal6N'
+};
+
+// Precios en centavos CRC
+const PLAN_AMOUNTS = {
+  [PLAN_IDS.BASIC]: 6000000,      // 60,000 CRC
+  [PLAN_IDS.PROFESSIONAL]: 10000000, // 100,000 CRC
+  [PLAN_IDS.BUSINESS]: 15000000   // 150,000 CRC
 };
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const url = new URL(req.url);
+    const path = url.pathname.split('/').pop();
     
-    // Initialize Stripe
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
-    
-    if (req.method !== "POST") {
-      return new Response("Method Not Allowed", { status: 405 });
+    // Support both path-based routing (direct) and body-action routing (invoke SDK)
+    let body = {};
+    try {
+      if (req.method === "POST") {
+        body = await req.json();
+      }
+    } catch (e) {
+      // ignore json parse error for empty body
     }
+    
+    const action = body.action || path;
 
-    const body = await req.json();
-    const { action } = body;
-
-    // --- ACTION: GET CONFIG ---
-    if (action === "getConfig") {
+    if (action === 'getConfig' || action === 'getStripeConfig') {
       return Response.json({ 
         publishableKey: Deno.env.get("STRIPE_PUBLISHABLE_KEY") 
       });
     }
 
-    // --- ACTION: CREATE PAYMENT INTENT / SUBSCRIPTION ---
-    if (action === "createPaymentIntent") {
-      const { planId, paymentMode, email, name, projectName } = body;
+    if (action === 'createPaymentIntent') {
+      const { planId, paymentMode, email, name } = body;
       
-      if (!email) {
-        return Response.json({ error: "Email is required" });
+      // Usar planId estandarizado, con fallback a basic
+      const normalizedPlanId = planId || PLAN_IDS.BASIC;
+      const priceId = PLAN_PRICES[normalizedPlanId] || PLAN_PRICES[PLAN_IDS.BASIC];
+      
+      // 1. Find or Create Customer
+      let customerId;
+      const user = await base44.auth.me().catch(() => null);
+      const userEmail = user?.email || email;
+      const userName = user?.full_name || name || "Guest Customer";
+
+      if (!userEmail) {
+        return Response.json({ error: "Email is required" }, { status: 400 });
       }
 
-      const user = await base44.auth.me().catch(() => null);
-      
-      // 1. Create or Get Customer
-      let customer;
-      const existingCustomers = await stripe.customers.list({ email: email, limit: 1 });
-      
-      if (existingCustomers.data.length > 0) {
-        customer = existingCustomers.data[0];
+      const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
+      if (customers.data.length > 0) {
+        customerId = customers.data[0].id;
       } else {
-        customer = await stripe.customers.create({
-          email: email,
-          name: name,
+        const customer = await stripe.customers.create({
+          email: userEmail,
+          name: userName,
           metadata: {
-            base44_user_id: user ? user.id : null
+            userId: user?.id || 'guest'
           }
         });
+        customerId = customer.id;
       }
 
-      const priceId = STRIPE_PRICES[planId]?.[paymentMode];
-      if (!priceId) {
-        return Response.json({ error: "Invalid plan or payment mode configuration" });
-      }
-
-      // Common metadata
-      const metadata = {
-        planId: planId,
-        paymentMode: paymentMode,
-        base44_user_id: user ? user.id : null,
-        projectName: projectName || "Sin nombre"
-      };
-
+      // 2. Handle Subscription vs One-time usando constantes estandarizadas
       if (paymentMode === PAYMENT_MODES.SUBSCRIPTION) {
-        // For subscriptions, we create a Subscription directly (which creates a PaymentIntent)
-        // Or for SetupIntent + Subscription later. 
-        // Simplest for "Payment Element" with Subscription is to create a Subscription with 'incomplete' status
-        
+        // Create a subscription
         const subscription = await stripe.subscriptions.create({
-          customer: customer.id,
+          customer: customerId,
           items: [{ price: priceId }],
           payment_behavior: 'default_incomplete',
           payment_settings: { save_default_payment_method: 'on_subscription' },
           expand: ['latest_invoice.payment_intent'],
-          metadata: metadata,
-          subscription_data: {
-            metadata: metadata // Ensure subscription object also has metadata
+          metadata: {
+            planId: normalizedPlanId,
+            paymentMode: PAYMENT_MODES.SUBSCRIPTION
           }
         });
 
         return Response.json({
-          subscriptionId: subscription.id,
           clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+          subscriptionId: subscription.id
         });
 
       } else {
-        // One-time payment (50% down payment)
-        // Note: In a real app, you might want to calculate 50% of the plan price dynamically
-        // Here we use the predefined onetime price ID, or we could pass amount directly.
-        // Using priceId is safer for backend control.
-        
-        // For PaymentIntent with Price ID (Stripe typically wants 'amount', not price ID for simple intents unless using checkout sessions)
-        // But if we defined Products/Prices in Stripe dashboard for the "Down Payment", we can look up the amount.
-        // To keep it simple and robust, let's fetch the price amount first or use hardcoded knowledge (bad practice).
-        // Better: Retrieve the price from Stripe.
-        
-        const price = await stripe.prices.retrieve(priceId);
+        // One-time payment (50%)
+        const fullAmount = PLAN_AMOUNTS[normalizedPlanId];
+        const chargeAmount = Math.round(fullAmount * 0.5); // 50%
 
         const paymentIntent = await stripe.paymentIntents.create({
-          amount: price.unit_amount,
-          currency: price.currency,
-          customer: customer.id,
+          amount: chargeAmount,
+          currency: 'crc',
+          customer: customerId,
           automatic_payment_methods: { enabled: true },
-          metadata: metadata
+          metadata: {
+            planId: normalizedPlanId,
+            paymentMode: PAYMENT_MODES.ONETIME,
+            type: 'down_payment_50_percent',
+            email: userEmail,
+            name: userName
+          }
         });
 
         return Response.json({
           clientSecret: paymentIntent.client_secret,
+          id: paymentIntent.id
         });
       }
     }
 
-    // --- ACTION: CANCEL SUBSCRIPTION ---
-    if (action === "cancelSubscription") {
-      const { subscriptionId } = body;
-      const user = await base44.auth.me();
-
-      if (!user) {
-        return Response.json({ error: "Unauthorized" }, { status: 401 });
+    // Verificar estado del pago
+    if (action === 'verifyPayment') {
+      const { paymentIntentId } = body;
+      
+      if (!paymentIntentId) {
+        return Response.json({ error: "Payment Intent ID is required" }, { status: 400 });
       }
 
-      // Security check: Verify this subscription belongs to the user
-      // We can query our database for the subscription to check ownership
-      const [subscriptionRecord] = await base44.entities.Subscription.list({
-        stripe_subscription_id: subscriptionId,
-        user_id: user.id
-      });
-
-      if (!subscriptionRecord) {
-        return Response.json({ error: "Subscription not found or access denied" }, { status: 403 });
-      }
-
-      // Cancel in Stripe
-      const canceledSubscription = await stripe.subscriptions.cancel(subscriptionId);
-
-      return Response.json({ 
-        status: canceledSubscription.status,
-        message: "Subscription canceled successfully" 
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      
+      return Response.json({
+        status: paymentIntent.status,
+        amount: paymentIntent.amount,
+        currency: paymentIntent.currency,
+        metadata: paymentIntent.metadata
       });
     }
 
-    return Response.json({ error: "Invalid action" }, { status: 400 });
-
+    return Response.json({ error: "Action not found" }, { status: 404 });
   } catch (error) {
-    console.error("Stripe function error:", error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

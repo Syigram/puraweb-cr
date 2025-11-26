@@ -1,6 +1,3 @@
-import { base44 } from "@/api/base44Client";
-import { createPageUrl } from "@/utils";
-
 export const translations = {
   es: {
     nav: {

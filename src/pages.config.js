@@ -3,7 +3,6 @@ import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
 import AdminDashboard from './pages/AdminDashboard';
-import UserDashboard from './pages/UserDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -13,7 +12,6 @@ export const PAGES = {
     "PaymentSuccess": PaymentSuccess,
     "Planes": Planes,
     "AdminDashboard": AdminDashboard,
-    "UserDashboard": UserDashboard,
 }
 
 export const pagesConfig = {
