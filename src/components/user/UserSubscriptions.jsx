@@ -23,8 +23,15 @@ import {
   Pencil,
   Package,
   Save,
-  X
+  X,
+  HelpCircle
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { es, enUS } from "date-fns/locale";
 import { useLanguage } from "@/components/LanguageContext";
@@ -51,13 +58,17 @@ const translations = {
     keepSubscription: "Mantener Suscripción",
     yesCancel: "Sí, Cancelar",
     canceling: "Cancelando...",
+    activateSubscription: "Completar Pago",
     status: {
       active: "Activa",
       canceled: "Cancelada",
       past_due: "Pago Pendiente",
       unpaid: "Impaga",
-      trialing: "Período de Prueba"
+      trialing: "Período de Prueba",
+      incomplete: "Incompleta",
+      incomplete_expired: "Expirada"
     },
+    incompleteTooltip: "Esta suscripción no se completó porque el pago inicial falló o fue abandonado. Haz clic en 'Completar Pago' para activarla.",
     subscriptionName: "Nombre de la suscripción"
   },
   en: {
@@ -78,13 +89,17 @@ const translations = {
     keepSubscription: "Keep Subscription",
     yesCancel: "Yes, Cancel",
     canceling: "Canceling...",
+    activateSubscription: "Complete Payment",
     status: {
       active: "Active",
       canceled: "Canceled",
       past_due: "Past Due",
       unpaid: "Unpaid",
-      trialing: "Trialing"
+      trialing: "Trialing",
+      incomplete: "Incomplete",
+      incomplete_expired: "Expired"
     },
+    incompleteTooltip: "This subscription was not completed because the initial payment failed or was abandoned. Click 'Complete Payment' to activate it.",
     subscriptionName: "Subscription name"
   }
 };
@@ -94,7 +109,9 @@ const STATUS_CONFIG = {
   canceled: { icon: XCircle, className: "bg-gray-100 text-gray-700 border-gray-200" },
   past_due: { icon: Clock, className: "bg-yellow-100 text-yellow-700 border-yellow-200" },
   unpaid: { icon: AlertTriangle, className: "bg-red-100 text-red-700 border-red-200" },
-  trialing: { icon: Clock, className: "bg-blue-100 text-blue-700 border-blue-200" }
+  trialing: { icon: Clock, className: "bg-blue-100 text-blue-700 border-blue-200" },
+  incomplete: { icon: AlertTriangle, className: "bg-orange-100 text-orange-700 border-orange-200" },
+  incomplete_expired: { icon: XCircle, className: "bg-red-100 text-red-700 border-red-200" }
 };
 
 export default function UserSubscriptions({ user }) {
@@ -109,6 +126,7 @@ export default function UserSubscriptions({ user }) {
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
   const [savingName, setSavingName] = useState(false);
+  const [activatingId, setActivatingId] = useState(null);
 
   useEffect(() => {
     fetchSubscriptions();
@@ -140,9 +158,9 @@ export default function UserSubscriptions({ user }) {
       });
 
       // Combinar datos de Stripe con nombres guardados localmente
-      // Filtrar suscripciones canceladas
+      // Filtrar suscripciones canceladas e incomplete_expired
       const subscriptionsWithNames = data.subscriptions
-        .filter(sub => sub.subscription_status !== 'canceled')
+        .filter(sub => sub.subscription_status !== 'canceled' && sub.subscription_status !== 'incomplete_expired')
         .map(sub => ({
           ...sub,
           subscription_name: nameMap[sub.stripe_subscription_id] || sub.subscription_name,
@@ -239,6 +257,26 @@ export default function UserSubscriptions({ user }) {
     }
   };
 
+  const handleActivateSubscription = async (subscription) => {
+    setActivatingId(subscription.stripe_subscription_id);
+    try {
+      const { data } = await base44.functions.invoke("stripe", {
+        action: "getSubscriptionPaymentUrl",
+        subscriptionId: subscription.stripe_subscription_id
+      });
+
+      if (data.error) throw new Error(data.error);
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error("Error activating subscription:", error);
+    } finally {
+      setActivatingId(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -290,10 +328,12 @@ export default function UserSubscriptions({ user }) {
               editName={editName}
               setEditName={setEditName}
               savingName={savingName}
+              activating={activatingId === subscription.stripe_subscription_id}
               onStartEdit={() => handleStartEdit(subscription)}
               onSaveName={() => handleSaveName(subscription)}
               onCancelEdit={() => setEditingId(null)}
               onCancelSubscription={() => setCancelDialog({ open: true, subscription })}
+              onActivateSubscription={() => handleActivateSubscription(subscription)}
             />
           ))}
         </CardContent>
@@ -351,109 +391,149 @@ function SubscriptionCard({
   editName,
   setEditName,
   savingName,
+  activating,
   onStartEdit,
   onSaveName,
   onCancelEdit,
-  onCancelSubscription
+  onCancelSubscription,
+  onActivateSubscription
 }) {
   const status = subscription.subscription_status || "active";
   const statusConfig = STATUS_CONFIG[status] || STATUS_CONFIG.active;
   const StatusIcon = statusConfig.icon;
   const displayName = subscription.subscription_name || PLAN_LABELS[language][subscription.plan_id] || subscription.plan_id;
+  const isIncomplete = status === "incomplete";
 
   return (
-    <div className="border rounded-lg p-4 sm:p-6 space-y-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-        <div className="flex-1">
-          {isEditing ? (
-            <div className="flex items-center gap-2">
-              <Input
-                value={editName}
-                onChange={(e) => setEditName(e.target.value)}
-                className="max-w-xs"
-                placeholder={t.subscriptionName}
-              />
+    <TooltipProvider>
+      <div className="border rounded-lg p-4 sm:p-6 space-y-4">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div className="flex-1">
+            {isEditing ? (
+              <div className="flex items-center gap-2">
+                <Input
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className="max-w-xs"
+                  placeholder={t.subscriptionName}
+                />
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={onSaveName}
+                  disabled={savingName}
+                  className="shrink-0"
+                >
+                  {savingName ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4 text-green-600" />
+                  )}
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={onCancelEdit}
+                  className="shrink-0"
+                >
+                  <X className="w-4 h-4 text-gray-500" />
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-lg">{displayName}</h3>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={onStartEdit}
+                  className="h-7 w-7"
+                >
+                  <Pencil className="w-3 h-3 text-gray-400" />
+                </Button>
+              </div>
+            )}
+            <p className="text-sm text-gray-500">
+              {PLAN_LABELS[language][subscription.plan_id] || subscription.plan_id}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className={statusConfig.className}>
+              <StatusIcon className="w-3 h-3 mr-1" />
+              {t.status[status] || status}
+            </Badge>
+            {isIncomplete && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button className="text-orange-500 hover:text-orange-600">
+                    <HelpCircle className="w-4 h-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>{t.incompleteTooltip}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        </div>
+
+        {/* Details */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
+          <div className="flex items-center gap-2 text-sm">
+            <Calendar className="w-4 h-4 text-gray-400" />
+            <span className="text-gray-500">
+              {status === "canceled" ? t.canceledOn : t.renewsOn}:
+            </span>
+            <span className="font-medium">
+              {subscription.current_period_end
+                ? format(new Date(subscription.current_period_end), "d MMMM yyyy", { locale: dateLocale })
+                : "N/A"}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <CreditCard className="w-4 h-4 text-gray-400" />
+            <span className="text-gray-500">{t.monthlyPayment}:</span>
+            <span className="font-medium">
+              ₡{((subscription.amount || 0) / 100).toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        {/* Actions */}
+        {status !== "canceled" && (
+          <div className="pt-4 border-t flex justify-end gap-2">
+            {isIncomplete ? (
               <Button
-                size="icon"
-                variant="ghost"
-                onClick={onSaveName}
-                disabled={savingName}
-                className="shrink-0"
+                size="sm"
+                className="bg-blue-900 hover:bg-blue-800 text-white"
+                onClick={onActivateSubscription}
+                disabled={activating}
               >
-                {savingName ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                {activating ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    {language === 'es' ? 'Cargando...' : 'Loading...'}
+                  </>
                 ) : (
-                  <Save className="w-4 h-4 text-green-600" />
+                  <>
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    {t.activateSubscription}
+                  </>
                 )}
               </Button>
+            ) : (
               <Button
-                size="icon"
-                variant="ghost"
-                onClick={onCancelEdit}
-                className="shrink-0"
+                variant="outline"
+                size="sm"
+                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                onClick={onCancelSubscription}
               >
-                <X className="w-4 h-4 text-gray-500" />
+                {t.cancelSubscription}
               </Button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-lg">{displayName}</h3>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={onStartEdit}
-                className="h-7 w-7"
-              >
-                <Pencil className="w-3 h-3 text-gray-400" />
-              </Button>
-            </div>
-          )}
-          <p className="text-sm text-gray-500">
-            {PLAN_LABELS[language][subscription.plan_id] || subscription.plan_id}
-          </p>
-        </div>
-        <Badge variant="outline" className={statusConfig.className}>
-          <StatusIcon className="w-3 h-3 mr-1" />
-          {t.status[status] || status}
-        </Badge>
+            )}
+          </div>
+        )}
       </div>
-
-      {/* Details */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t">
-        <div className="flex items-center gap-2 text-sm">
-          <Calendar className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-500">
-            {status === "canceled" ? t.canceledOn : t.renewsOn}:
-          </span>
-          <span className="font-medium">
-            {subscription.current_period_end
-              ? format(new Date(subscription.current_period_end), "d MMMM yyyy", { locale: dateLocale })
-              : "N/A"}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-sm">
-          <CreditCard className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-500">{t.monthlyPayment}:</span>
-          <span className="font-medium">
-            ₡{((subscription.amount || 0) / 100).toLocaleString()}
-          </span>
-        </div>
-      </div>
-
-      {/* Actions */}
-      {status !== "canceled" && (
-        <div className="pt-4 border-t flex justify-end">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-            onClick={onCancelSubscription}
-          >
-            {t.cancelSubscription}
-          </Button>
-        </div>
-      )}
-    </div>
+    </TooltipProvider>
   );
 }
