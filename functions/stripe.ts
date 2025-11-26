@@ -201,6 +201,50 @@ Deno.serve(async (req) => {
       return Response.json({ subscriptions: formattedSubscriptions });
     }
 
+    // Obtener URL de pago para suscripción incompleta
+    if (action === 'getSubscriptionPaymentUrl') {
+      const { subscriptionId } = body;
+      
+      if (!subscriptionId) {
+        return Response.json({ error: "Subscription ID is required" }, { status: 400 });
+      }
+
+      const user = await base44.auth.me().catch(() => null);
+      if (!user) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Obtener la suscripción
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+        expand: ['latest_invoice']
+      });
+
+      // Verificar que la suscripción pertenece al usuario
+      const customer = await stripe.customers.retrieve(subscription.customer);
+      if (customer.email !== user.email) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      // Obtener la URL de pago del invoice
+      if (subscription.latest_invoice?.hosted_invoice_url) {
+        return Response.json({ url: subscription.latest_invoice.hosted_invoice_url });
+      }
+
+      // Si no hay URL de invoice, crear una sesión de checkout
+      const session = await stripe.checkout.sessions.create({
+        customer: subscription.customer,
+        mode: 'setup',
+        payment_method_types: ['card'],
+        success_url: `${Deno.env.get("APP_URL") || "https://app.base44.com"}/UserDashboard?payment=success`,
+        cancel_url: `${Deno.env.get("APP_URL") || "https://app.base44.com"}/UserDashboard?payment=canceled`,
+        metadata: {
+          subscriptionId: subscriptionId
+        }
+      });
+
+      return Response.json({ url: session.url });
+    }
+
     // Cancelar suscripción
     if (action === 'cancelSubscription') {
       const { subscriptionId } = body;
