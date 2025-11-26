@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'createPaymentIntent') {
-      const { planId, paymentMode, email, name } = body;
+      const { planId, paymentMode, email, name, projectName } = body;
       
       // Usar planId estandarizado, con fallback a basic
       const normalizedPlanId = planId || PLAN_IDS.BASIC;
@@ -99,6 +99,23 @@ Deno.serve(async (req) => {
           }
         });
 
+        // Save to database
+        await base44.asServiceRole.entities.Payment.create({
+          project_name: projectName || null,
+          customer_email: userEmail,
+          customer_name: userName,
+          plan_id: normalizedPlanId,
+          payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+          amount: PLAN_AMOUNTS[normalizedPlanId],
+          currency: "crc",
+          status: "pending",
+          subscription_status: subscription.status,
+          stripe_subscription_id: subscription.id,
+          stripe_customer_id: customerId,
+          user_id: user?.id || null,
+          next_billing_date: new Date(subscription.current_period_end * 1000).toISOString()
+        });
+
         return Response.json({
           clientSecret: subscription.latest_invoice.payment_intent.client_secret,
           subscriptionId: subscription.id
@@ -121,6 +138,21 @@ Deno.serve(async (req) => {
             email: userEmail,
             name: userName
           }
+        });
+
+        // Save to database
+        await base44.asServiceRole.entities.Payment.create({
+          project_name: projectName || null,
+          customer_email: userEmail,
+          customer_name: userName,
+          plan_id: normalizedPlanId,
+          payment_mode: PAYMENT_MODES.ONETIME,
+          amount: chargeAmount,
+          currency: "crc",
+          status: "pending",
+          stripe_payment_intent_id: paymentIntent.id,
+          stripe_customer_id: customerId,
+          user_id: user?.id || null
         });
 
         return Response.json({
