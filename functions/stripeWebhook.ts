@@ -332,8 +332,41 @@ async function handleInvoicePaymentFailed(base44, invoice) {
 }
 
 async function handleSubscriptionCreated(base44, subscription) {
-  console.log(`🆕 Subscription created: ${subscription.id}`);
-  // Initial record is created via invoice.paid event
+  const { id, status, customer, current_period_end } = subscription;
+  
+  console.log(`🆕 Subscription created: ${id}, status: ${status}`);
+  
+  // Si la suscripción se crea directamente como activa, crear el registro
+  if (status === 'active') {
+    const customerData = customer ? await stripe.customers.retrieve(customer) : null;
+    const priceId = subscription.items?.data[0]?.price?.id;
+    const planId = subscription.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+    const subscriptionName = subscription.metadata?.subscriptionName || null;
+    
+    // Verificar si ya existe
+    const existingPayments = await base44.asServiceRole.entities.Payment.filter({
+      stripe_subscription_id: id
+    });
+    
+    if (existingPayments.length === 0) {
+      await base44.asServiceRole.entities.Payment.create({
+        customer_email: customerData?.email || 'unknown',
+        customer_name: customerData?.name || 'Unknown',
+        subscription_name: subscriptionName,
+        plan_id: planId,
+        payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+        amount: subscription.items?.data[0]?.price?.unit_amount || 0,
+        currency: subscription.items?.data[0]?.price?.currency || 'crc',
+        status: PAYMENT_STATUS.SUCCEEDED,
+        stripe_subscription_id: id,
+        stripe_customer_id: customer,
+        user_id: customerData?.metadata?.userId || null,
+        subscription_status: status,
+        current_period_end: new Date(current_period_end * 1000).toISOString()
+      });
+      console.log(`✅ Subscription created and payment record added: ${id}`);
+    }
+  }
 }
 
 async function handleSubscriptionUpdated(base44, subscription) {
