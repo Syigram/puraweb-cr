@@ -145,7 +145,7 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   // Esto cubre el caso donde el campo invoice no viene en el webhook pero existe la relación
   try {
     const invoices = await stripe.invoices.list({
-      limit: 5,
+      limit: 10,
       expand: ['data.subscription']
     });
     
@@ -164,20 +164,29 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
     return;
   }
   
-  // Verificar que realmente es un pago único usando el metadata
-  // SOLO procesar si explícitamente tiene paymentMode = 'onetime'
+  // Si NO tiene paymentMode en metadata, es probablemente un pago de suscripción
+  // (los pagos únicos siempre tienen paymentMode = 'onetime' en metadata)
   const paymentMode = metadata?.paymentMode;
   
+  if (!paymentMode) {
+    console.log(`⏭️ Payment intent ${id} has no paymentMode metadata, likely subscription - skipping (handled by invoice.paid)`);
+    return;
+  }
+  
+  // Solo procesar si explícitamente tiene paymentMode = 'onetime'
   if (paymentMode !== PAYMENT_MODES.ONETIME) {
-    console.log(`⏭️ Payment intent ${id} does not have explicit onetime mode (mode: ${paymentMode}), skipping`);
+    console.log(`⏭️ Payment intent ${id} has unknown paymentMode (${paymentMode}), skipping`);
     return;
   }
   
   // Get customer details
   const customerData = customer ? await stripe.customers.retrieve(customer) : null;
   
-  // Determine plan from metadata
-  const planId = metadata?.planId || 'basic';
+  // Determine plan from metadata or amount
+  let planId = metadata?.planId;
+  if (!planId) {
+    planId = getPlanIdFromAmount(amount);
+  }
   
   // Check if payment record exists
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
@@ -187,7 +196,8 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   if (existingPayments.length > 0) {
     // Update existing record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
-      status: PAYMENT_STATUS.SUCCEEDED
+      status: PAYMENT_STATUS.SUCCEEDED,
+      plan_id: planId
     });
   } else {
     // Create new payment record for one-time payment only
