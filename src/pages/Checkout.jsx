@@ -76,6 +76,7 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   // Subscription Name State
   const defaultSubscriptionName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
