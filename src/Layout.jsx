@@ -322,7 +322,7 @@ function LayoutContent({ children, currentPageName }) {
                   <img 
                     src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/c58c3ac27_logo1.png" 
                     alt="PuraWeb CR" 
-                    className="h-10 w-auto brightness-0 invert"
+                    className="h-10 w-auto"
                   />
                   </div>
                 <p className="text-blue-200 text-sm">
