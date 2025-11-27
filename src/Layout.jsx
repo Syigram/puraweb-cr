@@ -194,7 +194,7 @@ function LayoutContent({ children, currentPageName }) {
                 className="flex items-center group"
               >
                 <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/230f31504_logo3.png" 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/0da20b464_logo4.png" 
                   alt="PuraWeb CR" 
                   className="h-10 md:h-12 w-auto transform group-hover:scale-105 transition-transform"
                 />
@@ -320,7 +320,7 @@ function LayoutContent({ children, currentPageName }) {
             <div>
                 <div className="flex items-center gap-2 mb-4">
                   <img 
-                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/230f31504_logo3.png" 
+                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/0da20b464_logo4.png" 
                     alt="PuraWeb CR" 
                     className="h-10 w-auto"
                   />
