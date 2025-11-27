@@ -153,6 +153,15 @@ function LayoutContent({ children, currentPageName }) {
   const t = translations[language];
 
   useEffect(() => {
+    // Set favicon
+    const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'icon';
+    link.href = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/3bdadd331_logo_fav.png';
+    document.head.appendChild(link);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
