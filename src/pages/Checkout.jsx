@@ -192,7 +192,7 @@ export default function Checkout() {
       isMounted = false;
       clearTimeout(timer);
     };
-  }, [paymentMode, planId, email, existingSubscriptionId]); // Re-run when these change
+  }, [paymentMode, planId, email, existingSubscriptionId, isAuthenticated]); // Re-run when these change
 
   // Track previous language to detect changes and control remounting
   const [prevLanguage, setPrevLanguage] = useState(language);
