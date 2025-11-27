@@ -181,8 +181,9 @@ export default function Checkout() {
     };
 
     // Debounce intent creation for email typing
+    // Solo crear payment intent si el usuario está autenticado
     const timer = setTimeout(() => {
-      if (email && email.includes("@")) {
+      if (isAuthenticated && email && email.includes("@")) {
         loadStripeAndIntent();
       }
     }, 800);
