@@ -462,28 +462,33 @@ export default function Checkout() {
                 </div>
               )}
 
-              {loading ? (
-                                        <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
-                                          <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
-                                          <p className="font-medium">{t.preparingGateway}</p>
-                                          {!email && (
-                                            <div className="text-center mt-3">
-                                              <p className="text-xs mb-3">{t.enterEmailToContinue}</p>
-                                              <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => {
-                                                  const returnUrl = `${createPageUrl("Checkout")}?plan=${planId}&mode=${paymentMode}`;
-                                                  base44.auth.redirectToLogin(returnUrl);
-                                                }}
-                                                className="text-blue-900 border-blue-900 hover:bg-blue-50"
-                                              >
-                                                {t.loginButton}
-                                              </Button>
-                                            </div>
-                                          )}
-                                        </div>
-                                      ) : (
+              {!isAuthenticated ? (
+                <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
+                  <Lock className="w-10 h-10 mb-3 text-blue-900" />
+                  <p className="font-medium text-gray-700 mb-2">
+                    {language === 'es' ? 'Inicia sesión para continuar' : 'Log in to continue'}
+                  </p>
+                  <p className="text-xs text-center mb-4 max-w-xs">
+                    {language === 'es' 
+                      ? 'Para procesar tu pago de forma segura, necesitas iniciar sesión o crear una cuenta.' 
+                      : 'To process your payment securely, you need to log in or create an account.'}
+                  </p>
+                  <Button
+                    onClick={() => {
+                      const returnUrl = `${createPageUrl("Checkout")}?plan=${planId}&mode=${paymentMode}`;
+                      base44.auth.redirectToLogin(returnUrl);
+                    }}
+                    className="bg-blue-900 hover:bg-blue-800 text-white"
+                  >
+                    {t.loginButton}
+                  </Button>
+                </div>
+              ) : loading ? (
+                <div className="py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-lg border border-dashed">
+                  <Loader2 className="w-10 h-10 animate-spin mb-3 text-blue-900" />
+                  <p className="font-medium">{t.preparingGateway}</p>
+                </div>
+              ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div id="payment-element" className="min-h-[250px]" />
 
