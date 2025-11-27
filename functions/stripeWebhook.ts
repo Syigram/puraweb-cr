@@ -370,7 +370,11 @@ async function handleSubscriptionCreated(base44, subscription) {
 }
 
 async function handleSubscriptionUpdated(base44, subscription) {
-  const { id, status, cancel_at_period_end, current_period_end, customer } = subscription;
+  const { id, status, cancel_at_period_end, customer } = subscription;
+  
+  // current_period_end puede estar en el objeto principal o en los items
+  const currentPeriodEnd = subscription.current_period_end || 
+                           subscription.items?.data[0]?.current_period_end;
   
   const existingPayments = await base44.asServiceRole.entities.Payment.filter({
     stripe_subscription_id: id
@@ -394,16 +398,24 @@ async function handleSubscriptionUpdated(base44, subscription) {
     subscriptionStatus = 'canceled';
   }
 
+  // Calcular fecha de fin del período
+  const periodEndDate = currentPeriodEnd 
+    ? new Date(currentPeriodEnd * 1000).toISOString() 
+    : null;
+
   if (existingPayments.length > 0) {
     // Actualizar registro existente
-    await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
+    const updateData = {
       status: paymentStatus,
-      subscription_status: subscriptionStatus,
-      current_period_end: new Date(current_period_end * 1000).toISOString()
-    });
+      subscription_status: subscriptionStatus
+    };
+    if (periodEndDate) {
+      updateData.current_period_end = periodEndDate;
+    }
+    await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, updateData);
   } else if (status === 'active') {
     // Crear registro si la suscripción pasó de incomplete a active y no existe
-    await base44.asServiceRole.entities.Payment.create({
+    const createData = {
       customer_email: customerData?.email || 'unknown',
       customer_name: customerData?.name || 'Unknown',
       subscription_name: subscriptionName,
@@ -415,9 +427,12 @@ async function handleSubscriptionUpdated(base44, subscription) {
       stripe_subscription_id: id,
       stripe_customer_id: customer,
       user_id: customerData?.metadata?.userId || null,
-      subscription_status: subscriptionStatus,
-      current_period_end: new Date(current_period_end * 1000).toISOString()
-    });
+      subscription_status: subscriptionStatus
+    };
+    if (periodEndDate) {
+      createData.current_period_end = periodEndDate;
+    }
+    await base44.asServiceRole.entities.Payment.create(createData);
   }
 
   console.log(`🔄 Subscription updated: ${id} - Status: ${status}`);
