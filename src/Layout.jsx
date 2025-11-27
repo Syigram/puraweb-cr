@@ -191,14 +191,13 @@ function LayoutContent({ children, currentPageName }) {
             {/* Logo */}
             <Link
               to={createPageUrl("Home")}
-              className="flex items-center gap-2 group"
+              className="flex items-center group"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform">
-                <Code2 className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                PuraWeb CR
-              </span>
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d9eadaf2c_logo2.png" 
+                alt="PuraWeb CR" 
+                className="h-10 md:h-12 w-auto transform group-hover:scale-105 transition-transform"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -319,16 +318,17 @@ function LayoutContent({ children, currentPageName }) {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                  <Code2 className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-bold">PuraWeb CR</span>
+                <div className="flex items-center gap-2 mb-4">
+                  <img 
+                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d9eadaf2c_logo2.png" 
+                    alt="PuraWeb CR" 
+                    className="h-12 w-auto brightness-0 invert"
+                  />
                 </div>
                 <p className="text-blue-200 text-sm">
-                {t.footer.description}
-              </p>
-              </div>
+                  {t.footer.description}
+                </p>
+            </div>
               <div>
               <h3 className="font-semibold mb-4">{t.footer.servicesTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
