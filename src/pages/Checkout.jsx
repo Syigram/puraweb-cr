@@ -106,9 +106,13 @@ export default function Checkout() {
         if (user) {
           setEmail(user.email);
           setName(user.full_name || "");
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
         }
       } catch (e) {
         console.error(e);
+        setIsAuthenticated(false);
       }
     };
     init();
