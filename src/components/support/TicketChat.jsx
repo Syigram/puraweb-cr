@@ -198,22 +198,22 @@ export default function TicketChat({
   const StatusIcon = status.icon;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-[75vh] sm:h-[500px] max-h-[85vh]">
       {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
-        <div className="flex items-start justify-between gap-3">
+      <div className="border-b bg-gradient-to-r from-blue-900 to-blue-800 px-3 sm:px-4 py-3 pr-10 sm:pr-12">
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
-            <p className="text-sm text-gray-500 truncate">
-              {ticket?.user_name} • {ticket?.user_email}
+            <h3 className="font-semibold text-white text-sm sm:text-base truncate">{ticket?.subject}</h3>
+            <p className="text-xs sm:text-sm text-blue-200 truncate">
+              {ticket?.user_name}
             </p>
           </div>
           {isAdmin && onStatusChange ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${status.color} hover:opacity-80 transition-opacity`}>
+                <button className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-white/20 text-white hover:bg-white/30 transition-colors">
                   <StatusIcon className="w-3 h-3" />
-                  {t.status[ticket?.status]}
+                  <span className="hidden sm:inline">{t.status[ticket?.status]}</span>
                   <ChevronDown className="w-3 h-3" />
                 </button>
               </DropdownMenuTrigger>
@@ -249,22 +249,22 @@ export default function TicketChat({
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Badge className={status.color}>
+            <Badge className="bg-white/20 text-white border-0 text-xs">
               <StatusIcon className="w-3 h-3 mr-1" />
-              {t.status[ticket?.status]}
+              <span className="hidden sm:inline">{t.status[ticket?.status]}</span>
             </Badge>
           )}
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[300px] max-h-[400px]">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 bg-gray-50">
         {loading ? (
           <div className="flex items-center justify-center h-full">
-            <Loader2 className="w-6 h-6 animate-spin text-blue-900" />
+            <Loader2 className="w-5 h-5 animate-spin text-blue-900" />
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-gray-400 text-sm">
+          <div className="flex items-center justify-center h-full text-gray-400 text-xs sm:text-sm">
             {t.noMessages}
           </div>
         ) : (
@@ -277,41 +277,36 @@ export default function TicketChat({
               return (
                 <motion.div
                   key={msg.id || index}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className={`flex ${showOnRight ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex items-end gap-2 max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
-                    {/* Avatar */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                  <div className={`flex items-end gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[75%] ${showOnRight ? "flex-row-reverse" : ""}`}>
+                    {/* Avatar - hidden on mobile for cleaner look */}
+                    <div className={`hidden sm:flex w-7 h-7 rounded-full items-center justify-center shrink-0 ${
                       isUserMessage 
                         ? "bg-blue-100 text-blue-600" 
                         : "bg-green-100 text-green-600"
                     }`}>
                       {isUserMessage ? (
-                        <User className="w-4 h-4" />
+                        <User className="w-3.5 h-3.5" />
                       ) : (
-                        <Shield className="w-4 h-4" />
+                        <Shield className="w-3.5 h-3.5" />
                       )}
                     </div>
 
                     {/* Message Bubble */}
-                    <div className={`rounded-2xl px-4 py-2.5 ${
+                    <div className={`rounded-2xl px-3 sm:px-4 py-2 ${
                       showOnRight
-                        ? "bg-blue-900 text-white rounded-br-md"
-                        : "bg-white border shadow-sm rounded-bl-md"
+                        ? "bg-blue-900 text-white rounded-br-sm"
+                        : "bg-white border shadow-sm rounded-bl-sm"
                     }`}>
-                      <div className={`text-xs mb-1 ${showOnRight ? "text-blue-200" : "text-gray-500"}`}>
-                        {isUserMessage 
-                          ? (isCurrentUser ? t.you : msg.sender_name) 
-                          : t.support}
-                      </div>
-                      <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
-                      <div className={`text-xs mt-1 ${showOnRight ? "text-blue-300" : "text-gray-400"}`}>
+                      <p className="text-xs sm:text-sm whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
+                      <div className={`text-[10px] sm:text-xs mt-1 ${showOnRight ? "text-blue-300" : "text-gray-400"}`}>
                         {msg.created_date && format(
                           new Date(msg.created_date), 
-                          "dd MMM, HH:mm", 
+                          "HH:mm", 
                           { locale: dateLocale }
                         )}
                       </div>
@@ -327,24 +322,24 @@ export default function TicketChat({
 
       {/* Input */}
       {isClosed ? (
-        <div className="border-t bg-gray-100 px-4 py-3 text-center text-sm text-gray-500">
+        <div className="border-t bg-gray-100 px-3 py-2.5 text-center text-xs sm:text-sm text-gray-500">
           {t.ticketClosed}
         </div>
       ) : (
-        <div className="border-t bg-white p-4">
-          <div className="flex gap-2">
+        <div className="border-t bg-white p-2 sm:p-3">
+          <div className="flex gap-2 items-end">
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t.typeMessage}
-              className="resize-none min-h-[44px] max-h-[120px]"
+              className="resize-none min-h-[40px] max-h-[80px] sm:max-h-[100px] text-sm rounded-xl border-gray-200 focus:border-blue-400"
               rows={1}
             />
             <Button
               onClick={handleSend}
               disabled={!newMessage.trim() || sending}
-              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-11 w-11 p-0"
+              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-10 w-10 p-0 rounded-xl"
             >
               {sending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
