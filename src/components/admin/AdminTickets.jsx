@@ -271,7 +271,7 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:flex-col sm:items-end" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-start" onClick={(e) => e.stopPropagation()}>
           {/* Status Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -312,16 +312,19 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Button
-            size="sm"
-            onClick={() => onOpenChat(ticket)}
-            className="bg-blue-900 hover:bg-blue-800"
-          >
-            <MessageSquare className="w-4 h-4 mr-1" />
-            Chat
-          </Button>
         </div>
+      </div>
+      
+      {/* Chat Button - Bottom Right */}
+      <div className="flex justify-end mt-3" onClick={(e) => e.stopPropagation()}>
+        <Button
+          size="sm"
+          onClick={() => onOpenChat(ticket)}
+          className="bg-blue-900 hover:bg-blue-800"
+        >
+          <MessageSquare className="w-4 h-4 mr-1" />
+          Chat
+        </Button>
       </div>
     </div>
   );
