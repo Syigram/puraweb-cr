@@ -63,7 +63,8 @@ export default function TicketChat({
   currentUser, 
   isAdmin = false,
   onMessageSent,
-  onClose 
+  onClose,
+  onStatusChange
 }) {
   const { language } = useLanguage();
   const t = translations[language];
