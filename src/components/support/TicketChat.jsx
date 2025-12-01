@@ -200,7 +200,7 @@ export default function TicketChat({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3">
+      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
