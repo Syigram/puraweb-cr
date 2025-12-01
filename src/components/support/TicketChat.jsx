@@ -11,8 +11,15 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  XCircle
+  XCircle,
+  ChevronDown
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { es, enUS } from "date-fns/locale";
 import { useLanguage } from "@/components/LanguageContext";
@@ -27,6 +34,7 @@ const translations = {
     support: "Soporte",
     ticketClosed: "Este ticket está cerrado",
     noMessages: "Inicia la conversación enviando un mensaje",
+    changeStatus: "Cambiar estado",
     status: {
       open: "Abierto",
       in_progress: "En Progreso",
@@ -42,6 +50,7 @@ const translations = {
     support: "Support",
     ticketClosed: "This ticket is closed",
     noMessages: "Start the conversation by sending a message",
+    changeStatus: "Change status",
     status: {
       open: "Open",
       in_progress: "In Progress",
@@ -199,10 +208,52 @@ export default function TicketChat({
               {ticket?.user_name} • {ticket?.user_email}
             </p>
           </div>
-          <Badge className={status.color}>
-            <StatusIcon className="w-3 h-3 mr-1" />
-            {t.status[ticket?.status]}
-          </Badge>
+          {isAdmin && onStatusChange ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${status.color} hover:opacity-80 transition-opacity`}>
+                  <StatusIcon className="w-3 h-3" />
+                  {t.status[ticket?.status]}
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem 
+                  onClick={() => onStatusChange(ticket, "open")}
+                  disabled={ticket?.status === "open"}
+                >
+                  <Clock className="w-4 h-4 mr-2 text-yellow-600" />
+                  {t.status.open}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => onStatusChange(ticket, "in_progress")}
+                  disabled={ticket?.status === "in_progress"}
+                >
+                  <AlertCircle className="w-4 h-4 mr-2 text-blue-600" />
+                  {t.status.in_progress}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => onStatusChange(ticket, "resolved")}
+                  disabled={ticket?.status === "resolved"}
+                >
+                  <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
+                  {t.status.resolved}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => onStatusChange(ticket, "closed")}
+                  disabled={ticket?.status === "closed"}
+                >
+                  <XCircle className="w-4 h-4 mr-2 text-gray-600" />
+                  {t.status.closed}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Badge className={status.color}>
+              <StatusIcon className="w-3 h-3 mr-1" />
+              {t.status[ticket?.status]}
+            </Badge>
+          )}
         </div>
       </div>
 

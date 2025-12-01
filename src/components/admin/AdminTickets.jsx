@@ -222,6 +222,10 @@ export default function AdminTickets() {
               isAdmin={true}
               onMessageSent={handleMessageSent}
               onClose={() => setDialogOpen(false)}
+              onStatusChange={(ticket, newStatus) => {
+                handleStatusChange(ticket, newStatus);
+                setSelectedTicket({ ...ticket, status: newStatus });
+              }}
             />
           )}
         </DialogContent>
