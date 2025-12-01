@@ -3,16 +3,21 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Loader2, MessageSquare } from "lucide-react";
+import { Shield, Loader2, BarChart3, Users, CreditCard, MessageSquare } from "lucide-react";
 import AdminStats from "@/components/admin/AdminStats";
 import AdminUsers from "@/components/admin/AdminUsers";
 import AdminPayments from "@/components/admin/AdminPayments";
 import AdminTickets from "@/components/admin/AdminTickets";
 
+const ADMIN_TAB_KEY = "adminDashboardTab";
+
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem(ADMIN_TAB_KEY) || "stats";
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +40,11 @@ export default function AdminDashboard() {
     checkAuth();
   }, [navigate]);
 
+  const handleTabChange = (value) => {
+    setActiveTab(value);
+    localStorage.setItem(ADMIN_TAB_KEY, value);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -51,35 +61,54 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-blue-900 rounded-lg flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
+        <div className="mb-8 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+              <Shield className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              Panel de Administración
-            </h1>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold">
+                Panel de Administración
+              </h1>
+              <p className="text-blue-200 mt-1">
+                Gestiona usuarios, pagos y visualiza estadísticas de la plataforma.
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600">
-            Gestiona usuarios, pagos y visualiza estadísticas de la plataforma.
-          </p>
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="stats" className="space-y-6">
-          <TabsList className="bg-white border shadow-sm w-full sm:w-auto grid grid-cols-4 sm:flex">
-            <TabsTrigger value="stats" className="text-sm">
-              Estadísticas
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
+          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-4 gap-1 h-auto">
+            <TabsTrigger 
+              value="stats" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="hidden sm:inline">Estadísticas</span>
             </TabsTrigger>
-            <TabsTrigger value="users" className="text-sm">
-              Usuarios
+            <TabsTrigger 
+              value="users" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <Users className="w-4 h-4" />
+              <span className="hidden sm:inline">Usuarios</span>
             </TabsTrigger>
-            <TabsTrigger value="payments" className="text-sm">
-              Pagos
+            <TabsTrigger 
+              value="payments" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span className="hidden sm:inline">Pagos</span>
             </TabsTrigger>
-            <TabsTrigger value="tickets" className="text-sm">
-              <MessageSquare className="w-4 h-4 mr-1 hidden sm:inline" />
-              Tickets
+            <TabsTrigger 
+              value="tickets" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="hidden sm:inline">Tickets</span>
             </TabsTrigger>
           </TabsList>
 

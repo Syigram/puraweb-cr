@@ -10,6 +10,8 @@ import UserSubscriptions from "@/components/user/UserSubscriptions";
 import UserTransactions from "@/components/user/UserTransactions";
 import UserDashboardSummary from "@/components/user/UserDashboardSummary";
 
+const USER_TAB_KEY = "userDashboardTab";
+
 const translations = {
   es: {
     title: "Mi Panel",
@@ -34,6 +36,9 @@ const translations = {
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem(USER_TAB_KEY) || "subscriptions";
+  });
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = translations[language];
@@ -86,7 +91,7 @@ export default function UserDashboard() {
         <UserDashboardSummary user={user} />
 
         {/* Tabs */}
-        <Tabs defaultValue="subscriptions" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); localStorage.setItem(USER_TAB_KEY, value); }} className="space-y-6">
           <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-3 gap-1 h-auto">
             <TabsTrigger 
               value="profile" 
