@@ -198,9 +198,9 @@ export default function TicketChat({
   const StatusIcon = status.icon;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-[80vh] sm:h-auto sm:max-h-[85vh]">
       {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
+      <div className="border-b bg-gray-50 px-3 sm:px-4 py-3 pr-12 shrink-0">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
@@ -258,7 +258,7 @@ export default function TicketChat({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[300px] max-h-[400px]">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-0">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="w-6 h-6 animate-spin text-blue-900" />
@@ -327,18 +327,18 @@ export default function TicketChat({
 
       {/* Input */}
       {isClosed ? (
-        <div className="border-t bg-gray-100 px-4 py-3 text-center text-sm text-gray-500">
+        <div className="border-t bg-gray-100 px-3 sm:px-4 py-3 text-center text-sm text-gray-500 shrink-0">
           {t.ticketClosed}
         </div>
       ) : (
-        <div className="border-t bg-white p-4">
-          <div className="flex gap-2">
+        <div className="border-t bg-white p-3 sm:p-4 shrink-0">
+          <div className="flex gap-2 items-end">
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t.typeMessage}
-              className="resize-none min-h-[44px] max-h-[120px]"
+              className="resize-none min-h-[44px] max-h-[100px] text-base"
               rows={1}
             />
             <Button
