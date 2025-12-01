@@ -3,7 +3,6 @@ import { base44 } from "@/api/base44Client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -15,9 +14,6 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -34,11 +30,10 @@ import {
   CheckCircle2,
   AlertCircle,
   XCircle,
-  Send,
-  Mail,
   Filter,
 } from "lucide-react";
 import moment from "moment";
+import TicketChat from "@/components/support/TicketChat";
 
 const statusConfig = {
   open: { label: "Abierto", color: "bg-yellow-100 text-yellow-800", icon: AlertCircle },
@@ -66,20 +61,23 @@ export default function AdminTickets() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedTicket, setSelectedTicket] = useState(null);
-  const [responseText, setResponseText] = useState("");
-  const [responding, setResponding] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    loadTickets();
+    loadData();
   }, []);
 
-  const loadTickets = async () => {
+  const loadData = async () => {
     try {
-      const data = await base44.entities.SupportTicket.list("-created_date");
-      setTickets(data);
+      const [ticketsData, user] = await Promise.all([
+        base44.entities.SupportTicket.list("-created_date"),
+        base44.auth.me()
+      ]);
+      setTickets(ticketsData);
+      setCurrentUser(user);
     } catch (error) {
-      console.error("Error loading tickets:", error);
+      console.error("Error loading data:", error);
     } finally {
       setLoading(false);
     }
@@ -94,65 +92,13 @@ export default function AdminTickets() {
     }
   };
 
-  const handlePriorityChange = async (ticket, newPriority) => {
-    try {
-      await base44.entities.SupportTicket.update(ticket.id, { priority: newPriority });
-      setTickets(tickets.map(t => t.id === ticket.id ? { ...t, priority: newPriority } : t));
-    } catch (error) {
-      console.error("Error updating priority:", error);
-    }
-  };
-
-  const openResponseDialog = (ticket) => {
+  const openChatDialog = (ticket) => {
     setSelectedTicket(ticket);
-    setResponseText(ticket.admin_response || "");
     setDialogOpen(true);
   };
 
-  const handleSendResponse = async () => {
-    if (!responseText.trim() || !selectedTicket) return;
-
-    setResponding(true);
-    try {
-      // Update ticket with response
-      await base44.entities.SupportTicket.update(selectedTicket.id, {
-        admin_response: responseText,
-        responded_at: new Date().toISOString(),
-        status: "in_progress",
-      });
-
-      // Send email notification
-      await base44.integrations.Core.SendEmail({
-        to: selectedTicket.user_email,
-        subject: `Respuesta a tu ticket: ${selectedTicket.subject}`,
-        body: `
-          <h2>Hola ${selectedTicket.user_name || ""},</h2>
-          <p>Hemos respondido a tu ticket de soporte:</p>
-          <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
-            <p><strong>Asunto:</strong> ${selectedTicket.subject}</p>
-            <p><strong>Nuestra respuesta:</strong></p>
-            <p>${responseText}</p>
-          </div>
-          <p>Si tienes más preguntas, no dudes en contactarnos.</p>
-          <p>Saludos,<br>Equipo PuraWeb CR</p>
-        `,
-      });
-
-      // Update local state
-      setTickets(tickets.map(t => 
-        t.id === selectedTicket.id 
-          ? { ...t, admin_response: responseText, responded_at: new Date().toISOString(), status: "in_progress" }
-          : t
-      ));
-
-      setDialogOpen(false);
-      setSelectedTicket(null);
-      setResponseText("");
-    } catch (error) {
-      console.error("Error sending response:", error);
-    } finally {
-      setResponding(false);
-    }
+  const handleMessageSent = () => {
+    loadData(); // Refresh tickets
   };
 
   const filteredTickets = tickets.filter(ticket => {
@@ -258,8 +204,7 @@ export default function AdminTickets() {
                   key={ticket.id}
                   ticket={ticket}
                   onStatusChange={handleStatusChange}
-                  onPriorityChange={handlePriorityChange}
-                  onRespond={openResponseDialog}
+                  onOpenChat={openChatDialog}
                 />
               ))}
             </div>
@@ -267,75 +212,34 @@ export default function AdminTickets() {
         </CardContent>
       </Card>
 
-      {/* Response Dialog */}
+      {/* Chat Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Responder Ticket</DialogTitle>
-          </DialogHeader>
-          {selectedTicket && (
-            <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <p className="font-medium">{selectedTicket.subject}</p>
-                    <p className="text-sm text-gray-500">
-                      De: {selectedTicket.user_name} ({selectedTicket.user_email})
-                    </p>
-                  </div>
-                  <Badge className={categoryLabels[selectedTicket.category] ? "bg-gray-100 text-gray-700" : ""}>
-                    {categoryLabels[selectedTicket.category] || selectedTicket.category}
-                  </Badge>
-                </div>
-                <p className="text-gray-700 mt-3">{selectedTicket.message}</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Tu respuesta</label>
-                <Textarea
-                  value={responseText}
-                  onChange={(e) => setResponseText(e.target.value)}
-                  placeholder="Escribe tu respuesta aquí..."
-                  rows={6}
-                />
-              </div>
-            </div>
+        <DialogContent className="max-w-2xl p-0 overflow-hidden max-h-[85vh]">
+          {selectedTicket && currentUser && (
+            <TicketChat 
+              ticket={selectedTicket}
+              currentUser={currentUser}
+              isAdmin={true}
+              onMessageSent={handleMessageSent}
+              onClose={() => setDialogOpen(false)}
+            />
           )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button
-              onClick={handleSendResponse}
-              disabled={!responseText.trim() || responding}
-              className="bg-blue-900 hover:bg-blue-800"
-            >
-              {responding ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                  Enviando...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Enviar Respuesta
-                </>
-              )}
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
 
-function TicketCard({ ticket, onStatusChange, onPriorityChange, onRespond }) {
+function TicketCard({ ticket, onStatusChange, onOpenChat }) {
   const status = statusConfig[ticket.status] || statusConfig.open;
   const priority = priorityConfig[ticket.priority] || priorityConfig.medium;
   const StatusIcon = status.icon;
 
   return (
-    <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
+    <div 
+      className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white cursor-pointer"
+      onClick={() => onOpenChat(ticket)}
+    >
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-start gap-3">
@@ -359,24 +263,18 @@ function TicketCard({ ticket, onStatusChange, onPriorityChange, onRespond }) {
                   {moment(ticket.created_date).fromNow()}
                 </span>
               </div>
-              {ticket.admin_response && (
-                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                  <p className="text-xs text-blue-600 font-medium mb-1">Última respuesta:</p>
-                  <p className="text-sm text-blue-800 line-clamp-2">{ticket.admin_response}</p>
-                </div>
-              )}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:flex-col sm:items-end">
+        <div className="flex items-center gap-2 sm:flex-col sm:items-end" onClick={(e) => e.stopPropagation()}>
           <Button
             size="sm"
-            onClick={() => onRespond(ticket)}
+            onClick={() => onOpenChat(ticket)}
             className="bg-blue-900 hover:bg-blue-800"
           >
-            <Mail className="w-4 h-4 mr-1" />
-            Responder
+            <MessageSquare className="w-4 h-4 mr-1" />
+            Chat
           </Button>
           
           <DropdownMenu>
