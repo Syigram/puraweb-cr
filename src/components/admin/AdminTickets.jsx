@@ -241,7 +241,7 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
 
   return (
     <div 
-      className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white cursor-pointer"
+      className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white cursor-pointer relative"
       onClick={() => onOpenChat(ticket)}
     >
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -315,8 +315,8 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
         </div>
       </div>
       
-      {/* Chat Button - Bottom Right */}
-      <div className="flex justify-end mt-3" onClick={(e) => e.stopPropagation()}>
+      {/* Chat Button - Bottom Right (Absolute) */}
+      <div className="absolute bottom-4 right-4" onClick={(e) => e.stopPropagation()}>
         <Button
           size="sm"
           onClick={() => onOpenChat(ticket)}
