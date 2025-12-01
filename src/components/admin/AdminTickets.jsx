@@ -214,7 +214,7 @@ export default function AdminTickets() {
 
       {/* Chat Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden max-h-[85vh]">
+                    <DialogContent className="max-w-2xl w-[95vw] sm:w-full p-0 overflow-hidden max-h-[85vh]">
           {selectedTicket && currentUser && (
             <TicketChat 
               ticket={selectedTicket}
