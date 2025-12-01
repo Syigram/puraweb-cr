@@ -3,10 +3,11 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Loader2 } from "lucide-react";
+import { Shield, Loader2, MessageSquare } from "lucide-react";
 import AdminStats from "@/components/admin/AdminStats";
 import AdminUsers from "@/components/admin/AdminUsers";
 import AdminPayments from "@/components/admin/AdminPayments";
+import AdminTickets from "@/components/admin/AdminTickets";
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -66,7 +67,7 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="stats" className="space-y-6">
-          <TabsList className="bg-white border shadow-sm w-full sm:w-auto grid grid-cols-3 sm:flex">
+          <TabsList className="bg-white border shadow-sm w-full sm:w-auto grid grid-cols-4 sm:flex">
             <TabsTrigger value="stats" className="text-sm">
               Estadísticas
             </TabsTrigger>
@@ -75,6 +76,10 @@ export default function AdminDashboard() {
             </TabsTrigger>
             <TabsTrigger value="payments" className="text-sm">
               Pagos
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="text-sm">
+              <MessageSquare className="w-4 h-4 mr-1 hidden sm:inline" />
+              Tickets
             </TabsTrigger>
           </TabsList>
 
@@ -88,6 +93,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="payments">
             <AdminPayments />
+          </TabsContent>
+
+          <TabsContent value="tickets">
+            <AdminTickets />
           </TabsContent>
         </Tabs>
       </div>
