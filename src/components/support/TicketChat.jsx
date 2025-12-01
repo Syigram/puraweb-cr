@@ -200,12 +200,13 @@ export default function TicketChat({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
-        <div className="flex items-start justify-between gap-3">
+      <div className="border-b bg-gray-50 px-3 sm:px-4 py-3 pr-10 sm:pr-12">
+        <div className="flex items-start justify-between gap-2 sm:gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
-            <p className="text-sm text-gray-500 truncate">
-              {ticket?.user_name} • {ticket?.user_email}
+            <h3 className="font-semibold text-gray-900 truncate text-sm sm:text-base">{ticket?.subject}</h3>
+            <p className="text-xs sm:text-sm text-gray-500 truncate">
+              {ticket?.user_name} • <span className="hidden xs:inline">{ticket?.user_email}</span>
+              <span className="xs:hidden">{ticket?.user_email?.split('@')[0]}</span>
             </p>
           </div>
           {isAdmin && onStatusChange ? (
@@ -258,7 +259,7 @@ export default function TicketChat({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[300px] max-h-[400px]">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[250px] sm:min-h-[300px] max-h-[350px] sm:max-h-[400px]">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="w-6 h-6 animate-spin text-blue-900" />
@@ -282,33 +283,33 @@ export default function TicketChat({
                   exit={{ opacity: 0 }}
                   className={`flex ${showOnRight ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex items-end gap-2 max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
-                    {/* Avatar */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                  <div className={`flex items-end gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
+                    {/* Avatar - Hidden on very small screens */}
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 hidden xs:flex ${
                       isUserMessage 
                         ? "bg-blue-100 text-blue-600" 
                         : "bg-green-100 text-green-600"
                     }`}>
                       {isUserMessage ? (
-                        <User className="w-4 h-4" />
+                        <User className="w-3 h-3 sm:w-4 sm:h-4" />
                       ) : (
-                        <Shield className="w-4 h-4" />
+                        <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
                       )}
                     </div>
 
                     {/* Message Bubble */}
-                    <div className={`rounded-2xl px-4 py-2.5 ${
+                    <div className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 max-w-full ${
                       showOnRight
                         ? "bg-blue-900 text-white rounded-br-md"
                         : "bg-white border shadow-sm rounded-bl-md"
                     }`}>
-                      <div className={`text-xs mb-1 ${showOnRight ? "text-blue-200" : "text-gray-500"}`}>
+                      <div className={`text-[10px] sm:text-xs mb-0.5 sm:mb-1 ${showOnRight ? "text-blue-200" : "text-gray-500"}`}>
                         {isUserMessage 
                           ? (isCurrentUser ? t.you : msg.sender_name) 
                           : t.support}
                       </div>
-                      <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
-                      <div className={`text-xs mt-1 ${showOnRight ? "text-blue-300" : "text-gray-400"}`}>
+                      <p className="text-xs sm:text-sm whitespace-pre-wrap break-words">{msg.message}</p>
+                      <div className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 ${showOnRight ? "text-blue-300" : "text-gray-400"}`}>
                         {msg.created_date && format(
                           new Date(msg.created_date), 
                           "dd MMM, HH:mm", 
@@ -327,24 +328,24 @@ export default function TicketChat({
 
       {/* Input */}
       {isClosed ? (
-        <div className="border-t bg-gray-100 px-4 py-3 text-center text-sm text-gray-500">
+        <div className="border-t bg-gray-100 px-3 sm:px-4 py-2.5 sm:py-3 text-center text-xs sm:text-sm text-gray-500">
           {t.ticketClosed}
         </div>
       ) : (
-        <div className="border-t bg-white p-4">
+        <div className="border-t bg-white p-2.5 sm:p-4">
           <div className="flex gap-2">
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t.typeMessage}
-              className="resize-none min-h-[44px] max-h-[120px]"
+              className="resize-none min-h-[40px] sm:min-h-[44px] max-h-[100px] sm:max-h-[120px] text-sm"
               rows={1}
             />
             <Button
               onClick={handleSend}
               disabled={!newMessage.trim() || sending}
-              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-11 w-11 p-0"
+              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-10 w-10 sm:h-11 sm:w-11 p-0"
             >
               {sending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
