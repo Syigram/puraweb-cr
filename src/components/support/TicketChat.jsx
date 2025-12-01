@@ -200,7 +200,7 @@ export default function TicketChat({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
+      <div className="border-b bg-gray-50 px-3 py-2.5 sm:px-4 sm:py-3 pr-10 sm:pr-12">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
@@ -258,7 +258,7 @@ export default function TicketChat({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[300px] max-h-[400px]">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[200px] sm:min-h-[300px] max-h-[50vh] sm:max-h-[400px]">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="w-6 h-6 animate-spin text-blue-900" />
@@ -282,22 +282,22 @@ export default function TicketChat({
                   exit={{ opacity: 0 }}
                   className={`flex ${showOnRight ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex items-end gap-2 max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
+                  <div className={`flex items-end gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
                     {/* Avatar */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 ${
                       isUserMessage 
                         ? "bg-blue-100 text-blue-600" 
                         : "bg-green-100 text-green-600"
                     }`}>
                       {isUserMessage ? (
-                        <User className="w-4 h-4" />
+                        <User className="w-3 h-3 sm:w-4 sm:h-4" />
                       ) : (
-                        <Shield className="w-4 h-4" />
+                        <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
                       )}
                     </div>
 
                     {/* Message Bubble */}
-                    <div className={`rounded-2xl px-4 py-2.5 ${
+                    <div className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 ${
                       showOnRight
                         ? "bg-blue-900 text-white rounded-br-md"
                         : "bg-white border shadow-sm rounded-bl-md"
@@ -331,20 +331,20 @@ export default function TicketChat({
           {t.ticketClosed}
         </div>
       ) : (
-        <div className="border-t bg-white p-4">
+        <div className="border-t bg-white p-3 sm:p-4">
           <div className="flex gap-2">
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t.typeMessage}
-              className="resize-none min-h-[44px] max-h-[120px]"
+              className="resize-none min-h-[40px] sm:min-h-[44px] max-h-[100px] sm:max-h-[120px] text-sm sm:text-base"
               rows={1}
             />
             <Button
               onClick={handleSend}
               disabled={!newMessage.trim() || sending}
-              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-11 w-11 p-0"
+              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-10 w-10 sm:h-11 sm:w-11 p-0"
             >
               {sending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
