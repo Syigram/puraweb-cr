@@ -194,7 +194,7 @@ export default function UserTickets({ user }) {
 
       {/* Ticket Chat Dialog */}
       <Dialog open={!!selectedTicket} onOpenChange={() => setSelectedTicket(null)}>
-                    <DialogContent className="sm:max-w-lg p-0 overflow-hidden max-h-[85vh] w-[92vw] left-[4vw] translate-x-0 sm:left-[50%] sm:translate-x-[-50%] sm:w-full">
+                    <DialogContent className="w-[calc(100vw-2rem)] max-w-lg p-0 overflow-hidden max-h-[85vh] mx-4">
           {selectedTicket && (
             <TicketChat 
               ticket={selectedTicket}
