@@ -24,13 +24,13 @@ import {
 import {
   Loader2,
   Search,
-  MoreVertical,
   MessageSquare,
   Clock,
   CheckCircle2,
   AlertCircle,
   XCircle,
   Filter,
+  ChevronDown,
 } from "lucide-react";
 import moment from "moment";
 import TicketChat from "@/components/support/TicketChat";
@@ -272,6 +272,47 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
         </div>
 
         <div className="flex items-center gap-2 sm:flex-col sm:items-end" onClick={(e) => e.stopPropagation()}>
+          {/* Status Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${status.color} hover:opacity-80 transition-opacity`}>
+                <StatusIcon className="w-3.5 h-3.5" />
+                {status.label}
+                <ChevronDown className="w-3 h-3" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem 
+                onClick={() => onStatusChange(ticket, "open")}
+                disabled={ticket.status === "open"}
+              >
+                <AlertCircle className="w-4 h-4 mr-2 text-yellow-600" />
+                Abierto
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => onStatusChange(ticket, "in_progress")}
+                disabled={ticket.status === "in_progress"}
+              >
+                <Clock className="w-4 h-4 mr-2 text-blue-600" />
+                En Proceso
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => onStatusChange(ticket, "resolved")}
+                disabled={ticket.status === "resolved"}
+              >
+                <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
+                Resuelto
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => onStatusChange(ticket, "closed")}
+                disabled={ticket.status === "closed"}
+              >
+                <XCircle className="w-4 h-4 mr-2 text-gray-600" />
+                Cerrado
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button
             size="sm"
             onClick={() => onOpenChat(ticket)}
@@ -280,44 +321,6 @@ function TicketCard({ ticket, onStatusChange, onOpenChat }) {
             <MessageSquare className="w-4 h-4 mr-1" />
             Chat
           </Button>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <MoreVertical className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem 
-                onClick={() => onStatusChange(ticket, "open")}
-                disabled={ticket.status === "open"}
-              >
-                <AlertCircle className="w-4 h-4 mr-2 text-yellow-600" />
-                Marcar como Abierto
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => onStatusChange(ticket, "in_progress")}
-                disabled={ticket.status === "in_progress"}
-              >
-                <Clock className="w-4 h-4 mr-2 text-blue-600" />
-                Marcar En Proceso
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => onStatusChange(ticket, "resolved")}
-                disabled={ticket.status === "resolved"}
-              >
-                <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
-                Marcar como Resuelto
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => onStatusChange(ticket, "closed")}
-                disabled={ticket.status === "closed"}
-              >
-                <XCircle className="w-4 h-4 mr-2 text-gray-600" />
-                Cerrar Ticket
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </div>
