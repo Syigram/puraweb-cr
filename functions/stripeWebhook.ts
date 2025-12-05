@@ -217,6 +217,10 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
     });
   }
 
+  // Send WhatsApp notification
+  const customerPhone = customerData?.phone || metadata?.phone;
+  await sendWhatsAppPaymentConfirmation(customerPhone, amount, planId, PAYMENT_MODES.ONETIME, currency);
+
   console.log(`✅ One-time payment succeeded: ${id}`);
 }
 
@@ -310,6 +314,10 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
+    
+    // Send WhatsApp notification for new subscriptions
+    const customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
+    await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
   }
 
   console.log(`✅ Subscription invoice paid: ${id}`);
