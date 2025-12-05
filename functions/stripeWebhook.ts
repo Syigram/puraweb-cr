@@ -230,6 +230,7 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
     }
   }
   
+  console.log(`📱 About to send WhatsApp for one-time payment. Phone: ${customerPhone}`);
   await sendWhatsAppPaymentConfirmation(customerPhone, amount, planId, PAYMENT_MODES.ONETIME, currency);
 
   console.log(`✅ One-time payment succeeded: ${id}`);
@@ -328,21 +329,29 @@ async function handleInvoicePaid(base44, invoice) {
     
     // Send WhatsApp notification for new subscriptions
     let customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
+    console.log(`📱 Looking for phone - customerData.phone: ${customerData?.phone}, metadata.phone: ${subscriptionData.metadata?.phone}`);
     
     // Try to get phone from the invoice's payment intent
     if (!customerPhone && payment_intent) {
       try {
+        console.log(`📱 Retrieving payment intent ${payment_intent} for phone lookup`);
         const pi = await stripe.paymentIntents.retrieve(payment_intent);
+        console.log(`📱 Payment intent has payment_method: ${pi.payment_method}`);
         if (pi.payment_method) {
           const paymentMethod = await stripe.paymentMethods.retrieve(pi.payment_method);
           customerPhone = paymentMethod.billing_details?.phone;
+          console.log(`📱 Got phone from billing details: ${customerPhone}`);
         }
       } catch (e) {
         console.log('Could not retrieve payment method for phone:', e.message);
       }
     }
     
+    console.log(`📱 About to send WhatsApp for subscription. Phone: ${customerPhone}`);
     await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
+  } else {
+    // Subscription already exists - also try to send WhatsApp if first successful payment
+    console.log(`📱 Subscription payment exists, checking if WhatsApp needed`);
   }
 
   console.log(`✅ Subscription invoice paid: ${id}`);
@@ -529,6 +538,16 @@ const PAYMENT_MODE_NAMES = {
 };
 
 async function sendWhatsAppPaymentConfirmation(phoneNumber, amount, planId, paymentMode, currency = 'crc') {
+  console.log(`📱 sendWhatsAppPaymentConfirmation called with:`, {
+    phoneNumber,
+    amount,
+    planId,
+    paymentMode,
+    currency,
+    hasToken: !!whatsappAccessToken,
+    hasPhoneId: !!whatsappPhoneNumberId
+  });
+
   if (!whatsappAccessToken || !whatsappPhoneNumberId) {
     console.log('⚠️ WhatsApp credentials not configured, skipping notification');
     return;
