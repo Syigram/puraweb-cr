@@ -5,12 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock, Check } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Loader2, AlertCircle, Lock, Check, Phone } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { base44 } from "@/api/base44Client";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { PAYMENT_MODES, PLAN_IDS } from "@/components/paymentConstants";
+import PhoneInput from "@/components/PhoneInput";
 
 export default function Checkout() {
     const navigate = useNavigate();
@@ -76,6 +77,7 @@ export default function Checkout() {
   // Customer Info State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   // Subscription Name State
@@ -106,6 +108,7 @@ export default function Checkout() {
         if (user) {
           setEmail(user.email);
           setName(user.full_name || "");
+          setPhone(user.phone || "");
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
@@ -269,6 +272,16 @@ export default function Checkout() {
     successUrl.searchParams.set("plan_id", planId);
     successUrl.searchParams.set("payment_mode", paymentMode);
 
+    // Save phone to user profile if it's new or updated
+    try {
+      const currentUser = await base44.auth.me();
+      if (phone && phone !== currentUser.phone) {
+        await base44.auth.updateMe({ phone });
+      }
+    } catch (e) {
+      console.error("Error saving phone:", e);
+    }
+
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -276,7 +289,8 @@ export default function Checkout() {
         payment_method_data: {
           billing_details: {
             name: name,
-            email: email
+            email: email,
+            phone: phone
           }
         }
       },
@@ -435,6 +449,21 @@ export default function Checkout() {
                       onChange={(e) => setName(e.target.value)}
                       className="h-11"
                     />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="phone" className="flex items-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      {language === 'es' ? 'Teléfono' : 'Phone'}
+                    </Label>
+                    <PhoneInput 
+                      value={phone}
+                      onChange={setPhone}
+                    />
+                    <p className="text-xs text-gray-500">
+                      {language === 'es' 
+                        ? 'Recibirás confirmación de pago por WhatsApp' 
+                        : 'You will receive payment confirmation via WhatsApp'}
+                    </p>
                   </div>
                   {paymentMode === PAYMENT_MODES.SUBSCRIPTION && (
                     <div className="grid gap-2">
