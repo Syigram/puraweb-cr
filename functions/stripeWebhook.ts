@@ -217,8 +217,19 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
     });
   }
 
-  // Send WhatsApp notification
-  const customerPhone = customerData?.phone || metadata?.phone;
+  // Send WhatsApp notification - get phone from payment method billing details
+  let customerPhone = customerData?.phone || metadata?.phone;
+  
+  // Try to get phone from the payment intent's payment method
+  if (!customerPhone && paymentIntent.payment_method) {
+    try {
+      const paymentMethod = await stripe.paymentMethods.retrieve(paymentIntent.payment_method);
+      customerPhone = paymentMethod.billing_details?.phone;
+    } catch (e) {
+      console.log('Could not retrieve payment method for phone:', e.message);
+    }
+  }
+  
   await sendWhatsAppPaymentConfirmation(customerPhone, amount, planId, PAYMENT_MODES.ONETIME, currency);
 
   console.log(`✅ One-time payment succeeded: ${id}`);
@@ -316,7 +327,21 @@ async function handleInvoicePaid(base44, invoice) {
     });
     
     // Send WhatsApp notification for new subscriptions
-    const customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
+    let customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
+    
+    // Try to get phone from the invoice's payment intent
+    if (!customerPhone && payment_intent) {
+      try {
+        const pi = await stripe.paymentIntents.retrieve(payment_intent);
+        if (pi.payment_method) {
+          const paymentMethod = await stripe.paymentMethods.retrieve(pi.payment_method);
+          customerPhone = paymentMethod.billing_details?.phone;
+        }
+      } catch (e) {
+        console.log('Could not retrieve payment method for phone:', e.message);
+      }
+    }
+    
     await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
   }
 
