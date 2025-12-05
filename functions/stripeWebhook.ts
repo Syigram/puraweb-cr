@@ -321,7 +321,9 @@ async function handleInvoicePaid(base44, invoice) {
     });
   }
 
-  let isNewSubscription = false;
+  // Check if this is the first payment for this subscription by looking at invoice number
+  // invoice.billing_reason can be: 'subscription_create', 'subscription_cycle', 'subscription_update', etc.
+  const isFirstPayment = existingPayments.length === 0 && existingByPaymentIntent.length === 0;
 
   if (existingPayments.length > 0) {
     // Update existing subscription payment record (renewal)
@@ -331,7 +333,7 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
-    console.log(`📱 Updated existing subscription record (renewal)`);
+    console.log(`✅ Updated existing subscription record`);
   } else if (existingByPaymentIntent.length > 0) {
     // Fix incorrect record created by payment_intent.succeeded
     console.log(`🔧 Fixing incorrect payment record ${existingByPaymentIntent[0].id} -> subscription`);
@@ -345,7 +347,6 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
-    isNewSubscription = true; // This is still a new subscription, just fixed
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
@@ -364,13 +365,15 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
-    isNewSubscription = true;
   }
 
-  // Send WhatsApp notification for NEW subscriptions only (not renewals)
-  if (isNewSubscription) {
-    console.log(`📱 Sending WhatsApp for NEW subscription. Phone: ${customerPhone}`);
+  // Send WhatsApp notification for first subscription payment
+  // Use isFirstPayment flag since handleSubscriptionCreated may have created the record first
+  if (isFirstPayment) {
+    console.log(`📱 Sending WhatsApp for FIRST subscription payment. Phone: ${customerPhone}`);
     await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
+  } else {
+    console.log(`📱 Skipping WhatsApp - this is a renewal payment`);
   }
 
   console.log(`✅ Subscription invoice paid: ${id}`);
