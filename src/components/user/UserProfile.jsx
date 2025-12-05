@@ -5,16 +5,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { User, Mail, Shield, Calendar, Save, Loader2, CheckCircle2 } from "lucide-react";
+import { User, Mail, Shield, Calendar, Save, Loader2, CheckCircle2, Phone } from "lucide-react";
 import { format } from "date-fns";
 import { es, enUS } from "date-fns/locale";
 import { useLanguage } from "@/components/LanguageContext";
+import PhoneInput from "@/components/PhoneInput";
 
 const translations = {
   es: {
     title: "Información del Perfil",
     fullName: "Nombre Completo",
     email: "Correo Electrónico",
+    phone: "Teléfono",
+    phoneNote: "Usado para notificaciones por WhatsApp",
     role: "Rol",
     memberSince: "Miembro Desde",
     saveChanges: "Guardar Cambios",
@@ -28,6 +31,8 @@ const translations = {
     title: "Profile Information",
     fullName: "Full Name",
     email: "Email Address",
+    phone: "Phone",
+    phoneNote: "Used for WhatsApp notifications",
     role: "Role",
     memberSince: "Member Since",
     saveChanges: "Save Changes",
@@ -45,6 +50,7 @@ export default function UserProfile({ user, onUserUpdate }) {
   const dateLocale = language === "es" ? es : enUS;
 
   const [fullName, setFullName] = useState(user.full_name || "");
+  const [phone, setPhone] = useState(user.phone || "");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -52,8 +58,8 @@ export default function UserProfile({ user, onUserUpdate }) {
     setSaving(true);
     setSaved(false);
     try {
-      await base44.auth.updateMe({ full_name: fullName });
-      onUserUpdate({ ...user, full_name: fullName });
+      await base44.auth.updateMe({ full_name: fullName, phone });
+      onUserUpdate({ ...user, full_name: fullName, phone });
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (error) {
@@ -62,6 +68,8 @@ export default function UserProfile({ user, onUserUpdate }) {
       setSaving(false);
     }
   };
+
+  const hasChanges = fullName !== (user.full_name || "") || phone !== (user.phone || "");
 
   return (
     <Card>
@@ -98,6 +106,19 @@ export default function UserProfile({ user, onUserUpdate }) {
             </div>
             <p className="text-xs text-gray-500">{t.emailNote}</p>
           </div>
+
+          {/* Phone */}
+          <div className="space-y-2 sm:col-span-2">
+            <Label htmlFor="phone" className="flex items-center gap-2">
+              <Phone className="w-4 h-4" />
+              {t.phone}
+            </Label>
+            <PhoneInput
+              value={phone}
+              onChange={setPhone}
+            />
+            <p className="text-xs text-gray-500">{t.phoneNote}</p>
+          </div>
         </div>
 
         {/* Role and Member Since */}
@@ -124,7 +145,7 @@ export default function UserProfile({ user, onUserUpdate }) {
         <div className="flex justify-end pt-4">
           <Button
             onClick={handleSave}
-            disabled={saving || fullName === user.full_name}
+            disabled={saving || !hasChanges}
             className="bg-blue-900 hover:bg-blue-800"
           >
             {saving ? (
