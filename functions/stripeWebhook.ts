@@ -288,37 +288,7 @@ async function handleInvoicePaid(base44, invoice) {
   const planId = subscriptionData.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
   const subscriptionName = subscriptionData.metadata?.subscriptionName || null;
 
-  // PRIMERO: Buscar si existe un registro incorrecto creado por payment_intent.succeeded
-  // usando el payment_intent_id de este invoice
-  if (payment_intent) {
-    const incorrectPayments = await base44.asServiceRole.entities.Payment.filter({
-      stripe_payment_intent_id: payment_intent
-    });
-    
-    if (incorrectPayments.length > 0) {
-      // Corregir el registro existente - convertirlo a suscripción
-      console.log(`🔧 Fixing incorrect payment record ${incorrectPayments[0].id} -> subscription`);
-      await base44.asServiceRole.entities.Payment.update(incorrectPayments[0].id, {
-        payment_mode: PAYMENT_MODES.SUBSCRIPTION,
-        subscription_name: subscriptionName,
-        plan_id: planId,
-        status: PAYMENT_STATUS.SUCCEEDED,
-        amount: amount_paid,
-        stripe_subscription_id: subscription,
-        subscription_status: subscriptionData.status,
-        current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
-      });
-      console.log(`✅ Subscription invoice paid (fixed existing): ${id}`);
-      return;
-    }
-  }
-
-  // Check if payment record exists for this subscription
-  const existingPayments = await base44.asServiceRole.entities.Payment.filter({
-    stripe_subscription_id: subscription
-  });
-
-  // Get phone number for WhatsApp notification
+  // Get phone number for WhatsApp notification FIRST
   let customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
   console.log(`📱 Looking for phone - customerData.phone: ${customerData?.phone}, metadata.phone: ${subscriptionData.metadata?.phone}`);
   
@@ -338,15 +308,44 @@ async function handleInvoicePaid(base44, invoice) {
     }
   }
 
+  // Check if payment record exists for this subscription
+  const existingPayments = await base44.asServiceRole.entities.Payment.filter({
+    stripe_subscription_id: subscription
+  });
+  
+  // Also check if there's a record by payment_intent (created incorrectly by payment_intent.succeeded)
+  let existingByPaymentIntent = [];
+  if (payment_intent) {
+    existingByPaymentIntent = await base44.asServiceRole.entities.Payment.filter({
+      stripe_payment_intent_id: payment_intent
+    });
+  }
+
+  let isNewSubscription = false;
+
   if (existingPayments.length > 0) {
-    // Update existing subscription payment record
+    // Update existing subscription payment record (renewal)
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
       status: PAYMENT_STATUS.SUCCEEDED,
       amount: amount_paid,
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
-    console.log(`📱 Updated existing payment record, skipping WhatsApp (renewal)`);
+    console.log(`📱 Updated existing subscription record (renewal)`);
+  } else if (existingByPaymentIntent.length > 0) {
+    // Fix incorrect record created by payment_intent.succeeded
+    console.log(`🔧 Fixing incorrect payment record ${existingByPaymentIntent[0].id} -> subscription`);
+    await base44.asServiceRole.entities.Payment.update(existingByPaymentIntent[0].id, {
+      payment_mode: PAYMENT_MODES.SUBSCRIPTION,
+      subscription_name: subscriptionName,
+      plan_id: planId,
+      status: PAYMENT_STATUS.SUCCEEDED,
+      amount: amount_paid,
+      stripe_subscription_id: subscription,
+      subscription_status: subscriptionData.status,
+      current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
+    });
+    isNewSubscription = true; // This is still a new subscription, just fixed
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
@@ -365,9 +364,12 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
-    
-    // Send WhatsApp notification for new subscriptions
-    console.log(`📱 About to send WhatsApp for NEW subscription. Phone: ${customerPhone}`);
+    isNewSubscription = true;
+  }
+
+  // Send WhatsApp notification for NEW subscriptions only (not renewals)
+  if (isNewSubscription) {
+    console.log(`📱 Sending WhatsApp for NEW subscription. Phone: ${customerPhone}`);
     await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
   }
 
