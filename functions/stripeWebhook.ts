@@ -3,6 +3,8 @@ import Stripe from 'npm:stripe@^14.0.0';
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
 const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
+const whatsappAccessToken = Deno.env.get("WHATSAPP_ACCESS_TOKEN");
+const whatsappPhoneNumberId = Deno.env.get("WHATSAPP_PHONE_NUMBER_ID");
 
 // Constantes estandarizadas (duplicadas aquí porque backend no puede importar de components)
 const PAYMENT_MODES = {
@@ -478,4 +480,92 @@ async function handleSubscriptionCanceled(base44, subscription) {
   }
 
   console.log(`🚫 Subscription deleted event processed: ${id}`);
+}
+
+// ============ WHATSAPP NOTIFICATION ============
+
+const PLAN_NAMES = {
+  basic: { es: 'Básico', en: 'Basic' },
+  professional: { es: 'Profesional', en: 'Professional' },
+  business: { es: 'Empresarial', en: 'Business' }
+};
+
+const PAYMENT_MODE_NAMES = {
+  subscription: { es: 'Suscripción Mensual', en: 'Monthly Subscription' },
+  onetime: { es: 'Pago Único', en: 'One-time Payment' }
+};
+
+async function sendWhatsAppPaymentConfirmation(phoneNumber, amount, planId, paymentMode, currency = 'crc') {
+  if (!whatsappAccessToken || !whatsappPhoneNumberId) {
+    console.log('⚠️ WhatsApp credentials not configured, skipping notification');
+    return;
+  }
+
+  if (!phoneNumber) {
+    console.log('⚠️ No phone number provided, skipping WhatsApp notification');
+    return;
+  }
+
+  // Format phone number (remove spaces, dashes, and ensure it has country code)
+  let formattedPhone = phoneNumber.replace(/[\s\-\(\)]/g, '');
+  if (!formattedPhone.startsWith('+')) {
+    // Assume Costa Rica if no country code
+    if (!formattedPhone.startsWith('506')) {
+      formattedPhone = '506' + formattedPhone;
+    }
+  } else {
+    formattedPhone = formattedPhone.substring(1); // Remove + for WhatsApp API
+  }
+
+  // Format amount (convert from cents to currency display)
+  const amountInUnits = amount / 100;
+  const formattedAmount = currency.toUpperCase() === 'CRC' 
+    ? `₡${amountInUnits.toLocaleString('es-CR')}`
+    : `$${amountInUnits.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+  // Get plan and payment mode names
+  const planName = PLAN_NAMES[planId]?.es || planId;
+  const paymentModeName = PAYMENT_MODE_NAMES[paymentMode]?.es || paymentMode;
+  const planDescription = `Plan ${planName} - ${paymentModeName}`;
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/v18.0/${whatsappPhoneNumberId}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${whatsappAccessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          messaging_product: 'whatsapp',
+          to: formattedPhone,
+          type: 'template',
+          template: {
+            name: 'payment_confirmation',
+            language: { code: 'es' },
+            components: [
+              {
+                type: 'body',
+                parameters: [
+                  { type: 'text', text: formattedAmount },
+                  { type: 'text', text: planDescription }
+                ]
+              }
+            ]
+          }
+        })
+      }
+    );
+
+    const result = await response.json();
+    
+    if (response.ok) {
+      console.log(`✅ WhatsApp notification sent to ${formattedPhone}`);
+    } else {
+      console.error(`❌ WhatsApp API error:`, result);
+    }
+  } catch (error) {
+    console.error(`❌ Failed to send WhatsApp notification:`, error.message);
+  }
 }
