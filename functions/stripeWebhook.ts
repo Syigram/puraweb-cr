@@ -367,14 +367,10 @@ async function handleInvoicePaid(base44, invoice) {
     });
   }
 
-  // Send WhatsApp notification for first subscription payment
-  // Use isFirstPayment flag since handleSubscriptionCreated may have created the record first
-  if (isFirstPayment) {
-    console.log(`📱 Sending WhatsApp for FIRST subscription payment. Phone: ${customerPhone}`);
-    await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
-  } else {
-    console.log(`📱 Skipping WhatsApp - this is a renewal payment`);
-  }
+  // WhatsApp notification is now sent from handleSubscriptionUpdated when the record is created
+  // This avoids duplicate messages since subscription.updated fires before invoice.paid
+  console.log(`📱 WhatsApp handled by subscription.updated event (isFirstPayment: ${isFirstPayment})`);
+  
 
   console.log(`✅ Subscription invoice paid: ${id}`);
 }
@@ -499,6 +495,28 @@ async function handleSubscriptionUpdated(base44, subscription) {
       createData.current_period_end = periodEndDate;
     }
     await base44.asServiceRole.entities.Payment.create(createData);
+    
+    // Send WhatsApp for NEW subscription created here
+    let customerPhone = customerData?.phone || subscription.metadata?.phone;
+    
+    // Try to get phone from default payment method
+    if (!customerPhone && subscription.default_payment_method) {
+      try {
+        const paymentMethod = await stripe.paymentMethods.retrieve(subscription.default_payment_method);
+        customerPhone = paymentMethod.billing_details?.phone;
+      } catch (e) {
+        console.log('Could not retrieve payment method for phone:', e.message);
+      }
+    }
+    
+    console.log(`📱 Sending WhatsApp for NEW subscription (from updated event). Phone: ${customerPhone}`);
+    await sendWhatsAppPaymentConfirmation(
+      customerPhone, 
+      subscription.items?.data[0]?.price?.unit_amount || 0, 
+      planId, 
+      PAYMENT_MODES.SUBSCRIPTION, 
+      subscription.items?.data[0]?.price?.currency || 'crc'
+    );
   }
 
   console.log(`🔄 Subscription updated: ${id} - Status: ${status}`);
