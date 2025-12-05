@@ -573,7 +573,7 @@ const PLAN_NAMES = {
 };
 
 const PAYMENT_MODE_NAMES = {
-  subscription: { es: 'Suscripción Mensual', en: 'Monthly Subscription' },
+  subscription: { es: 'Suscripción', en: 'Subscription' },
   onetime: { es: 'Pago Único', en: 'One-time Payment' }
 };
 
