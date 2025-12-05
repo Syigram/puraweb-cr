@@ -300,6 +300,26 @@ async function handleInvoicePaid(base44, invoice) {
     stripe_subscription_id: subscription
   });
 
+  // Get phone number for WhatsApp notification
+  let customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
+  console.log(`📱 Looking for phone - customerData.phone: ${customerData?.phone}, metadata.phone: ${subscriptionData.metadata?.phone}`);
+  
+  // Try to get phone from the invoice's payment intent
+  if (!customerPhone && payment_intent) {
+    try {
+      console.log(`📱 Retrieving payment intent ${payment_intent} for phone lookup`);
+      const pi = await stripe.paymentIntents.retrieve(payment_intent);
+      console.log(`📱 Payment intent has payment_method: ${pi.payment_method}`);
+      if (pi.payment_method) {
+        const paymentMethod = await stripe.paymentMethods.retrieve(pi.payment_method);
+        customerPhone = paymentMethod.billing_details?.phone;
+        console.log(`📱 Got phone from billing details: ${customerPhone}`);
+      }
+    } catch (e) {
+      console.log('Could not retrieve payment method for phone:', e.message);
+    }
+  }
+
   if (existingPayments.length > 0) {
     // Update existing subscription payment record
     await base44.asServiceRole.entities.Payment.update(existingPayments[0].id, {
@@ -308,6 +328,7 @@ async function handleInvoicePaid(base44, invoice) {
       subscription_status: subscriptionData.status,
       current_period_end: new Date(subscriptionData.current_period_end * 1000).toISOString()
     });
+    console.log(`📱 Updated existing payment record, skipping WhatsApp (renewal)`);
   } else {
     // Create new payment record for subscription
     await base44.asServiceRole.entities.Payment.create({
@@ -328,30 +349,8 @@ async function handleInvoicePaid(base44, invoice) {
     });
     
     // Send WhatsApp notification for new subscriptions
-    let customerPhone = customerData?.phone || subscriptionData.metadata?.phone;
-    console.log(`📱 Looking for phone - customerData.phone: ${customerData?.phone}, metadata.phone: ${subscriptionData.metadata?.phone}`);
-    
-    // Try to get phone from the invoice's payment intent
-    if (!customerPhone && payment_intent) {
-      try {
-        console.log(`📱 Retrieving payment intent ${payment_intent} for phone lookup`);
-        const pi = await stripe.paymentIntents.retrieve(payment_intent);
-        console.log(`📱 Payment intent has payment_method: ${pi.payment_method}`);
-        if (pi.payment_method) {
-          const paymentMethod = await stripe.paymentMethods.retrieve(pi.payment_method);
-          customerPhone = paymentMethod.billing_details?.phone;
-          console.log(`📱 Got phone from billing details: ${customerPhone}`);
-        }
-      } catch (e) {
-        console.log('Could not retrieve payment method for phone:', e.message);
-      }
-    }
-    
-    console.log(`📱 About to send WhatsApp for subscription. Phone: ${customerPhone}`);
+    console.log(`📱 About to send WhatsApp for NEW subscription. Phone: ${customerPhone}`);
     await sendWhatsAppPaymentConfirmation(customerPhone, amount_paid, planId, PAYMENT_MODES.SUBSCRIPTION, currency);
-  } else {
-    // Subscription already exists - also try to send WhatsApp if first successful payment
-    console.log(`📱 Subscription payment exists, checking if WhatsApp needed`);
   }
 
   console.log(`✅ Subscription invoice paid: ${id}`);
