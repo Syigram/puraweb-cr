@@ -253,14 +253,32 @@ async function handlePaymentIntentFailed(base44, paymentIntent) {
 }
 
 async function handleInvoicePaid(base44, invoice) {
-  const { id, subscription, customer, amount_paid, currency, payment_intent } = invoice;
+  let { id, subscription, customer, amount_paid, currency, payment_intent } = invoice;
   
   console.log(`🔍 Processing invoice.paid: ${id}`);
   console.log(`   subscription: ${subscription}`);
   console.log(`   payment_intent: ${payment_intent}`);
+  console.log(`   customer: ${customer}`);
+  
+  // Si no tiene subscription, intentar buscarla por el invoice
+  if (!subscription) {
+    console.log(`🔍 Invoice ${id} has no subscription field, searching...`);
+    try {
+      // Obtener el invoice completo desde Stripe
+      const fullInvoice = await stripe.invoices.retrieve(id);
+      subscription = fullInvoice.subscription;
+      payment_intent = fullInvoice.payment_intent;
+      customer = fullInvoice.customer;
+      amount_paid = fullInvoice.amount_paid;
+      currency = fullInvoice.currency;
+      console.log(`📋 Full invoice data - subscription: ${subscription}, payment_intent: ${payment_intent}`);
+    } catch (e) {
+      console.log(`⚠️ Could not retrieve full invoice: ${e.message}`);
+    }
+  }
   
   if (!subscription) {
-    console.log(`⏭️ Invoice ${id} has no subscription, skipping`);
+    console.log(`⏭️ Invoice ${id} has no subscription after lookup, skipping`);
     return; // Not a subscription invoice
   }
   
