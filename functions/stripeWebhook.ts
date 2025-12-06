@@ -620,44 +620,63 @@ async function sendWhatsAppPaymentConfirmation(phoneNumber, amount, planId, paym
   const paymentModeName = PAYMENT_MODE_NAMES[paymentMode]?.es || paymentMode;
   const planDescription = `Plan ${planName} - ${paymentModeName}`;
 
-  try {
-    const response = await fetch(
-      `https://graph.facebook.com/v22.0/${whatsappPhoneNumberId}/messages`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${whatsappAccessToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          messaging_product: 'whatsapp',
-          to: formattedPhone,
-          type: 'template',
-          template: {
-            name: 'payment_confirmation',
-            language: { code: 'es' },
-            components: [
-              {
-                type: 'body',
-                parameters: [
-                  { type: 'text', text: formattedAmount },
-                  { type: 'text', text: planDescription }
-                ]
-              }
-            ]
-          }
-        })
-      }
-    );
+  const sendMessageToNumber = async (targetPhone) => {
+    try {
+      const response = await fetch(
+        `https://graph.facebook.com/v22.0/${whatsappPhoneNumberId}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${whatsappAccessToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            messaging_product: 'whatsapp',
+            to: targetPhone,
+            type: 'template',
+            template: {
+              name: 'payment_confirmation',
+              language: { code: 'es' },
+              components: [
+                {
+                  type: 'body',
+                  parameters: [
+                    { type: 'text', text: formattedAmount },
+                    { type: 'text', text: planDescription }
+                  ]
+                }
+              ]
+            }
+          })
+        }
+      );
 
-    const result = await response.json();
-    
-    if (response.ok) {
-      console.log(`✅ WhatsApp notification sent to ${formattedPhone}`);
-    } else {
-      console.error(`❌ WhatsApp API error:`, result);
+      const result = await response.json();
+      
+      if (response.ok) {
+        console.log(`✅ WhatsApp notification sent to ${targetPhone}`);
+        return true;
+      } else {
+        console.error(`❌ WhatsApp API error for ${targetPhone}:`, result);
+        return false;
+      }
+    } catch (error) {
+      console.error(`❌ Failed to send WhatsApp notification to ${targetPhone}:`, error.message);
+      return false;
     }
-  } catch (error) {
-    console.error(`❌ Failed to send WhatsApp notification:`, error.message);
+  };
+
+  // Send to customer
+  await sendMessageToNumber(formattedPhone);
+
+  // Send copy to configured admin number
+  const copyPhoneNumber = Deno.env.get('WHATSAPP_COPY_PHONE_NUMBER');
+  if (copyPhoneNumber) {
+    let formattedCopyPhone = copyPhoneNumber.replace(/[\s\-\(\)]/g, '');
+    if (formattedCopyPhone.startsWith('+')) {
+      formattedCopyPhone = formattedCopyPhone.substring(1);
+    }
+    console.log(`📋 Sending copy to admin number: ${formattedCopyPhone}`);
+    await sendMessageToNumber(formattedCopyPhone);
   }
 }
