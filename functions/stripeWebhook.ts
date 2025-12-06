@@ -676,7 +676,13 @@ async function sendWhatsAppPaymentConfirmation(phoneNumber, amount, planId, paym
     if (formattedCopyPhone.startsWith('+')) {
       formattedCopyPhone = formattedCopyPhone.substring(1);
     }
-    console.log(`📋 Sending copy to admin number: ${formattedCopyPhone}`);
-    await sendMessageToNumber(formattedCopyPhone);
+    
+    // Don't send to the same number (WhatsApp doesn't allow business account to message itself)
+    if (formattedCopyPhone === formattedPhone) {
+      console.log(`⏭️ Copy phone number is same as customer, skipping duplicate`);
+    } else {
+      console.log(`📋 Sending copy to admin number: ${formattedCopyPhone}`);
+      await sendMessageToNumber(formattedCopyPhone);
+    }
   }
 }
