@@ -13,6 +13,7 @@ import {
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
+import VersionChecker from "@/components/VersionChecker";
 
 function GetStartedButtonMobile({ scrollToSection, t }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -170,6 +171,7 @@ function LayoutContent({ children, currentPageName }) {
 
   return (
     <div className="min-h-screen bg-white">
+      <VersionChecker />
       <style>{`
         :root {
           --costa-blue: #002B7F;
