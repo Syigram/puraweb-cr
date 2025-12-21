@@ -40,7 +40,7 @@ export const translations = {
         description: "Tiempos de carga ultrarrápidos y SEO superior para ayudar a su negocio a posicionarse mejor."
       },
       securitySupport: {
-        title: "Seguridad & Soporte 24/7",
+        title: "Seguridad & Soporte",
         description: "Seguridad empresarial con SSL, encriptación de datos, respaldos regulares y soporte continuo para mantener su sitio funcionando."
       },
       payments: {
@@ -229,7 +229,7 @@ export const translations = {
         description: "Lightning-fast loading times and superior SEO to help your business rank higher."
       },
       securitySupport: {
-        title: "Security & 24/7 Support",
+        title: "Security & Support",
         description: "Enterprise-grade security with SSL, data encryption, regular backups, and continuous support to keep your site running."
       },
       payments: {
