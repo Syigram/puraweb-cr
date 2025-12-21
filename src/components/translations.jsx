@@ -1,3 +1,4 @@
+
 export const translations = {
   es: {
     nav: {
@@ -38,13 +39,13 @@ export const translations = {
         title: "Optimización de Rendimiento",
         description: "Tiempos de carga ultrarrápidos y SEO superior para ayudar a su negocio a posicionarse mejor."
       },
-      security: {
-        title: "Seguridad & SSL",
-        description: "Seguridad de nivel empresarial con certificados SSL, encriptación de datos y respaldos regulares."
+      securitySupport: {
+        title: "Seguridad & Soporte 24/7",
+        description: "Seguridad empresarial con SSL, encriptación de datos, respaldos regulares y soporte continuo para mantener su sitio funcionando."
       },
-      support: {
-        title: "Soporte 24/7",
-        description: "Mantenimiento y soporte continuo para mantener su sitio web funcionando sin problemas en todo momento."
+      payments: {
+        title: "Pagos con Stripe",
+        description: "Integración de pagos seguros con Stripe: tarjetas de crédito, débito, suscripciones recurrentes y checkout optimizado."
       }
     },
     pricing: {
@@ -155,40 +156,40 @@ export const translations = {
       location: "San José, Costa Rica",
       serving: "Atendiendo clientes a nivel nacional",
       copyright: "© 2025 PuraWeb CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
-      },
-      checkout: {
-        title: "Finalizar Compra",
-        subtitle: "Completa tus datos para comenzar a transformar tu negocio con PuraWeb CR.",
-        serviceDescription: "Servicio de diseño web",
-        includedFeatures: "Características incluidas:",
-        totalPriceLabel: "precio total / mes",
-        paymentMode: "Modo de Pago",
-        subscriptionMode: "Suscripción Mensual",
-        onetimeMode: "Pago Inicial 50%",
-        subscriptionDescription: "Acceso completo inmediato. Facturación recurrente automática cada mes.",
-        onetimeDescription: "Pago del 50% para iniciar el desarrollo. El restante se abona contra entrega.",
-        subtotal: "Subtotal",
-        taxes: "Impuestos",
-        totalToday: "Total a Pagar Hoy",
-        encryptedTransaction: "Transacción encriptada de 256-bits",
-        secureData: "Datos seguros y confidenciales",
-        subscriptionTab: "Suscripción",
-        onetimeTab: "Pago Único (50%)",
-        emailLabel: "Correo Electrónico",
-        emailPlaceholder: "tu@email.com",
-        nameLabel: "Nombre Completo",
-        namePlaceholder: "Juan Pérez",
-        preparingGateway: "Preparando pasarela segura...",
-        enterEmailToContinue: "Ingresa tu correo para continuar",
-        loginButton: "Iniciar Sesión",
-        processing: "Procesando Pago...",
-        payButton: "Pagar",
-        subscriptionNameLabel: "Nombre de la Suscripción",
-        subscriptionNamePlaceholder: "Ej: Mi Sitio Web Principal",
-        subscriptionNameHint: "Este nombre te ayudará a identificar esta suscripción si tienes varias."
-          }
-          },
-          en: {
+    },
+    checkout: {
+      title: "Finalizar Compra",
+      subtitle: "Completa tus datos para comenzar a transformar tu negocio con PuraWeb CR.",
+      serviceDescription: "Servicio de diseño web",
+      includedFeatures: "Características incluidas:",
+      totalPriceLabel: "precio total / mes",
+      paymentMode: "Modo de Pago",
+      subscriptionMode: "Suscripción Mensual",
+      onetimeMode: "Pago Inicial 50%",
+      subscriptionDescription: "Acceso completo inmediato. Facturación recurrente automática cada mes.",
+      onetimeDescription: "Pago del 50% para iniciar el desarrollo. El restante se abona contra entrega.",
+      subtotal: "Subtotal",
+      taxes: "Impuestos",
+      totalToday: "Total a Pagar Hoy",
+      encryptedTransaction: "Transacción encriptada de 256-bits",
+      secureData: "Datos seguros y confidenciales",
+      subscriptionTab: "Suscripción",
+      onetimeTab: "Pago Único (50%)",
+      emailLabel: "Correo Electrónico",
+      emailPlaceholder: "tu@email.com",
+      nameLabel: "Nombre Completo",
+      namePlaceholder: "Juan Pérez",
+      preparingGateway: "Preparando pasarela segura...",
+      enterEmailToContinue: "Ingresa tu correo para continuar",
+      loginButton: "Iniciar Sesión",
+      processing: "Procesando Pago...",
+      payButton: "Pagar",
+      subscriptionNameLabel: "Nombre de la Suscripción",
+      subscriptionNamePlaceholder: "Ej: Mi Sitio Web Principal",
+      subscriptionNameHint: "Este nombre te ayudará a identificar esta suscripción si tienes varias."
+    }
+  },
+  en: {
     nav: {
       services: "Services",
       pricing: "Pricing",
@@ -227,13 +228,13 @@ export const translations = {
         title: "Performance Optimization",
         description: "Lightning-fast loading times and superior SEO to help your business rank higher."
       },
-      security: {
-        title: "Security & SSL",
-        description: "Enterprise-grade security with SSL certificates, data encryption, and regular backups."
+      securitySupport: {
+        title: "Security & 24/7 Support",
+        description: "Enterprise-grade security with SSL, data encryption, regular backups, and continuous support to keep your site running."
       },
-      support: {
-        title: "24/7 Support",
-        description: "Continuous maintenance and support to keep your website running smoothly at all times."
+      payments: {
+        title: "Stripe Payments",
+        description: "Secure payment integration with Stripe: credit/debit cards, recurring subscriptions, and optimized checkout."
       }
     },
     pricing: {
@@ -344,37 +345,37 @@ export const translations = {
       location: "San José, Costa Rica",
       serving: "Serving clients nationwide",
       copyright: "© 2025 PuraWeb CR. All rights reserved. Built with ❤️ in Costa Rica"
-          },
-      checkout: {
-        title: "Complete Your Purchase",
-        subtitle: "Fill in your details to start transforming your business with PuraWeb CR.",
-        serviceDescription: "Web design service",
-        includedFeatures: "Included features:",
-        totalPriceLabel: "total price / month",
-        paymentMode: "Payment Mode",
-        subscriptionMode: "Monthly Subscription",
-        onetimeMode: "Initial Payment 50%",
-        subscriptionDescription: "Immediate full access. Automatic recurring billing every month.",
-        onetimeDescription: "50% payment to start development. The remainder is paid upon delivery.",
-        subtotal: "Subtotal",
-        taxes: "Taxes",
-        totalToday: "Total Due Today",
-        encryptedTransaction: "256-bit encrypted transaction",
-        secureData: "Secure and confidential data",
-        subscriptionTab: "Subscription",
-        onetimeTab: "One-time (50%)",
-        emailLabel: "Email Address",
-        emailPlaceholder: "you@email.com",
-        nameLabel: "Full Name",
-        namePlaceholder: "John Doe",
-        preparingGateway: "Preparing secure gateway...",
-        enterEmailToContinue: "Enter your email to continue",
-        loginButton: "Log In",
-        processing: "Processing Payment...",
-        payButton: "Pay",
-        subscriptionNameLabel: "Subscription Name",
-        subscriptionNamePlaceholder: "E.g: My Main Website",
-        subscriptionNameHint: "This name will help you identify this subscription if you have several."
-          }
-              }
-          };
+    },
+    checkout: {
+      title: "Complete Your Purchase",
+      subtitle: "Fill in your details to start transforming your business with PuraWeb CR.",
+      serviceDescription: "Web design service",
+      includedFeatures: "Included features:",
+      totalPriceLabel: "total price / month",
+      paymentMode: "Payment Mode",
+      subscriptionMode: "Monthly Subscription",
+      onetimeMode: "Initial Payment 50%",
+      subscriptionDescription: "Immediate full access. Automatic recurring billing every month.",
+      onetimeDescription: "50% payment to start development. The remainder is paid upon delivery.",
+      subtotal: "Subtotal",
+      taxes: "Taxes",
+      totalToday: "Total Due Today",
+      encryptedTransaction: "256-bit encrypted transaction",
+      secureData: "Secure and confidential data",
+      subscriptionTab: "Subscription",
+      onetimeTab: "One-time (50%)",
+      emailLabel: "Email Address",
+      emailPlaceholder: "you@email.com",
+      nameLabel: "Full Name",
+      namePlaceholder: "John Doe",
+      preparingGateway: "Preparing secure gateway...",
+      enterEmailToContinue: "Enter your email to continue",
+      loginButton: "Log In",
+      processing: "Processing Payment...",
+      payButton: "Pay",
+      subscriptionNameLabel: "Subscription Name",
+      subscriptionNamePlaceholder: "E.g: My Main Website",
+      subscriptionNameHint: "This name will help you identify this subscription if you have several."
+    }
+  }
+};
