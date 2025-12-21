@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Globe, ShoppingCart, Smartphone, Zap, Shield, Headphones } from "lucide-react";
+import { Globe, ShoppingCart, Smartphone, Zap, ShieldCheck, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
@@ -35,16 +35,16 @@ export default function Services() {
       color: "from-red-700 to-red-800"
     },
     {
-      icon: Shield,
-      title: t.security.title,
-      description: t.security.description,
-      color: "from-blue-700 to-blue-500"
+      icon: CreditCard,
+      title: t.payments.title,
+      description: t.payments.description,
+      color: "from-purple-600 to-purple-800"
     },
     {
-      icon: Headphones,
-      title: t.support.title,
-      description: t.support.description,
-      color: "from-red-600 to-red-500"
+      icon: ShieldCheck,
+      title: t.securitySupport.title,
+      description: t.securitySupport.description,
+      color: "from-blue-700 to-blue-500"
     }
   ];
   return (
