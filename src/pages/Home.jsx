@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "../components/home/Hero";
+import FeaturedImage from "../components/home/FeaturedImage";
 import Services from "../components/home/Services";
 import Pricing from "../components/home/Pricing";
 import Benefits from "../components/home/Benefits";
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <div>
       <Hero onGetStarted={scrollToContact} />
+      <FeaturedImage />
       <Services />
       <Pricing onGetStarted={scrollToContact} />
       <Benefits />
