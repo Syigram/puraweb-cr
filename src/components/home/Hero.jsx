@@ -141,55 +141,40 @@ export default function Hero({ onGetStarted }) {
             className="hidden lg:block relative"
           >
             <div className="relative">
-              {/* Floating service cards */}
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: [-10, 10, -10] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-4 -right-4 z-10 bg-white rounded-2xl shadow-2xl p-4 transform rotate-3 hover:rotate-0 transition-transform"
+                className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform"
               >
-                <Globe className="w-10 h-10 text-blue-900 mb-2" />
-                <h3 className="font-bold text-gray-900 text-sm">
+                <Globe className="w-12 h-12 text-blue-900 mb-3" />
+                <h3 className="font-bold text-gray-900 mb-1">
                   {translations[language].services.webDev.title}
                 </h3>
+                <p className="text-sm text-gray-600">
+                  {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+                </p>
               </motion.div>
 
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: [10, -10, 10] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -bottom-4 -left-4 z-10 bg-white rounded-2xl shadow-2xl p-4 transform -rotate-3 hover:rotate-0 transition-transform"
+                className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform"
               >
-                <ShoppingCart className="w-10 h-10 text-red-600 mb-2" />
-                <h3 className="font-bold text-gray-900 text-sm">
+                <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
+                <h3 className="font-bold text-gray-900 mb-1">
                   {translations[language].services.ecommerce.title}
                 </h3>
+                <p className="text-sm text-gray-600">
+                  {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+                </p>
               </motion.div>
 
-              {/* Main image with decorative elements */}
-              <div className="relative">
-                {/* Gradient border effect */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-blue-900 via-blue-600 to-red-600 rounded-3xl blur-sm opacity-60"></div>
-                
-                {/* Image container */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative rounded-2xl overflow-hidden shadow-2xl"
-                >
-                  <img 
-                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/042d7574b_unnamed.jpg" 
-                    alt="Equipo de diseño web trabajando"
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                  
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent rounded-2xl"></div>
-                </motion.div>
-
-                {/* Decorative dots */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-red-600/10 rounded-full"></div>
-                <div className="absolute -top-6 -left-6 w-16 h-16 bg-blue-900/10 rounded-full"></div>
+              <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
+                <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
+                  <Sparkles className="w-20 h-20 text-blue-900" />
+                </div>
               </div>
             </div>
           </motion.div>
