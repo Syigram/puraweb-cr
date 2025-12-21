@@ -24,7 +24,7 @@ export const translations = {
       subtitle: "Soluciones web integrales diseñadas para elevar su negocio y entregar resultados medibles",
       webDev: {
         title: "Desarrollo Web",
-        description: "Sitios web personalizados adaptados a su marca, totalmente responsivos y optimizados para el rendimiento."
+        description: "Sitios web personalizados adaptados a su marca, con arquitectura escalable y optimizados para el rendimiento."
       },
       ecommerce: {
         title: "Soluciones E-Commerce",
@@ -213,7 +213,7 @@ export const translations = {
       subtitle: "Comprehensive web solutions designed to elevate your business and deliver measurable results",
       webDev: {
         title: "Web Development",
-        description: "Custom-built websites tailored to your brand, fully responsive and optimized for performance."
+        description: "Custom-built websites tailored to your brand, fully responsive, scalable and optimized for performance."
       },
       ecommerce: {
         title: "E-Commerce Solutions",
