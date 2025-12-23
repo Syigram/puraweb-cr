@@ -230,7 +230,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">{t.info.phone}</h4>
-                  <p className="text-gray-600">+506 1234 5678</p>
+                  <p className="text-gray-600">+506 8402 7214</p>
                   <p className="text-gray-600">{t.info.phoneAvailable}</p>
                 </div>
               </div>
