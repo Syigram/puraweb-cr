@@ -80,40 +80,6 @@ export default function Benefits() {
             </motion.div>
           ))}
         </div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
-        >
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              5+
-            </div>
-            <div className="text-blue-200">{t.years}</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              150+
-            </div>
-            <div className="text-blue-200">{t.clients}</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              200+
-            </div>
-            <div className="text-blue-200">{t.projects}</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              98%
-            </div>
-            <div className="text-blue-200">{t.satisfaction}</div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
