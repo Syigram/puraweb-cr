@@ -34,6 +34,28 @@ export default function Contact() {
 
     try {
       await base44.entities.ContactRequest.create(formData);
+      
+      // Send email notification
+      await base44.integrations.Core.SendEmail({
+        to: "purawebsoluciones@gmail.com",
+        subject: `Nuevo mensaje de contacto de ${formData.name}`,
+        body: `
+Nuevo mensaje de contacto recibido:
+
+Nombre: ${formData.name}
+Email: ${formData.email}
+${formData.company ? `Empresa: ${formData.company}` : ''}
+${formData.phone ? `Teléfono: ${formData.phone}` : ''}
+${formData.service_interest ? `Servicio de interés: ${formData.service_interest}` : ''}
+
+Mensaje:
+${formData.message}
+
+---
+Este correo fue enviado automáticamente desde el formulario de contacto de PuraWeb CR.
+        `
+      });
+
       setIsSuccess(true);
       setFormData({
         name: "",

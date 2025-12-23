@@ -8,6 +8,7 @@ import AdminStats from "@/components/admin/AdminStats";
 import AdminUsers from "@/components/admin/AdminUsers";
 import AdminPayments from "@/components/admin/AdminPayments";
 import AdminTickets from "@/components/admin/AdminTickets";
+import AdminContactMessages from "@/components/admin/AdminContactMessages";
 
 const ADMIN_TAB_KEY = "adminDashboardTab";
 
