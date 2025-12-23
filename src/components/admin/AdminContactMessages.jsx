@@ -17,7 +17,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Mail, Search, Calendar, Building2, Phone, User, MessageSquare, CheckCircle, Clock, XCircle } from "lucide-react";
+import { Mail, Search, Calendar, Building2, Phone, User, MessageSquare, CheckCircle, Clock, XCircle, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { format } from "date-fns";
 
 const STATUS_CONFIG = {
@@ -87,6 +97,18 @@ export default function AdminContactMessages() {
       await fetchMessages();
     } catch (error) {
       console.error("Error updating message status:", error);
+    }
+  };
+
+  const deleteMessage = async (messageId) => {
+    try {
+      await base44.entities.ContactRequest.delete(messageId);
+      await fetchMessages();
+      if (selectedMessage?.id === messageId) {
+        setSelectedMessage(null);
+      }
+    } catch (error) {
+      console.error("Error deleting message:", error);
     }
   };
 
@@ -191,6 +213,7 @@ export default function AdminContactMessages() {
                   key={message.id}
                   message={message}
                   onStatusChange={updateMessageStatus}
+                  onDelete={deleteMessage}
                   onClick={() => setSelectedMessage(message)}
                 />
               ))}
@@ -205,134 +228,71 @@ export default function AdminContactMessages() {
           message={selectedMessage}
           onClose={() => setSelectedMessage(null)}
           onStatusChange={updateMessageStatus}
+          onDelete={deleteMessage}
         />
       )}
     </div>
   );
 }
 
-function MessageCard({ message, onStatusChange, onClick }) {
+function MessageCard({ message, onStatusChange, onDelete, onClick }) {
+  const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
   const statusConfig = STATUS_CONFIG[message.status] || STATUS_CONFIG.new;
   const StatusIcon = statusConfig.icon;
 
   return (
-    <div
-      onClick={onClick}
-      className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-    >
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-2">
-            <h3 className="font-semibold text-gray-900 truncate">{message.name}</h3>
-            <Badge className={statusConfig.color}>
-              <StatusIcon className="w-3 h-3 mr-1" />
-              {statusConfig.label}
-            </Badge>
-            {message.service_interest && (
-              <Badge variant="outline" className="text-xs">
-                {SERVICE_LABELS[message.service_interest] || message.service_interest}
+    <>
+      <div
+        onClick={onClick}
+        className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <h3 className="font-semibold text-gray-900 truncate">{message.name}</h3>
+              <Badge className={statusConfig.color}>
+                <StatusIcon className="w-3 h-3 mr-1" />
+                {statusConfig.label}
               </Badge>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-2">
-            <span className="flex items-center gap-1">
-              <Mail className="w-3 h-3" />
-              {message.email}
-            </span>
-            {message.company && (
+              {message.service_interest && (
+                <Badge variant="outline" className="text-xs">
+                  {SERVICE_LABELS[message.service_interest] || message.service_interest}
+                </Badge>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-2">
               <span className="flex items-center gap-1">
-                <Building2 className="w-3 h-3" />
-                {message.company}
+                <Mail className="w-3 h-3" />
+                {message.email}
               </span>
-            )}
-            {message.phone && (
-              <span className="flex items-center gap-1">
-                <Phone className="w-3 h-3" />
-                {message.phone}
-              </span>
-            )}
+              {message.company && (
+                <span className="flex items-center gap-1">
+                  <Building2 className="w-3 h-3" />
+                  {message.company}
+                </span>
+              )}
+              {message.phone && (
+                <span className="flex items-center gap-1">
+                  <Phone className="w-3 h-3" />
+                  {message.phone}
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-600 line-clamp-2">{message.message}</p>
+            <div className="flex items-center gap-1 text-xs text-gray-500 mt-2">
+              <Calendar className="w-3 h-3" />
+              {format(new Date(message.created_date), "d MMM yyyy, HH:mm")}
+            </div>
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">{message.message}</p>
-          <div className="flex items-center gap-1 text-xs text-gray-500 mt-2">
-            <Calendar className="w-3 h-3" />
-            {format(new Date(message.created_date), "d MMM yyyy, HH:mm")}
-          </div>
-        </div>
-        <div className="flex justify-start sm:shrink-0">
-          <Select
-            value={message.status}
-            onValueChange={(value) => {
-              onStatusChange(message.id, value);
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="new">Nuevo</SelectItem>
-              <SelectItem value="contacted">Contactado</SelectItem>
-              <SelectItem value="in_progress">En Progreso</SelectItem>
-              <SelectItem value="closed">Cerrado</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MessageDetailsDialog({ message, onClose, onStatusChange }) {
-  const statusConfig = STATUS_CONFIG[message.status] || STATUS_CONFIG.new;
-
-  return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Detalles del Mensaje</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Badge className={statusConfig.color}>
-              {statusConfig.label}
-            </Badge>
-            {message.service_interest && (
-              <Badge variant="outline">
-                {SERVICE_LABELS[message.service_interest] || message.service_interest}
-              </Badge>
-            )}
-          </div>
-
-          <DetailRow label="Nombre" value={message.name} icon={User} />
-          <DetailRow label="Email" value={message.email} icon={Mail} />
-          {message.company && <DetailRow label="Empresa" value={message.company} icon={Building2} />}
-          {message.phone && <DetailRow label="Teléfono" value={message.phone} icon={Phone} />}
-          <DetailRow
-            label="Fecha"
-            value={format(new Date(message.created_date), "d MMMM yyyy, HH:mm")}
-            icon={Calendar}
-          />
-
-          <div className="border-t pt-4">
-            <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Mensaje
-            </h4>
-            <p className="text-gray-700 whitespace-pre-wrap">{message.message}</p>
-          </div>
-
-          <div className="border-t pt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Cambiar Estado
-            </label>
+          <div className="flex gap-2 justify-start sm:shrink-0">
             <Select
               value={message.status}
               onValueChange={(value) => {
                 onStatusChange(message.id, value);
-                onClose();
               }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-32">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -342,23 +302,161 @@ function MessageDetailsDialog({ message, onClose, onStatusChange }) {
                 <SelectItem value="closed">Cerrado</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="flex justify-end gap-2 pt-4">
-            <Button variant="outline" onClick={onClose}>
-              Cerrar
-            </Button>
             <Button
-              onClick={() => window.open(`mailto:${message.email}`, '_blank')}
-              className="bg-blue-600 hover:bg-blue-700"
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowDeleteDialog(true);
+              }}
+              className="text-red-600 hover:text-red-700 hover:bg-red-50"
             >
-              <Mail className="w-4 h-4 mr-2" />
-              Enviar Email
+              <Trash2 className="w-4 h-4" />
             </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar mensaje?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer. El mensaje de {message.name} será eliminado permanentemente.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                onDelete(message.id);
+                setShowDeleteDialog(false);
+              }}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}
+
+function MessageDetailsDialog({ message, onClose, onStatusChange, onDelete }) {
+  const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
+  const statusConfig = STATUS_CONFIG[message.status] || STATUS_CONFIG.new;
+
+  return (
+    <>
+      <Dialog open={true} onOpenChange={onClose}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Detalles del Mensaje</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Badge className={statusConfig.color}>
+                {statusConfig.label}
+              </Badge>
+              {message.service_interest && (
+                <Badge variant="outline">
+                  {SERVICE_LABELS[message.service_interest] || message.service_interest}
+                </Badge>
+              )}
+            </div>
+
+            <DetailRow label="Nombre" value={message.name} icon={User} />
+            <DetailRow label="Email" value={message.email} icon={Mail} />
+            {message.company && <DetailRow label="Empresa" value={message.company} icon={Building2} />}
+            {message.phone && <DetailRow label="Teléfono" value={message.phone} icon={Phone} />}
+            <DetailRow
+              label="Fecha"
+              value={format(new Date(message.created_date), "d MMMM yyyy, HH:mm")}
+              icon={Calendar}
+            />
+
+            <div className="border-t pt-4">
+              <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Mensaje
+              </h4>
+              <p className="text-gray-700 whitespace-pre-wrap">{message.message}</p>
+            </div>
+
+            <div className="border-t pt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Cambiar Estado
+              </label>
+              <Select
+                value={message.status}
+                onValueChange={(value) => {
+                  onStatusChange(message.id, value);
+                  onClose();
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="new">Nuevo</SelectItem>
+                  <SelectItem value="contacted">Contactado</SelectItem>
+                  <SelectItem value="in_progress">En Progreso</SelectItem>
+                  <SelectItem value="closed">Cerrado</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex justify-between gap-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteDialog(true)}
+                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Eliminar
+              </Button>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={onClose}>
+                  Cerrar
+                </Button>
+                <Button
+                  onClick={() => window.open(`mailto:${message.email}`, '_blank')}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  Enviar Email
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar mensaje?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer. El mensaje de {message.name} será eliminado permanentemente.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                onDelete(message.id);
+                setShowDeleteDialog(false);
+                onClose();
+              }}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
 
