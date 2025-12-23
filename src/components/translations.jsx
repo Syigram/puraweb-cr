@@ -96,7 +96,7 @@ export const translations = {
       },
       quality: {
         title: "Experiencia de Usuario (UX) Superior",
-        description: "Fusionamos una estética premium con una arquitectura técnica de primer nivel. Creamos sitios web intuitivos y ultrarrápidos, diseñados para ofrecer una visualización impecable en cualquier dispositivo y elevar la presencia digital de su marca."
+        description: "Fusionamos una estética premium con una arquitectura técnica de primer nivel. Creamos sitios web ultrarrápidos e intuitivos, diseñados para ofrecer una visualización impecable en cualquier dispositivo, elevando la presencia digital de su marca al más alto nivel."
       },
       scalable: {
         title: "Soporte Local y Personalizado",
