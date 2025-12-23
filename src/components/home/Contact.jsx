@@ -106,7 +106,7 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Juan Pérez"
+                        placeholder="Nombre Completo"
                         className="border-gray-300"
                       />
                     </div>
