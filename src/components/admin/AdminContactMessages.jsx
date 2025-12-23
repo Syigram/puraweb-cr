@@ -220,9 +220,9 @@ function MessageCard({ message, onStatusChange, onClick }) {
       onClick={onClick}
       className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <h3 className="font-semibold text-gray-900 truncate">{message.name}</h3>
             <Badge className={statusConfig.color}>
               <StatusIcon className="w-3 h-3 mr-1" />
@@ -258,23 +258,25 @@ function MessageCard({ message, onStatusChange, onClick }) {
             {format(new Date(message.created_date), "d MMM yyyy, HH:mm")}
           </div>
         </div>
-        <Select
-          value={message.status}
-          onValueChange={(value) => {
-            onStatusChange(message.id, value);
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <SelectTrigger className="w-32">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="new">Nuevo</SelectItem>
-            <SelectItem value="contacted">Contactado</SelectItem>
-            <SelectItem value="in_progress">En Progreso</SelectItem>
-            <SelectItem value="closed">Cerrado</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex justify-end sm:justify-start sm:shrink-0">
+          <Select
+            value={message.status}
+            onValueChange={(value) => {
+              onStatusChange(message.id, value);
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="new">Nuevo</SelectItem>
+              <SelectItem value="contacted">Contactado</SelectItem>
+              <SelectItem value="in_progress">En Progreso</SelectItem>
+              <SelectItem value="closed">Cerrado</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
