@@ -198,67 +198,73 @@ export default function TicketChat({
   const StatusIcon = status.icon;
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="border-b bg-gray-50 px-4 py-3 pr-12">
-        <div className="flex items-start justify-between gap-3">
+    <div className="flex flex-col h-full max-h-[90vh]">
+      {/* Header - Mobile Optimized */}
+      <div className="border-b bg-gray-50 px-3 sm:px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 truncate">{ticket?.subject}</h3>
-            <p className="text-sm text-gray-500 truncate">
-              {ticket?.user_name} • {ticket?.user_email}
+            <h3 className="font-semibold text-gray-900 text-sm sm:text-base line-clamp-2">{ticket?.subject}</h3>
+            <p className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
+              {ticket?.user_name}
+            </p>
+            <p className="text-xs text-gray-400 truncate">
+              {ticket?.user_email}
             </p>
           </div>
-          {isAdmin && onStatusChange ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${status.color} hover:opacity-80 transition-opacity`}>
-                  <StatusIcon className="w-3 h-3" />
-                  {t.status[ticket?.status]}
-                  <ChevronDown className="w-3 h-3" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem 
-                  onClick={() => onStatusChange(ticket, "open")}
-                  disabled={ticket?.status === "open"}
-                >
-                  <Clock className="w-4 h-4 mr-2 text-yellow-600" />
-                  {t.status.open}
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onStatusChange(ticket, "in_progress")}
-                  disabled={ticket?.status === "in_progress"}
-                >
-                  <AlertCircle className="w-4 h-4 mr-2 text-blue-600" />
-                  {t.status.in_progress}
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onStatusChange(ticket, "resolved")}
-                  disabled={ticket?.status === "resolved"}
-                >
-                  <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
-                  {t.status.resolved}
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onStatusChange(ticket, "closed")}
-                  disabled={ticket?.status === "closed"}
-                >
-                  <XCircle className="w-4 h-4 mr-2 text-gray-600" />
-                  {t.status.closed}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Badge className={status.color}>
-              <StatusIcon className="w-3 h-3 mr-1" />
-              {t.status[ticket?.status]}
-            </Badge>
-          )}
+          <div className="flex items-center justify-between sm:justify-end gap-2">
+            {isAdmin && onStatusChange ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium ${status.color} hover:opacity-80 transition-opacity whitespace-nowrap`}>
+                    <StatusIcon className="w-3 h-3" />
+                    <span className="hidden sm:inline">{t.status[ticket?.status]}</span>
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem 
+                    onClick={() => onStatusChange(ticket, "open")}
+                    disabled={ticket?.status === "open"}
+                  >
+                    <Clock className="w-4 h-4 mr-2 text-yellow-600" />
+                    {t.status.open}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => onStatusChange(ticket, "in_progress")}
+                    disabled={ticket?.status === "in_progress"}
+                  >
+                    <AlertCircle className="w-4 h-4 mr-2 text-blue-600" />
+                    {t.status.in_progress}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => onStatusChange(ticket, "resolved")}
+                    disabled={ticket?.status === "resolved"}
+                  >
+                    <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
+                    {t.status.resolved}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => onStatusChange(ticket, "closed")}
+                    disabled={ticket?.status === "closed"}
+                  >
+                    <XCircle className="w-4 h-4 mr-2 text-gray-600" />
+                    {t.status.closed}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Badge className={`${status.color} text-xs`}>
+                <StatusIcon className="w-3 h-3 mr-1" />
+                <span className="hidden sm:inline">{t.status[ticket?.status]}</span>
+              </Badge>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white min-h-[300px] max-h-[400px]">
+      {/* Messages - Mobile Optimized */}
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gradient-to-b from-gray-50 to-white"
+           style={{ minHeight: '300px', maxHeight: 'calc(90vh - 200px)' }}>
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="w-6 h-6 animate-spin text-blue-900" />
@@ -282,32 +288,32 @@ export default function TicketChat({
                   exit={{ opacity: 0 }}
                   className={`flex ${showOnRight ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex items-end gap-2 max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
+                  <div className={`flex items-end gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[80%] ${showOnRight ? "flex-row-reverse" : ""}`}>
                     {/* Avatar */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 ${
                       isUserMessage 
                         ? "bg-blue-100 text-blue-600" 
                         : "bg-green-100 text-green-600"
                     }`}>
                       {isUserMessage ? (
-                        <User className="w-4 h-4" />
+                        <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       ) : (
-                        <Shield className="w-4 h-4" />
+                        <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       )}
                     </div>
 
                     {/* Message Bubble */}
-                    <div className={`rounded-2xl px-4 py-2.5 ${
+                    <div className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 ${
                       showOnRight
                         ? "bg-blue-900 text-white rounded-br-md"
                         : "bg-white border shadow-sm rounded-bl-md"
                     }`}>
-                      <div className={`text-xs mb-1 ${showOnRight ? "text-blue-200" : "text-gray-500"}`}>
+                      <div className={`text-xs mb-1 font-medium ${showOnRight ? "text-blue-200" : "text-gray-500"}`}>
                         {isUserMessage 
                           ? (isCurrentUser ? t.you : msg.sender_name) 
                           : t.support}
                       </div>
-                      <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
+                      <p className="text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
                       <div className={`text-xs mt-1 ${showOnRight ? "text-blue-300" : "text-gray-400"}`}>
                         {msg.created_date && format(
                           new Date(msg.created_date), 
@@ -325,31 +331,31 @@ export default function TicketChat({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
+      {/* Input - Mobile Optimized */}
       {isClosed ? (
-        <div className="border-t bg-gray-100 px-4 py-3 text-center text-sm text-gray-500">
+        <div className="border-t bg-gray-100 px-3 sm:px-4 py-3 text-center text-xs sm:text-sm text-gray-500">
           {t.ticketClosed}
         </div>
       ) : (
-        <div className="border-t bg-white p-4">
+        <div className="border-t bg-white p-3 sm:p-4">
           <div className="flex gap-2">
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t.typeMessage}
-              className="resize-none min-h-[44px] max-h-[120px]"
+              className="resize-none min-h-[44px] max-h-[120px] text-sm sm:text-base"
               rows={1}
             />
             <Button
               onClick={handleSend}
               disabled={!newMessage.trim() || sending}
-              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-11 w-11 p-0"
+              className="bg-blue-900 hover:bg-blue-800 shrink-0 h-11 w-11 sm:h-12 sm:w-12 p-0"
             >
               {sending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
               ) : (
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               )}
             </Button>
           </div>
