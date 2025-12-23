@@ -200,9 +200,9 @@ export default function TicketChat({
   return (
     <div className="flex flex-col h-full max-h-[90vh]">
       {/* Header - Mobile Optimized */}
-      <div className="border-b bg-gray-50 px-3 sm:px-4 py-3">
+      <div className="border-b bg-gray-50 px-3 sm:px-4 py-3 pr-10 sm:pr-16">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 sm:pr-4">
             <h3 className="font-semibold text-gray-900 text-sm sm:text-base line-clamp-2">{ticket?.subject}</h3>
             <p className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
               {ticket?.user_name}
@@ -211,7 +211,7 @@ export default function TicketChat({
               {ticket?.user_email}
             </p>
           </div>
-          <div className="flex items-center justify-between sm:justify-end gap-2">
+          <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
             {isAdmin && onStatusChange ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
