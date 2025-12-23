@@ -214,7 +214,7 @@ export default function AdminTickets() {
 
       {/* Chat Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden max-h-[85vh]">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden max-h-[85vh] [&>button]:bg-red-600 [&>button]:hover:bg-red-700 [&>button]:text-white [&>button]:rounded-full [&>button]:w-8 [&>button]:h-8 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:shadow-lg [&>button]:transition-all [&>button]:hover:scale-110 [&>button]:hover:shadow-xl [&>button]:border-2 [&>button]:border-white">
           {selectedTicket && currentUser && (
             <TicketChat 
               ticket={selectedTicket}
