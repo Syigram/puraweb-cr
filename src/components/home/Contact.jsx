@@ -220,8 +220,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">{t.info.email}</h4>
-                  <p className="text-gray-600">info@webcraftcr.com</p>
-                  <p className="text-gray-600">support@webcraftcr.com</p>
+                  <p className="text-gray-600">purawebsoluciones@gmail.com</p>
                 </div>
               </div>
 
