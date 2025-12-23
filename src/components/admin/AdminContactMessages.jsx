@@ -258,7 +258,7 @@ function MessageCard({ message, onStatusChange, onClick }) {
             {format(new Date(message.created_date), "d MMM yyyy, HH:mm")}
           </div>
         </div>
-        <div className="flex justify-end sm:justify-start sm:shrink-0">
+        <div className="flex justify-start sm:shrink-0">
           <Select
             value={message.status}
             onValueChange={(value) => {
