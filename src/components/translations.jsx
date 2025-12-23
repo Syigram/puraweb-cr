@@ -96,7 +96,7 @@ export const translations = {
       },
       quality: {
         title: "Experiencia de Usuario (UX) Superior",
-        description: "No solo creamos páginas bonitas; creamos herramientas funcionales. Cada sitio está optimizado para ser rápido, intuitivo y verse perfecto en celulares, asegurando que tus clientes encuentren lo que buscan en segundos y completen su compra o cita sin fricción."
+        description: "Fusionamos una estética premium con una arquitectura técnica de primer nivel. Creamos sitios web intuitivos y ultrarrápidos, diseñados para ofrecer una visualización impecable en cualquier dispositivo y elevar la presencia digital de su marca."
       },
       scalable: {
         title: "Soporte Local y Personalizado",
@@ -285,7 +285,7 @@ export const translations = {
       },
       quality: {
         title: "Superior User Experience (UX)",
-        description: "We don't just build beautiful websites; we build functional tools. Every project is optimized for speed, intuitive navigation, and flawless mobile performance, ensuring your customers find what they need and complete their purchase or booking in seconds."
+        description: "We merge premium aesthetics with world-class technical architecture. We create ultra-fast, intuitive websites engineered to deliver a flawless viewing experience on any device, elevating your brand's digital presence to the highest standard."
       },
       scalable: {
         title: "Local Expertise & Personalized Support",
