@@ -134,7 +134,7 @@ export const translations = {
       info: {
         email: "Correo",
         phone: "Teléfono",
-        phoneAvailable: "Disponible Lun-Vie, 8am-6pm",
+        phoneAvailable: "Disponible Lun-Vie, 9am-5pm",
         location: "Ubicación",
         locationCity: "San José, Costa Rica",
         locationServing: "Atendiendo clientes a nivel nacional"
@@ -323,7 +323,7 @@ export const translations = {
       info: {
         email: "Email",
         phone: "Phone",
-        phoneAvailable: "Available Mon-Fri, 8am-6pm",
+        phoneAvailable: "Available Mon-Fri, 9am-5pm",
         location: "Location",
         locationCity: "San José, Costa Rica",
         locationServing: "Serving clients nationwide"
