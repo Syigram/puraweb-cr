@@ -1,21 +1,21 @@
-import Home from './pages/Home';
+import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
+import Home from './pages/Home';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
-import AdminDashboard from './pages/AdminDashboard';
-import UserDashboard from './pages/UserDashboard';
 import Support from './pages/Support';
+import UserDashboard from './pages/UserDashboard';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Home": Home,
+    "AdminDashboard": AdminDashboard,
     "Checkout": Checkout,
+    "Home": Home,
     "PaymentSuccess": PaymentSuccess,
     "Planes": Planes,
-    "AdminDashboard": AdminDashboard,
-    "UserDashboard": UserDashboard,
     "Support": Support,
+    "UserDashboard": UserDashboard,
 }
 
 export const pagesConfig = {
