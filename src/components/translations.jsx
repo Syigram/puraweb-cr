@@ -281,7 +281,7 @@ export const translations = {
       },
       dedicatedTeam: {
         title: "Seamless Global Payments with Stripe",
-        description: "Turn your website into a powerful sales engine. We implement modern, secure payment gateways like Stripe, allowing your customers to pay smoothly and professionally—whether you're running a boutique shop, a barbershop, or a service-based business."
+        description: "Turn your website into a powerful sales engine. We implement modern, secure payment gateways using Stripe, allowing your customers to pay smoothly and professionally—whether you're running a store, or a service-based business."
       },
       quality: {
         title: "Superior User Experience (UX)",
