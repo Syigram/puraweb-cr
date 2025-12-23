@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Loader2, BarChart3, Users, CreditCard, MessageSquare } from "lucide-react";
+import { Shield, Loader2, BarChart3, Users, CreditCard, MessageSquare, Mail, HelpCircle } from "lucide-react";
 import AdminStats from "@/components/admin/AdminStats";
 import AdminUsers from "@/components/admin/AdminUsers";
 import AdminPayments from "@/components/admin/AdminPayments";
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-4 gap-1 h-auto">
+          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-5 gap-1 h-auto">
             <TabsTrigger 
               value="stats" 
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
@@ -108,8 +108,15 @@ export default function AdminDashboard() {
               value="tickets" 
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
             >
-              <MessageSquare className="w-4 h-4" />
+              <HelpCircle className="w-4 h-4" />
               <span className="hidden sm:inline">Tickets</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="messages" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              <span className="hidden sm:inline">Mensajes</span>
             </TabsTrigger>
           </TabsList>
 
@@ -127,6 +134,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="tickets">
             <AdminTickets />
+          </TabsContent>
+
+          <TabsContent value="messages">
+            <AdminContactMessages />
           </TabsContent>
         </Tabs>
       </div>
