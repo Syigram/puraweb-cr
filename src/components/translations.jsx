@@ -1,4 +1,3 @@
-
 export const translations = {
   es: {
     nav: {
@@ -88,20 +87,20 @@ export const translations = {
       title: "Por Qué Elegir PuraWeb CR",
       subtitle: "Asóciate con la agencia de desarrollo web premier de Costa Rica para soluciones digitales excepcionales",
       resultsDriven: {
-        title: "Enfoque en Resultados",
-        description: "Nos enfocamos en entregar resultados medibles que impactan directamente sus ingresos y el crecimiento de su negocio."
+        title: "Calidad Premium a Precio Real",
+        description: "Diseñamos soluciones de alto nivel que antes solo estaban al alcance de grandes corporaciones. En PuraWeb CR, democratizamos la tecnología premium para que emprendedores y pymes costarricenses compitan al más alto nivel sin sacrificar su presupuesto."
       },
       dedicatedTeam: {
-        title: "Equipo Dedicado",
-        description: "Trabaje con profesionales experimentados comprometidos a dar vida a su visión con precisión."
+        title: "Ventas Sin Fronteras con Stripe",
+        description: "Transformamos tu sitio en una máquina de ventas. Implementamos pasarelas de pago modernas y seguras como Stripe, permitiendo que tus clientes paguen de forma fluida y profesional, ya sea que tengás una tienda de ropa o una barbería."
       },
       quality: {
-        title: "Calidad Garantizada",
-        description: "Cada proyecto se somete a pruebas rigurosas para garantizar una funcionalidad impecable y una experiencia de usuario excepcional."
+        title: "Experiencia de Usuario (UX) Superior",
+        description: "No solo creamos páginas bonitas; creamos herramientas funcionales. Cada sitio está optimizado para ser rápido, intuitivo y verse perfecto en celulares, asegurando que tus clientes encuentren lo que buscan en segundos y completen su compra o cita sin fricción."
       },
       scalable: {
-        title: "Soluciones Escalables",
-        description: "Nuestras plataformas crecen con su negocio, adaptándose al aumento del tráfico y requisitos en expansión."
+        title: "Soporte Local y Personalizado",
+        description: "Somos de aquí y entendemos el mercado nacional. Al elegirnos, no estás contratando un software genérico, sino un aliado tecnológico en Costa Rica que te acompaña en el crecimiento de tu negocio con asesoría clara, honesta y en tu mismo idioma."
       },
       years: "Años de Experiencia",
       clients: "Clientes Felices",
@@ -277,20 +276,20 @@ export const translations = {
       title: "Why Choose PuraWeb CR",
       subtitle: "Partner with Costa Rica's premier web development agency for exceptional digital solutions",
       resultsDriven: {
-        title: "Results-Driven Approach",
-        description: "We focus on delivering measurable outcomes that directly impact your bottom line and business growth."
+        title: "Premium Quality at Accessible Rates",
+        description: "We deliver high-end digital solutions that were once reserved for large corporations. At PuraWeb CR, we bridge the gap by providing premium technology for Costa Rican entrepreneurs and SMEs, ensuring top-tier results that fit your budget."
       },
       dedicatedTeam: {
-        title: "Dedicated Team",
-        description: "Work with experienced professionals who are committed to bringing your vision to life with precision."
+        title: "Seamless Global Payments with Stripe",
+        description: "Turn your website into a powerful sales engine. We implement modern, secure payment gateways like Stripe, allowing your customers to pay smoothly and professionally—whether you're running a boutique shop, a barbershop, or a service-based business."
       },
       quality: {
-        title: "Quality Guaranteed",
-        description: "Every project undergoes rigorous testing to ensure flawless functionality and exceptional user experience."
+        title: "Superior User Experience (UX)",
+        description: "We don't just build beautiful websites; we build functional tools. Every project is optimized for speed, intuitive navigation, and flawless mobile performance, ensuring your customers find what they need and complete their purchase or booking in seconds."
       },
       scalable: {
-        title: "Scalable Solutions",
-        description: "Our platforms grow with your business, adapting to increased traffic and expanding requirements."
+        title: "Local Expertise & Personalized Support",
+        description: "Based in Costa Rica, we understand the local market inside and out. Choosing us means gaining a dedicated tech partner who speaks your language and is committed to your growth through honest, clear, and reliable local support."
       },
       years: "Years Experience",
       clients: "Happy Clients",
