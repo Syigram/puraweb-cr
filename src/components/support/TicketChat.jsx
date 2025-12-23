@@ -202,8 +202,8 @@ export default function TicketChat({
       {/* Header - Mobile Optimized */}
       <div className="border-b bg-gray-50 px-3 sm:px-4 py-3 sm:pr-16">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 text-sm sm:text-base line-clamp-2">{ticket?.subject}</h3>
+          <div className="flex-1 min-w-0 pr-10 sm:pr-0">
+            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{ticket?.subject}</h3>
             <p className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
               {ticket?.user_name}
             </p>
