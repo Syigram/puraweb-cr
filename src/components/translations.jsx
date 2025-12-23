@@ -92,7 +92,7 @@ export const translations = {
       },
       dedicatedTeam: {
         title: "Ventas Sin Fronteras con Stripe",
-        description: "Transformamos tu sitio en una máquina de ventas. Implementamos pasarelas de pago modernas y seguras usando Stripe, permitiendo que tus clientes paguen de forma fluida y profesional."
+        description: "Fusionamos una estética premium con una arquitectura técnica de primer nivel. Creamos sitios web intuitivos y ultrarrápidos, diseñados para ofrecer una visualización impecable en cualquier dispositivo y elevar la presencia digital de su marca."
       },
       quality: {
         title: "Experiencia de Usuario (UX) Superior",
@@ -281,7 +281,7 @@ export const translations = {
       },
       dedicatedTeam: {
         title: "Seamless Global Payments with Stripe",
-        description: "Turn your website into a powerful sales engine. We implement modern, secure payment gateways using Stripe, allowing your customers to pay smoothly and professionally—whether you're running a store, or a service-based business."
+        description: "We merge premium aesthetics with world-class technical architecture. We create ultra-fast, intuitive websites engineered to deliver a flawless viewing experience on any device, elevating your brand's digital presence to the highest standard."
       },
       quality: {
         title: "Superior User Experience (UX)",
