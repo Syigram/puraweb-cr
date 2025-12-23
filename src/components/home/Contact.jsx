@@ -142,7 +142,7 @@ export default function Contact() {
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+506 1234 5678"
+                        placeholder="+506 8402 7214"
                         className="border-gray-300"
                       />
                     </div>
