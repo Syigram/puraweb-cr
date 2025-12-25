@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Pricing from "@/components/home/Pricing";
+import PlanComparisonTable from "@/components/pricing/PlanComparisonTable";
 
 export default function Planes() {
   useEffect(() => {
@@ -9,6 +10,7 @@ export default function Planes() {
   return (
     <div className="pt-20">
       <Pricing />
+      <PlanComparisonTable />
     </div>
   );
 }
