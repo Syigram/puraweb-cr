@@ -236,15 +236,24 @@ export default function PlanComparisonTable() {
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
-                        <thead className={isGeneralSection ? "bg-red-50" : "bg-gray-50"}>
+                        <thead className={isGeneralSection ? "bg-gradient-to-r from-red-100 to-orange-100" : "bg-gray-50"}>
                           <tr>
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/4">
+                            <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
+                              isGeneralSection 
+                                ? 'text-base font-extrabold text-red-900' 
+                                : 'text-xs font-semibold text-gray-700'
+                            }`}>
+                              {isGeneralSection && <Star className="w-4 h-4 inline mr-2 text-red-600" />}
                               Característica
                             </th>
                             {t.plans.map((plan, idx) => (
                               <th
                                 key={idx}
-                                className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/4"
+                                className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
+                                  isGeneralSection 
+                                    ? 'text-base font-extrabold text-red-900' 
+                                    : 'text-xs font-semibold text-gray-700'
+                                }`}
                               >
                                 {plan}
                               </th>
