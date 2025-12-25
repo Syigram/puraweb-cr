@@ -171,27 +171,7 @@ export default function PlanComparisonTable() {
       );
     }
     
-    if (isGeneralSection) {
-      // Renderizado especial para la sección de Información General
-      if (rowLabel === "Precio" || rowLabel === "Price") {
-        return (
-          <div className="flex items-center justify-center">
-            <Badge className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-2 text-lg font-bold shadow-lg border-2 border-red-700">
-              {value}
-            </Badge>
-          </div>
-        );
-      }
-      if (rowLabel === "Objetivo" || rowLabel === "Objective") {
-        return (
-          <div className="flex items-center justify-center">
-            <span className="text-base font-bold text-gray-800 bg-white px-4 py-2 rounded-lg shadow-md border-2 border-red-200">
-              {value}
-            </span>
-          </div>
-        );
-      }
-    }
+
     
     return (
       <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
@@ -224,7 +204,7 @@ export default function PlanComparisonTable() {
                     {/* Section Header */}
                     <div className={`px-6 py-4 ${
                       isGeneralSection 
-                        ? 'bg-gradient-to-r from-red-600 via-red-500 to-orange-600 shadow-xl' 
+                        ? 'bg-gradient-to-r from-red-600 to-red-700 shadow-xl' 
                         : 'bg-gradient-to-r from-blue-900 to-blue-800'
                     }`}>
                       <h3 className={`font-bold text-white ${isGeneralSection ? 'text-xl flex items-center gap-2' : 'text-lg'}`}>
