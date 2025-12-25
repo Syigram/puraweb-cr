@@ -1,9 +1,8 @@
-
 export const translations = {
   es: {
     nav: {
       services: "Servicios",
-      pricing: "Precios",
+      pricing: "Planes",
       benefits: "Por Qué PuraWeb CR",
       contact: "Contacto",
       getStarted: "Comenzar"
@@ -192,7 +191,7 @@ export const translations = {
   en: {
     nav: {
       services: "Services",
-      pricing: "Pricing",
+      pricing: "Plans",
       benefits: "Why PuraWeb CR",
       contact: "Contact",
       getStarted: "Get Started"
