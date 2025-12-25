@@ -238,11 +238,11 @@ export default function PlanComparisonTable() {
                           </tr>
                         </thead>
                       )}
-                      <tbody className={`divide-y divide-gray-200 ${isGeneralSection ? 'bg-red-50/30' : 'bg-white'}`}>
+                      <tbody className={`divide-y divide-gray-200 ${isGeneralSection ? 'bg-white' : 'bg-white'}`}>
                         {section.rows.map((row, rowIdx) => (
                           <tr key={rowIdx} className={`transition-colors ${
                             isGeneralSection 
-                              ? 'hover:bg-red-50 bg-gradient-to-r from-red-50/50 to-orange-50/30' 
+                              ? 'hover:bg-gray-50' 
                               : 'hover:bg-gray-50'
                           }`}>
                             <td className={`px-6 py-5 whitespace-nowrap font-medium w-1/4 ${
