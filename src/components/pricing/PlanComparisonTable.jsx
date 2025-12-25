@@ -207,7 +207,7 @@ export default function PlanComparisonTable() {
                     </div>
                     
                     {/* Section Rows */}
-                    <table className="min-w-full divide-y divide-gray-200">
+                    <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
                         <thead className={isGeneralSection ? "bg-red-50" : "bg-gray-50"}>
                           <tr>
@@ -217,7 +217,7 @@ export default function PlanComparisonTable() {
                             {t.plans.map((plan, idx) => (
                               <th
                                 key={idx}
-                                className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/4"
                               >
                                 {plan}
                               </th>
@@ -232,13 +232,13 @@ export default function PlanComparisonTable() {
                               ? 'hover:bg-red-50 bg-gradient-to-r from-red-50/50 to-orange-50/30' 
                               : 'hover:bg-gray-50'
                           }`}>
-                            <td className={`px-6 py-4 whitespace-nowrap font-medium ${
+                            <td className={`px-6 py-4 whitespace-nowrap font-medium w-1/4 ${
                               isGeneralSection ? 'text-base text-gray-900 font-bold' : 'text-sm text-gray-900'
                             }`}>
                               {row.label}
                             </td>
                             {row.values.map((value, valueIdx) => (
-                              <td key={valueIdx} className="px-6 py-4 text-center align-middle">
+                              <td key={valueIdx} className="px-6 py-4 text-center align-middle w-1/4">
                                 {renderValue(value, isGeneralSection)}
                               </td>
                             ))}
