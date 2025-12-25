@@ -172,15 +172,29 @@ export default function PlanComparisonTable() {
     }
     
     if (isGeneralSection) {
-      return (
-        <span className="text-lg font-bold text-gray-900">
-          {value}
-        </span>
-      );
+      // Renderizado especial para la sección de Información General
+      if (rowLabel === "Precio" || rowLabel === "Price") {
+        return (
+          <div className="flex items-center justify-center">
+            <Badge className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-2 text-lg font-bold shadow-lg border-2 border-red-700">
+              {value}
+            </Badge>
+          </div>
+        );
+      }
+      if (rowLabel === "Objetivo" || rowLabel === "Objective") {
+        return (
+          <div className="flex items-center justify-center">
+            <span className="text-base font-bold text-gray-800 bg-white px-4 py-2 rounded-lg shadow-md border-2 border-red-200">
+              {value}
+            </span>
+          </div>
+        );
+      }
     }
     
     return (
-      <span className="text-sm text-gray-700">
+      <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
         {value}
       </span>
     );
@@ -222,14 +236,14 @@ export default function PlanComparisonTable() {
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
-                        <thead className={isGeneralSection ? "bg-gradient-to-r from-red-600 to-red-700" : "bg-gray-50"}>
+                        <thead className={isGeneralSection ? "bg-gradient-to-r from-red-100 to-orange-100" : "bg-gray-50"}>
                           <tr>
                             <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
                               isGeneralSection 
-                                ? 'text-base font-extrabold text-white' 
+                                ? 'text-base font-extrabold text-red-900' 
                                 : 'text-xs font-semibold text-gray-700'
                             }`}>
-                              {isGeneralSection && <Star className="w-4 h-4 inline mr-2 text-yellow-300" />}
+                              {isGeneralSection && <Star className="w-4 h-4 inline mr-2 text-red-600" />}
                               Característica
                             </th>
                             {t.plans.map((plan, idx) => (
@@ -237,7 +251,7 @@ export default function PlanComparisonTable() {
                                 key={idx}
                                 className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
                                   isGeneralSection 
-                                    ? 'text-base font-extrabold text-white' 
+                                    ? 'text-base font-extrabold text-red-900' 
                                     : 'text-xs font-semibold text-gray-700'
                                 }`}
                               >
