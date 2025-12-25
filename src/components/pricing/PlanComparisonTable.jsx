@@ -201,11 +201,7 @@ export default function PlanComparisonTable() {
                 return (
                   <div key={sectionIdx}>
                     {/* Section Header */}
-                    <div className={`px-6 py-4 ${
-                      isGeneralSection 
-                        ? 'bg-gradient-to-r from-red-600 to-red-700 shadow-xl' 
-                        : 'bg-gradient-to-r from-blue-900 to-blue-800'
-                    }`}>
+                    <div className="px-6 py-4 bg-gradient-to-r from-blue-900 to-blue-800">
                       <h3 className={`font-bold text-white ${isGeneralSection ? 'text-xl' : 'text-lg'}`}>
                         {section.title}
                       </h3>
