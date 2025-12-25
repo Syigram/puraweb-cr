@@ -214,7 +214,7 @@ export default function PlanComparisonTable() {
                           <tr>
                             <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
                               isGeneralSection 
-                                ? 'text-base font-extrabold text-red-900' 
+                                ? 'text-base font-extrabold text-gray-900' 
                                 : 'text-xs font-semibold text-gray-700'
                             }`}>
                               Plan
@@ -224,7 +224,7 @@ export default function PlanComparisonTable() {
                                 key={idx}
                                 className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
                                   isGeneralSection 
-                                    ? 'text-base font-extrabold text-red-900' 
+                                    ? 'text-base font-extrabold text-gray-900' 
                                     : 'text-xs font-semibold text-gray-700'
                                 }`}
                               >
