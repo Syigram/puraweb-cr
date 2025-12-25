@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { useLanguage } from "@/components/LanguageContext";
-import ComparisonTable from "@/components/pricing/ComparisonTable";
 
 export default function Planes() {
   const navigate = useNavigate();
@@ -227,7 +226,7 @@ export default function Planes() {
         </div>
 
         {/* Footer Note */}
-        <div className="text-center bg-blue-50 rounded-xl p-6 border border-blue-100 mb-16">
+        <div className="text-center bg-blue-50 rounded-xl p-6 border border-blue-100">
           <h3 className="font-semibold text-blue-900 mb-3">{t.allPlansInclude}</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {t.includedItems.map((item, index) => (
@@ -238,9 +237,6 @@ export default function Planes() {
             ))}
           </div>
         </div>
-
-        {/* Comparison Table */}
-        <ComparisonTable />
       </div>
     </div>
   );
