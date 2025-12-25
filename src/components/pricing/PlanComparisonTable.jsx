@@ -214,7 +214,7 @@ export default function PlanComparisonTable() {
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
-                        <thead className={isGeneralSection ? "bg-gradient-to-r from-red-100 to-orange-100" : "bg-gray-50"}>
+                        <thead className="bg-gray-50">
                           <tr>
                             <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
                               isGeneralSection 
