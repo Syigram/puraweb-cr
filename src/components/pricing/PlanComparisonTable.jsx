@@ -1,6 +1,7 @@
 import React from "react";
-import { Check, X } from "lucide-react";
+import { Check, X, DollarSign, Target, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function PlanComparisonTable() {
@@ -157,7 +158,7 @@ export default function PlanComparisonTable() {
 
   const t = content[language];
 
-  const renderValue = (value, isGeneralSection = false) => {
+  const renderValue = (value, isGeneralSection = false, rowLabel = '') => {
     if (typeof value === "boolean") {
       return (
         <div className="flex items-center justify-center">
@@ -169,6 +170,29 @@ export default function PlanComparisonTable() {
         </div>
       );
     }
+    
+    if (isGeneralSection) {
+      // Renderizado especial para la sección de Información General
+      if (rowLabel === "Precio" || rowLabel === "Price") {
+        return (
+          <div className="flex items-center justify-center">
+            <Badge className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-2 text-lg font-bold shadow-lg border-2 border-red-700">
+              {value}
+            </Badge>
+          </div>
+        );
+      }
+      if (rowLabel === "Objetivo" || rowLabel === "Objective") {
+        return (
+          <div className="flex items-center justify-center">
+            <span className="text-base font-bold text-gray-800 bg-white px-4 py-2 rounded-lg shadow-md border-2 border-red-200">
+              {value}
+            </span>
+          </div>
+        );
+      }
+    }
+    
     return (
       <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
         {value}
@@ -200,10 +224,13 @@ export default function PlanComparisonTable() {
                     {/* Section Header */}
                     <div className={`px-6 py-4 ${
                       isGeneralSection 
-                        ? 'bg-gradient-to-r from-red-600 to-red-700' 
+                        ? 'bg-gradient-to-r from-red-600 via-red-500 to-orange-600 shadow-xl' 
                         : 'bg-gradient-to-r from-blue-900 to-blue-800'
                     }`}>
-                      <h3 className="text-lg font-bold text-white">{section.title}</h3>
+                      <h3 className={`font-bold text-white ${isGeneralSection ? 'text-xl flex items-center gap-2' : 'text-lg'}`}>
+                        {isGeneralSection && <Star className="w-6 h-6 text-yellow-300" />}
+                        {section.title}
+                      </h3>
                     </div>
                     
                     {/* Section Rows */}
@@ -226,24 +253,39 @@ export default function PlanComparisonTable() {
                         </thead>
                       )}
                       <tbody className={`divide-y divide-gray-200 ${isGeneralSection ? 'bg-red-50/30' : 'bg-white'}`}>
-                        {section.rows.map((row, rowIdx) => (
-                          <tr key={rowIdx} className={`transition-colors ${
-                            isGeneralSection 
-                              ? 'hover:bg-red-50 bg-gradient-to-r from-red-50/50 to-orange-50/30' 
-                              : 'hover:bg-gray-50'
-                          }`}>
-                            <td className={`px-6 py-4 whitespace-nowrap font-medium w-1/4 ${
-                              isGeneralSection ? 'text-base text-gray-900 font-bold' : 'text-sm text-gray-900'
+                        {section.rows.map((row, rowIdx) => {
+                          const isPriceRow = row.label === "Precio" || row.label === "Price";
+                          const isObjectiveRow = row.label === "Objetivo" || row.label === "Objective";
+                          
+                          return (
+                            <tr key={rowIdx} className={`transition-colors ${
+                              isGeneralSection 
+                                ? 'hover:bg-red-50 bg-gradient-to-r from-red-50/50 to-orange-50/30' 
+                                : 'hover:bg-gray-50'
                             }`}>
-                              {row.label}
-                            </td>
-                            {row.values.map((value, valueIdx) => (
-                              <td key={valueIdx} className="px-6 py-4 text-center align-middle w-1/4">
-                                {renderValue(value, isGeneralSection)}
+                              <td className={`px-6 py-5 whitespace-nowrap font-medium w-1/4 ${
+                                isGeneralSection ? 'text-lg text-gray-900 font-bold' : 'text-sm text-gray-900'
+                              }`}>
+                                <div className="flex items-center gap-2">
+                                  {isGeneralSection && isPriceRow && (
+                                    <DollarSign className="w-5 h-5 text-red-600" />
+                                  )}
+                                  {isGeneralSection && isObjectiveRow && (
+                                    <Target className="w-5 h-5 text-orange-600" />
+                                  )}
+                                  {row.label}
+                                </div>
                               </td>
-                            ))}
-                          </tr>
-                        ))}
+                              {row.values.map((value, valueIdx) => (
+                                <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
+                                  isGeneralSection ? 'py-5' : 'py-4'
+                                }`}>
+                                  {renderValue(value, isGeneralSection, row.label)}
+                                </td>
+                              ))}
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -267,26 +309,38 @@ export default function PlanComparisonTable() {
                     <div key={sectionIdx} className={`mb-6 last:mb-0 ${
                       isGeneralSection ? 'bg-gradient-to-r from-red-50 to-orange-50 -mx-6 px-6 py-4 rounded-lg' : ''
                     }`}>
-                      <h4 className={`text-lg font-bold mb-3 pb-2 ${
+                      <h4 className={`font-bold mb-3 pb-2 ${
                         isGeneralSection 
-                          ? 'text-red-900 border-b-2 border-red-300' 
-                          : 'text-gray-900 border-b-2 border-blue-200'
+                          ? 'text-xl text-red-900 border-b-2 border-red-300 flex items-center gap-2' 
+                          : 'text-lg text-gray-900 border-b-2 border-blue-200'
                       }`}>
+                        {isGeneralSection && <Star className="w-5 h-5 text-red-600" />}
                         {section.title}
                       </h4>
                       <div className="space-y-3">
-                        {section.rows.map((row, rowIdx) => (
-                          <div key={rowIdx} className="flex items-center justify-between py-2">
-                            <span className={`font-medium flex-1 ${
-                              isGeneralSection ? 'text-base font-bold text-gray-900' : 'text-sm text-gray-700'
-                            }`}>
-                              {row.label}
-                            </span>
-                            <div className="flex-shrink-0 ml-4">
-                              {renderValue(row.values[planIdx], isGeneralSection)}
+                        {section.rows.map((row, rowIdx) => {
+                          const isPriceRow = row.label === "Precio" || row.label === "Price";
+                          const isObjectiveRow = row.label === "Objetivo" || row.label === "Objective";
+                          
+                          return (
+                            <div key={rowIdx} className="flex items-center justify-between py-2">
+                              <span className={`font-medium flex-1 ${
+                                isGeneralSection ? 'text-base font-bold text-gray-900 flex items-center gap-2' : 'text-sm text-gray-700'
+                              }`}>
+                                {isGeneralSection && isPriceRow && (
+                                  <DollarSign className="w-4 h-4 text-red-600" />
+                                )}
+                                {isGeneralSection && isObjectiveRow && (
+                                  <Target className="w-4 h-4 text-orange-600" />
+                                )}
+                                {row.label}
+                              </span>
+                              <div className="flex-shrink-0 ml-4">
+                                {renderValue(row.values[planIdx], isGeneralSection, row.label)}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   );
