@@ -157,15 +157,23 @@ export default function PlanComparisonTable() {
 
   const t = content[language];
 
-  const renderValue = (value) => {
+  const renderValue = (value, isGeneralSection = false) => {
     if (typeof value === "boolean") {
-      return value ? (
-        <Check className="w-5 h-5 text-green-600 mx-auto" />
-      ) : (
-        <X className="w-5 h-5 text-gray-300 mx-auto" />
+      return (
+        <div className="flex items-center justify-center">
+          {value ? (
+            <Check className="w-5 h-5 text-green-600" />
+          ) : (
+            <X className="w-5 h-5 text-gray-300" />
+          )}
+        </div>
       );
     }
-    return <span className="text-sm text-gray-700">{value}</span>;
+    return (
+      <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
+        {value}
+      </span>
+    );
   };
 
   return (
@@ -185,49 +193,62 @@ export default function PlanComparisonTable() {
         <div className="hidden lg:block overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden border border-gray-200 rounded-2xl shadow-lg">
-              {t.sections.map((section, sectionIdx) => (
-                <div key={sectionIdx}>
-                  {/* Section Header */}
-                  <div className="bg-gradient-to-r from-blue-900 to-blue-800 px-6 py-4">
-                    <h3 className="text-lg font-bold text-white">{section.title}</h3>
-                  </div>
-                  
-                  {/* Section Rows */}
-                  <table className="min-w-full divide-y divide-gray-200">
-                    {sectionIdx === 0 && (
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/4">
-                            Característica
-                          </th>
-                          {t.plans.map((plan, idx) => (
-                            <th
-                              key={idx}
-                              className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                            >
-                              {plan}
+              {t.sections.map((section, sectionIdx) => {
+                const isGeneralSection = sectionIdx === 0;
+                return (
+                  <div key={sectionIdx}>
+                    {/* Section Header */}
+                    <div className={`px-6 py-4 ${
+                      isGeneralSection 
+                        ? 'bg-gradient-to-r from-red-600 to-red-700' 
+                        : 'bg-gradient-to-r from-blue-900 to-blue-800'
+                    }`}>
+                      <h3 className="text-lg font-bold text-white">{section.title}</h3>
+                    </div>
+                    
+                    {/* Section Rows */}
+                    <table className="min-w-full divide-y divide-gray-200">
+                      {sectionIdx === 0 && (
+                        <thead className={isGeneralSection ? "bg-red-50" : "bg-gray-50"}>
+                          <tr>
+                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-1/4">
+                              Característica
                             </th>
-                          ))}
-                        </tr>
-                      </thead>
-                    )}
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {section.rows.map((row, rowIdx) => (
-                        <tr key={rowIdx} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {row.label}
-                          </td>
-                          {row.values.map((value, valueIdx) => (
-                            <td key={valueIdx} className="px-6 py-4 text-center">
-                              {renderValue(value)}
+                            {t.plans.map((plan, idx) => (
+                              <th
+                                key={idx}
+                                className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                              >
+                                {plan}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                      )}
+                      <tbody className={`divide-y divide-gray-200 ${isGeneralSection ? 'bg-red-50/30' : 'bg-white'}`}>
+                        {section.rows.map((row, rowIdx) => (
+                          <tr key={rowIdx} className={`transition-colors ${
+                            isGeneralSection 
+                              ? 'hover:bg-red-50 bg-gradient-to-r from-red-50/50 to-orange-50/30' 
+                              : 'hover:bg-gray-50'
+                          }`}>
+                            <td className={`px-6 py-4 whitespace-nowrap font-medium ${
+                              isGeneralSection ? 'text-base text-gray-900 font-bold' : 'text-sm text-gray-900'
+                            }`}>
+                              {row.label}
                             </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
+                            {row.values.map((value, valueIdx) => (
+                              <td key={valueIdx} className="px-6 py-4 text-center align-middle">
+                                {renderValue(value, isGeneralSection)}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -240,25 +261,36 @@ export default function PlanComparisonTable() {
                 <h3 className="text-2xl font-bold text-white text-center">{plan}</h3>
               </div>
               <CardContent className="p-6">
-                {t.sections.map((section, sectionIdx) => (
-                  <div key={sectionIdx} className="mb-6 last:mb-0">
-                    <h4 className="text-lg font-bold text-gray-900 mb-3 pb-2 border-b-2 border-blue-200">
-                      {section.title}
-                    </h4>
-                    <div className="space-y-3">
-                      {section.rows.map((row, rowIdx) => (
-                        <div key={rowIdx} className="flex items-center justify-between py-2">
-                          <span className="text-sm font-medium text-gray-700 flex-1">
-                            {row.label}
-                          </span>
-                          <div className="flex-shrink-0 ml-4">
-                            {renderValue(row.values[planIdx])}
+                {t.sections.map((section, sectionIdx) => {
+                  const isGeneralSection = sectionIdx === 0;
+                  return (
+                    <div key={sectionIdx} className={`mb-6 last:mb-0 ${
+                      isGeneralSection ? 'bg-gradient-to-r from-red-50 to-orange-50 -mx-6 px-6 py-4 rounded-lg' : ''
+                    }`}>
+                      <h4 className={`text-lg font-bold mb-3 pb-2 ${
+                        isGeneralSection 
+                          ? 'text-red-900 border-b-2 border-red-300' 
+                          : 'text-gray-900 border-b-2 border-blue-200'
+                      }`}>
+                        {section.title}
+                      </h4>
+                      <div className="space-y-3">
+                        {section.rows.map((row, rowIdx) => (
+                          <div key={rowIdx} className="flex items-center justify-between py-2">
+                            <span className={`font-medium flex-1 ${
+                              isGeneralSection ? 'text-base font-bold text-gray-900' : 'text-sm text-gray-700'
+                            }`}>
+                              {row.label}
+                            </span>
+                            <div className="flex-shrink-0 ml-4">
+                              {renderValue(row.values[planIdx], isGeneralSection)}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </CardContent>
             </Card>
           ))}
