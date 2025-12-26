@@ -19,9 +19,9 @@ export default function Servicios() {
 
   const content = {
     es: {
-      title: "Soluciones Digitales de Alto Rendimiento",
-      subtitle: "Desde presencia esencial hasta ecosistemas corporativos, diseñamos la infraestructura que su negocio necesita para escalar.",
-      viewPlans: "Ver Planes",
+      title: "Su Partner Tecnológico para el Crecimiento Digital",
+      subtitle: "No vendemos páginas web. Construimos infraestructura de crecimiento escalable que transforma su visión de negocio en resultados medibles.",
+      viewPlans: "Explorar Soluciones",
       services: [
         {
           icon: Code2,
@@ -86,9 +86,9 @@ export default function Servicios() {
       ]
     },
     en: {
-      title: "High-Performance Digital Solutions",
-      subtitle: "From essential presence to corporate ecosystems, we design the infrastructure your business needs to scale.",
-      viewPlans: "View Plans",
+      title: "Your Technology Partner for Digital Growth",
+      subtitle: "We don't sell websites. We build scalable growth infrastructure that transforms your business vision into measurable results.",
+      viewPlans: "Explore Solutions",
       services: [
         {
           icon: Code2,
