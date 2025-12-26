@@ -329,13 +329,26 @@ export default function Servicios() {
                       </div>
 
                       {/* Diferenciador */}
-                      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border border-red-100">
-                        <h4 className="font-semibold text-red-900 mb-2 text-sm uppercase tracking-wide">
-                          {language === 'es' ? 'Diferenciador PuraWeb' : 'PuraWeb Differentiator'}
-                        </h4>
-                        <p className="text-gray-700 text-sm leading-relaxed">
-                          {service.differentiator}
-                        </p>
+                      <div className="relative bg-gradient-to-br from-red-600 via-red-700 to-orange-600 rounded-2xl p-6 shadow-xl overflow-hidden">
+                        {/* Decorative elements */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </div>
+                            <h4 className="font-bold text-white text-sm uppercase tracking-wider">
+                              {language === 'es' ? 'Diferenciador PuraWeb' : 'PuraWeb Differentiator'}
+                            </h4>
+                          </div>
+                          <p className="text-white/95 text-sm leading-relaxed font-medium">
+                            {service.differentiator}
+                          </p>
+                        </div>
                       </div>
 
                       {/* CTA */}
