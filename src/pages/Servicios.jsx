@@ -328,16 +328,6 @@ export default function Servicios() {
                         </ul>
                       </div>
 
-                      {/* Diferenciador */}
-                      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border border-red-100">
-                        <h4 className="font-semibold text-red-900 mb-2 text-sm uppercase tracking-wide">
-                          {language === 'es' ? 'Diferenciador PuraWeb' : 'PuraWeb Differentiator'}
-                        </h4>
-                        <p className="text-gray-700 text-sm leading-relaxed">
-                          {service.differentiator}
-                        </p>
-                      </div>
-
                       {/* CTA */}
                       <Button
                         onClick={handleViewPlans}
