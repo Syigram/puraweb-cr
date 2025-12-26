@@ -47,7 +47,7 @@ export default function Servicios() {
           includes: [
             "Carrito de compras optimizado",
             "Gestión de inventario automatizado",
-            "Sistemas de cupones y descuentos",
+            "Pagos locales e internacionales con Stripe",
             "Suscripciones recurrentes y membresías"
           ],
           differentiator: "Notificaciones automáticas por WhatsApp para cada venta, manteniendo su negocio conectado en tiempo real.",
@@ -114,7 +114,7 @@ export default function Servicios() {
           includes: [
             "Optimized shopping cart",
             "Automated inventory management",
-            "Coupon and discount systems",
+            "Local and international payments with Stripe",
             "Recurring subscriptions and memberships"
           ],
           differentiator: "Automatic WhatsApp notifications for every sale, keeping your business connected in real-time.",
