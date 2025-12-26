@@ -202,12 +202,12 @@ function LayoutContent({ children, currentPageName }) {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              <button
-                onClick={() => scrollToSection("services")}
+              <Link
+                to={createPageUrl("Servicios")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
                 {t.nav.services}
-              </button>
+              </Link>
               <Link
                 to={createPageUrl("Planes")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -261,12 +261,13 @@ function LayoutContent({ children, currentPageName }) {
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-3 border-t pt-4">
-              <button
-                onClick={() => scrollToSection("services")}
+              <Link
+                to={createPageUrl("Servicios")}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
                 {t.nav.services}
-              </button>
+              </Link>
               <Link
                 to={createPageUrl("Planes")}
                 onClick={() => setIsMobileMenuOpen(false)}
