@@ -19,7 +19,7 @@ export default function Servicios() {
 
   const content = {
     es: {
-      title: "Arquitectura Digital de Alto Rendimiento",
+      title: "Soluciones Digitales de Alto Rendimiento",
       subtitle: "Diseñamos, desarrollamos y mantenemos ecosistemas digitales escalables que transforman la operación de su negocio.",
       viewPlans: "Ver Planes",
       services: [
