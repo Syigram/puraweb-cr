@@ -31,9 +31,9 @@ export default function Servicios() {
           description: "No creamos simples páginas; construimos activos digitales. Todos nuestros desarrollos son 100% responsivos, optimizados para SEO y diseñados bajo estándares de UX (Experiencia de Usuario) internacionales.",
           includes: [
             "Landing Pages de alto impacto",
-            "Sitios Corporativos escalables",
             "Blogs de contenido optimizados",
-            "Portafolios de alta resolución"
+            "Portafolios de alta resolución",
+            "Autogestión Total"
           ],
           differentiator: "Autogestión total. Usted tiene el control de su contenido sin depender de terceros.",
           planLink: "basic"
@@ -98,9 +98,9 @@ export default function Servicios() {
           description: "We don't create simple pages; we build digital assets. All our developments are 100% responsive, SEO-optimized, and designed under international UX (User Experience) standards.",
           includes: [
             "High-impact Landing Pages",
-            "Scalable Corporate Websites",
             "Optimized Content Blogs",
-            "High-resolution Portfolios"
+            "High-resolution Portfolios",
+            "Total Self-Management"
           ],
           differentiator: "Total self-management. You have control of your content without depending on third parties.",
           planLink: "basic"
