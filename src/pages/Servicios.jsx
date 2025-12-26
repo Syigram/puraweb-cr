@@ -19,8 +19,8 @@ export default function Servicios() {
 
   const content = {
     es: {
-      title: "Soluciones Digitales de Alto Rendimiento",
-      subtitle: "Desde presencia esencial hasta ecosistemas corporativos, diseñamos la infraestructura que su negocio necesita para escalar.",
+      title: "Arquitectura Digital de Alto Rendimiento",
+      subtitle: "Diseñamos, desarrollamos y mantenemos ecosistemas digitales escalables que transforman la operación de su negocio.",
       viewPlans: "Ver Planes",
       services: [
         {
@@ -86,8 +86,8 @@ export default function Servicios() {
       ]
     },
     en: {
-      title: "High-Performance Digital Solutions",
-      subtitle: "From essential presence to corporate ecosystems, we design the infrastructure your business needs to scale.",
+      title: "High-Performance Digital Architecture",
+      subtitle: "We design, develop, and maintain scalable digital ecosystems that transform your business operations.",
       viewPlans: "View Plans",
       services: [
         {
