@@ -23,7 +23,7 @@ export default function Planes() {
 
   return (
     <div className="pt-20">
-      <Pricing />
+      <Pricing compact />
       
       {/* CTA Section */}
       <div className="pb-8 bg-white">

@@ -9,7 +9,7 @@ import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
-export default function Pricing({ onGetStarted }) {
+export default function Pricing({ onGetStarted, compact = false }) {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = translations[language].pricing;
@@ -26,7 +26,7 @@ export default function Pricing({ onGetStarted }) {
   const plans = t.plans || [];
 
   return (
-    <section id="pricing" className="py-20 bg-white relative overflow-hidden">
+    <section id="pricing" className={`${compact ? 'pt-20 pb-8' : 'py-20'} bg-white relative overflow-hidden`}>
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white" />
 
