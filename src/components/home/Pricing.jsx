@@ -191,9 +191,9 @@ export default function Pricing({ onGetStarted }) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-6"
         >
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm">
             {t.additionalInfo}
           </p>
         </motion.div>
