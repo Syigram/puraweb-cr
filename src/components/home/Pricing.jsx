@@ -193,7 +193,7 @@ export default function Pricing({ onGetStarted }) {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-6"
         >
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600">
             {t.additionalInfo}
           </p>
         </motion.div>
