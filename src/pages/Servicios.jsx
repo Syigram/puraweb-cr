@@ -160,6 +160,10 @@ export default function Servicios() {
     navigate(createPageUrl("Planes"));
   };
 
+  const handleRequestQuote = () => {
+    navigate(createPageUrl("Home") + "#contact");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Hero Section */}
@@ -329,14 +333,41 @@ export default function Servicios() {
                       </div>
 
                       {/* CTA */}
-                      <Button
-                        onClick={handleViewPlans}
-                        variant="outline"
-                        className="w-full group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
-                      >
-                        {language === 'es' ? 'Ver detalles del plan' : 'View plan details'}
-                        <ArrowRight className="ml-2 w-4 h-4" />
-                      </Button>
+                      {(index === 0 || index === 1) ? (
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <Button
+                            onClick={handleViewPlans}
+                            variant="outline"
+                            className="flex-1 group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
+                          >
+                            {language === 'es' ? 'Ver Planes' : 'View Plans'}
+                            <ArrowRight className="ml-2 w-4 h-4" />
+                          </Button>
+                          <Button
+                            onClick={handleRequestQuote}
+                            className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+                          >
+                            {language === 'es' ? 'Cotización' : 'Get Quote'}
+                          </Button>
+                        </div>
+                      ) : index === 3 ? (
+                        <Button
+                          onClick={handleViewPlans}
+                          className="w-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white"
+                        >
+                          {language === 'es' ? 'Empezar Soporte Élite' : 'Start Elite Support'}
+                          <ArrowRight className="ml-2 w-4 h-4" />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={handleViewPlans}
+                          variant="outline"
+                          className="w-full group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
+                        >
+                          {language === 'es' ? 'Ver detalles del plan' : 'View plan details'}
+                          <ArrowRight className="ml-2 w-4 h-4" />
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 </motion.div>
