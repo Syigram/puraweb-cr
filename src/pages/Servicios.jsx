@@ -377,10 +377,10 @@ export default function Servicios() {
                 : 'Discover the perfect plan for your needs and start today.'}
             </p>
             <Button
-              onClick={handleRequestQuote}
+              onClick={handleViewPlans}
               className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-6 text-lg font-semibold"
             >
-              {language === 'es' ? 'Solicitar Cotización Gratuita' : 'Request Free Quote'}
+              {t.viewPlans}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </motion.div>
