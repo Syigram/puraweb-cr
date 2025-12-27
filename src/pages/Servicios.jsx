@@ -4,6 +4,7 @@ import { Code2, ShoppingCart, Calendar, Shield, ArrowRight, Check } from "lucide
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLanguage } from "@/components/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -30,10 +31,10 @@ export default function Servicios() {
           badgeColor: "bg-blue-100 text-blue-800",
           description: "No creamos simples páginas; construimos activos digitales. Todos nuestros desarrollos son 100% responsivos, optimizados para SEO y diseñados bajo estándares de UX (Experiencia de Usuario) internacionales.",
           includes: [
-            "Landing Pages de alto impacto",
-            "Blogs de contenido optimizados",
-            "Portafolios de alta resolución",
-            "Autogestión Total"
+            { text: "Landing Pages de alto impacto", tooltip: "Páginas de aterrizaje diseñadas para convertir visitantes en clientes, con velocidades de carga ultra rápidas y mensajes persuasivos." },
+            { text: "Blogs de contenido optimizados", tooltip: "Plataformas de blog configuradas para posicionamiento SEO, que aumentan su visibilidad en Google y atraen tráfico orgánico constante." },
+            { text: "Portafolios de alta resolución", tooltip: "Vitrinas visuales que proyectan profesionalismo, perfectas para mostrar sus proyectos, productos o servicios con impacto." },
+            { text: "Autogestión Total", tooltip: "Sistema de gestión de contenido intuitivo que le permite actualizar textos, imágenes y precios sin conocimientos técnicos ni depender de terceros." }
           ],
           differentiator: "Autogestión total. Usted tiene el control de su contenido sin depender de terceros.",
           planLink: "basic"
@@ -45,10 +46,10 @@ export default function Servicios() {
           badgeColor: "bg-red-100 text-red-800",
           description: "Transformamos su sitio en una máquina de ventas global. Especialistas en integración de Stripe, permitiendo cobros locales e internacionales con seguridad de grado bancario.",
           includes: [
-            "Carrito de compras optimizado",
-            "Gestión de inventario automatizado",
-            "Pagos locales e internacionales con Stripe",
-            "Suscripciones recurrentes y membresías"
+            { text: "Carrito de compras optimizado", tooltip: "Experiencia de compra fluida y sin fricciones que reduce carritos abandonados y aumenta las conversiones de venta." },
+            { text: "Gestión de inventario automatizado", tooltip: "Control de stock en tiempo real que actualiza disponibilidad automáticamente y evita sobreventa o falta de productos." },
+            { text: "Pagos locales e internacionales con Stripe", tooltip: "Procese pagos seguros en colones (CRC), dólares (USD) y más de 135 monedas, expandiendo su alcance de mercado globalmente." },
+            { text: "Suscripciones recurrentes y membresías", tooltip: "Genere ingresos predecibles con pagos automáticos mensuales/anuales para servicios, contenido premium o productos por suscripción." }
           ],
           differentiator: "Notificaciones automáticas por WhatsApp para cada venta, manteniendo su negocio conectado en tiempo real.",
           planLink: "professional"
@@ -60,10 +61,10 @@ export default function Servicios() {
           badgeColor: "bg-red-100 text-red-800",
           description: "Eliminamos la fricción operativa. Implementamos sistemas inteligentes de agendamiento que trabajan 24/7 por usted.",
           includes: [
-            "Calendarios interactivos",
-            "Sincronización con Gmail",
-            "Formularios personalizados avanzados",
-            "Sistemas de reservas para servicios"
+            { text: "Calendarios interactivos", tooltip: "Calendarios visuales en tiempo real donde sus clientes seleccionan fechas y horarios disponibles, eliminando el ir y venir de mensajes." },
+            { text: "Sincronización con Gmail", tooltip: "Integración bidireccional con Google Calendar que mantiene su agenda personal y profesional siempre actualizada automáticamente." },
+            { text: "Formularios personalizados avanzados", tooltip: "Recopile información específica de cada cliente (ej: número de personas, requisitos especiales, presupuesto) antes de la reserva para ofrecer un servicio más personalizado." },
+            { text: "Sistemas de reservas para servicios", tooltip: "Plataforma 24/7 que permite a clientes agendar citas, clases o servicios sin intervención humana, maximizando su capacidad de captar reservas incluso fuera de horario." }
           ],
           differentiator: "Integración completa con bases de datos externas y APIs para flujos de trabajo avanzados.",
           planLink: "professional"
@@ -75,10 +76,10 @@ export default function Servicios() {
           badgeColor: "bg-blue-100 text-blue-800",
           description: "Olvídese de los problemas técnicos. Su suscripción garantiza que su sitio web evolucione constantemente, se mantenga seguro y nunca quede obsoleto.",
           includes: [
-            "Hosting premium incluido",
-            "Certificado SSL y seguridad",
-            "Backups diarios automáticos",
-            "Actualizaciones de seguridad proactivas"
+            { text: "Hosting premium incluido", tooltip: "Servidores de alta velocidad con 99.9% de disponibilidad garantizada, asegurando que su sitio esté siempre en línea y cargue rápido para no perder ventas." },
+            { text: "Certificado SSL y seguridad", tooltip: "Cifrado de datos que protege la información de sus clientes y mejora su posicionamiento en Google (requisito obligatorio para SEO)." },
+            { text: "Backups diarios automáticos", tooltip: "Copias de seguridad automáticas cada 24 horas que garantizan recuperación total de su sitio en caso de problemas, sin pérdida de datos." },
+            { text: "Actualizaciones de seguridad proactivas", tooltip: "Monitoreo continuo y parches de seguridad aplicados antes de que surjan vulnerabilidades, protegiendo su negocio de hackeos y malware." }
           ],
           differentiator: "Promesa de servicio (SLA) con tiempos de respuesta desde 4 horas y soporte multicanal (Llamada, WhatsApp, Ticket).",
           planLink: "basic"
@@ -97,10 +98,10 @@ export default function Servicios() {
           badgeColor: "bg-blue-100 text-blue-800",
           description: "We don't create simple pages; we build digital assets. All our developments are 100% responsive, SEO-optimized, and designed under international UX (User Experience) standards.",
           includes: [
-            "High-impact Landing Pages",
-            "Optimized Content Blogs",
-            "High-resolution Portfolios",
-            "Total Self-Management"
+            { text: "High-impact Landing Pages", tooltip: "Landing pages designed to convert visitors into customers, with ultra-fast loading speeds and persuasive messaging." },
+            { text: "Optimized Content Blogs", tooltip: "Blog platforms configured for SEO ranking, increasing your Google visibility and attracting consistent organic traffic." },
+            { text: "High-resolution Portfolios", tooltip: "Visual showcases that project professionalism, perfect for displaying your projects, products, or services with impact." },
+            { text: "Total Self-Management", tooltip: "Intuitive content management system that allows you to update text, images, and prices without technical knowledge or depending on third parties." }
           ],
           differentiator: "Total self-management. You have control of your content without depending on third parties.",
           planLink: "basic"
@@ -112,10 +113,10 @@ export default function Servicios() {
           badgeColor: "bg-red-100 text-red-800",
           description: "We transform your site into a global sales machine. Stripe integration specialists, enabling local and international payments with bank-grade security.",
           includes: [
-            "Optimized shopping cart",
-            "Automated inventory management",
-            "Local and international payments with Stripe",
-            "Recurring subscriptions and memberships"
+            { text: "Optimized shopping cart", tooltip: "Smooth and frictionless shopping experience that reduces abandoned carts and increases sales conversions." },
+            { text: "Automated inventory management", tooltip: "Real-time stock control that automatically updates availability and prevents overselling or out-of-stock situations." },
+            { text: "Local and international payments with Stripe", tooltip: "Process secure payments in colones (CRC), dollars (USD), and 135+ currencies, expanding your market reach globally." },
+            { text: "Recurring subscriptions and memberships", tooltip: "Generate predictable revenue with automatic monthly/annual payments for services, premium content, or subscription products." }
           ],
           differentiator: "Automatic WhatsApp notifications for every sale, keeping your business connected in real-time.",
           planLink: "professional"
@@ -127,10 +128,10 @@ export default function Servicios() {
           badgeColor: "bg-red-100 text-red-800",
           description: "We eliminate operational friction. We implement intelligent scheduling systems that work 24/7 for you.",
           includes: [
-            "Interactive calendars",
-            "Gmail synchronization",
-            "Advanced custom forms",
-            "Booking systems for services"
+            { text: "Interactive calendars", tooltip: "Real-time visual calendars where your clients select available dates and times, eliminating back-and-forth messaging." },
+            { text: "Gmail synchronization", tooltip: "Bidirectional integration with Google Calendar that keeps your personal and professional schedule always updated automatically." },
+            { text: "Advanced custom forms", tooltip: "Collect specific information from each client (e.g., number of people, special requirements, budget) before booking to offer more personalized service." },
+            { text: "Booking systems for services", tooltip: "24/7 platform that allows clients to schedule appointments, classes, or services without human intervention, maximizing your capacity to capture bookings even outside business hours." }
           ],
           differentiator: "Full integration with external databases and APIs for advanced workflows.",
           planLink: "professional"
@@ -142,10 +143,10 @@ export default function Servicios() {
           badgeColor: "bg-blue-100 text-blue-800",
           description: "Forget about technical problems. Your subscription guarantees that your website constantly evolves, stays secure, and never becomes obsolete.",
           includes: [
-            "Premium hosting included",
-            "SSL certificate and security",
-            "Automatic daily backups",
-            "Proactive security updates"
+            { text: "Premium hosting included", tooltip: "High-speed servers with 99.9% guaranteed uptime, ensuring your site is always online and loads fast so you don't lose sales." },
+            { text: "SSL certificate and security", tooltip: "Data encryption that protects your customers' information and improves your Google ranking (mandatory requirement for SEO)." },
+            { text: "Automatic daily backups", tooltip: "Automatic backups every 24 hours that guarantee full site recovery in case of problems, without data loss." },
+            { text: "Proactive security updates", tooltip: "Continuous monitoring and security patches applied before vulnerabilities arise, protecting your business from hacks and malware." }
           ],
           differentiator: "Service promise (SLA) with response times from 4 hours and multichannel support (Call, WhatsApp, Ticket).",
           planLink: "basic"
@@ -322,14 +323,25 @@ export default function Servicios() {
                         <h4 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wide">
                           {language === 'es' ? 'Qué incluye' : 'What\'s included'}
                         </h4>
-                        <ul className="space-y-2">
-                          {service.includes.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-700 text-sm">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <TooltipProvider>
+                          <ul className="space-y-2">
+                            {service.includes.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                                <Tooltip delayDuration={200}>
+                                  <TooltipTrigger asChild>
+                                    <span className="text-gray-700 text-sm cursor-help hover:text-blue-900 transition-colors">
+                                      {item.text}
+                                    </span>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="right" className="max-w-xs bg-blue-950 text-white border-blue-900">
+                                    <p className="text-sm">{item.tooltip}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </li>
+                            ))}
+                          </ul>
+                        </TooltipProvider>
                       </div>
 
                       {/* CTA */}
