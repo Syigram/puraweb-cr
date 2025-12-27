@@ -298,7 +298,7 @@ export default function Servicios() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 hover:border-blue-200 group">
+                  <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 hover:border-blue-200 group flex flex-col">
                     <CardHeader className="space-y-4">
                       <div className="flex items-start justify-between">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -316,9 +316,9 @@ export default function Servicios() {
                       </p>
                     </CardHeader>
 
-                    <CardContent className="space-y-6">
+                    <CardContent className="space-y-6 flex-1 flex flex-col">
                       {/* Qué incluye */}
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wide">
                           {language === 'es' ? 'Qué incluye' : 'What\'s included'}
                         </h4>
@@ -333,41 +333,22 @@ export default function Servicios() {
                       </div>
 
                       {/* CTA */}
-                      {(index === 0 || index === 1) ? (
-                        <div className="flex flex-col sm:flex-row gap-3">
-                          <Button
-                            onClick={handleViewPlans}
-                            variant="outline"
-                            className="flex-1 group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
-                          >
-                            {language === 'es' ? 'Ver Planes' : 'View Plans'}
-                            <ArrowRight className="ml-2 w-4 h-4" />
-                          </Button>
-                          <Button
-                            onClick={handleRequestQuote}
-                            className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
-                          >
-                            {language === 'es' ? 'Cotización' : 'Get Quote'}
-                          </Button>
-                        </div>
-                      ) : index === 3 ? (
-                        <Button
-                          onClick={handleViewPlans}
-                          className="w-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white"
-                        >
-                          {language === 'es' ? 'Empezar Soporte Élite' : 'Start Elite Support'}
-                          <ArrowRight className="ml-2 w-4 h-4" />
-                        </Button>
-                      ) : (
+                      <div className="mt-auto pt-4 flex flex-col sm:flex-row gap-3">
                         <Button
                           onClick={handleViewPlans}
                           variant="outline"
-                          className="w-full group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
+                          className="flex-1 group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all"
                         >
-                          {language === 'es' ? 'Ver detalles del plan' : 'View plan details'}
+                          {language === 'es' ? 'Ver Planes' : 'View Plans'}
                           <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
-                      )}
+                        <Button
+                          onClick={handleRequestQuote}
+                          className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+                        >
+                          {language === 'es' ? 'Cotización' : 'Get Quote'}
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
