@@ -92,6 +92,41 @@ export default function Nosotros() {
         </div>
       </section>
 
+      {/* Team Image Section */}
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative rounded-3xl overflow-hidden shadow-2xl"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop" 
+              alt="Equipo de trabajo colaborando"
+              className="w-full h-[400px] md:h-[500px] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent flex items-end">
+              <div className="p-8 md:p-12">
+                <Badge className="mb-4 bg-white/20 backdrop-blur-sm text-white border-white/30">
+                  <Users className="w-4 h-4 mr-2" />
+                  {language === 'es' ? 'Nuestro Equipo' : 'Our Team'}
+                </Badge>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  {language === 'es' ? 'Profesionales Comprometidos con tu Éxito' : 'Professionals Committed to Your Success'}
+                </h3>
+                <p className="text-white/90 text-lg max-w-2xl">
+                  {language === 'es' 
+                    ? 'Un equipo apasionado que combina experiencia técnica con creatividad para transformar tu visión digital en realidad.'
+                    : 'A passionate team that combines technical expertise with creativity to transform your digital vision into reality.'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Mission & Vision */}
       <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
@@ -186,6 +221,58 @@ export default function Nosotros() {
                 </Card>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Development Process Visual */}
+      <section className="py-16 px-6 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop" 
+                alt="Desarrollo web profesional"
+                className="rounded-2xl shadow-xl w-full h-[350px] md:h-[450px] object-cover"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              <Badge className="bg-blue-100 text-blue-900 px-4 py-2">
+                <Code className="w-4 h-4 mr-2" />
+                {language === 'es' ? 'Tecnología de Vanguardia' : 'Cutting-Edge Technology'}
+              </Badge>
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
+                {language === 'es' 
+                  ? 'Código Limpio, Resultados Excepcionales'
+                  : 'Clean Code, Exceptional Results'}
+              </h3>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                {language === 'es'
+                  ? 'Utilizamos las últimas tecnologías y mejores prácticas de desarrollo para crear sitios web rápidos, seguros y escalables. Cada proyecto es construido con atención al detalle y optimizado para el rendimiento.'
+                  : 'We use the latest technologies and development best practices to create fast, secure, and scalable websites. Every project is built with attention to detail and optimized for performance.'}
+              </p>
+              <div className="flex gap-4 pt-4">
+                <div className="flex items-center gap-2 text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <span className="font-medium">{language === 'es' ? 'Código Optimizado' : 'Optimized Code'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <span className="font-medium">{language === 'es' ? 'Seguridad SSL' : 'SSL Security'}</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
