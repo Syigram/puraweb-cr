@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   Sparkles, Zap, Code, Shield, TrendingUp, Target, Eye, 
-  CheckCircle2, ArrowRight, Heart, Rocket, Users, Award
+  CheckCircle2, ArrowRight, Heart, Rocket, Users, Award, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -190,7 +190,7 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* Why Different */}
+      {/* Against Section - What we fight */}
       <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -202,38 +202,38 @@ export default function Nosotros() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                {t.whyDifferentTitle}
+                {translations[language].manifesto.againstTitle}
               </span>
             </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {translations[language].manifesto.againstSubtitle}
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {t.differentiators.map((diff, index) => {
-              const Icon = iconMap[diff.icon];
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-200 group">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <Icon className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">
-                        {diff.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {diff.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+            {translations[language].manifesto.against.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-200 group">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                      <X className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
