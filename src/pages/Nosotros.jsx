@@ -219,10 +219,10 @@ export default function Nosotros() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-200 group">
+                <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-400 group">
                 <CardContent className="p-6 text-center">
-                  <div className="w-14 h-14 rounded-full bg-red-600/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-red-600/30 transition-all">
-                    <X className="w-7 h-7 text-red-500" />
+                  <div className="w-14 h-14 rounded-full bg-red-700/30 flex items-center justify-center mx-auto mb-4 group-hover:bg-red-700/40 transition-all">
+                    <X className="w-7 h-7 text-red-700" />
                   </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">
                       {item.title}
