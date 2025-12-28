@@ -186,6 +186,95 @@ export const translations = {
       subscriptionNameLabel: "Nombre de la Suscripción",
       subscriptionNamePlaceholder: "Ej: Mi Sitio Web Principal",
       subscriptionNameHint: "Este nombre te ayudará a identificar esta suscripción si tienes varias."
+    },
+    about: {
+      title: "Nosotros",
+      heroTitle: "Tecnología Premium al Alcance de Todos",
+      heroSubtitle: "Nacimos para democratizar el diseño web de alto nivel en Costa Rica. Creemos que toda PYME merece una presencia digital excepcional sin comprometer su presupuesto.",
+      missionTitle: "Nuestra Misión",
+      missionText: "Cerrar la brecha entre el diseño de alta gama y la accesibilidad para las pequeñas y medianas empresas costarricenses, ofreciendo soluciones digitales de nivel corporativo a precios justos y transparentes.",
+      visionTitle: "Nuestra Visión",
+      visionText: "Convertirnos en el aliado tecnológico preferido de emprendedores y PYMEs en Costa Rica, elevando el estándar de la web nacional y compitiendo globalmente con tecnología de clase mundial.",
+      valuesTitle: "Nuestros Valores Fundamentales",
+      values: [
+        {
+          title: "Simplicidad sobre Complejidad",
+          description: "Creemos en interfaces intuitivas y código limpio. No complicamos lo que debe ser simple. Cada elemento tiene un propósito, cada línea de código está optimizada."
+        },
+        {
+          title: "Transparencia Total",
+          description: "Sin costos ocultos ni sorpresas. Publicamos nuestros precios abiertamente porque creemos en relaciones honestas. Lo que ves es lo que pagas, siempre."
+        },
+        {
+          title: "Obsesión por el Rendimiento",
+          description: "Cada milisegundo cuenta. Optimizamos cada imagen, cada script, cada consulta. Tus usuarios merecen sitios ultrarrápidos que conviertan visitantes en clientes."
+        },
+        {
+          title: "Compromiso Local",
+          description: "Entendemos el mercado tico. Hablamos tu idioma, conocemos tus necesidades y estamos disponibles cuando nos necesitas, sin barreras de zona horaria."
+        }
+      ],
+      whyDifferentTitle: "¿Por Qué Somos Diferentes?",
+      differentiators: [
+        {
+          title: "Web as a Service (WaaS)",
+          description: "No vendemos un producto estático. Ofrecemos un ecosistema digital vivo que evoluciona con tu negocio. Tu sitio siempre estará actualizado, seguro y optimizado.",
+          icon: "Zap"
+        },
+        {
+          title: "Tecnología de Vanguardia",
+          description: "Usamos las herramientas más modernas del mercado: React, Stripe, Base44, optimización SEO avanzada. Lo mismo que usan las grandes corporaciones, pero para tu PYME.",
+          icon: "Code"
+        },
+        {
+          title: "Sin Ataduras ni Trucos",
+          description: "Cancela cuando quieras, sin penalizaciones. Exporta tu contenido cuando desees. Tu negocio es tuyo, y nosotros respetamos eso completamente.",
+          icon: "Shield"
+        },
+        {
+          title: "Resultados Medibles",
+          description: "No prometemos magia, entregamos datos. Velocidad de carga, tasas de conversión, posicionamiento SEO. Todo medible, todo transparente.",
+          icon: "TrendingUp"
+        }
+      ],
+      processTitle: "Nuestro Proceso",
+      processSubtitle: "Simple, transparente y centrado en resultados",
+      processSteps: [
+        {
+          step: "01",
+          title: "Consulta Inicial",
+          description: "Conversamos sobre tu negocio, objetivos y visión. Sin compromiso, solo entendiendo tus necesidades reales."
+        },
+        {
+          step: "02",
+          title: "Propuesta Transparente",
+          description: "Presentamos un plan claro con alcance, tiempos y costos definidos. Sin letra pequeña ni sorpresas."
+        },
+        {
+          step: "03",
+          title: "Diseño y Desarrollo",
+          description: "Creamos tu sitio con actualizaciones constantes. Ves el progreso en tiempo real y apruebas cada etapa."
+        },
+        {
+          step: "04",
+          title: "Lanzamiento y Soporte",
+          description: "Desplegamos tu sitio y te capacitamos para gestionarlo. Seguimos a tu lado con soporte continuo."
+        }
+      ],
+      guaranteeTitle: "Nuestro Compromiso",
+      guarantees: [
+        "Respuesta en menos de 24 horas en días hábiles",
+        "Sitios con velocidad de carga menor a 2 segundos",
+        "Diseño responsive perfecto en todos los dispositivos",
+        "Código limpio y documentado para fácil mantenimiento",
+        "Backups automáticos diarios de tu información",
+        "Certificado SSL y seguridad de nivel bancario",
+        "Cancelación sin penalización en cualquier momento",
+        "Capacitación completa para gestionar tu contenido"
+      ],
+      ctaTitle: "¿Listo para Elevar tu Presencia Digital?",
+      ctaSubtitle: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos digitales",
+      ctaButton: "Agenda una Consulta Gratuita"
     }
   },
   en: {
@@ -375,6 +464,95 @@ export const translations = {
       subscriptionNameLabel: "Subscription Name",
       subscriptionNamePlaceholder: "E.g: My Main Website",
       subscriptionNameHint: "This name will help you identify this subscription if you have several."
+    },
+    about: {
+      title: "About Us",
+      heroTitle: "Premium Technology for Everyone",
+      heroSubtitle: "We were born to democratize high-end web design in Costa Rica. We believe every SME deserves an exceptional digital presence without compromising their budget.",
+      missionTitle: "Our Mission",
+      missionText: "To bridge the gap between high-end design and accessibility for Costa Rican small and medium businesses, offering corporate-level digital solutions at fair and transparent prices.",
+      visionTitle: "Our Vision",
+      visionText: "To become the preferred technology partner for entrepreneurs and SMEs in Costa Rica, raising the standard of the national web and competing globally with world-class technology.",
+      valuesTitle: "Our Core Values",
+      values: [
+        {
+          title: "Simplicity over Complexity",
+          description: "We believe in intuitive interfaces and clean code. We don't complicate what should be simple. Every element has a purpose, every line of code is optimized."
+        },
+        {
+          title: "Total Transparency",
+          description: "No hidden costs or surprises. We publish our prices openly because we believe in honest relationships. What you see is what you pay, always."
+        },
+        {
+          title: "Performance Obsession",
+          description: "Every millisecond counts. We optimize every image, every script, every query. Your users deserve ultra-fast sites that convert visitors into customers."
+        },
+        {
+          title: "Local Commitment",
+          description: "We understand the Costa Rican market. We speak your language, know your needs, and are available when you need us, without time zone barriers."
+        }
+      ],
+      whyDifferentTitle: "Why Are We Different?",
+      differentiators: [
+        {
+          title: "Web as a Service (WaaS)",
+          description: "We don't sell a static product. We offer a living digital ecosystem that evolves with your business. Your site will always be updated, secure, and optimized.",
+          icon: "Zap"
+        },
+        {
+          title: "Cutting-Edge Technology",
+          description: "We use the most modern tools on the market: React, Stripe, Base44, advanced SEO optimization. The same that large corporations use, but for your SME.",
+          icon: "Code"
+        },
+        {
+          title: "No Strings Attached",
+          description: "Cancel anytime, no penalties. Export your content whenever you want. Your business is yours, and we completely respect that.",
+          icon: "Shield"
+        },
+        {
+          title: "Measurable Results",
+          description: "We don't promise magic, we deliver data. Loading speed, conversion rates, SEO ranking. Everything measurable, everything transparent.",
+          icon: "TrendingUp"
+        }
+      ],
+      processTitle: "Our Process",
+      processSubtitle: "Simple, transparent, and results-focused",
+      processSteps: [
+        {
+          step: "01",
+          title: "Initial Consultation",
+          description: "We talk about your business, goals, and vision. No commitment, just understanding your real needs."
+        },
+        {
+          step: "02",
+          title: "Transparent Proposal",
+          description: "We present a clear plan with defined scope, timelines, and costs. No fine print or surprises."
+        },
+        {
+          step: "03",
+          title: "Design and Development",
+          description: "We build your site with constant updates. You see progress in real-time and approve each stage."
+        },
+        {
+          step: "04",
+          title: "Launch and Support",
+          description: "We deploy your site and train you to manage it. We stay by your side with continuous support."
+        }
+      ],
+      guaranteeTitle: "Our Commitment",
+      guarantees: [
+        "Response within 24 hours on business days",
+        "Sites with loading speed under 2 seconds",
+        "Perfect responsive design on all devices",
+        "Clean and documented code for easy maintenance",
+        "Automatic daily backups of your information",
+        "SSL certificate and bank-level security",
+        "Cancellation without penalty at any time",
+        "Complete training to manage your content"
+      ],
+      ctaTitle: "Ready to Elevate Your Digital Presence?",
+      ctaSubtitle: "Let's talk about how we can help you achieve your digital goals",
+      ctaButton: "Schedule a Free Consultation"
     }
   }
 };

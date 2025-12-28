@@ -3,9 +3,10 @@ import Checkout from './pages/Checkout';
 import Home from './pages/Home';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
+import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import UserDashboard from './pages/UserDashboard';
-import Servicios from './pages/Servicios';
+import Nosotros from './pages/Nosotros';
 import __Layout from './Layout.jsx';
 
 
@@ -15,9 +16,10 @@ export const PAGES = {
     "Home": Home,
     "PaymentSuccess": PaymentSuccess,
     "Planes": Planes,
+    "Servicios": Servicios,
     "Support": Support,
     "UserDashboard": UserDashboard,
-    "Servicios": Servicios,
+    "Nosotros": Nosotros,
 }
 
 export const pagesConfig = {

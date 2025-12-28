@@ -214,6 +214,12 @@ function LayoutContent({ children, currentPageName }) {
               >
                 {t.nav.pricing}
               </Link>
+              <Link
+                to={createPageUrl("Nosotros")}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
+              >
+                {language === 'es' ? 'Nosotros' : 'About'}
+              </Link>
               <button
                 onClick={() => scrollToSection("benefits")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -274,6 +280,13 @@ function LayoutContent({ children, currentPageName }) {
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
                 {t.nav.pricing}
+              </Link>
+              <Link
+                to={createPageUrl("Nosotros")}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+              >
+                {language === 'es' ? 'Nosotros' : 'About'}
               </Link>
               <button
                 onClick={() => scrollToSection("benefits")}
