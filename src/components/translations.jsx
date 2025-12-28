@@ -275,6 +275,89 @@ export const translations = {
       ctaTitle: "¿Listo para Elevar tu Presencia Digital?",
       ctaSubtitle: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos digitales",
       ctaButton: "Agenda una Consulta Gratuita"
+    },
+    manifesto: {
+      title: "Nosotros",
+      heroTitle: "Elevando el Estándar del Desarrollo Web en Costa Rica",
+      heroSubtitle: "No solo escribimos código; construimos la ventaja competitiva de nuestros clientes.",
+      manifestoTitle: "El Manifiesto de PuraWeb CR",
+      manifestoIntro: "En un mundo saturado de sitios web mediocres y soporte deficiente, en PuraWeb CR operamos bajo un código de principios innegociables.",
+      pillars: [
+        {
+          title: "Transparencia Radical",
+          subtitle: "No \"Gatekeeping\"",
+          description: "Creemos que la confianza es la base de toda relación tecnológica. Por eso, nuestros precios son públicos y nuestros planes son claros. Eliminamos el misterio de las cotizaciones infinitas y las facturas sorpresa. Con PuraWeb CR, usted sabe exactamente qué está pagando y qué valor recibirá cada mes, sin letras pequeñas ni contratos abusivos."
+        },
+        {
+          title: "Obsesión por el Rendimiento",
+          subtitle: "Performance over Fluff",
+          description: "Un diseño bonito que no convierte no sirve para nada. En PuraWeb CR, la estética está al servicio del rendimiento. Priorizamos la velocidad de carga, la optimización SEO y la seguridad de grado bancario. Cada milisegundo de carga cuenta, y cada píxel tiene el propósito de guiar a su usuario hacia la acción."
+        },
+        {
+          title: "Soporte Proactivo, No Reactivo",
+          subtitle: "Siempre un Paso Adelante",
+          description: "El desarrollo web tradicional muere cuando se entrega el proyecto; para nosotros, ese es solo el comienzo. Nuestra promesa de SLA (Service Level Agreement) no es una sugerencia, es un compromiso. No esperamos a que su sitio falle para actuar; monitoreamos, actualizamos y evolucionamos su plataforma constantemente bajo nuestro modelo de suscripción, garantizando que su tecnología nunca quede obsoleta."
+        },
+        {
+          title: "Tecnología con Propósito Humano",
+          subtitle: "Personas Primero, Código Segundo",
+          description: "Aunque dominamos las herramientas más avanzadas (Stripe, APIs, Cloud Infrastructure), nunca olvidamos que detrás de cada pantalla hay un ser humano. Diseñamos experiencias intuitivas que facilitan la vida de sus clientes y la gestión de su negocio. Si la tecnología no le ahorra tiempo y esfuerzo, no es la tecnología adecuada."
+        }
+      ],
+      againstTitle: "Contra lo que Luchamos",
+      againstSubtitle: "Nuestro compromiso es eliminar las malas prácticas que plagan la industria",
+      against: [
+        {
+          title: "Precios Ocultos",
+          description: "Sin cotizaciones eternas ni sorpresas en la factura. Todo claro desde el día uno."
+        },
+        {
+          title: "Sitios Lentos",
+          description: "Cada segundo perdido es un cliente que se va. Optimizamos hasta el último byte."
+        },
+        {
+          title: "Soporte Inexistente",
+          description: "No desaparecemos después del lanzamiento. Estamos aquí para el largo plazo."
+        },
+        {
+          title: "Tecnología Obsoleta",
+          description: "Usamos las herramientas más modernas, no legacy code de hace 10 años."
+        }
+      ],
+      promiseTitle: "Nuestra Promesa Inquebrantable",
+      promises: [
+        "Sitios que cargan en menos de 2 segundos, garantizado",
+        "Precios públicos sin negociación ni sorpresas",
+        "Respuesta en menos de 24 horas en días hábiles",
+        "Código limpio, documentado y de nivel internacional",
+        "Cancelación sin penalización en cualquier momento",
+        "Actualizaciones proactivas de seguridad y rendimiento",
+        "Backups automáticos cada 24 horas",
+        "Capacitación completa para gestionar tu contenido"
+      ],
+      whyUsTitle: "¿Por Qué PuraWeb CR?",
+      whyUsSubtitle: "Porque el status quo no es suficiente",
+      whyReasons: [
+        {
+          title: "Estándares Internacionales",
+          description: "Competimos con agencias de Silicon Valley, pero con precios de Centroamérica."
+        },
+        {
+          title: "Obsesión por los Detalles",
+          description: "Cada pixel, cada línea de código, cada interacción está pensada estratégicamente."
+        },
+        {
+          title: "Web as a Service",
+          description: "Tu sitio no es un producto final, es un ecosistema vivo que evoluciona con tu negocio."
+        },
+        {
+          title: "Sin Contratos Trampa",
+          description: "Te quedas porque quieres, no porque estés atrapado en un contrato de 2 años."
+        }
+      ],
+      ctaTitle: "Únase a la Revolución del Desarrollo Web",
+      ctaSubtitle: "No acepte la mediocridad. Su negocio merece tecnología de clase mundial.",
+      ctaButton: "Comenzar Ahora"
     }
   },
   en: {
@@ -553,6 +636,89 @@ export const translations = {
       ctaTitle: "Ready to Elevate Your Digital Presence?",
       ctaSubtitle: "Let's talk about how we can help you achieve your digital goals",
       ctaButton: "Schedule a Free Consultation"
+    },
+    manifesto: {
+      title: "About Us",
+      heroTitle: "Raising the Standard of Web Development in Costa Rica",
+      heroSubtitle: "We don't just write code; we build our clients' competitive advantage.",
+      manifestoTitle: "The PuraWeb CR Manifesto",
+      manifestoIntro: "In a world saturated with mediocre websites and poor support, at PuraWeb CR we operate under a code of non-negotiable principles.",
+      pillars: [
+        {
+          title: "Radical Transparency",
+          subtitle: "No \"Gatekeeping\"",
+          description: "We believe trust is the foundation of every technology relationship. That's why our prices are public and our plans are clear. We eliminate the mystery of endless quotes and surprise invoices. With PuraWeb CR, you know exactly what you're paying for and what value you'll receive each month, without fine print or abusive contracts."
+        },
+        {
+          title: "Performance Obsession",
+          subtitle: "Performance over Fluff",
+          description: "A beautiful design that doesn't convert is useless. At PuraWeb CR, aesthetics serve performance. We prioritize loading speed, SEO optimization, and bank-grade security. Every millisecond of loading counts, and every pixel has the purpose of guiding your user to action."
+        },
+        {
+          title: "Proactive Support, Not Reactive",
+          subtitle: "Always One Step Ahead",
+          description: "Traditional web development dies when the project is delivered; for us, that's just the beginning. Our SLA (Service Level Agreement) promise is not a suggestion, it's a commitment. We don't wait for your site to fail to act; we monitor, update, and evolve your platform constantly under our subscription model, ensuring your technology never becomes obsolete."
+        },
+        {
+          title: "Technology with Human Purpose",
+          subtitle: "People First, Code Second",
+          description: "Although we master the most advanced tools (Stripe, APIs, Cloud Infrastructure), we never forget that behind every screen is a human being. We design intuitive experiences that make life easier for your customers and your business management. If technology doesn't save you time and effort, it's not the right technology."
+        }
+      ],
+      againstTitle: "What We Fight Against",
+      againstSubtitle: "Our commitment is to eliminate the bad practices plaguing the industry",
+      against: [
+        {
+          title: "Hidden Prices",
+          description: "No endless quotes or invoice surprises. Everything clear from day one."
+        },
+        {
+          title: "Slow Sites",
+          description: "Every lost second is a customer leaving. We optimize down to the last byte."
+        },
+        {
+          title: "Non-existent Support",
+          description: "We don't disappear after launch. We're here for the long haul."
+        },
+        {
+          title: "Obsolete Technology",
+          description: "We use the most modern tools, not 10-year-old legacy code."
+        }
+      ],
+      promiseTitle: "Our Unbreakable Promise",
+      promises: [
+        "Sites that load in less than 2 seconds, guaranteed",
+        "Public pricing without negotiation or surprises",
+        "Response within 24 hours on business days",
+        "Clean, documented, international-level code",
+        "Cancellation without penalty at any time",
+        "Proactive security and performance updates",
+        "Automatic backups every 24 hours",
+        "Complete training to manage your content"
+      ],
+      whyUsTitle: "Why PuraWeb CR?",
+      whyUsSubtitle: "Because the status quo is not enough",
+      whyReasons: [
+        {
+          title: "International Standards",
+          description: "We compete with Silicon Valley agencies, but with Central American prices."
+        },
+        {
+          title: "Obsession with Details",
+          description: "Every pixel, every line of code, every interaction is strategically thought out."
+        },
+        {
+          title: "Web as a Service",
+          description: "Your site is not an end product, it's a living ecosystem that evolves with your business."
+        },
+        {
+          title: "No Trap Contracts",
+          description: "You stay because you want to, not because you're trapped in a 2-year contract."
+        }
+      ],
+      ctaTitle: "Join the Web Development Revolution",
+      ctaSubtitle: "Don't accept mediocrity. Your business deserves world-class technology.",
+      ctaButton: "Start Now"
     }
   }
 };

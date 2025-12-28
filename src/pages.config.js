@@ -7,6 +7,7 @@ import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import UserDashboard from './pages/UserDashboard';
 import Nosotros from './pages/Nosotros';
+import NosotrosManifiesto from './pages/NosotrosManifiesto';
 import __Layout from './Layout.jsx';
 
 
@@ -20,6 +21,7 @@ export const PAGES = {
     "Support": Support,
     "UserDashboard": UserDashboard,
     "Nosotros": Nosotros,
+    "NosotrosManifiesto": NosotrosManifiesto,
 }
 
 export const pagesConfig = {
