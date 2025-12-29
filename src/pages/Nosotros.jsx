@@ -103,7 +103,7 @@ export default function Nosotros() {
             className="relative rounded-3xl overflow-hidden shadow-2xl"
           >
             <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop" 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/eeea33b21_tec.jpg" 
               alt="Equipo de trabajo colaborando"
               className="w-full h-[400px] md:h-[500px] object-cover"
             />
