@@ -118,8 +118,8 @@ export default function Nosotros() {
                 </h3>
                 <p className="text-white/90 text-lg max-w-2xl">
                   {language === 'es' 
-                    ? 'Un equipo apasionado que combina experiencia técnica con creatividad para transformar tu visión digital en realidad.'
-                    : 'A passionate team that combines technical expertise with creativity to transform your digital vision into reality.'}
+                    ? 'Mi nombre es Alejandro González y soy el fundador y líder técnico de este equipo. Graduado de Ingeniería en Computadores en el TEC y con más de 10 años en la industria.'
+                    : 'My name is Alejandro González and I am the founder and technical leader of this team. Graduated in Computer Engineering from TEC with over 10 years in the industry.'}
                 </p>
               </div>
             </div>
