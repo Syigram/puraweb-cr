@@ -221,12 +221,6 @@ function LayoutContent({ children, currentPageName }) {
                 {language === 'es' ? 'Nosotros' : 'About'}
               </Link>
               <button
-                onClick={() => scrollToSection("benefits")}
-                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
-              >
-                {t.nav.benefits}
-              </button>
-              <button
                 onClick={() => scrollToSection("contact")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
@@ -234,9 +228,8 @@ function LayoutContent({ children, currentPageName }) {
               </button>
               <Link
                 to={createPageUrl("Support")}
-                className="text-gray-700 hover:text-blue-900 transition-colors font-medium flex items-center gap-1"
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
-                <HelpCircle className="w-4 h-4" />
                 {language === 'es' ? 'Soporte' : 'Support'}
               </Link>
               <button
@@ -289,12 +282,6 @@ function LayoutContent({ children, currentPageName }) {
                 {language === 'es' ? 'Nosotros' : 'About'}
               </Link>
               <button
-                onClick={() => scrollToSection("benefits")}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {t.nav.benefits}
-              </button>
-              <button
                 onClick={() => scrollToSection("contact")}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
@@ -303,9 +290,8 @@ function LayoutContent({ children, currentPageName }) {
               <Link
                 to={createPageUrl("Support")}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
               >
-                <HelpCircle className="w-4 h-4" />
                 {language === 'es' ? 'Soporte' : 'Support'}
               </Link>
               <button
