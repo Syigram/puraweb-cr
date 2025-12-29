@@ -116,10 +116,15 @@ export default function Nosotros() {
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                   {language === 'es' ? 'Profesionales Comprometidos con tu Éxito' : 'Professionals Committed to Your Success'}
                 </h3>
-                <p className="text-white/90 text-lg max-w-2xl">
+                <p className="text-white/90 text-lg max-w-2xl mb-4">
                   {language === 'es' 
                     ? 'Un equipo apasionado que combina experiencia técnica con creatividad para transformar tu visión digital en realidad.'
                     : 'A passionate team that combines technical expertise with creativity to transform your digital vision into reality.'}
+                </p>
+                <p className="text-white/95 text-base max-w-2xl leading-relaxed">
+                  {language === 'es' 
+                    ? 'Mi nombre es Alejandro González y soy el líder técnico de este equipo. Graduado de Ingeniería en Computadores en el TEC y con más de 10 años en la industria. Mi compromiso es garantizar la seguridad de sus datos y la estabilidad de su negocio. Con nosotros, su infraestructura digital está en manos expertas, permitiéndole a usted enfocarse en lo que mejor sabe hacer: crecer su empresa.'
+                    : 'My name is Alejandro González and I am the technical leader of this team. Graduated in Computer Engineering from TEC with over 10 years in the industry. My commitment is to guarantee the security of your data and the stability of your business. With us, your digital infrastructure is in expert hands, allowing you to focus on what you do best: growing your company.'}
                 </p>
               </div>
             </div>
