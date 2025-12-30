@@ -162,15 +162,29 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
     logoLink.fetchPriority = 'high';
     document.head.appendChild(logoLink);
 
-    // Preconnect to external domains
-    const preconnect = document.createElement('link');
-    preconnect.rel = 'preconnect';
-    preconnect.href = 'https://qtrypzzcjebvfcihiynt.supabase.co';
-    document.head.appendChild(preconnect);
+    // Preconnect to external domains (CDN and API)
+    const preconnectCDN = document.createElement('link');
+    preconnectCDN.rel = 'preconnect';
+    preconnectCDN.href = 'https://qtrypzzcjebvfcihiynt.supabase.co';
+    document.head.appendChild(preconnectCDN);
+
+    // Preconnect to base44 API (reduces auth call latency)
+    const preconnectAPI = document.createElement('link');
+    preconnectAPI.rel = 'preconnect';
+    preconnectAPI.href = 'https://api.base44.app';
+    document.head.appendChild(preconnectAPI);
+
+    // DNS prefetch for base44
+    const dnsPrefetch = document.createElement('link');
+    dnsPrefetch.rel = 'dns-prefetch';
+    dnsPrefetch.href = 'https://api.base44.app';
+    document.head.appendChild(dnsPrefetch);
 
     return () => {
       if (logoLink.parentNode) document.head.removeChild(logoLink);
-      if (preconnect.parentNode) document.head.removeChild(preconnect);
+      if (preconnectCDN.parentNode) document.head.removeChild(preconnectCDN);
+      if (preconnectAPI.parentNode) document.head.removeChild(preconnectAPI);
+      if (dnsPrefetch.parentNode) document.head.removeChild(dnsPrefetch);
     };
   }, []);
 
