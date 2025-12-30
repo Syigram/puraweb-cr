@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, memo, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,9 +11,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-export default function Contact() {
+const Contact = memo(function Contact() {
   const { language } = useLanguage();
-  const t = translations[language].contact;
+  const t = useMemo(() => translations[language].contact, [language]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -138,32 +137,17 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
               {t.title}
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t.subtitle}
-          </p>
-        </motion.div>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <Card className="border-0 shadow-xl">
               <CardContent className="p-8">
                 {isSuccess && (
@@ -280,16 +264,10 @@ export default function Contact() {
                 </form>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-            >
+          <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.getInTouch}</h3>
               <p className="text-gray-600 leading-relaxed mb-8">
@@ -330,9 +308,11 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-            </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+});
+
+export default Contact;

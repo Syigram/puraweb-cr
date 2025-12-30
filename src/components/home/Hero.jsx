@@ -1,82 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
-import { motion } from "framer-motion";
-import CountUp from "@/components/ui/CountUp";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-const Typewriter = ({ words }) => {
-  const [text, setText] = useState('');
+// Lightweight typewriter without heavy re-renders
+const Typewriter = memo(({ words }) => {
+  const [text, setText] = useState(words[0] || '');
+  const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
 
   useEffect(() => {
-    const handleType = () => {
-      const i = loopNum % words.length;
-      const fullText = words[i];
+    const currentWord = words[wordIndex];
+    const speed = isDeleting ? 30 : 100;
 
-      setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1));
-
-      setTypingSpeed(isDeleting ? 30 : 150);
-
-      if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && text === '') {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < currentWord.length) {
+          setText(currentWord.slice(0, text.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), 1500);
+        }
+      } else {
+        if (text.length > 0) {
+          setText(text.slice(0, -1));
+        } else {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
       }
-    };
+    }, speed);
 
-    const timer = setTimeout(handleType, typingSpeed);
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, words, typingSpeed]);
+  }, [text, isDeleting, wordIndex, words]);
 
   return (
     <span>
       {text}
-      <span className="animate-pulse border-r-2 border-red-600 ml-1 h-full inline-block align-middle">&nbsp;</span>
+      <span className="border-r-2 border-red-600 ml-1 inline-block">&nbsp;</span>
     </span>
   );
-};
+});
 
-export default function Hero({ onGetStarted }) {
+// Memoized Hero component for performance
+const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
-  const t = translations[language].hero;
+  const t = useMemo(() => translations[language].hero, [language]);
+  
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.1, scale: 1 }}
-          transition={{ duration: 1.5 }}
-          className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.1, scale: 1 }}
-          transition={{ duration: 1.5, delay: 0.3 }}
-          className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl"
-        />
+      {/* Static background - no animation for FCP */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-32 md:py-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6"
-            >
+          <div>
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
-            </motion.div>
+            </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
@@ -114,17 +99,14 @@ export default function Hero({ onGetStarted }) {
               </Button>
             </div>
 
+            {/* Static stats - no animation for faster render */}
             <div className="grid grid-cols-3 gap-6">
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">
-                  <CountUp value={150} suffix="+" />
-                </div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
                 <div className="text-sm text-gray-600">{t.stat1}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">
-                  <CountUp value={98} suffix="%" />
-                </div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
                 <div className="text-sm text-gray-600">{t.stat2}</div>
               </div>
               <div>
@@ -132,21 +114,12 @@ export default function Hero({ onGetStarted }) {
                 <div className="text-sm text-gray-600">{t.stat3}</div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:block relative"
-          >
+          {/* Simplified hero visual - no heavy animations */}
+          <div className="hidden lg:block relative">
             <div className="relative">
-              <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform"
-              >
+              <div className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform">
                 <Globe className="w-12 h-12 text-blue-900 mb-3" />
                 <h3 className="font-bold text-gray-900 mb-1">
                   {translations[language].services.webDev.title}
@@ -154,14 +127,9 @@ export default function Hero({ onGetStarted }) {
                 <p className="text-sm text-gray-600">
                   {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform"
-              >
+              <div className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform">
                 <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
                 <h3 className="font-bold text-gray-900 mb-1">
                   {translations[language].services.ecommerce.title}
@@ -169,7 +137,7 @@ export default function Hero({ onGetStarted }) {
                 <p className="text-sm text-gray-600">
                   {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
                 </p>
-              </motion.div>
+              </div>
 
               <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
                 <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
@@ -177,24 +145,18 @@ export default function Hero({ onGetStarted }) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2"
-        >
+      {/* Simplified scroll indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+        <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2 animate-bounce">
           <div className="w-1 h-2 bg-blue-900 rounded-full" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
-}
+});
+
+export default Hero;
