@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, memo, useMemo, useCallback } from "react";
 import { 
-  Sparkles, Zap, Code, Shield, TrendingUp, Target, Eye, 
+  Sparkles, Target, Eye, 
   CheckCircle2, ArrowRight, Heart, Rocket, Users, Award, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,69 +10,34 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
-const iconMap = {
-  Zap,
-  Code,
-  Shield,
-  TrendingUp
-};
-
-export default function Nosotros() {
+const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
   const navigate = useNavigate();
-  const t = translations[language].about;
+  const t = useMemo(() => translations[language].about, [language]);
 
   useEffect(() => {
     document.title = `${t.title} - PuraWeb CR`;
     window.scrollTo(0, 0);
   }, [t.title]);
 
-  const handleContactClick = () => {
+  const handleContactClick = useCallback(() => {
     navigate(createPageUrl("Home") + "#contact");
-  };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+      {/* Hero Section - Static for fast FCP */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        {/* Animated Background */}
+        {/* Static Background - no animations */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, 30, 0]
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, -50, 0],
-              y: [0, 50, 0]
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
+          <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl" />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
+          <div className="text-center">
             <Badge className="mb-6 bg-blue-100 text-blue-900 px-6 py-2 text-sm">
               <Heart className="w-4 h-4 mr-2" />
               {language === 'es' ? 'Hecho con pasión en Costa Rica' : 'Made with passion in Costa Rica'}
@@ -88,7 +52,7 @@ export default function Nosotros() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               {t.heroSubtitle}
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -96,26 +60,18 @@ export default function Nosotros() {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <img 
+            <div>
+              <OptimizedImage 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/0f67e6504_tec5.jpg" 
                 alt="Equipo de trabajo colaborando"
-                className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-2xl"
+                className="w-full h-[400px] md:h-[500px] rounded-3xl shadow-2xl"
+                width={800}
+                height={500}
+                priority={true}
               />
-            </motion.div>
+            </div>
             
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <Badge className="bg-blue-100 text-blue-900 px-6 py-2 text-sm">
                 <Users className="w-4 h-4 mr-2" />
                 {language === 'es' ? 'Nuestro Equipo' : 'Our Team'}
@@ -128,7 +84,7 @@ export default function Nosotros() {
                   ? 'Mi nombre es Alejandro González, fundador y líder técnico de este equipo. Graduado de Ingeniería en Computadores en el TEC y con más de 10 años en la industria. Mi compromiso es garantizar la seguridad de sus datos y la estabilidad de su negocio. Con nosotros, su infraestructura digital está en manos expertas, permitiéndole a usted enfocarse en lo que mejor sabe hacer: crecer su empresa.'
                   : 'My name is Alejandro González, founder and technical leader of this team. Graduated in Computer Engineering from TEC with over 10 years in the industry. My commitment is to ensure the security of your data and the stability of your business. With us, your digital infrastructure is in expert hands, allowing you to focus on what you do best: growing your company.'}
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -137,12 +93,7 @@ export default function Nosotros() {
       <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+            <div>
               <Card className="h-full border-2 border-blue-100 hover:border-blue-200 transition-all hover:shadow-xl">
                 <CardContent className="p-8">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center mb-6">
@@ -155,16 +106,11 @@ export default function Nosotros() {
                     {t.missionText}
                   </p>
                 </CardContent>
-              </Card>
-            </motion.div>
+                </Card>
+                </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Card className="h-full border-2 border-red-100 hover:border-red-200 transition-all hover:shadow-xl">
+                <div>
+                <Card className="h-full border-2 border-red-100 hover:border-red-200 transition-all hover:shadow-xl">
                 <CardContent className="p-8">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mb-6">
                     <Eye className="w-8 h-8 text-white" />
@@ -176,38 +122,26 @@ export default function Nosotros() {
                     {t.visionText}
                   </p>
                 </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+                </Card>
+                </div>
+                </div>
+                </div>
+                </section>
 
-      {/* Core Values */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                {/* Core Values */}
+                <section className="py-20 px-6 bg-white">
+                <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.valuesTitle}
-              </span>
-            </h2>
-          </motion.div>
+                </span>
+                </h2>
+                </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {t.values.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+                <div className="grid md:grid-cols-2 gap-8">
+                {t.values.map((value, index) => (
+                <div key={index}>
                 <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-blue-200">
                   <CardContent className="p-8">
                     <div className="flex items-start gap-4 mb-4">
@@ -221,45 +155,33 @@ export default function Nosotros() {
                         <p className="text-gray-600 leading-relaxed">
                           {value.description}
                         </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                        </div>
+                        </div>
+                        </CardContent>
+                        </Card>
+                        </div>
+                        ))}
+                        </div>
+                        </div>
+                        </section>
 
-      {/* Against Section - What we fight */}
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                {translations[language].manifesto.againstTitle}
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {translations[language].manifesto.againstSubtitle}
-            </p>
-          </motion.div>
+                        {/* Against Section - What we fight */}
+                        <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
+                        <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                        <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                        {translations[language].manifesto.againstTitle}
+                        </span>
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        {translations[language].manifesto.againstSubtitle}
+                        </p>
+                        </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {translations[language].manifesto.against.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {translations[language].manifesto.against.map((item, index) => (
+                        <div key={index}>
                 <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-400 group">
                 <CardContent className="p-6 text-center">
                   <div className="w-14 h-14 rounded-full bg-red-700/30 flex items-center justify-center mx-auto mb-4 group-hover:bg-red-700/40 transition-all">
@@ -271,44 +193,29 @@ export default function Nosotros() {
                     <p className="text-gray-600 text-sm leading-relaxed">
                       {item.description}
                     </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                    </CardContent>
+                    </Card>
+                    </div>
+                    ))}
+                    </div>
+                    </div>
+                    </section>
 
-      {/* Process */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                {t.processTitle}
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600">
-              {t.processSubtitle}
-            </p>
-          </motion.div>
+                    {/* Process */}
+                    <section className="py-20 px-6 bg-white">
+                    <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                    <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                    {t.processTitle}
+                    </span>
+                    </h2>
+                    <p className="text-xl text-gray-600">{t.processSubtitle}</p>
+                    </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {t.processSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative"
-              >
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {t.processSteps.map((step, index) => (
+                    <div key={index} className="relative">
                 <Card className="h-full hover:shadow-xl transition-all">
                   <CardContent className="p-6">
                     <div className="text-6xl font-bold text-blue-100 mb-4">
@@ -323,78 +230,52 @@ export default function Nosotros() {
                   </CardContent>
                 </Card>
                 {index < t.processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-8 h-8 text-blue-200" />
-                  </div>
+                <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                <ArrowRight className="w-8 h-8 text-blue-200" />
+                </div>
                 )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                </div>
+                ))}
+                </div>
+                </div>
+                </section>
 
-      {/* Guarantees */}
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <Badge className="mb-6 bg-green-100 text-green-800 px-6 py-2 text-sm">
-              <Award className="w-4 h-4 mr-2" />
-              {language === 'es' ? 'Garantizado' : 'Guaranteed'}
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                {/* Guarantees */}
+                <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
+                <div className="max-w-5xl mx-auto">
+                <div className="text-center mb-12">
+                <Badge className="mb-6 bg-green-100 text-green-800 px-6 py-2 text-sm">
+                <Award className="w-4 h-4 mr-2" />
+                {language === 'es' ? 'Garantizado' : 'Guaranteed'}
+                </Badge>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.guaranteeTitle}
-              </span>
-            </h2>
-          </motion.div>
+                </span>
+                </h2>
+                </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+                <div>
             <Card className="border-2 border-green-100">
               <CardContent className="p-8">
                 <div className="grid md:grid-cols-2 gap-4">
                   {t.guarantees.map((guarantee, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="flex items-start gap-3"
-                    >
+                    <div key={index} className="flex items-start gap-3">
                       <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 leading-relaxed">
-                        {guarantee}
-                      </span>
-                    </motion.div>
+                      <span className="text-gray-700 leading-relaxed">{guarantee}</span>
+                    </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
-        </div>
-      </section>
+            </div>
+            </div>
+            </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-12 shadow-2xl text-center relative overflow-hidden"
-          >
+            {/* CTA Section */}
+            <section className="py-20 px-6 bg-white">
+            <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-12 shadow-2xl text-center relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
@@ -419,9 +300,11 @@ export default function Nosotros() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
   );
-}
+});
+
+export default Nosotros;
