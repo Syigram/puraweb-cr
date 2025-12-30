@@ -233,17 +233,11 @@ export default function Servicios() {
             {t.services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 hover:border-blue-200 group flex flex-col">
+                <div key={index}>
+                  <Card className="h-full hover:shadow-2xl transition-shadow duration-200 border-2 hover:border-blue-200 group flex flex-col">
                     <CardHeader className="space-y-4">
                       <div className="flex items-start justify-between">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                           <Icon className="w-7 h-7 text-white" />
                         </div>
                         <Badge className={service.badgeColor}>
