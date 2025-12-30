@@ -88,11 +88,13 @@ function GetStartedButton({ scrollToSection, t }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Defer auth check to not block initial render
-    const timer = requestIdleCallback ? 
-      requestIdleCallback(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); })) :
-      setTimeout(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); }), 50);
-    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
+    const handle = deferExecution(() => {
+      getAuthState().then(state => { 
+        setIsAuthenticated(state.isAuthenticated); 
+        setLoading(false); 
+      });
+    });
+    return () => cancelDeferredExecution(handle);
   }, []);
 
   // Show button immediately (optimistic), hide later if authenticated
