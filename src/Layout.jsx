@@ -14,35 +14,50 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
 
-// Shared auth state to avoid multiple API calls
+// Shared auth state to avoid multiple API calls - optimized for non-authenticated users
 let authPromise = null;
 let cachedAuthState = null;
 
+// Check if there's a session indicator in localStorage first (fast check)
+const hasSessionIndicator = () => {
+  try {
+    // Check for any auth-related localStorage keys that indicate a logged-in session
+    return localStorage.getItem('base44_session') !== null || 
+           document.cookie.includes('base44') ||
+           sessionStorage.getItem('base44_auth') !== null;
+  } catch {
+    return false;
+  }
+};
+
 const getAuthState = () => {
   if (cachedAuthState !== null) return Promise.resolve(cachedAuthState);
+  
+  // Quick path for clearly non-authenticated users - skip API call entirely
+  if (!hasSessionIndicator() && !authPromise) {
+    // Still make the call but with lower priority, assume not authenticated initially
+    cachedAuthState = { user: null, isAuthenticated: false, pending: true };
+    
+    authPromise = base44.auth.me()
+      .then(user => { 
+        cachedAuthState = { user, isAuthenticated: true, pending: false }; 
+        return cachedAuthState; 
+      })
+      .catch(() => { 
+        cachedAuthState = { user: null, isAuthenticated: false, pending: false }; 
+        return cachedAuthState; 
+      });
+    
+    // Return immediately with non-authenticated state for faster render
+    return Promise.resolve(cachedAuthState);
+  }
+  
   if (!authPromise) {
     authPromise = base44.auth.me()
-      .then(user => { cachedAuthState = { user, isAuthenticated: true }; return cachedAuthState; })
-      .catch(() => { cachedAuthState = { user: null, isAuthenticated: false }; return cachedAuthState; });
+      .then(user => { cachedAuthState = { user, isAuthenticated: true, pending: false }; return cachedAuthState; })
+      .catch(() => { cachedAuthState = { user: null, isAuthenticated: false, pending: false }; return cachedAuthState; });
   }
   return authPromise;
-};
-
-// Safari/iOS compatible deferred execution
-const deferExecution = (callback) => {
-  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-    return { id: window.requestIdleCallback(callback), type: 'idle' };
-  }
-  return { id: setTimeout(callback, 50), type: 'timeout' };
-};
-
-const cancelDeferredExecution = (handle) => {
-  if (!handle) return;
-  if (handle.type === 'idle' && 'cancelIdleCallback' in window) {
-    window.cancelIdleCallback(handle.id);
-  } else {
-    clearTimeout(handle.id);
-  }
 };
 
 function GetStartedButtonMobile({ scrollToSection, t }) {
