@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import OptimizedImage from "@/components/ui/OptimizedImage";
+
 
 const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
@@ -61,13 +61,11 @@ const Nosotros = memo(function Nosotros() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <OptimizedImage 
+              <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/0f67e6504_tec5.jpg" 
                 alt="Equipo de trabajo colaborando"
-                className="w-full h-[400px] md:h-[500px] rounded-3xl shadow-2xl"
-                width={800}
-                height={500}
-                priority={true}
+                className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-2xl"
+                loading="lazy"
               />
             </div>
             
