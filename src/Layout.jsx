@@ -127,11 +127,13 @@ const UserMenuButton = memo(function UserMenuButton() {
   const { language } = useLanguage();
 
   useEffect(() => {
-    // Use shared auth state - deferred to not block render
-    const timer = requestIdleCallback ? 
-      requestIdleCallback(() => getAuthState().then(state => { setUser(state.user); setLoading(false); })) :
-      setTimeout(() => getAuthState().then(state => { setUser(state.user); setLoading(false); }), 50);
-    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
+    const handle = deferExecution(() => {
+      getAuthState().then(state => { 
+        setUser(state.user); 
+        setLoading(false); 
+      });
+    });
+    return () => cancelDeferredExecution(handle);
   }, []);
 
   // Show login button immediately while loading
