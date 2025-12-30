@@ -298,7 +298,7 @@ export default function Servicios() {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               );
             })}
           </div>
