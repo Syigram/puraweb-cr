@@ -29,10 +29,10 @@ const Nosotros = memo(function Nosotros() {
     <div className="min-h-screen bg-white">
       {/* Hero Section - Static for fast FCP */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        {/* Static Background - no animations */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl" />
+        {/* Static Background - no animations for iOS performance */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-auto">
+          <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl transform-gpu" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl transform-gpu" />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
