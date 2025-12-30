@@ -152,6 +152,28 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
   const { language, toggleLanguage } = useLanguage();
   const t = useMemo(() => translations[language], [language]);
 
+  // Preload critical resources for LCP optimization
+  useEffect(() => {
+    // Preload logo image (critical for LCP)
+    const logoLink = document.createElement('link');
+    logoLink.rel = 'preload';
+    logoLink.as = 'image';
+    logoLink.href = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png';
+    logoLink.fetchPriority = 'high';
+    document.head.appendChild(logoLink);
+
+    // Preconnect to external domains
+    const preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = 'https://qtrypzzcjebvfcihiynt.supabase.co';
+    document.head.appendChild(preconnect);
+
+    return () => {
+      if (logoLink.parentNode) document.head.removeChild(logoLink);
+      if (preconnect.parentNode) document.head.removeChild(preconnect);
+    };
+  }, []);
+
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
