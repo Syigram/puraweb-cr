@@ -107,34 +107,29 @@ function GetStartedButton({ scrollToSection, t }) {
 
 const UserMenuButton = memo(function UserMenuButton() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [checked, setChecked] = useState(false);
   const { language } = useLanguage();
 
   useEffect(() => {
-    const handle = deferExecution(() => {
-      getAuthState().then(state => { 
-        setUser(state.user); 
-        setLoading(false); 
-      });
+    getAuthState().then(state => { 
+      setUser(state.user); 
+      setChecked(true);
+      
+      // If auth state is pending, listen for updates
+      if (state.pending) {
+        // Re-check after API call completes
+        setTimeout(() => {
+          getAuthState().then(finalState => {
+            if (finalState.user !== state.user) {
+              setUser(finalState.user);
+            }
+          });
+        }, 500);
+      }
     });
-    return () => cancelDeferredExecution(handle);
   }, []);
 
-  // Show login button immediately while loading
-  if (loading) {
-    return (
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-gray-700 hover:text-blue-900 opacity-50"
-        disabled
-      >
-        <User className="w-4 h-4 mr-2" />
-        {language === 'es' ? '...' : '...'}
-      </Button>
-    );
-  }
-
+  // Show login button immediately for non-authenticated users (fast path)
   if (!user) {
     return (
       <Button
