@@ -106,20 +106,27 @@ const UserMenuButton = memo(function UserMenuButton() {
   const { language } = useLanguage();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const currentUser = await base44.auth.me();
-        setUser(currentUser);
-      } catch (e) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkAuth();
+    // Use shared auth state - deferred to not block render
+    const timer = requestIdleCallback ? 
+      requestIdleCallback(() => getAuthState().then(state => { setUser(state.user); setLoading(false); })) :
+      setTimeout(() => getAuthState().then(state => { setUser(state.user); setLoading(false); }), 50);
+    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
   }, []);
 
-  if (loading) return null;
+  // Show login button immediately while loading
+  if (loading) {
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-gray-700 hover:text-blue-900 opacity-50"
+        disabled
+      >
+        <User className="w-4 h-4 mr-2" />
+        {language === 'es' ? '...' : '...'}
+      </Button>
+    );
+  }
 
   if (!user) {
     return (
