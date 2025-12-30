@@ -125,8 +125,8 @@ export default function Nosotros() {
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 {language === 'es' 
-                  ? 'Mi nombre es Alejandro González, soy el fundador y líder técnico de este equipo. Graduado de Ingeniería en Computadores en el TEC y con más de 10 años en la industria. Mi compromiso es garantizar la seguridad de sus datos y la estabilidad de su negocio. Con nosotros, su infraestructura digital está en manos expertas, permitiéndole a usted enfocarse en lo que mejor sabe hacer: crecer su empresa.'
-                  : 'My name is Alejandro González, I am the founder and technical leader of this team. Graduated in Computer Engineering from TEC with over 10 years in the industry. My commitment is to ensure the security of your data and the stability of your business. With us, your digital infrastructure is in expert hands, allowing you to focus on what you do best: growing your company.'}
+                  ? 'Mi nombre es Alejandro González, fundador y líder técnico de este equipo. Graduado de Ingeniería en Computadores en el TEC y con más de 10 años en la industria. Mi compromiso es garantizar la seguridad de sus datos y la estabilidad de su negocio. Con nosotros, su infraestructura digital está en manos expertas, permitiéndole a usted enfocarse en lo que mejor sabe hacer: crecer su empresa.'
+                  : 'My name is Alejandro González, founder and technical leader of this team. Graduated in Computer Engineering from TEC with over 10 years in the industry. My commitment is to ensure the security of your data and the stability of your business. With us, your digital infrastructure is in expert hands, allowing you to focus on what you do best: growing your company.'}
               </p>
             </motion.div>
           </div>
