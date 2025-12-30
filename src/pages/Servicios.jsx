@@ -40,10 +40,15 @@ const floatOnce = {
 export default function Servicios() {
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     document.title = "Servicios - PuraWeb CR";
     window.scrollTo(0, 0);
+    // Delay animation start to ensure smooth initial render
+    const timer = requestAnimationFrame(() => setIsVisible(true));
+    return () => cancelAnimationFrame(timer);
   }, []);
 
   const content = {
