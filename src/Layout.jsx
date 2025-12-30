@@ -18,44 +18,35 @@ import { base44 } from "@/api/base44Client";
 let authPromise = null;
 let cachedAuthState = null;
 
-// Check if there's a session indicator in localStorage first (fast check)
-const hasSessionIndicator = () => {
-  try {
-    // Check for any auth-related localStorage keys that indicate a logged-in session
-    return localStorage.getItem('base44_session') !== null || 
-           document.cookie.includes('base44') ||
-           sessionStorage.getItem('base44_auth') !== null;
-  } catch {
-    return false;
-  }
-};
-
 const getAuthState = () => {
-  if (cachedAuthState !== null) return Promise.resolve(cachedAuthState);
-  
-  // Quick path for clearly non-authenticated users - skip API call entirely
-  if (!hasSessionIndicator() && !authPromise) {
-    // Still make the call but with lower priority, assume not authenticated initially
-    cachedAuthState = { user: null, isAuthenticated: false, pending: true };
-    
-    authPromise = base44.auth.me()
-      .then(user => { 
-        cachedAuthState = { user, isAuthenticated: true, pending: false }; 
-        return cachedAuthState; 
-      })
-      .catch(() => { 
-        cachedAuthState = { user: null, isAuthenticated: false, pending: false }; 
-        return cachedAuthState; 
-      });
-    
-    // Return immediately with non-authenticated state for faster render
+  if (cachedAuthState !== null && !cachedAuthState.pending) {
     return Promise.resolve(cachedAuthState);
   }
   
   if (!authPromise) {
-    authPromise = base44.auth.me()
-      .then(user => { cachedAuthState = { user, isAuthenticated: true, pending: false }; return cachedAuthState; })
-      .catch(() => { cachedAuthState = { user: null, isAuthenticated: false, pending: false }; return cachedAuthState; });
+    // First check if user is authenticated before calling me() to avoid 401 errors
+    authPromise = base44.auth.isAuthenticated()
+      .then(isAuth => {
+        if (!isAuth) {
+          // User is not authenticated - skip me() call entirely
+          cachedAuthState = { user: null, isAuthenticated: false, pending: false };
+          return cachedAuthState;
+        }
+        // User is authenticated - now safe to call me()
+        return base44.auth.me()
+          .then(user => {
+            cachedAuthState = { user, isAuthenticated: true, pending: false };
+            return cachedAuthState;
+          })
+          .catch(() => {
+            cachedAuthState = { user: null, isAuthenticated: false, pending: false };
+            return cachedAuthState;
+          });
+      })
+      .catch(() => {
+        cachedAuthState = { user: null, isAuthenticated: false, pending: false };
+        return cachedAuthState;
+      });
   }
   return authPromise;
 };
