@@ -199,17 +199,20 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Critical CSS inlined for faster FCP - variables needed immediately */}
       <style>{`
         :root {
           --costa-blue: #002B7F;
           --costa-red: #CE1126;
           --costa-white: #FFFFFF;
         }
+        /* Critical above-the-fold styles */
+        .nav-transition { transition: background-color 0.3s, box-shadow 0.3s; }
       `}</style>
       
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 nav-transition ${
           isScrolled || isMobileMenuOpen
             ? "bg-white/95 backdrop-blur-md shadow-lg"
             : "bg-transparent"
@@ -226,6 +229,10 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png" 
                   alt="PuraWeb CR" 
                   className="h-10 md:h-12 w-auto transform group-hover:scale-105 transition-transform"
+                  fetchpriority="high"
+                  decoding="async"
+                  width="120"
+                  height="48"
                 />
               </Link>
 
