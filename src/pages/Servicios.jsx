@@ -308,13 +308,7 @@ export default function Servicios() {
       {/* CTA Section */}
       <section className="pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-12 shadow-2xl"
-          >
+          <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-12 shadow-2xl">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               {language === 'es' ? '¿Listo para transformar su negocio?' : 'Ready to transform your business?'}
             </h2>
@@ -330,7 +324,7 @@ export default function Servicios() {
               {language === 'es' ? 'Contáctanos' : 'Contact Us'}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
