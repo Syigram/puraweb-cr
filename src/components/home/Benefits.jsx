@@ -5,8 +5,8 @@ import { translations } from "@/components/translations";
 
 const BenefitCard = memo(({ icon: Icon, title, description }) => (
   <div className="group">
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300">
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-200">
+      <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mb-6">
         <Icon className="w-7 h-7 text-white" />
       </div>
       <h3 className="text-2xl font-bold mb-3">{title}</h3>
