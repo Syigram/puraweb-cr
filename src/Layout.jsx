@@ -28,16 +28,35 @@ const getAuthState = () => {
   return authPromise;
 };
 
+// Safari/iOS compatible deferred execution
+const deferExecution = (callback) => {
+  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+    return { id: window.requestIdleCallback(callback), type: 'idle' };
+  }
+  return { id: setTimeout(callback, 50), type: 'timeout' };
+};
+
+const cancelDeferredExecution = (handle) => {
+  if (!handle) return;
+  if (handle.type === 'idle' && 'cancelIdleCallback' in window) {
+    window.cancelIdleCallback(handle.id);
+  } else {
+    clearTimeout(handle.id);
+  }
+};
+
 function GetStartedButtonMobile({ scrollToSection, t }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Defer auth check to not block initial render
-    const timer = requestIdleCallback ? 
-      requestIdleCallback(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); })) :
-      setTimeout(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); }), 50);
-    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
+    const handle = deferExecution(() => {
+      getAuthState().then(state => { 
+        setIsAuthenticated(state.isAuthenticated); 
+        setLoading(false); 
+      });
+    });
+    return () => cancelDeferredExecution(handle);
   }, []);
 
   // Show button immediately (optimistic), hide later if authenticated
