@@ -4,13 +4,22 @@ import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-// Lightweight typewriter without heavy re-renders
+// Lightweight typewriter - deferred to not block FCP/LCP
 const Typewriter = memo(({ words }) => {
   const [text, setText] = useState(words[0] || '');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  // Defer typewriter animation until after initial paint
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
+    if (!isReady) return;
+    
     const currentWord = words[wordIndex];
     const speed = isDeleting ? 30 : 100;
 
@@ -32,7 +41,7 @@ const Typewriter = memo(({ words }) => {
     }, speed);
 
     return () => clearTimeout(timer);
-  }, [text, isDeleting, wordIndex, words]);
+  }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
     <span>
