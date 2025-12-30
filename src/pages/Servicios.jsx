@@ -202,24 +202,62 @@ export default function Servicios() {
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 relative overflow-hidden">
-        {/* Static Background Elements - optimized for mobile performance */}
+        {/* Animated Background Elements - GPU accelerated for iOS */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl" />
+          <motion.div 
+            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.8 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          />
+          <motion.div 
+            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.8 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.8 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          />
         </div>
 
-        {/* Static Geometric Shapes - no continuous animations for better iOS performance */}
+        {/* Animated Geometric Shapes - one-time animations only */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 rotate-45" />
-          <div className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20" />
-          <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full" />
+          <motion.div 
+            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 transform-gpu"
+            initial={prefersReducedMotion ? { rotate: 45 } : { rotate: 0, opacity: 0 }}
+            animate={isVisible ? { rotate: 45, opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20 transform-gpu"
+            initial={prefersReducedMotion ? {} : { scale: 0, opacity: 0 }}
+            animate={isVisible ? { scale: 1, opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          />
+          <motion.div 
+            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full transform-gpu"
+            initial={prefersReducedMotion ? {} : { scale: 0 }}
+            animate={isVisible ? { scale: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+          />
         </div>
 
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div>
+        <motion.div 
+          className="max-w-7xl mx-auto text-center relative z-10"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isVisible && !prefersReducedMotion ? "visible" : "hidden"}
+        >
+          <motion.div variants={fadeInUp}>
             <div className="mb-8">
-              <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-gray-200 mb-6">
+              <motion.div 
+                className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-gray-200 mb-6"
+                variants={floatOnce}
+              >
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                     <Code2 className="w-4 h-4 text-white" />
@@ -237,26 +275,34 @@ export default function Servicios() {
                 <span className="text-sm font-semibold text-gray-700">
                   {language === 'es' ? 'Soluciones Integrales' : 'Comprehensive Solutions'}
                 </span>
-              </div>
+              </motion.div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+              variants={fadeInUp}
+            >
               <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.title}
               </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto mb-8">
-              {t.subtitle}
-            </p>
-            <Button
-              onClick={handleViewPlans}
-              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-shadow"
+            </motion.h1>
+            <motion.p 
+              className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto mb-8"
+              variants={fadeInUp}
             >
-              {t.viewPlans}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
-        </div>
+              {t.subtitle}
+            </motion.p>
+            <motion.div variants={fadeInUp}>
+              <Button
+                onClick={handleViewPlans}
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-shadow"
+              >
+                {t.viewPlans}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Services Grid */}
