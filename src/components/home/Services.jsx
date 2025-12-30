@@ -5,9 +5,9 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
 const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
-  <Card className="group hover:shadow-2xl transition-shadow duration-300 border-0 h-full bg-white">
+  <Card className="group hover:shadow-2xl transition-shadow duration-200 border-0 h-full bg-white">
     <CardContent className="p-8">
-      <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+      <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
         <Icon className="w-8 h-8 text-white" />
       </div>
       <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
