@@ -158,10 +158,10 @@ const Hero = memo(function Hero({ onGetStarted }) {
         </div>
       </div>
 
-      {/* Simplified scroll indicator */}
+      {/* Simplified scroll indicator - reduced animation for iOS */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2 animate-bounce">
-          <div className="w-1 h-2 bg-blue-900 rounded-full" />
+        <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2">
+          <div className="w-1 h-2 bg-blue-900 rounded-full animate-pulse" />
         </div>
       </div>
     </section>
