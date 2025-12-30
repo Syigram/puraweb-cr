@@ -205,7 +205,7 @@ export default function Servicios() {
                   {language === 'es' ? 'Soluciones Integrales' : 'Comprehensive Solutions'}
                 </span>
               </div>
-            </motion.div>
+            </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
@@ -217,12 +217,12 @@ export default function Servicios() {
             </p>
             <Button
               onClick={handleViewPlans}
-              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all"
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-shadow"
             >
               {t.viewPlans}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
 
