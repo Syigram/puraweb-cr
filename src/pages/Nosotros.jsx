@@ -231,58 +231,6 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* Development Process Visual */}
-      <section className="py-16 px-6 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop" 
-                alt="Desarrollo web profesional"
-                className="rounded-2xl shadow-xl w-full h-[350px] md:h-[450px] object-cover"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              <Badge className="bg-blue-100 text-blue-900 px-4 py-2">
-                <Code className="w-4 h-4 mr-2" />
-                {language === 'es' ? 'Tecnología de Vanguardia' : 'Cutting-Edge Technology'}
-              </Badge>
-              <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {language === 'es' 
-                  ? 'Código Limpio, Resultados Excepcionales'
-                  : 'Clean Code, Exceptional Results'}
-              </h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                {language === 'es'
-                  ? 'Utilizamos las últimas tecnologías y mejores prácticas de desarrollo para crear sitios web rápidos, seguros y escalables. Cada proyecto es construido con atención al detalle y optimizado para el rendimiento.'
-                  : 'We use the latest technologies and development best practices to create fast, secure, and scalable websites. Every project is built with attention to detail and optimized for performance.'}
-              </p>
-              <div className="flex gap-4 pt-4">
-                <div className="flex items-center gap-2 text-gray-700">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
-                  <span className="font-medium">{language === 'es' ? 'Código Optimizado' : 'Optimized Code'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-700">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
-                  <span className="font-medium">{language === 'es' ? 'Seguridad SSL' : 'SSL Security'}</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Against Section - What we fight */}
       <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
