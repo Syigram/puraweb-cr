@@ -62,30 +62,15 @@ const getAuthState = () => {
 
 function GetStartedButtonMobile({ scrollToSection, t }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const handle = deferExecution(() => {
-      getAuthState().then(state => { 
-        setIsAuthenticated(state.isAuthenticated); 
-        setLoading(false); 
-      });
+    // Get auth state immediately - no defer needed since getAuthState is now optimized
+    getAuthState().then(state => { 
+      setIsAuthenticated(state.isAuthenticated); 
     });
-    return () => cancelDeferredExecution(handle);
   }, []);
 
-  // Show button immediately (optimistic), hide later if authenticated
-  if (loading) {
-    return (
-      <Button
-        onClick={() => scrollToSection("contact")}
-        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
-      >
-        {t.nav.getStarted}
-      </Button>
-    );
-  }
-  
+  // Always show button immediately - hide only after confirmed authenticated
   if (isAuthenticated) return null;
 
   return (
