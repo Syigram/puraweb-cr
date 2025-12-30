@@ -169,68 +169,18 @@ export default function Servicios() {
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 relative overflow-hidden">
-        {/* Animated Background Elements */}
+        {/* Static Background Elements - optimized for mobile performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-              x: [0, 50, 0],
-              y: [0, 30, 0]
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              rotate: [0, -90, 0],
-              x: [0, -50, 0],
-              y: [0, 50, 0]
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              x: [0, 30, 0],
-              y: [0, -30, 0]
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl" />
         </div>
 
-        {/* Geometric Shapes */}
+        {/* Static Geometric Shapes - no continuous animations for better iOS performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <motion.div
-            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 rotate-45"
-            animate={{ rotate: [45, 225, 45] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20"
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full"
-            animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 rotate-45" />
+          <div className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20" />
+          <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full" />
         </div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
