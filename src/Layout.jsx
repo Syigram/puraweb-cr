@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useCallback, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Code2, Globe, User, LogOut, LayoutDashboard, Shield, HelpCircle } from "lucide-react";
+import { Menu, X, Globe, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -74,7 +74,7 @@ function GetStartedButton({ scrollToSection, t }) {
   );
 }
 
-function UserMenuButton() {
+const UserMenuButton = memo(function UserMenuButton() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const { language } = useLanguage();
@@ -143,30 +143,37 @@ function UserMenuButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+});
 
-function LayoutContent({ children, currentPageName }) {
+const LayoutContent = memo(function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
-  const t = translations[language];
+  const t = useMemo(() => translations[language], [language]);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = useCallback((sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsMobileMenuOpen(false);
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -359,13 +366,13 @@ function LayoutContent({ children, currentPageName }) {
               <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-blue-200">
               <p>{t.footer.copyright}</p>
           </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
+          </div>
+          </footer>
+          </div>
+          );
+          });
 
-export default function Layout({ children, currentPageName }) {
+          export default function Layout({ children, currentPageName }) {
   return (
     <LanguageProvider>
       <LayoutContent children={children} currentPageName={currentPageName} />
