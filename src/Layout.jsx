@@ -14,25 +14,45 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
 
+// Shared auth state to avoid multiple API calls
+let authPromise = null;
+let cachedAuthState = null;
+
+const getAuthState = () => {
+  if (cachedAuthState !== null) return Promise.resolve(cachedAuthState);
+  if (!authPromise) {
+    authPromise = base44.auth.me()
+      .then(user => { cachedAuthState = { user, isAuthenticated: true }; return cachedAuthState; })
+      .catch(() => { cachedAuthState = { user: null, isAuthenticated: false }; return cachedAuthState; });
+  }
+  return authPromise;
+};
+
 function GetStartedButtonMobile({ scrollToSection, t }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await base44.auth.me();
-        setIsAuthenticated(true);
-      } catch (e) {
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkAuth();
+    // Defer auth check to not block initial render
+    const timer = requestIdleCallback ? 
+      requestIdleCallback(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); })) :
+      setTimeout(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); }), 50);
+    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
   }, []);
 
-  if (loading || isAuthenticated) return null;
+  // Show button immediately (optimistic), hide later if authenticated
+  if (loading) {
+    return (
+      <Button
+        onClick={() => scrollToSection("contact")}
+        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+      >
+        {t.nav.getStarted}
+      </Button>
+    );
+  }
+  
+  if (isAuthenticated) return null;
 
   return (
     <Button
@@ -49,20 +69,26 @@ function GetStartedButton({ scrollToSection, t }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await base44.auth.me();
-        setIsAuthenticated(true);
-      } catch (e) {
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkAuth();
+    // Defer auth check to not block initial render
+    const timer = requestIdleCallback ? 
+      requestIdleCallback(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); })) :
+      setTimeout(() => getAuthState().then(state => { setIsAuthenticated(state.isAuthenticated); setLoading(false); }), 50);
+    return () => { if (requestIdleCallback) cancelIdleCallback(timer); else clearTimeout(timer); };
   }, []);
 
-  if (loading || isAuthenticated) return null;
+  // Show button immediately (optimistic), hide later if authenticated
+  if (loading) {
+    return (
+      <Button
+        onClick={() => scrollToSection("contact")}
+        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
+      >
+        {t.nav.getStarted}
+      </Button>
+    );
+  }
+  
+  if (isAuthenticated) return null;
 
   return (
     <Button
