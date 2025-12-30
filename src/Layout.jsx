@@ -105,18 +105,6 @@ const UserMenuButton = memo(function UserMenuButton() {
     getAuthState().then(state => { 
       setUser(state.user); 
       setChecked(true);
-      
-      // If auth state is pending, listen for updates
-      if (state.pending) {
-        // Re-check after API call completes
-        setTimeout(() => {
-          getAuthState().then(finalState => {
-            if (finalState.user !== state.user) {
-              setUser(finalState.user);
-            }
-          });
-        }, 500);
-      }
     });
   }, []);
 
