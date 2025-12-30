@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Code2, ShoppingCart, Calendar, Shield, ArrowRight, Check } from "lucide-react";
+// Optimized for iOS performance - removed framer-motion animations
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
