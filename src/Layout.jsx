@@ -116,17 +116,26 @@ function GetStartedButton({ scrollToSection, t }) {
 
 const UserMenuButton = memo(function UserMenuButton() {
   const [user, setUser] = useState(null);
-  const [checked, setChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { language } = useLanguage();
 
   useEffect(() => {
     getAuthState().then(state => { 
       setUser(state.user); 
-      setChecked(true);
+      setIsLoading(false);
     });
   }, []);
 
-  // Show login button immediately for non-authenticated users (fast path)
+  // Show nothing while checking auth status
+  if (isLoading) {
+    return (
+      <Button variant="ghost" size="sm" className="text-gray-700" disabled>
+        <User className="w-4 h-4 mr-2 animate-pulse" />
+      </Button>
+    );
+  }
+
+  // Show login button only after confirming user is NOT authenticated
   if (!user) {
     return (
       <Button
@@ -141,6 +150,7 @@ const UserMenuButton = memo(function UserMenuButton() {
     );
   }
 
+  // User is authenticated - show dropdown menu
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
