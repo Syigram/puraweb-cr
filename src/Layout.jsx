@@ -47,25 +47,25 @@ const getAuthState = async () => {
   return authPromise;
 };
 
-function ContactButtonMobile({ scrollToSection, language }) {
+function ContactButtonMobile() {
+  const { language } = useLanguage();
   return (
-    <Button
-      onClick={() => scrollToSection("contact")}
-      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
-    >
-      {language === 'es' ? 'Contacto' : 'Contact'}
-    </Button>
+    <Link to={createPageUrl("Contacto")}>
+      <Button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white">
+        {language === 'es' ? 'Contacto' : 'Contact'}
+      </Button>
+    </Link>
   );
 }
 
-function ContactButton({ scrollToSection, language }) {
+function ContactButton() {
+  const { language } = useLanguage();
   return (
-    <Button
-      onClick={() => scrollToSection("contact")}
-      className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
-    >
-      {language === 'es' ? 'Contacto' : 'Contact'}
-    </Button>
+    <Link to={createPageUrl("Contacto")}>
+      <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6">
+        {language === 'es' ? 'Contacto' : 'Contact'}
+      </Button>
+    </Link>
   );
 }
 
@@ -290,7 +290,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               <UserMenuButton />
 
               {/* Primary CTA */}
-              <ContactButton scrollToSection={scrollToSection} language={language} />
+              <ContactButton />
             </div>
 
             {/* Mobile Menu Button */}
@@ -358,7 +358,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
 
               {/* Primary CTA */}
               <div className="px-4">
-                <ContactButtonMobile scrollToSection={scrollToSection} language={language} />
+                <ContactButtonMobile />
               </div>
             </div>
           )}
