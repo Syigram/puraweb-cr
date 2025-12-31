@@ -47,47 +47,24 @@ const getAuthState = async () => {
   return authPromise;
 };
 
-function GetStartedButtonMobile({ scrollToSection, t }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Get auth state immediately - no defer needed since getAuthState is now optimized
-    getAuthState().then(state => { 
-      setIsAuthenticated(state.isAuthenticated); 
-    });
-  }, []);
-
-  // Always show button immediately - hide only after confirmed authenticated
-  if (isAuthenticated) return null;
-
+function ContactButtonMobile({ scrollToSection, language }) {
   return (
     <Button
       onClick={() => scrollToSection("contact")}
       className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
     >
-      {t.nav.getStarted}
+      {language === 'es' ? 'Contacto' : 'Contact'}
     </Button>
   );
 }
 
-function GetStartedButton({ scrollToSection, t }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    getAuthState().then(state => { 
-      setIsAuthenticated(state.isAuthenticated); 
-    });
-  }, []);
-
-  // Always show button immediately - hide only after confirmed authenticated
-  if (isAuthenticated) return null;
-
+function ContactButton({ scrollToSection, language }) {
   return (
     <Button
       onClick={() => scrollToSection("contact")}
       className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6"
     >
-      {t.nav.getStarted}
+      {language === 'es' ? 'Contacto' : 'Contact'}
     </Button>
   );
 }
@@ -290,12 +267,6 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {language === 'es' ? 'Nosotros' : 'About'}
               </Link>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
-              >
-                {t.nav.contact}
-              </button>
               <Link
                 to={createPageUrl("Support")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -311,7 +282,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                 <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
               <UserMenuButton />
-              <GetStartedButton scrollToSection={scrollToSection} t={t} />
+              <ContactButton scrollToSection={scrollToSection} language={language} />
               </div>
 
             {/* Mobile Menu Button */}
@@ -351,12 +322,6 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {language === 'es' ? 'Nosotros' : 'About'}
               </Link>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {t.nav.contact}
-              </button>
               <Link
                 to={createPageUrl("Support")}
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -374,7 +339,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               <div className="flex justify-center">
                 <UserMenuButton />
               </div>
-              <GetStartedButtonMobile scrollToSection={scrollToSection} t={t} />
+              <ContactButtonMobile scrollToSection={scrollToSection} language={language} />
               </div>
               )}
               </div>
