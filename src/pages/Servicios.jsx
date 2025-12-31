@@ -267,10 +267,10 @@ export default function Servicios() {
           />
           <motion.div 
             className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20 transform-gpu"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [1, 1.1, 1], opacity: 1 }}
+            initial={{ rotate: 0, opacity: 0 }}
+            animate={{ rotate: -360, opacity: 1 }}
             transition={{ 
-              scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
               opacity: { duration: 0.5, delay: 0.2 }
             }}
           />
