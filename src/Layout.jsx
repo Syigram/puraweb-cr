@@ -248,7 +248,8 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6">
+              {/* Primary Navigation Links */}
               <Link
                 to={createPageUrl("Servicios")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -273,17 +274,24 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {language === 'es' ? 'Soporte' : 'Support'}
               </Link>
+
+              {/* Separator */}
+              <div className="h-6 w-px bg-gray-300" />
+
+              {/* Utility Controls */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 text-gray-700 hover:text-blue-900 transition-colors font-medium"
+                className="flex items-center gap-1.5 text-gray-600 hover:text-blue-900 transition-colors"
                 title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
               >
-                <Globe className="w-5 h-5" />
-                <span className="text-sm font-bold">{language === 'es' ? 'EN' : 'ES'}</span>
+                <Globe className="w-4 h-4" />
+                <span className="text-sm font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
               </button>
               <UserMenuButton />
+
+              {/* Primary CTA */}
               <ContactButton scrollToSection={scrollToSection} language={language} />
-              </div>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -300,48 +308,60 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 space-y-3 border-t pt-4">
-              <Link
-                to={createPageUrl("Servicios")}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {t.nav.services}
-              </Link>
-              <Link
-                to={createPageUrl("Planes")}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {t.nav.pricing}
-              </Link>
-              <Link
-                to={createPageUrl("Nosotros")}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {language === 'es' ? 'Nosotros' : 'About'}
-              </Link>
-              <Link
-                to={createPageUrl("Support")}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-              >
-                {language === 'es' ? 'Soporte' : 'Support'}
-              </Link>
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
-              >
-                <Globe className="w-5 h-5" />
-                {language === 'es' ? 'English' : 'Español'}
-              </button>
-              <div className="flex justify-center">
+            <div className="md:hidden mt-4 pb-4 border-t pt-4">
+              {/* Primary Navigation Links */}
+              <div className="space-y-1 mb-4">
+                <Link
+                  to={createPageUrl("Servicios")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {t.nav.services}
+                </Link>
+                <Link
+                  to={createPageUrl("Planes")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {t.nav.pricing}
+                </Link>
+                <Link
+                  to={createPageUrl("Nosotros")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {language === 'es' ? 'Nosotros' : 'About'}
+                </Link>
+                <Link
+                  to={createPageUrl("Support")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {language === 'es' ? 'Soporte' : 'Support'}
+                </Link>
+              </div>
+
+              {/* Separator */}
+              <div className="border-t border-gray-200 my-3" />
+
+              {/* Utility Controls */}
+              <div className="flex items-center justify-between px-4 py-2 mb-4">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 text-gray-600 hover:text-blue-900 transition-colors"
+                >
+                  <Globe className="w-5 h-5" />
+                  <span className="text-sm font-medium">{language === 'es' ? 'English' : 'Español'}</span>
+                </button>
                 <UserMenuButton />
               </div>
-              <ContactButtonMobile scrollToSection={scrollToSection} language={language} />
+
+              {/* Primary CTA */}
+              <div className="px-4">
+                <ContactButtonMobile scrollToSection={scrollToSection} language={language} />
               </div>
-              )}
+            </div>
+          )}
               </div>
               </nav>
 
