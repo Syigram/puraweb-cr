@@ -1,8 +1,23 @@
 import React, { useState, useEffect, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+
+// Custom hook to detect desktop screens (only loads motion on lg+)
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+  
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+  
+  return isDesktop;
+};
 
 // Lightweight typewriter - deferred to not block FCP/LCP
 const Typewriter = memo(({ words }) => {
@@ -48,6 +63,71 @@ const Typewriter = memo(({ words }) => {
       {text}
       <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
+  );
+});
+
+// Animated cards component - only rendered on desktop
+const DesktopHeroVisual = memo(({ language }) => {
+  const isDesktop = useIsDesktop();
+  
+  // Don't render anything on mobile/tablet - saves memory and CPU
+  if (!isDesktop) return null;
+  
+  return (
+    <div className="hidden lg:block relative">
+      <div className="relative">
+        {/* Web Development Card - floating animation */}
+        <motion.div
+          initial={{ y: 0, opacity: 0 }}
+          animate={{ 
+            y: [-10, 10, -10], 
+            opacity: 1 
+          }}
+          transition={{ 
+            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 0.5 }
+          }}
+          className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform"
+        >
+          <Globe className="w-12 h-12 text-blue-900 mb-3" />
+          <h3 className="font-bold text-gray-900 mb-1">
+            {translations[language].services.webDev.title}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+          </p>
+        </motion.div>
+
+        {/* E-commerce Card - floating animation (opposite phase) */}
+        <motion.div
+          initial={{ y: 0, opacity: 0 }}
+          animate={{ 
+            y: [10, -10, 10], 
+            opacity: 1 
+          }}
+          transition={{ 
+            y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+            opacity: { duration: 0.5, delay: 0.2 }
+          }}
+          className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform"
+        >
+          <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
+          <h3 className="font-bold text-gray-900 mb-1">
+            {translations[language].services.ecommerce.title}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+          </p>
+        </motion.div>
+
+        {/* Central circle */}
+        <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
+          <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
+            <Sparkles className="w-20 h-20 text-blue-900" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 });
 
@@ -125,36 +205,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
             </div>
           </div>
 
-          {/* Desktop visual - hidden on mobile for faster load */}
-          <div className="hidden lg:block relative">
-            <div className="relative">
-              <div className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform">
-                <Globe className="w-12 h-12 text-blue-900 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">
-                  {translations[language].services.webDev.title}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
-                </p>
-              </div>
-
-              <div className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 transition-transform">
-                <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
-                <h3 className="font-bold text-gray-900 mb-1">
-                  {translations[language].services.ecommerce.title}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
-                </p>
-              </div>
-
-              <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
-                <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
-                  <Sparkles className="w-20 h-20 text-blue-900" />
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Desktop visual with animations - only renders on lg+ screens */}
+          <DesktopHeroVisual language={language} />
         </div>
       </div>
 
