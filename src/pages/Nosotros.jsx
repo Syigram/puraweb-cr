@@ -1,8 +1,9 @@
-import React, { useEffect, memo, useMemo, useCallback } from "react";
+import React, { useEffect, memo, useMemo, useCallback, useState } from "react";
 import { 
   Sparkles, Target, Eye, 
   CheckCircle2, ArrowRight, Heart, Rocket, Users, Award, X
 } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,14 +12,37 @@ import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
+// Animation variants matching Servicios page
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+  }
+};
+
 const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = useMemo(() => translations[language].about, [language]);
+  const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     document.title = `${t.title} - PuraWeb CR`;
     window.scrollTo(0, 0);
+    // Delay animation start to ensure smooth initial render
+    const timer = requestAnimationFrame(() => setIsVisible(true));
+    return () => cancelAnimationFrame(timer);
   }, [t.title]);
 
   const handleContactClick = useCallback(() => {
@@ -26,33 +50,125 @@ const Nosotros = memo(function Nosotros() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Static for fast FCP */}
+    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
+      {/* Hero Section with animations matching Servicios */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        {/* Static Background - no animations for iOS performance */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-auto">
-          <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl transform-gpu" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl transform-gpu" />
+        {/* Animated Background Elements - GPU accelerated with infinite float */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: [0, -20, 0],
+              x: [0, 10, 0]
+            }}
+            transition={{ 
+              opacity: { duration: 0.8 },
+              scale: { duration: 0.8 },
+              y: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+              x: { duration: 10, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+          <motion.div 
+            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: [0, 25, 0],
+              x: [0, -15, 0]
+            }}
+            transition={{ 
+              opacity: { duration: 0.8, delay: 0.1 },
+              scale: { duration: 0.8, delay: 0.1 },
+              y: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+              x: { duration: 12, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl transform-gpu will-change-transform"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: [0, 15, 0],
+              x: [0, -10, 0]
+            }}
+            transition={{ 
+              opacity: { duration: 0.8, delay: 0.2 },
+              scale: { duration: 0.8, delay: 0.2 },
+              y: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+              x: { duration: 11, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        {/* Animated Geometric Shapes - with infinite rotation */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+          <motion.div 
+            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 transform-gpu"
+            initial={{ rotate: 0, opacity: 0 }}
+            animate={{ rotate: 360, opacity: 1 }}
+            transition={{ 
+              rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+              opacity: { duration: 0.6 }
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20 transform-gpu"
+            initial={{ rotate: 0, opacity: 0 }}
+            animate={{ rotate: -360, opacity: 1 }}
+            transition={{ 
+              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+              opacity: { duration: 0.5, delay: 0.2 }
+            }}
+          />
+          <motion.div 
+            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full transform-gpu"
+            initial={{ scale: 0 }}
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ 
+              duration: 5, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 0.3
+            }}
+          />
+        </div>
+
+        <motion.div 
+          className="max-w-7xl mx-auto relative z-10"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isVisible && !prefersReducedMotion ? "visible" : "hidden"}
+        >
           <div className="text-center">
-            <Badge className="mb-6 bg-blue-100 text-blue-900 px-6 py-2 text-sm">
-              <Heart className="w-4 h-4 mr-2" />
-              {language === 'es' ? 'Hecho con pasión en Costa Rica' : 'Made with passion in Costa Rica'}
-            </Badge>
+            <motion.div variants={fadeInUp}>
+              <Badge className="mb-6 bg-blue-100 text-blue-900 px-6 py-2 text-sm">
+                <Heart className="w-4 h-4 mr-2" />
+                {language === 'es' ? 'Hecho con pasión en Costa Rica' : 'Made with passion in Costa Rica'}
+              </Badge>
+            </motion.div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+              variants={fadeInUp}
+            >
               <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.heroTitle}
               </span>
-            </h1>
+            </motion.h1>
             
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              variants={fadeInUp}
+            >
               {t.heroSubtitle}
-            </p>
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Team Image Section */}
