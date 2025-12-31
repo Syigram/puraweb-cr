@@ -1,9 +1,18 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import Hero from "../components/home/Hero";
-import Services from "../components/home/Services";
-import Pricing from "../components/home/Pricing";
-import Benefits from "../components/home/Benefits";
-import Contact from "../components/home/Contact";
+
+// Lazy load below-the-fold components for faster initial render
+const Services = lazy(() => import("../components/home/Services"));
+const Pricing = lazy(() => import("../components/home/Pricing"));
+const Benefits = lazy(() => import("../components/home/Benefits"));
+const Contact = lazy(() => import("../components/home/Contact"));
+
+// Minimal loading placeholder
+const SectionLoader = () => (
+  <div className="py-24 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-blue-900 border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 export default function Home() {
   useEffect(() => {
@@ -19,11 +28,22 @@ export default function Home() {
 
   return (
     <div>
+      {/* Hero loads immediately - critical for FCP/LCP */}
       <Hero onGetStarted={scrollToContact} />
-      <Services />
-      <Pricing onGetStarted={scrollToContact} />
-      <Benefits />
-      <Contact />
+      
+      {/* Below-fold sections lazy loaded */}
+      <Suspense fallback={<SectionLoader />}>
+        <Services />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <Pricing onGetStarted={scrollToContact} />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <Benefits />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <Contact />
+      </Suspense>
     </div>
   );
 }
