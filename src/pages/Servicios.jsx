@@ -195,7 +195,8 @@ export default function Servicios() {
   };
 
   const handleRequestQuote = () => {
-    navigate(createPageUrl("Home") + "#contact");
+    navigate(createPageUrl("Contacto"));
+    window.scrollTo(0, 0);
   };
 
   return (
