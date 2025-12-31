@@ -14,57 +14,35 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
 
-// Shared auth state to avoid multiple API calls - optimized for non-authenticated users
+// Shared auth state to avoid multiple API calls
 let authPromise = null;
 let cachedAuthState = null;
 
-// Check for auth token in cookies/storage (fast, no network call)
-const hasAuthToken = () => {
-  try {
-    // Check for common Base44/Supabase auth indicators
-    const cookies = document.cookie;
-    if (cookies.includes('sb-') || cookies.includes('base44')) {
-      return true;
-    }
-    // Check localStorage for auth tokens
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && (key.includes('sb-') || key.includes('supabase') || key.includes('auth'))) {
-        const value = localStorage.getItem(key);
-        if (value && value.includes('access_token')) {
-          return true;
-        }
-      }
-    }
-    return false;
-  } catch {
-    return false;
-  }
-};
-
-const getAuthState = () => {
-  // Return cached state if available and not pending
-  if (cachedAuthState !== null && !cachedAuthState.pending) {
-    return Promise.resolve(cachedAuthState);
+const getAuthState = async () => {
+  // Return cached state if available
+  if (cachedAuthState !== null) {
+    return cachedAuthState;
   }
   
-  // Fast path: if no auth token exists locally, skip all API calls
-  if (!hasAuthToken()) {
-    cachedAuthState = { user: null, isAuthenticated: false, pending: false };
-    return Promise.resolve(cachedAuthState);
-  }
-  
-  // Auth token exists - make the API call
+  // Use single promise to avoid duplicate requests
   if (!authPromise) {
-    authPromise = base44.auth.me()
-      .then(user => {
-        cachedAuthState = { user, isAuthenticated: true, pending: false };
+    authPromise = (async () => {
+      try {
+        // First check if authenticated (fast check)
+        const isAuth = await base44.auth.isAuthenticated();
+        if (!isAuth) {
+          cachedAuthState = { user: null, isAuthenticated: false };
+          return cachedAuthState;
+        }
+        // Only call me() if authenticated
+        const user = await base44.auth.me();
+        cachedAuthState = { user, isAuthenticated: true };
         return cachedAuthState;
-      })
-      .catch(() => {
-        cachedAuthState = { user: null, isAuthenticated: false, pending: false };
+      } catch {
+        cachedAuthState = { user: null, isAuthenticated: false };
         return cachedAuthState;
-      });
+      }
+    })();
   }
   return authPromise;
 };
