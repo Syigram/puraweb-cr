@@ -163,6 +163,7 @@ const Contact = memo(function Contact() {
                       <Input
                         id="name"
                         required
+                        maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Nombre Completo"
@@ -175,6 +176,7 @@ const Contact = memo(function Contact() {
                         id="email"
                         type="email"
                         required
+                        maxLength={150}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="nombre@example.com"
@@ -188,6 +190,7 @@ const Contact = memo(function Contact() {
                       <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
+                        maxLength={100}
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
@@ -199,6 +202,7 @@ const Contact = memo(function Contact() {
                       <Input
                         id="phone"
                         type="tel"
+                        maxLength={20}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+506 8402 7214"
@@ -226,10 +230,11 @@ const Contact = memo(function Contact() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">{t.form.message} *</Label>
+                    <Label htmlFor="message">{t.form.message} * <span className="text-gray-400 font-normal text-sm">({formData.message.length}/2000)</span></Label>
                     <Textarea
                       id="message"
                       required
+                      maxLength={2000}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={t.form.messagePlaceholder}
