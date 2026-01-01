@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo, useCallback } from "react";
+import React, { useState, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,7 @@ import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
+import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
 
 const Contact = memo(function Contact() {
   const { language } = useLanguage();
@@ -32,90 +33,23 @@ const Contact = memo(function Contact() {
     setError(null);
 
     try {
-      await base44.entities.ContactRequest.create(formData);
-      
-      // Send email notification (non-blocking)
-      const serviceLabels = {
-        web_development: "Desarrollo Web",
-        ecommerce: "E-Commerce",
-        both: "Desarrollo Web y E-Commerce",
-        custom: "Solución Personalizada"
+      // Sanitize inputs on client side before sending
+      const sanitizedData = {
+        name: sanitizeInput(formData.name),
+        email: sanitizeEmail(formData.email),
+        company: sanitizeInput(formData.company),
+        phone: sanitizePhone(formData.phone),
+        service_interest: formData.service_interest,
+        message: sanitizeInput(formData.message)
       };
 
-      base44.integrations.Core.SendEmail({
-        to: "purawebsoluciones@gmail.com",
-        from_name: formData.name,
-        subject: `Consulta de ${formData.name}${formData.company ? ` - ${formData.company}` : ''}`,
-        body: `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #002B7F 0%, #0052CC 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; text-align: center; }
-    .header h1 { margin: 0; font-size: 24px; }
-    .content { background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none; }
-    .field { margin-bottom: 20px; }
-    .label { font-weight: 600; color: #002B7F; margin-bottom: 5px; display: block; }
-    .value { color: #374151; }
-    .message-box { background: white; padding: 20px; border-left: 4px solid #002B7F; border-radius: 4px; margin-top: 10px; }
-    .footer { background: #f3f4f6; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; border-radius: 0 0 8px 8px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>📧 Nueva Consulta de Cliente</h1>
-    </div>
-    
-    <div class="content">
-      <div class="field">
-        <span class="label">👤 Nombre:</span>
-        <span class="value">${formData.name}</span>
-      </div>
+      // Send to backend function which performs server-side sanitization
+      const response = await base44.functions.invoke('sanitizeContact', sanitizedData);
       
-      <div class="field">
-        <span class="label">✉️ Correo Electrónico:</span>
-        <span class="value"><a href="mailto:${formData.email}">${formData.email}</a></span>
-      </div>
-      
-      ${formData.company ? `
-      <div class="field">
-        <span class="label">🏢 Empresa:</span>
-        <span class="value">${formData.company}</span>
-      </div>
-      ` : ''}
-      
-      ${formData.phone ? `
-      <div class="field">
-        <span class="label">📱 Teléfono:</span>
-        <span class="value"><a href="tel:${formData.phone}">${formData.phone}</a></span>
-      </div>
-      ` : ''}
-      
-      ${formData.service_interest ? `
-      <div class="field">
-        <span class="label">💼 Servicio de Interés:</span>
-        <span class="value">${serviceLabels[formData.service_interest] || formData.service_interest}</span>
-      </div>
-      ` : ''}
-      
-      <div class="field">
-        <span class="label">💬 Mensaje:</span>
-        <div class="message-box">${formData.message.replace(/\n/g, '<br>')}</div>
-      </div>
-    </div>
-    
-    <div class="footer">
-      Formulario de contacto - PuraWeb CR
-    </div>
-  </div>
-</body>
-</html>
-        `
-      }).catch(err => console.error("Error sending email notification:", err));
+      if (response.data.error) {
+        setError(response.data.error);
+        return;
+      }
 
       setIsSuccess(true);
       setFormData({
