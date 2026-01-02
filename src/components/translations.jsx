@@ -418,7 +418,7 @@ export const translations = {
         {
           id: "basic",
           name: "Basic",
-          price: "60,000",
+          price: "100,000",
           description: "Perfect for small businesses starting their digital journey",
           features: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"],
           recommended: false,
@@ -427,7 +427,7 @@ export const translations = {
         {
           id: "professional",
           name: "Professional",
-          price: "100,000",
+          price: "150,000",
           description: "Ideal for growing companies needing more power and flexibility",
           features: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"],
           recommended: true,
@@ -436,7 +436,7 @@ export const translations = {
         {
           id: "business",
           name: "Business",
-          price: "150,000",
+          price: "250,000",
           description: "Complete solution for established businesses and online stores",
           features: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
           recommended: false,
