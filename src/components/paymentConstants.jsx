@@ -1,3 +1,4 @@
+
 // Constantes estandarizadas para tipos de pago y planes
 // Usar estos valores en toda la aplicación para evitar inconsistencias
 
@@ -21,7 +22,7 @@ export const PAYMENT_STATUS = {
 
 // Mapeo de IDs de plan a Price IDs de Stripe
 export const STRIPE_PRICE_IDS = {
-  [PLAN_IDS.BASIC]: 'price_1SUE0bFA0Fkjjug3eDCGxI4G',
+  [PLAN_IDS.BASIC]: 'price_1Sl3etFA0Fkjjug3MNf5Sj9r',
   [PLAN_IDS.PROFESSIONAL]: 'price_1SUE2DFA0Fkjjug3euWqaW5c',
   [PLAN_IDS.BUSINESS]: 'price_1SUE32FA0Fkjjug3khKfal6N'
 };
