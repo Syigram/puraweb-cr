@@ -413,7 +413,7 @@ export const translations = {
       subtitle: "Flexible pricing options to match your business needs and budget",
       mostPopular: "Most Popular",
       perMonth: "₡/month",
-      additionalInfo: "All plans include free SSL certificate, hosting, and domain assistance",
+      additionalInfo: "All plans include hosting, domain, SSL certificate and support. Free cancellation at any time.",
       plans: [
         {
           id: "basic",
