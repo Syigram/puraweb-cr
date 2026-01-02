@@ -29,9 +29,9 @@ export const STRIPE_PRICE_IDS = {
 
 // Precios de planes en centavos CRC
 export const PLAN_AMOUNTS = {
-  [PLAN_IDS.BASIC]: 6000000,      // 60,000 CRC
-  [PLAN_IDS.PROFESSIONAL]: 10000000, // 100,000 CRC
-  [PLAN_IDS.BUSINESS]: 15000000   // 150,000 CRC
+  [PLAN_IDS.BASIC]: 10000000,      // 100,000 CRC
+  [PLAN_IDS.PROFESSIONAL]: 15000000, // 150,000 CRC
+  [PLAN_IDS.BUSINESS]: 25000000   // 250,000 CRC
 };
 
 // Traducciones de modos de pago para UI
