@@ -92,7 +92,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
       </CardContent>
     </Card>
   </div>
-  );
+);
 });
 
 const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
