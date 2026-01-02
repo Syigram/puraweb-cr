@@ -57,7 +57,7 @@ export const translations = {
         {
           id: "basic",
           name: "Básico",
-          price: "60,000",
+          price: "100,000",
           description: "Perfecto para pequeños negocios que inician su presencia digital",
           features: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
           recommended: false,
@@ -66,7 +66,7 @@ export const translations = {
         {
           id: "professional",
           name: "Profesional",
-          price: "100,000",
+          price: "150,000",
           description: "Ideal para empresas en crecimiento que necesitan más potencia",
           features: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
           recommended: true,
@@ -75,7 +75,7 @@ export const translations = {
         {
           id: "business",
           name: "Empresa",
-          price: "150,000",
+          price: "250,000",
           description: "Solución completa para negocios establecidos y tiendas online",
           features: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
           recommended: false,
