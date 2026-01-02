@@ -26,18 +26,20 @@ const staggerContainer = {
   }
 };
 
-const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected }) => (
-  <div className={plan.recommended && !hasUserSelected ? "md:-mt-4" : isSelected ? "md:-mt-4" : ""}>
-    <Card
-      onClick={() => onSelect(plan.name)}
-      className={`relative h-full transition-all duration-300 cursor-pointer ${
-        isSelected
-          ? "border-2 border-red-600 shadow-2xl scale-105"
-          : plan.recommended && !hasUserSelected
-          ? "border-2 border-red-600 shadow-2xl scale-105"
-          : "border-gray-200 hover:shadow-xl"
-      }`}
-    >
+const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected }) => {
+  const isHighlighted = isSelected || (plan.recommended && !hasUserSelected);
+  
+  return (
+    <div className="transition-all duration-300 ease-out" style={{ marginTop: isHighlighted ? '-16px' : '0' }}>
+      <Card
+        onClick={() => onSelect(plan.name)}
+        className={`relative h-full cursor-pointer transition-all duration-300 ease-out ${
+          isHighlighted
+            ? "border-2 border-red-600 shadow-2xl"
+            : "border-gray-200 hover:shadow-xl"
+        }`}
+        style={{ transform: isHighlighted ? 'scale(1.05)' : 'scale(1)' }}
+      >
       {plan.recommended && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
           <Badge className="bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-1 text-sm flex items-center gap-1">
