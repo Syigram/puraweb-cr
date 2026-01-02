@@ -26,14 +26,14 @@ const staggerContainer = {
   }
 };
 
-const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText }) => (
-  <div className={plan.recommended ? "md:-mt-4" : ""}>
+const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected }) => (
+  <div className={plan.recommended && !hasUserSelected ? "md:-mt-4" : isSelected ? "md:-mt-4" : ""}>
     <Card
       onClick={() => onSelect(plan.name)}
       className={`relative h-full transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-2 border-red-600 shadow-2xl scale-105"
-          : plan.recommended
+          : plan.recommended && !hasUserSelected
           ? "border-2 border-red-600 shadow-2xl scale-105"
           : "border-gray-200 hover:shadow-xl"
       }`}
