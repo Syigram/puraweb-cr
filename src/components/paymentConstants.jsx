@@ -23,8 +23,8 @@ export const PAYMENT_STATUS = {
 // Mapeo de IDs de plan a Price IDs de Stripe
 export const STRIPE_PRICE_IDS = {
   [PLAN_IDS.BASIC]: 'price_1Sl3etFA0Fkjjug3MNf5Sj9r',
-  [PLAN_IDS.PROFESSIONAL]: 'price_1SUE2DFA0Fkjjug3euWqaW5c',
-  [PLAN_IDS.BUSINESS]: 'price_1SUE32FA0Fkjjug3khKfal6N'
+  [PLAN_IDS.PROFESSIONAL]: 'price_1SlDVZFA0Fkjjug3ZD17ovCC',
+  [PLAN_IDS.BUSINESS]: 'price_1SlDXAFA0Fkjjug3E3DsbzuG'
 };
 
 // Precios de planes en centavos CRC
