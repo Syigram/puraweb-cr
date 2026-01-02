@@ -151,6 +151,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
               onSelect={handleCardClick}
               onNavigate={handlePlanSelect}
               mostPopularText={t.mostPopular}
+              hasUserSelected={selectedPlan !== null}
             />
           ))}
         </div>
