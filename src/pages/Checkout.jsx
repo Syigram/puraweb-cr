@@ -23,10 +23,10 @@ export default function Checkout() {
 
     // Configuration for plans using plan IDs estandarizados
     // Stripe stores amounts in smallest currency unit (centavos for CRC)
-    // Display prices: 60,000 / 100,000 / 150,000 CRC
+    // Display prices: 100,000 / 150,000 / 250,000 CRC
     const plans = {
       [PLAN_IDS.BASIC]: { 
-        fullPrice: 60000, 
+        fullPrice: 100000, 
         displayName: { es: "Plan Básico", en: "Basic Plan" },
         description: { 
           es: "Perfecto para pequeños negocios que inician su presencia digital", 
@@ -38,7 +38,7 @@ export default function Checkout() {
         }
       },
       [PLAN_IDS.PROFESSIONAL]: { 
-        fullPrice: 100000, 
+        fullPrice: 150000, 
         displayName: { es: "Plan Profesional", en: "Professional Plan" },
         description: { 
           es: "Ideal para empresas en crecimiento que necesitan más potencia", 
@@ -50,7 +50,7 @@ export default function Checkout() {
         }
       },
       [PLAN_IDS.BUSINESS]: { 
-        fullPrice: 150000, 
+        fullPrice: 250000, 
         displayName: { es: "Plan Empresa", en: "Business Plan" },
         description: { 
           es: "Solución completa para negocios establecidos y tiendas online", 
