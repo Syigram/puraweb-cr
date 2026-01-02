@@ -52,7 +52,7 @@ export const translations = {
       subtitle: "Opciones de precios flexibles para adaptarse a las necesidades y presupuesto de su negocio",
       mostPopular: "Más Popular",
       perMonth: "₡/mes",
-      additionalInfo: "Todos los planes incluyen certificado SSL gratuito, hosting y asistencia con dominio",
+      additionalInfo: "Todos los planes incluyen hosting, dominio, certificado SSL y soporte.",
       plans: [
         {
           id: "basic",
