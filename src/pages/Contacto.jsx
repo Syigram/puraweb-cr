@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import { motion, useReducedMotion } from "framer-motion";
-import { HelmetProvider } from "react-helmet-async";
 import SEO from "@/components/SEO";
 import Contact from "@/components/home/Contact";
 
@@ -63,7 +62,7 @@ export default function Contacto() {
   };
 
   return (
-    <HelmetProvider>
+    <>
       <SEO 
         title={seoTitle}
         description={seoDescription}
@@ -102,6 +101,6 @@ export default function Contacto() {
       {/* Contact Form Section */}
       <Contact />
     </div>
-    </HelmetProvider>
+    </>
   );
 }

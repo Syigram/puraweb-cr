@@ -1,5 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 
 export default function SEO({ 
   title, 
@@ -10,41 +9,72 @@ export default function SEO({
   language = 'es'
 }) {
   const siteName = "PuraWeb CR";
-  const baseUrl = "https://puraweb.cr";
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
   const ogImage = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png";
 
-  return (
-    <Helmet>
-      {/* Primary Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="title" content={fullTitle} />
-      {description && <meta name="description" content={description} />}
-      <meta name="language" content={language} />
-      <link rel="canonical" href={canonical || baseUrl} />
+  useEffect(() => {
+    // Update title
+    document.title = fullTitle;
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={canonical || baseUrl} />
-      <meta property="og:title" content={fullTitle} />
-      {description && <meta property="og:description" content={description} />}
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content={siteName} />
-      <meta property="og:locale" content={language === 'es' ? 'es_CR' : 'en_US'} />
+    // Update or create meta tags
+    const updateMetaTag = (name, content, property = false) => {
+      if (!content) return;
+      const attr = property ? 'property' : 'name';
+      let element = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attr, name);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
 
-      {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={canonical || baseUrl} />
-      <meta property="twitter:title" content={fullTitle} />
-      {description && <meta property="twitter:description" content={description} />}
-      <meta property="twitter:image" content={ogImage} />
+    // Primary Meta Tags
+    updateMetaTag('title', fullTitle);
+    updateMetaTag('description', description);
+    updateMetaTag('language', language);
 
-      {/* Structured Data */}
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      )}
-    </Helmet>
-  );
+    // Open Graph / Facebook
+    updateMetaTag('og:type', ogType, true);
+    updateMetaTag('og:url', canonical, true);
+    updateMetaTag('og:title', fullTitle, true);
+    updateMetaTag('og:description', description, true);
+    updateMetaTag('og:image', ogImage, true);
+    updateMetaTag('og:site_name', siteName, true);
+    updateMetaTag('og:locale', language === 'es' ? 'es_CR' : 'en_US', true);
+
+    // Twitter
+    updateMetaTag('twitter:card', 'summary_large_image', true);
+    updateMetaTag('twitter:url', canonical, true);
+    updateMetaTag('twitter:title', fullTitle, true);
+    updateMetaTag('twitter:description', description, true);
+    updateMetaTag('twitter:image', ogImage, true);
+
+    // Canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink && canonical) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    if (canonicalLink && canonical) {
+      canonicalLink.setAttribute('href', canonical);
+    }
+
+    // Structured Data
+    let scriptTag = document.getElementById('structured-data');
+    if (structuredData) {
+      if (!scriptTag) {
+        scriptTag = document.createElement('script');
+        scriptTag.id = 'structured-data';
+        scriptTag.type = 'application/ld+json';
+        document.head.appendChild(scriptTag);
+      }
+      scriptTag.textContent = JSON.stringify(structuredData);
+    } else if (scriptTag) {
+      scriptTag.remove();
+    }
+  }, [title, description, canonical, ogType, structuredData, language, fullTitle, ogImage, siteName]);
+
+  return null;
 }

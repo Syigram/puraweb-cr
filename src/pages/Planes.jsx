@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useLanguage } from "@/components/LanguageContext";
-import { HelmetProvider } from "react-helmet-async";
 import SEO from "@/components/SEO";
 import Pricing from "@/components/home/Pricing";
 import PlanComparisonTable from "@/components/pricing/PlanComparisonTable";
@@ -107,7 +106,7 @@ export default function Planes() {
   };
 
   return (
-    <HelmetProvider>
+    <>
       <SEO 
         title={seoTitle}
         description={seoDescription}
@@ -166,6 +165,6 @@ export default function Planes() {
 
       <PlanComparisonTable />
     </div>
-    </HelmetProvider>
+    </>
   );
 }

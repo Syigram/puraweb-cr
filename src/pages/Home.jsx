@@ -1,10 +1,9 @@
-import React, { useEffect, useCallback, lazy, Suspense } from "react";
+import React, { useCallback, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
-import { HelmetProvider } from "react-helmet-async";
 import SEO from "@/components/SEO";
 import Hero from "../components/home/Hero";
 
@@ -62,7 +61,7 @@ export default function Home() {
   };
 
   return (
-    <HelmetProvider>
+    <>
       <SEO 
         title={seoTitle}
         description={seoDescription}
@@ -113,6 +112,6 @@ export default function Home() {
         <Contact />
       </Suspense>
       </div>
-      </HelmetProvider>
+      </>
       );
       }
