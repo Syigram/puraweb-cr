@@ -61,7 +61,9 @@ export const translations = {
         "Backups automáticos",
         "Actualizaciones de seguridad",
         "Mantenimiento continuo",
-        "Cancelación sin costo"
+        "Cancelación sin costo",
+        "Autogestión de contenido",
+        "SEO"
       ],
       plans: [
         {
@@ -432,7 +434,9 @@ export const translations = {
         "Automatic backups",
         "Security updates",
         "Continuous maintenance",
-        "Free cancellation"
+        "Free cancellation",
+        "Content self-management",
+        "SEO"
       ],
       plans: [
         {
