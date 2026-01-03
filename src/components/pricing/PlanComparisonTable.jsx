@@ -29,6 +29,7 @@ export default function PlanComparisonTable() {
             { label: "SEO", values: [true, true, true] },
             { label: "Diseño para celulares y tablets", values: [true, true, true] },
             { label: "Autogestión de contenido", values: [true, true, true] },
+            { label: "Total páginas", values: ["Hasta 6 páginas/secciones", "Hasta 10 páginas/secciones", "Páginas ilimitadas (uso razonable)"] },
             { label: "Cancelación gratis", values: [true, true, true] }
           ]
         },
