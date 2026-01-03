@@ -13,6 +13,7 @@ import {
 import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
+import Chatbot from "@/components/Chatbot";
 
 // Shared auth state to avoid multiple API calls
 let authPromise = null;
@@ -367,6 +368,9 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
 
       {/* Main Content */}
       <main>{children}</main>
+
+      {/* Chatbot */}
+      <Chatbot />
 
       {/* Footer */}
       <footer className="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950 text-white py-12">
