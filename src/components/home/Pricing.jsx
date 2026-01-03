@@ -159,8 +159,18 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
           ))}
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-gray-600">{t.additionalInfo}</p>
+        <div className="text-center mt-12">
+          <p className="text-gray-700 font-medium mb-4">{t.additionalInfo}</p>
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 max-w-4xl mx-auto">
+            {t.commonFeatures?.map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <Check className="w-3 h-3 text-green-600" />
+                </div>
+                <span className="text-gray-600 text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

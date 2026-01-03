@@ -52,7 +52,17 @@ export const translations = {
       subtitle: "Opciones de precios flexibles para adaptarse a las necesidades y presupuesto de su negocio",
       mostPopular: "Más Popular",
       perMonth: "₡/mes",
-      additionalInfo: "Todos los planes incluyen hosting, dominio, certificado SSL y soporte. Puedes cancelar tu plan en cualquier momento.",
+      additionalInfo: "Todos los planes incluyen:",
+      commonFeatures: [
+        "Hosting premium",
+        "Dominio personalizado",
+        "Certificado SSL",
+        "Soporte técnico",
+        "Backups automáticos",
+        "Actualizaciones de seguridad",
+        "Mantenimiento continuo",
+        "Cancelación sin costo"
+      ],
       plans: [
         {
           id: "basic",
@@ -413,7 +423,17 @@ export const translations = {
       subtitle: "Flexible pricing options to match your business needs and budget",
       mostPopular: "Most Popular",
       perMonth: "₡/month",
-      additionalInfo: "All plans include hosting, domain, SSL certificate and support. Free cancellation at any time.",
+      additionalInfo: "All plans include:",
+      commonFeatures: [
+        "Premium hosting",
+        "Custom domain",
+        "SSL certificate",
+        "Technical support",
+        "Automatic backups",
+        "Security updates",
+        "Continuous maintenance",
+        "Free cancellation"
+      ],
       plans: [
         {
           id: "basic",
