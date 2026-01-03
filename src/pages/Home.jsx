@@ -20,6 +20,9 @@ const SectionLoader = () => (
 );
 
 export default function Home() {
+  const navigate = useNavigate();
+  const { language } = useLanguage();
+
   useEffect(() => {
     document.title = "PuraWeb - Costa Rica venta aplicaciones y páginas Web";
   }, []);
