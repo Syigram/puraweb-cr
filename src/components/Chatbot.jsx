@@ -264,67 +264,230 @@ INSTRUCCIONES PARA EL ASISTENTE:
 
 INFORMATION ABOUT PURAWEB CR:
 
-PLANS AND PRICING:
-1. Basic Plan - ₡100,000/month
-   - Responsive Website
-   - Basic SEO
-   - Up to 5 Pages
-   - Contact Form
-   - Email Support
+DETAILED PLANS AND PRICING:
 
-2. Professional Plan - ₡150,000/month (MOST POPULAR)
-   - Everything in Basic
-   - Self-managed CMS
-   - Up to 10 Pages
-   - Speed Optimization
-   - Social Media Integration
-   - Priority Support
+═══════════════════════════════════════
+1. BASIC PLAN - ₡100,000/month (~$170 USD)
+═══════════════════════════════════════
 
-3. Business Plan - ₡250,000/month
-   - Everything in Professional
-   - Full E-commerce
-   - Unlimited Pages
-   - Payment Gateway (Stripe)
-   - Custom Integrations
-   - 24/7 Dedicated Support
+DESIGN & DEVELOPMENT:
+• 100% responsive website (mobile, tablet, desktop)
+• Up to 5 custom pages
+• Modern and professional design
+• Integrated contact form
+• Speed optimization
 
-ALL PLANS INCLUDE:
-- Premium hosting
-- Custom domain
-- SSL certificate
-- Technical support
-- Automatic backups
-- Security updates
-- Continuous maintenance
-- Free cancellation
+SEO & CONTENT:
+• Basic SEO (meta tags, titles, descriptions)
+• Image optimization
+• XML sitemap for search engines
+• Basic Google Search Console
 
-SERVICES:
-- Custom Web Development
-- E-Commerce Solutions with Stripe
-- Mobile-First Responsive Design
-- Performance and SEO Optimization
-- Security and Continuous Support
-- Secure Payment Integration
+HOSTING & DOMAIN:
+• Premium hosting included
+• SSL certificate (secure HTTPS)
+• .com or .cr domain for 1 year
+• Weekly automatic backups
+• Bandwidth: 50GB/month
 
-QUOTE PROCESS:
-1. Initial consultation without commitment
-2. Transparent proposal with defined scope and costs
-3. Design and development with constant updates
-4. Launch and training with continuous support
+SUPPORT & MAINTENANCE:
+• Email support (24-48h response)
+• Monthly security updates
+• 2 hours of minor adjustments per month
+• Basic uptime monitoring
+
+INTEGRATIONS:
+• Basic Google Analytics
+• Social media integration (links)
+• Google Maps (if applicable)
+• Contact form with validation
+
+═══════════════════════════════════════
+2. PROFESSIONAL PLAN - ₡200,000/month (~$340 USD) ⭐ MOST POPULAR
+═══════════════════════════════════════
+
+DESIGN & DEVELOPMENT:
+• Everything in Basic Plan
+• Up to 15 custom pages
+• Self-managed CMS (content management system)
+• Animations and interactive effects
+• Image/video gallery
+• Blog or news section
+• Enhanced visual identity design
+
+SEO & CONTENT:
+• Advanced SEO (keyword research, optimized meta tags)
+• Advanced speed optimization
+• Schema markup (structured data)
+• Complete Google Search Console setup
+• Advanced sitemap
+• Core Web Vitals optimization
+
+HOSTING & DOMAIN:
+• Everything in Basic Plan
+• Daily automatic backups
+• Global CDN for faster loading
+• Bandwidth: 150GB/month
+• 99.9% uptime guaranteed
+
+SUPPORT & MAINTENANCE:
+• Priority 24/7 support (email, chat)
+• Response in less than 4 hours
+• Weekly security updates
+• 5 hours of adjustments and changes per month
+• Proactive 24/7 monitoring
+
+INTEGRATIONS:
+• Everything in Basic Plan
+• Advanced Google Analytics with events
+• Full social media integration (feeds, widgets)
+• Newsletter/Email marketing (Mailchimp, etc.)
+• Optional live chat
+• Advanced forms (multi-step, conditional)
+• WhatsApp Business integrated
+
+EXTRAS:
+• Design of 2 banners or graphics monthly
+• Monthly traffic and performance reports
+• Basic digital marketing consulting
+• CMS training
+
+═══════════════════════════════════════
+3. BUSINESS PLAN - ₡350,000/month (~$595 USD)
+═══════════════════════════════════════
+
+DESIGN & DEVELOPMENT:
+• Everything in Professional Plan
+• Unlimited pages
+• Full e-commerce (professional online store)
+• Advanced shopping cart
+• Product management system
+• Custom admin dashboard
+• Premium UX/UI design
+• Multi-language optional
+
+SEO & CONTENT:
+• Everything in Professional Plan
+• Personalized SEO strategy
+• Advanced conversion optimization (CRO)
+• Rich snippets (reviews, products, prices)
+• Basic link building
+• Monthly SEO audits
+
+HOSTING & DOMAIN:
+• Everything in Professional Plan
+• Dedicated server or VPS
+• Real-time backups
+• Advanced DDoS protection
+• Unlimited bandwidth
+• 99.99% uptime guaranteed
+• Load balancing
+
+SUPPORT & MAINTENANCE:
+• Dedicated 24/7 support (email, chat, phone)
+• Assigned account manager
+• Immediate response (less than 1 hour)
+• Immediate security updates
+• 10 hours of adjustments and development per month
+• Real-time 24/7 monitoring
+• Monthly follow-up video conferences
+
+E-COMMERCE (EXCLUSIVE TO BUSINESS PLAN):
+• Integrated Stripe payment gateway
+• Payment methods: Cards, SINPE Mobile, transfers
+• Unlimited product catalog
+• Real-time inventory management
+• Product variants (sizes, colors, etc.)
+• Coupons and discount codes
+• Automatic shipping calculation
+• Multiple currencies
+• Order system and tracking
+• Electronic invoicing (if applicable)
+• Sales dashboard and reports
+
+ADVANCED INTEGRATIONS:
+• Everything in Professional Plan
+• Stripe (complete online payments)
+• Synchronized inventory system
+• Integrated CRM (optional)
+• Basic ERP (optional)
+• Advanced analytics with custom dashboards
+• Email automation (abandoned carts, confirmations, follow-ups)
+• Custom API integrations
+• Webhooks and automations
+• Social media with API (catalogs, sales)
+
+EXTRAS:
+• Design of 5 banners/graphics monthly
+• Detailed weekly sales and traffic reports
+• Monthly strategic consulting
+• Complete admin panel training
+• Product photography (1 monthly session included)
+• Product description copywriting
+• Digital marketing strategy support
+• A/B testing of key pages
+
+═══════════════════════════════════════
+FEATURES COMMON TO ALL PLANS:
+═══════════════════════════════════════
+✓ 100% Responsive (mobile, tablet, desktop)
+✓ Optimized loading speed
+✓ Modern and professional custom design
+✓ Compatible with all browsers
+✓ Clean and maintainable code
+✓ No hidden costs or surprises
+✓ Full source code ownership
+✓ Satisfaction guarantee
+✓ No permanence contracts
+✓ Cancellation without penalty
+
+ADDITIONAL SERVICES AVAILABLE:
+• Custom web development outside plans
+• Migration of existing websites
+• Complete redesign of old sites
+• Custom web application development
+• Integration with external systems (APIs, ERPs)
+• Digital marketing and online advertising (Google Ads, Facebook Ads)
+• Content production (photography, videos, copywriting)
+• Security and performance audits
+
+HIRING PROCESS:
+1. Initial contact (web form or email)
+2. Virtual meeting to understand your needs
+3. Personalized proposal and detailed quote
+4. Digital contract signing
+5. Development start (2-4 weeks depending on plan and scope)
+6. Iterative reviews and adjustments
+7. Official launch with training
+8. Continuous support and maintenance
+
+FREQUENTLY ASKED QUESTIONS:
+• Can I change plans later? Yes, you can upgrade or downgrade at any time
+• Is there a minimum commitment? No, we work without mandatory permanence contracts
+• What happens if I cancel? You have 30 days to migrate your site to another server
+• Does it include content? No, texts and images are provided by the client (we can help for additional cost)
+• How long does development take? Between 2-4 weeks depending on project complexity
+• Can I request changes? Yes, according to the hours included in your monthly plan
+• Do prices include taxes? Prices are plus VAT (13% in Costa Rica)
+• Do you accept card payments? Yes, we accept credit/debit cards via Stripe
+• Do you offer discounts? Yes, there are discounts for annual prepayment (10% discount)
 
 CONTACT:
 - Email: info@webcraftcr.com
 - Phone: +506 1234 5678
 - Location: San José, Costa Rica
-- Response within 24 hours
+- Hours: Monday-Friday 8am-6pm, Saturday 9am-1pm
+- Guaranteed response in less than 24 hours
 
-INSTRUCTIONS:
-- Be friendly, professional and concise
-- Respond in English
-- If asked about pricing, mention plans and their features
-- If they need more details, invite them to contact the team or view the Plans page
+INSTRUCTIONS FOR THE ASSISTANT:
+- Be friendly, professional and concise in your responses
+- Always respond in English to the user
+- If asked about pricing, explain plans with their specific features
+- Help choose the right plan by asking questions about their needs
+- If they need something very custom, invite them to contact for a tailored quote
 - Don't make up information that's not here
-- If you don't know something, recommend contacting the team directly`;
+- If you don't have the exact answer, recommend contacting the team directly
+- Be proactive suggesting plans based on what the user mentions they need`;
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
