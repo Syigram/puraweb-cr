@@ -46,6 +46,31 @@ export default function Home() {
       <Suspense fallback={<SectionLoader />}>
         <Pricing onGetStarted={scrollToContact} />
       </Suspense>
+      
+      {/* CTA para ver planes completos */}
+      <div className="py-12 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            {language === 'es' 
+              ? '¿Necesitas más detalles sobre nuestros planes?' 
+              : 'Need more details about our plans?'}
+          </h3>
+          <p className="text-blue-100 mb-8 text-lg">
+            {language === 'es'
+              ? 'Compara todas las características y encuentra el plan perfecto para tu negocio'
+              : 'Compare all features and find the perfect plan for your business'}
+          </p>
+          <Button
+            onClick={() => navigate(createPageUrl("Planes"))}
+            size="lg"
+            className="bg-white text-blue-900 hover:bg-gray-100 font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+          >
+            {language === 'es' ? 'Ver Planes Completos' : 'View Full Plans'}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+        </div>
+      </div>
+      
       <Suspense fallback={<SectionLoader />}>
         <Benefits />
       </Suspense>
