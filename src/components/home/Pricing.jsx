@@ -98,6 +98,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
 const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const navigate = useNavigate();
   const t = useMemo(() => translations[language].pricing, [language]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const prefersReducedMotion = useReducedMotion();
