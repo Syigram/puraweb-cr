@@ -74,6 +74,7 @@ export default function PlanComparisonTable() {
             { label: "Sitio web corporativo", values: [false, false, true] },
             { label: "Ecosistema digital completo", values: [false, false, true] },
             { label: "Formularios personalizados", values: [false, false, true] },
+            { label: "Asistente virtual (IA)", values: [false, false, true] },
             { label: "Integración con APIs", values: [false, false, true] },
             { label: "Integración con DBs externas", values: [false, false, true] }
           ]
@@ -147,6 +148,7 @@ export default function PlanComparisonTable() {
             { label: "Corporate website", values: [false, false, true] },
             { label: "Complete digital ecosystem", values: [false, false, true] },
             { label: "Custom forms", values: [false, false, true] },
+            { label: "Virtual Assistant (AI)", values: [false, false, true] },
             { label: "API integration", values: [false, false, true] },
             { label: "External DB integration", values: [false, false, true] }
           ]
