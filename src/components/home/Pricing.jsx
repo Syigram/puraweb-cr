@@ -162,6 +162,21 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
         <div className="text-center mt-8">
           <p className="text-gray-600">{t.additionalInfo}</p>
         </div>
+
+        <div className="text-center mt-12 pt-8 border-t border-gray-100">
+          <p className="text-gray-700 mb-4">
+            {language === 'es' 
+              ? '¿Necesitas más detalles para decidir?' 
+              : 'Need more details to decide?'}
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => navigate(createPageUrl("Planes"))}
+            className="border-blue-900 text-blue-900 hover:bg-blue-50 px-8 py-3"
+          >
+            {language === 'es' ? 'Comparar planes' : 'Compare plans'}
+          </Button>
+        </div>
       </div>
     </section>
   );
