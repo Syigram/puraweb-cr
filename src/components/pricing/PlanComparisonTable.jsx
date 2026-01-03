@@ -104,6 +104,7 @@ export default function PlanComparisonTable() {
             { label: "SEO", values: [true, true, true] },
             { label: "Mobile and tablet design", values: [true, true, true] },
             { label: "Content self-management", values: [true, true, true] },
+            { label: "Content", values: ["Up to 6 pages/sections", "Up to 12 pages/sections", "Unlimited pages (fair use)"] },
             { label: "Free cancellation", values: [true, true, true] }
           ]
         },
