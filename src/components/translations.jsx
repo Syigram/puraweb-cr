@@ -89,7 +89,7 @@ export const translations = {
           name: "Empresa",
           price: "250,000",
           description: "Solución completa para negocios establecidos y tiendas online",
-          features: ["Sitio web corporativo", "Ecosistema digital completo", "Formularios personalizados", "Integración con APIs", "Integración con DBs externas", "Asistente virtual", "Páginas ilimitadas (bajo uso justo)"],
+          features: ["Sitio web corporativo", "Ecosistema digital completo", "Formularios personalizados", "Integración con APIs", "Integración con DBs externas", "Asistente virtual", "Páginas ilimitadas (uso justo)"],
           recommended: false,
           cta_text: "Elegir Empresa"
         }
