@@ -375,7 +375,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
       {/* Footer */}
       <footer className="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950 text-white py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-5 gap-8">
             <div>
                 <div className="flex items-center gap-2 mb-4">
                   <img 
@@ -400,18 +400,36 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               <div>
               <h3 className="font-semibold mb-4">{t.footer.companyTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
-                <li>{t.footer.about}</li>
+                <li>
+                  <Link to={createPageUrl("Nosotros")} className="hover:text-white transition-colors">
+                    {t.footer.about}
+                  </Link>
+                </li>
                 <li>{t.footer.process}</li>
                 <li>{t.footer.caseStudies}</li>
-                <li>{t.footer.contact}</li>
+                <li>
+                  <Link to={createPageUrl("Contacto")} className="hover:text-white transition-colors">
+                    {t.footer.contact}
+                  </Link>
+                </li>
               </ul>
               </div>
               <div>
               <h3 className="font-semibold mb-4">{t.footer.contactTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
                 <li>{t.footer.location}</li>
-                <li>info@webcraftcr.com</li>
+                <li>info@puraweb.cr</li>
                 <li>+506 1234 5678</li>
+              </ul>
+              </div>
+              <div>
+              <h3 className="font-semibold mb-4">{language === 'es' ? 'Legal' : 'Legal'}</h3>
+              <ul className="space-y-2 text-sm text-blue-200">
+                <li>
+                  <Link to={createPageUrl("Politicas")} className="hover:text-white transition-colors">
+                    {language === 'es' ? 'Políticas y Términos' : 'Policies and Terms'}
+                  </Link>
+                </li>
               </ul>
               </div>
               </div>

@@ -9,6 +9,7 @@ import Planes from './pages/Planes';
 import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import UserDashboard from './pages/UserDashboard';
+import Politicas from './pages/Politicas';
 import __Layout from './Layout.jsx';
 
 
@@ -24,6 +25,7 @@ export const PAGES = {
     "Servicios": Servicios,
     "Support": Support,
     "UserDashboard": UserDashboard,
+    "Politicas": Politicas,
 }
 
 export const pagesConfig = {
