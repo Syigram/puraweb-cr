@@ -57,13 +57,13 @@ export const translations = {
         "Hosting premium",
         "Dominio personalizado",
         "Certificado SSL",
-        "Soporte técnico",
+        "Autogestión de contenido",
+        "SEO",
         "Backups automáticos",
         "Actualizaciones de seguridad",
         "Mantenimiento continuo",
-        "Cancelación sin costo",
-        "Autogestión de contenido",
-        "SEO"
+        "Soporte técnico",
+        "Cancelación sin costo"
       ],
       plans: [
         {
@@ -430,13 +430,13 @@ export const translations = {
         "Premium hosting",
         "Custom domain",
         "SSL certificate",
-        "Technical support",
+        "Content self-management",
+        "SEO",
         "Automatic backups",
         "Security updates",
         "Continuous maintenance",
-        "Free cancellation",
-        "Content self-management",
-        "SEO"
+        "Technical support",
+        "Free cancellation"
       ],
       plans: [
         {
