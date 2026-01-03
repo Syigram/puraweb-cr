@@ -69,7 +69,7 @@ export const translations = {
           name: "Básico",
           price: "100,000",
           description: "Perfecto para pequeños negocios que inician su presencia digital",
-          features: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
+          features: ["Web básica", "Galería de imágenes", "Landing page", "Blog", "Portafolio", "Sitio Web Responsive", "Hasta 6 páginas/secciones"],
           recommended: false,
           cta_text: "Elegir Básico"
         },
@@ -78,7 +78,7 @@ export const translations = {
           name: "Profesional",
           price: "150,000",
           description: "Ideal para empresas en crecimiento que necesitan más potencia",
-          features: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
+          features: ["E-Commerce o tienda online", "Sistema de citas o reservas", "Pagos con tarjeta", "Suscripciones y membresías", "Integración con Gmail", "Notificaciones por WhatsApp", "Hasta 10 páginas/secciones"],
           recommended: true,
           cta_text: "Elegir Profesional"
         },
@@ -87,7 +87,7 @@ export const translations = {
           name: "Empresa",
           price: "250,000",
           description: "Solución completa para negocios establecidos y tiendas online",
-          features: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
+          features: ["Sitio web corporativo", "Ecosistema digital completo", "Formularios personalizados", "Integración con APIs", "Integración con DBs externas", "Asistente virtual", "Páginas ilimitadas (bajo uso justo)"],
           recommended: false,
           cta_text: "Elegir Empresa"
         }
@@ -440,7 +440,7 @@ export const translations = {
           name: "Basic",
           price: "100,000",
           description: "Perfect for small businesses starting their digital journey",
-          features: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"],
+          features: ["Basic website", "Image gallery", "Landing page", "Blog", "Portfolio", "Responsive Website", "Up to 6 pages/sections"],
           recommended: false,
           cta_text: "Choose Basic"
         },
@@ -449,7 +449,7 @@ export const translations = {
           name: "Professional",
           price: "150,000",
           description: "Ideal for growing companies needing more power and flexibility",
-          features: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"],
+          features: ["E-Commerce or online store", "Appointment or booking system", "Card payments", "Subscriptions and memberships", "Gmail integration", "WhatsApp notifications", "Up to 10 pages/sections"],
           recommended: true,
           cta_text: "Choose Professional"
         },
@@ -458,7 +458,7 @@ export const translations = {
           name: "Business",
           price: "250,000",
           description: "Complete solution for established businesses and online stores",
-          features: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"],
+          features: ["Corporate website", "Complete digital ecosystem", "Custom forms", "API integration", "External DB integration", "Virtual assistant", "Unlimited pages (fair use)"],
           recommended: false,
           cta_text: "Choose Business"
         }
