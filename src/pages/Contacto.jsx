@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import { motion, useReducedMotion } from "framer-motion";
+import { HelmetProvider } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import Contact from "@/components/home/Contact";
 
 const fadeInUp = {
@@ -26,16 +28,50 @@ export default function Contacto() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    document.title = language === 'es' 
-      ? "Contacto - PuraWeb CR" 
-      : "Contact - PuraWeb CR";
     window.scrollTo(0, 0);
     const timer = requestAnimationFrame(() => setIsVisible(true));
     return () => cancelAnimationFrame(timer);
   }, [language]);
 
+  const seoTitle = language === 'es' 
+    ? 'Contacto - Cotiza tu Proyecto Web'
+    : 'Contact - Get Your Web Project Quote';
+  
+  const seoDescription = language === 'es'
+    ? 'Contáctanos para cotizar tu proyecto web. Respuesta en menos de 24 horas. Desarrollo web, e-commerce y soluciones digitales en Costa Rica con precios transparentes.'
+    : 'Contact us to quote your web project. Response within 24 hours. Web development, e-commerce and digital solutions in Costa Rica with transparent pricing.';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": seoTitle,
+    "description": seoDescription,
+    "url": "https://puraweb.cr/contacto",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "PuraWeb CR",
+      "url": "https://puraweb.cr",
+      "logo": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+506-1234-5678",
+        "contactType": "customer service",
+        "areaServed": "CR",
+        "availableLanguage": ["Spanish", "English"]
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
+    <HelmetProvider>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        canonical="https://puraweb.cr/contacto"
+        structuredData={structuredData}
+        language={language}
+      />
+      <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Hero Section */}
       <section className="pt-32 pb-8 px-6">
         <motion.div 
@@ -66,5 +102,6 @@ export default function Contacto() {
       {/* Contact Form Section */}
       <Contact />
     </div>
+    </HelmetProvider>
   );
 }

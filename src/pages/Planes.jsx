@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useLanguage } from "@/components/LanguageContext";
+import { HelmetProvider } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import Pricing from "@/components/home/Pricing";
 import PlanComparisonTable from "@/components/pricing/PlanComparisonTable";
 
@@ -13,16 +15,107 @@ export default function Planes() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  useEffect(() => {
-    document.title = "Planes - PuraWeb CR";
-  }, []);
-
   const handleContactClick = () => {
     navigate(createPageUrl("Home") + "#contact");
   };
 
+  const seoTitle = language === 'es' 
+    ? 'Planes y Precios de Desarrollo Web'
+    : 'Web Development Plans & Pricing';
+  
+  const seoDescription = language === 'es'
+    ? 'Planes de desarrollo web desde ₡100,000/mes. Básico, Profesional y Empresa con hosting, SSL, soporte, backups y mantenimiento incluido. Compara características y elige tu plan.'
+    : 'Web development plans from ₡100,000/month. Basic, Professional and Business with hosting, SSL, support, backups and maintenance included. Compare features and choose your plan.';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "position": 1,
+        "name": language === 'es' ? "Plan Básico" : "Basic Plan",
+        "description": language === 'es' 
+          ? "Perfecto para pequeños negocios que inician su presencia digital"
+          : "Perfect for small businesses starting their digital journey",
+        "price": "100000",
+        "priceCurrency": "CRC",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "100000",
+          "priceCurrency": "CRC",
+          "unitText": "MONTH"
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": language === 'es' ? "Sitio Web Básico" : "Basic Website",
+          "provider": {
+            "@type": "Organization",
+            "name": "PuraWeb CR"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "position": 2,
+        "name": language === 'es' ? "Plan Profesional" : "Professional Plan",
+        "description": language === 'es'
+          ? "Ideal para empresas en crecimiento que necesitan más potencia"
+          : "Ideal for growing companies needing more power",
+        "price": "150000",
+        "priceCurrency": "CRC",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "150000",
+          "priceCurrency": "CRC",
+          "unitText": "MONTH"
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": language === 'es' ? "Sitio Web Profesional" : "Professional Website",
+          "provider": {
+            "@type": "Organization",
+            "name": "PuraWeb CR"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "position": 3,
+        "name": language === 'es' ? "Plan Empresa" : "Business Plan",
+        "description": language === 'es'
+          ? "Solución completa para negocios establecidos y tiendas online"
+          : "Complete solution for established businesses and online stores",
+        "price": "250000",
+        "priceCurrency": "CRC",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "250000",
+          "priceCurrency": "CRC",
+          "unitText": "MONTH"
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": language === 'es' ? "Sitio Web Empresa con E-commerce" : "Business Website with E-commerce",
+          "provider": {
+            "@type": "Organization",
+            "name": "PuraWeb CR"
+          }
+        }
+      }
+    ]
+  };
+
   return (
-    <div className="pt-20">
+    <HelmetProvider>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        canonical="https://puraweb.cr/planes"
+        structuredData={structuredData}
+        language={language}
+      />
+      <div className="pt-20">
       <Pricing compact />
       
       {/* CTA Section */}
@@ -73,5 +166,6 @@ export default function Planes() {
 
       <PlanComparisonTable />
     </div>
+    </HelmetProvider>
   );
 }

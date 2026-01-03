@@ -4,6 +4,8 @@ import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
+import { HelmetProvider } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import Hero from "../components/home/Hero";
 
 // Lazy load below-the-fold components for faster initial render
@@ -23,10 +25,6 @@ export default function Home() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  useEffect(() => {
-    document.title = "PuraWeb - Costa Rica venta aplicaciones y páginas Web";
-  }, []);
-
   const scrollToContact = useCallback(() => {
     const element = document.getElementById("contact");
     if (element) {
@@ -34,8 +32,45 @@ export default function Home() {
     }
   }, []);
 
+  const seoTitle = language === 'es' 
+    ? 'Desarrollo Web y E-Commerce en Costa Rica'
+    : 'Web Development & E-Commerce in Costa Rica';
+  
+  const seoDescription = language === 'es'
+    ? 'Creamos sitios web profesionales y tiendas online con tecnología premium. Planes desde ₡100,000/mes con hosting, SSL, soporte 24/7 y mantenimiento incluido. Stripe integrado.'
+    : 'We create professional websites and online stores with premium technology. Plans from ₡100,000/month with hosting, SSL, 24/7 support and maintenance included. Stripe integrated.';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PuraWeb CR",
+    "url": "https://puraweb.cr",
+    "description": seoDescription,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://puraweb.cr/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PuraWeb CR",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png"
+      }
+    }
+  };
+
   return (
-    <div>
+    <HelmetProvider>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        canonical="https://puraweb.cr"
+        structuredData={structuredData}
+        language={language}
+      />
+      <div>
       {/* Hero loads immediately - critical for FCP/LCP */}
       <Hero onGetStarted={scrollToContact} />
       
@@ -77,6 +112,7 @@ export default function Home() {
       <Suspense fallback={<SectionLoader />}>
         <Contact />
       </Suspense>
-    </div>
-  );
-}
+      </div>
+      </HelmetProvider>
+      );
+      }
