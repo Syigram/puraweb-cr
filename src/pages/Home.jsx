@@ -48,7 +48,7 @@ export default function Home() {
       </Suspense>
       
       {/* CTA para ver planes completos */}
-      <div className="py-6 bg-white border-t border-b border-gray-200">
+      <div className="py-8 bg-white border-t border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             {language === 'es' 
