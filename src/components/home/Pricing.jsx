@@ -119,7 +119,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
   const plans = t.plans || [];
 
   return (
-    <section id="pricing" className={`${compact ? 'pt-20 pb-8' : 'py-20'} bg-white relative overflow-hidden`}>
+    <section id="pricing" className={`${compact ? 'pt-20 pb-8' : 'pt-20 pb-8'} bg-white relative overflow-hidden`}>
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white pointer-events-none" aria-hidden="true" />
 
       <div className="relative max-w-7xl mx-auto px-6">
