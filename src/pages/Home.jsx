@@ -1,4 +1,9 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 import Hero from "../components/home/Hero";
 
 // Lazy load below-the-fold components for faster initial render
