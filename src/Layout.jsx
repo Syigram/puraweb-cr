@@ -426,8 +426,13 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               <h3 className="font-semibold mb-4">{language === 'es' ? 'Legal' : 'Legal'}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
                 <li>
-                  <Link to={createPageUrl("Politicas")} className="hover:text-white transition-colors">
-                    {language === 'es' ? 'Políticas y Términos' : 'Policies and Terms'}
+                  <Link to={createPageUrl("PoliticasPrivacidad")} className="hover:text-white transition-colors">
+                    {language === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to={createPageUrl("TerminosCondiciones")} className="hover:text-white transition-colors">
+                    {language === 'es' ? 'Términos y Condiciones' : 'Terms and Conditions'}
                   </Link>
                 </li>
               </ul>
