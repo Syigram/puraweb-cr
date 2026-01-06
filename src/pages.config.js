@@ -7,11 +7,11 @@ import NosotrosManifiesto from './pages/NosotrosManifiesto';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
 import Politicas from './pages/Politicas';
+import PoliticasPrivacidad from './pages/PoliticasPrivacidad';
 import Servicios from './pages/Servicios';
 import Support from './pages/Support';
-import UserDashboard from './pages/UserDashboard';
-import PoliticasPrivacidad from './pages/PoliticasPrivacidad';
 import TerminosCondiciones from './pages/TerminosCondiciones';
+import UserDashboard from './pages/UserDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -25,11 +25,11 @@ export const PAGES = {
     "PaymentSuccess": PaymentSuccess,
     "Planes": Planes,
     "Politicas": Politicas,
+    "PoliticasPrivacidad": PoliticasPrivacidad,
     "Servicios": Servicios,
     "Support": Support,
-    "UserDashboard": UserDashboard,
-    "PoliticasPrivacidad": PoliticasPrivacidad,
     "TerminosCondiciones": TerminosCondiciones,
+    "UserDashboard": UserDashboard,
 }
 
 export const pagesConfig = {

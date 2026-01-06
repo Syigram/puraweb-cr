@@ -176,6 +176,11 @@ export default function TerminosCondiciones() {
                 <p className="text-sm text-gray-500">{t.lastUpdate}</p>
               </CardHeader>
               <CardContent className="space-y-8">
+                {t.intro && (
+                  <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                    <p className="text-gray-700 leading-relaxed">{t.intro}</p>
+                  </div>
+                )}
                 {t.sections.map((section, idx) => (
                   <div key={idx}>
                     <h3 className="text-xl font-semibold mb-3 text-blue-900">{section.title}</h3>
