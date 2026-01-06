@@ -169,20 +169,69 @@ export default function TerminosCondiciones() {
             </motion.div>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl">{t.title}</CardTitle>
-                <p className="text-sm text-gray-500">{t.lastUpdate}</p>
+              <CardHeader className="border-b bg-gradient-to-r from-blue-50 to-white">
+                <CardTitle className="text-3xl font-bold text-blue-900">{t.title}</CardTitle>
+                <p className="text-sm text-gray-500 mt-2">{t.lastUpdate}</p>
               </CardHeader>
-              <CardContent className="space-y-8">
+              <CardContent className="space-y-10 py-8">
                 {t.intro && (
-                  <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
-                    <p className="text-gray-700 leading-relaxed">{t.intro}</p>
+                  <div className="mb-8 p-6 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl border-2 border-blue-200 shadow-sm">
+                    <p className="text-gray-800 leading-relaxed text-base font-medium">{t.intro}</p>
                   </div>
                 )}
                 {t.sections.map((section, idx) => (
-                  <div key={idx}>
-                    <h3 className="text-xl font-semibold mb-3 text-blue-900">{section.title}</h3>
-                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{section.content}</p>
+                  <div key={idx} className="scroll-mt-24">
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        {idx + 1}
+                      </div>
+                      <h3 className="text-xl font-bold text-blue-900 pt-1">{section.title}</h3>
+                    </div>
+                    <div className="ml-11 space-y-3">
+                      {section.content.split('\n\n').map((paragraph, pIdx) => {
+                        if (paragraph.startsWith('•')) {
+                          // Es una lista con bullets
+                          const items = paragraph.split('\n').filter(item => item.trim());
+                          return (
+                            <ul key={pIdx} className="space-y-2">
+                              {items.map((item, iIdx) => (
+                                <li key={iIdx} className="flex items-start gap-3">
+                                  <span className="text-blue-600 font-bold mt-1">•</span>
+                                  <span className="text-gray-700 leading-relaxed flex-1">
+                                    {item.replace(/^•\s*/, '')}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        } else if (paragraph.includes('- ')) {
+                          // Es una sub-lista con guiones
+                          const items = paragraph.split('\n').filter(item => item.trim());
+                          return (
+                            <ul key={pIdx} className="space-y-2 ml-4">
+                              {items.map((item, iIdx) => (
+                                <li key={iIdx} className="flex items-start gap-3">
+                                  <span className="text-blue-500 font-bold mt-1">-</span>
+                                  <span className="text-gray-700 leading-relaxed flex-1 text-sm">
+                                    {item.replace(/^\s*-\s*/, '')}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        } else {
+                          // Es un párrafo normal
+                          return (
+                            <p key={pIdx} className="text-gray-700 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          );
+                        }
+                      })}
+                    </div>
+                    {idx < t.sections.length - 1 && (
+                      <div className="mt-8 border-b border-gray-200"></div>
+                    )}
                   </div>
                 ))}
               </CardContent>
