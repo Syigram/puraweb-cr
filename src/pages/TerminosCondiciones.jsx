@@ -181,8 +181,29 @@ export default function TerminosCondiciones() {
                 )}
                 {t.sections.map((section, idx) => (
                   <div key={idx}>
-                    <h3 className="text-xl font-semibold mb-3 text-blue-900">{section.title}</h3>
-                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{section.content}</p>
+                    <h3 className="text-xl font-semibold mb-4 text-blue-900">{section.title}</h3>
+                    <div className="text-gray-700 leading-relaxed space-y-3">
+                      {section.content.split('\n').map((line, lineIdx) => {
+                        // Format lines with colons (e.g., "Title:" becomes bold)
+                        const parts = line.split(':');
+                        if (parts.length > 1 && line.startsWith('•')) {
+                          return (
+                            <p key={lineIdx} className="pl-4">
+                              <span className="font-semibold text-gray-900">{parts[0]}:</span>
+                              {parts.slice(1).join(':')}
+                            </p>
+                          );
+                        } else if (parts.length > 1 && !line.includes('http') && parts[0].length < 80) {
+                          return (
+                            <p key={lineIdx}>
+                              <span className="font-semibold text-gray-900">{parts[0]}:</span>
+                              {parts.slice(1).join(':')}
+                            </p>
+                          );
+                        }
+                        return line ? <p key={lineIdx}>{line}</p> : <br key={lineIdx} />;
+                      })}
+                    </div>
                   </div>
                 ))}
               </CardContent>
