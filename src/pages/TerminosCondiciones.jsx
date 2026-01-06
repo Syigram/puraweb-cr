@@ -181,50 +181,8 @@ export default function TerminosCondiciones() {
                 )}
                 {t.sections.map((section, idx) => (
                   <div key={idx}>
-                    <h3 className="text-xl font-semibold mb-4 text-blue-900">{section.title}</h3>
-                    <div className="text-gray-700 leading-relaxed space-y-3">
-                      {section.content.split('\n').map((paragraph, pIdx) => {
-                        if (!paragraph.trim()) return null;
-                        
-                        // Check if line contains a colon (subtitle format)
-                        if (paragraph.includes(':') && !paragraph.startsWith('•')) {
-                          const parts = paragraph.split(':');
-                          return (
-                            <p key={pIdx} className="leading-relaxed">
-                              <span className="font-semibold text-gray-900">{parts[0]}:</span>
-                              {parts.slice(1).join(':')}
-                            </p>
-                          );
-                        }
-                        
-                        // Bullet points
-                        if (paragraph.trim().startsWith('•')) {
-                          return (
-                            <p key={pIdx} className="pl-4 leading-relaxed flex items-start gap-2">
-                              <span className="text-blue-600 font-bold flex-shrink-0">•</span>
-                              <span>{paragraph.trim().substring(1).trim()}</span>
-                            </p>
-                          );
-                        }
-                        
-                        // Indented sub-bullets (with -)
-                        if (paragraph.trim().startsWith('-')) {
-                          return (
-                            <p key={pIdx} className="pl-8 leading-relaxed flex items-start gap-2">
-                              <span className="text-blue-400 flex-shrink-0">-</span>
-                              <span className="text-gray-600">{paragraph.trim().substring(1).trim()}</span>
-                            </p>
-                          );
-                        }
-                        
-                        // Regular paragraphs
-                        return (
-                          <p key={pIdx} className="leading-relaxed">
-                            {paragraph}
-                          </p>
-                        );
-                      })}
-                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-blue-900">{section.title}</h3>
+                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{section.content}</p>
                   </div>
                 ))}
               </CardContent>

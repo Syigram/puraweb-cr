@@ -10,8 +10,8 @@ import Politicas from './pages/Politicas';
 import PoliticasPrivacidad from './pages/PoliticasPrivacidad';
 import Servicios from './pages/Servicios';
 import Support from './pages/Support';
-import UserDashboard from './pages/UserDashboard';
 import TerminosCondiciones from './pages/TerminosCondiciones';
+import UserDashboard from './pages/UserDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -28,8 +28,8 @@ export const PAGES = {
     "PoliticasPrivacidad": PoliticasPrivacidad,
     "Servicios": Servicios,
     "Support": Support,
-    "UserDashboard": UserDashboard,
     "TerminosCondiciones": TerminosCondiciones,
+    "UserDashboard": UserDashboard,
 }
 
 export const pagesConfig = {
