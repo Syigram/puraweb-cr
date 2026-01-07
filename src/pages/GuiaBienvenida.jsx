@@ -565,7 +565,7 @@ function GuiaBienvenida() {
             </div>
             
             {/* Contact Widget */}
-            <Contact />
+            <Contact transparent />
             </motion.div>
             </div>
             </div>
