@@ -287,7 +287,7 @@ function GuiaBienvenida() {
               {t.subtitle}
             </p>
             
-            <Card className="bg-gradient-to-br from-blue-100 via-white to-red-50 border-2 border-blue-200 shadow-xl">
+            <Card className="bg-white border border-blue-200 shadow-xl">
               <CardContent className="p-8 md:p-12">
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
                   {t.hero}
@@ -318,10 +318,10 @@ function GuiaBienvenida() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <Card className="border-2 border-green-200 bg-gradient-to-br from-green-50 to-white hover:shadow-xl transition-shadow">
+              <Card className="border border-blue-200 bg-white hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Users className="w-8 h-8 text-green-600" />
+                    <Users className="w-8 h-8 text-blue-900" />
                     <h3 className="text-xl font-bold text-gray-900">{t.sections.ownership.yours}</h3>
                   </div>
                   <p className="text-gray-700 leading-relaxed">
@@ -330,10 +330,10 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:shadow-xl transition-shadow">
+              <Card className="border border-blue-200 bg-white hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Code className="w-8 h-8 text-blue-600" />
+                    <Code className="w-8 h-8 text-blue-900" />
                     <h3 className="text-xl font-bold text-gray-900">{t.sections.ownership.ours}</h3>
                   </div>
                   <p className="text-gray-700 leading-relaxed">
@@ -343,10 +343,10 @@ function GuiaBienvenida() {
               </Card>
             </div>
 
-            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200">
+            <Card className="bg-blue-50 border border-blue-300">
               <CardContent className="p-6">
                 <div className="flex gap-4">
-                  <Award className="w-8 h-8 text-orange-600 flex-shrink-0" />
+                  <Award className="w-8 h-8 text-blue-900 flex-shrink-0" />
                   <div>
                     <h4 className="text-lg font-bold text-gray-900 mb-2">
                       {t.sections.ownership.benefit}
@@ -363,7 +363,7 @@ function GuiaBienvenida() {
           {/* 2. Support Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                 <Headphones className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -375,7 +375,7 @@ function GuiaBienvenida() {
               {t.sections.support.intro}
             </p>
 
-            <Card className="bg-white border-2 border-purple-200 mb-6 hover:shadow-xl transition-shadow">
+            <Card className="bg-white border border-blue-200 mb-6 hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   {t.sections.support.whatIs}
@@ -385,7 +385,7 @@ function GuiaBienvenida() {
                 <div className="space-y-2">
                   {t.sections.support.examples.map((example, index) => (
                     <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-900 flex-shrink-0 mt-0.5" />
                       <span className="text-gray-700">{example}</span>
                     </div>
                   ))}
@@ -394,24 +394,24 @@ function GuiaBienvenida() {
             </Card>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <Card className="bg-gradient-to-br from-orange-50 to-white border-2 border-orange-200">
+              <Card className="bg-white border border-blue-200">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <Clock className="w-6 h-6 text-orange-600" />
+                    <Clock className="w-6 h-6 text-blue-900" />
                     <h4 className="text-lg font-bold text-gray-900">
                       {t.sections.support.rule}
                     </h4>
                   </div>
                   <p className="text-gray-700 mb-3">{t.sections.support.ruleDesc}</p>
-                  <div className="bg-orange-100 rounded-lg p-3 border border-orange-200">
-                    <p className="text-sm text-orange-900 font-medium">
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                    <p className="text-sm text-blue-900 font-medium">
                       💡 {t.sections.support.tip}
                     </p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-red-50 to-white border-2 border-red-200">
+              <Card className="bg-white border border-red-200">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
                     <AlertCircle className="w-6 h-6 text-red-600" />
@@ -424,19 +424,19 @@ function GuiaBienvenida() {
               </Card>
             </div>
 
-            <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-2 border-purple-300">
+            <Card className="bg-white border border-blue-200">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <Database className="w-8 h-8 text-purple-600" />
+                  <Database className="w-8 h-8 text-blue-900" />
                   <h4 className="text-xl font-bold text-gray-900">
                     {t.sections.support.rollover}
                   </h4>
                 </div>
                 <p className="text-gray-700 mb-3">{t.sections.support.rolloverDesc}</p>
-                <p className="text-purple-800 font-semibold mb-4">
+                <p className="text-blue-900 font-semibold mb-4">
                   ✨ {t.sections.support.rolloverBenefit}
                 </p>
-                <div className="bg-white/80 backdrop-blur rounded-lg p-4 border border-purple-200">
+                <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                   <p className="text-gray-700">{t.sections.support.rolloverExample}</p>
                 </div>
               </CardContent>
@@ -446,7 +446,7 @@ function GuiaBienvenida() {
           {/* 3. Payments Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                 <CreditCard className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -458,7 +458,7 @@ function GuiaBienvenida() {
               {t.sections.payments.intro}
             </p>
 
-            <Card className="bg-white border-2 border-green-200 mb-6">
+            <Card className="bg-white border border-blue-200 mb-6">
               <CardContent className="p-6">
                 <p className="text-lg font-semibold text-gray-900 mb-4">
                   {t.sections.payments.noCommission}
@@ -467,7 +467,7 @@ function GuiaBienvenida() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b-2 border-green-200">
+                      <tr className="border-b-2 border-blue-200">
                         <th className="text-left py-3 px-4 text-gray-900 font-bold">
                           {language === 'es' ? 'Si cobras en...' : 'If you charge in...'}
                         </th>
@@ -481,9 +481,9 @@ function GuiaBienvenida() {
                     </thead>
                     <tbody>
                       {t.sections.payments.fees.map((fee, index) => (
-                        <tr key={index} className="border-b border-gray-200 hover:bg-green-50">
+                        <tr key={index} className="border-b border-gray-200 hover:bg-blue-50">
                           <td className="py-4 px-4 font-semibold text-gray-900">{fee.currency}</td>
-                          <td className="py-4 px-4 text-green-700 font-bold">{fee.rate}</td>
+                          <td className="py-4 px-4 text-blue-900 font-bold">{fee.rate}</td>
                           <td className="py-4 px-4 text-gray-700">{fee.reason}</td>
                         </tr>
                       ))}
@@ -493,8 +493,8 @@ function GuiaBienvenida() {
               </CardContent>
             </Card>
 
-            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
-              <p className="text-sm text-yellow-900">
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+              <p className="text-sm text-red-900">
                 ⚠️ {t.sections.payments.note}
               </p>
             </div>
@@ -503,7 +503,7 @@ function GuiaBienvenida() {
           {/* 4. Fair Use Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -512,10 +512,10 @@ function GuiaBienvenida() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-gradient-to-br from-green-50 to-white border-2 border-green-200">
+              <Card className="bg-white border border-blue-200">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Zap className="w-8 h-8 text-green-600" />
+                    <Zap className="w-8 h-8 text-blue-900" />
                     <h3 className="text-xl font-bold text-gray-900">
                       {t.sections.fairUse.unlimited}
                     </h3>
@@ -526,7 +526,7 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-red-50 to-white border-2 border-red-200">
+              <Card className="bg-white border border-red-200">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <AlertCircle className="w-8 h-8 text-red-600" />
@@ -550,7 +550,7 @@ function GuiaBienvenida() {
           {/* 5. Freedom Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
                 <Heart className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -563,10 +563,10 @@ function GuiaBienvenida() {
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 hover:shadow-xl transition-shadow">
+              <Card className="bg-white border border-blue-200 hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <TrendingUp className="w-7 h-7 text-blue-600" />
+                    <TrendingUp className="w-7 h-7 text-blue-900" />
                     <h4 className="text-lg font-bold text-gray-900">
                       {t.sections.freedom.noLock}
                     </h4>
@@ -575,10 +575,10 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-cyan-50 to-white border-2 border-cyan-200 hover:shadow-xl transition-shadow">
+              <Card className="bg-white border border-blue-200 hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <Download className="w-7 h-7 text-cyan-600" />
+                    <Download className="w-7 h-7 text-blue-900" />
                     <h4 className="text-lg font-bold text-gray-900">
                       {t.sections.freedom.export}
                     </h4>
@@ -592,7 +592,7 @@ function GuiaBienvenida() {
           {/* 6. Contact Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                 <Phone className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -601,9 +601,9 @@ function GuiaBienvenida() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200">
+              <Card className="bg-white border border-blue-200">
                 <CardContent className="p-6">
-                  <Calendar className="w-8 h-8 text-blue-600 mb-3" />
+                  <Calendar className="w-8 h-8 text-blue-900 mb-3" />
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     {t.sections.contact.hours}
                   </h4>
@@ -611,9 +611,9 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200">
+              <Card className="bg-white border border-blue-200">
                 <CardContent className="p-6">
-                  <Mail className="w-8 h-8 text-purple-600 mb-3" />
+                  <Mail className="w-8 h-8 text-blue-900 mb-3" />
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     {t.sections.contact.channel}
                   </h4>
@@ -621,9 +621,9 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-50 to-white border-2 border-green-200">
+              <Card className="bg-white border border-red-200">
                 <CardContent className="p-6">
-                  <Clock className="w-8 h-8 text-green-600 mb-3" />
+                  <Clock className="w-8 h-8 text-red-600 mb-3" />
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     {t.sections.contact.response}
                   </h4>

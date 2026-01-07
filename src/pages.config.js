@@ -1,37 +1,37 @@
+import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
 import Contacto from './pages/Contacto';
+import GuiaBienvenida from './pages/GuiaBienvenida';
 import Home from './pages/Home';
+import Nosotros from './pages/Nosotros';
 import NosotrosManifiesto from './pages/NosotrosManifiesto';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Planes from './pages/Planes';
 import Politicas from './pages/Politicas';
 import PoliticasPrivacidad from './pages/PoliticasPrivacidad';
-import Support from './pages/Support';
-import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import GuiaBienvenida from './pages/GuiaBienvenida';
-import Nosotros from './pages/Nosotros';
 import Servicios from './pages/Servicios';
+import Support from './pages/Support';
 import TerminosCondiciones from './pages/TerminosCondiciones';
+import UserDashboard from './pages/UserDashboard';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AdminDashboard": AdminDashboard,
     "Checkout": Checkout,
     "Contacto": Contacto,
+    "GuiaBienvenida": GuiaBienvenida,
     "Home": Home,
+    "Nosotros": Nosotros,
     "NosotrosManifiesto": NosotrosManifiesto,
     "PaymentSuccess": PaymentSuccess,
     "Planes": Planes,
     "Politicas": Politicas,
     "PoliticasPrivacidad": PoliticasPrivacidad,
-    "Support": Support,
-    "UserDashboard": UserDashboard,
-    "AdminDashboard": AdminDashboard,
-    "GuiaBienvenida": GuiaBienvenida,
-    "Nosotros": Nosotros,
     "Servicios": Servicios,
+    "Support": Support,
     "TerminosCondiciones": TerminosCondiciones,
+    "UserDashboard": UserDashboard,
 }
 
 export const pagesConfig = {
