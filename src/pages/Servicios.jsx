@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback, memo } from "react";
 import { Code2, ShoppingCart, Calendar, Shield, ArrowRight, Check } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ const floatOnce = {
   }
 };
 
-export default function Servicios() {
+function Servicios() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const prefersReducedMotion = useReducedMotion();
@@ -51,7 +51,8 @@ export default function Servicios() {
     return () => cancelAnimationFrame(timer);
   }, []);
 
-  const content = {
+  // Memoize content to avoid recreating on every render
+  const content = useMemo(() => ({
     es: {
       title: "Soluciones Digitales de Alto Rendimiento",
       subtitle: "Diseñamos, desarrollamos y mantenemos ecosistemas digitales escalables que transforman la operación de su negocio.",
@@ -186,18 +187,18 @@ export default function Servicios() {
         }
       ]
     }
-  };
+  }), []);
 
   const t = content[language];
 
-  const handleViewPlans = () => {
+  const handleViewPlans = useCallback(() => {
     navigate(createPageUrl("Planes"));
-  };
+  }, [navigate]);
 
-  const handleRequestQuote = () => {
+  const handleRequestQuote = useCallback(() => {
     navigate(createPageUrl("Contacto"));
     window.scrollTo(0, 0);
-  };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
@@ -410,3 +411,5 @@ export default function Servicios() {
     </div>
   );
 }
+
+export default memo(Servicios);

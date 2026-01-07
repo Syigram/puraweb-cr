@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { Check, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/components/LanguageContext";
 
-export default function PlanComparisonTable() {
+function PlanComparisonTable() {
   const { language } = useLanguage();
 
-  const content = {
+  // Memoize content object - only created once
+  const content = useMemo(() => ({
     es: {
       title: "Comparación Detallada de Planes",
       subtitle: "Todas las características y beneficios de cada plan",
@@ -157,11 +158,12 @@ export default function PlanComparisonTable() {
         }
       ]
     }
-  };
+  }), []);
 
   const t = content[language];
 
-  const renderValue = (value, isGeneralSection = false, rowLabel = '') => {
+  // Memoize renderValue function
+  const renderValue = useCallback((value, isGeneralSection = false, rowLabel = '') => {
     if (typeof value === "boolean") {
       return (
         <div className="flex items-center justify-center">
@@ -181,7 +183,7 @@ export default function PlanComparisonTable() {
         {value}
       </span>
     );
-  };
+  }, []);
 
   return (
     <div className="pt-16 pb-16 bg-gradient-to-b from-white to-gray-50">
@@ -314,3 +316,5 @@ export default function PlanComparisonTable() {
     </div>
   );
 }
+
+export default memo(PlanComparisonTable);

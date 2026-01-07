@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,23 +10,23 @@ import SEO from "@/components/SEO";
 import Pricing from "@/components/home/Pricing";
 import PlanComparisonTable from "@/components/pricing/PlanComparisonTable";
 
-export default function Planes() {
+function Planes() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  const handleContactClick = () => {
+  const handleContactClick = useCallback(() => {
     navigate(createPageUrl("Home") + "#contact");
-  };
+  }, [navigate]);
 
-  const seoTitle = language === 'es' 
+  const seoTitle = useMemo(() => language === 'es' 
     ? 'Planes y Precios de Desarrollo Web'
-    : 'Web Development Plans & Pricing';
+    : 'Web Development Plans & Pricing', [language]);
   
-  const seoDescription = language === 'es'
+  const seoDescription = useMemo(() => language === 'es'
     ? 'Planes de desarrollo web desde ₡100,000/mes. Básico, Profesional y Empresa con hosting, SSL, soporte, backups y mantenimiento incluido. Compara características y elige tu plan.'
-    : 'Web development plans from ₡100,000/month. Basic, Professional and Business with hosting, SSL, support, backups and maintenance included. Compare features and choose your plan.';
+    : 'Web development plans from ₡100,000/month. Basic, Professional and Business with hosting, SSL, support, backups and maintenance included. Compare features and choose your plan.', [language]);
 
-  const structuredData = {
+  const structuredData = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "itemListElement": [
@@ -103,7 +103,7 @@ export default function Planes() {
         }
       }
     ]
-  };
+  }), [language]);
 
   return (
     <>
@@ -168,3 +168,5 @@ export default function Planes() {
     </>
   );
 }
+
+export default memo(Planes);
