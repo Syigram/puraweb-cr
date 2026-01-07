@@ -38,7 +38,8 @@ const Chatbot = memo(function Chatbot() {
     }
   }, [isOpen, language, messages.length]);
 
-  const systemPrompt = language === 'es' ? `Eres el asistente virtual de PuraWeb CR, una empresa costarricense de desarrollo web premium.
+  // Memoize system prompt to avoid recalculation on every render
+  const systemPrompt = React.useMemo(() => language === 'es' ? `Eres el asistente virtual de PuraWeb CR, una empresa costarricense de desarrollo web premium.
 
 INFORMACIÓN SOBRE PURAWEB CR:
 
@@ -167,9 +168,10 @@ INSTRUCTIONS:
 - If asked about pricing, mention plans and their features
 - If they need more details, invite them to contact the team or view the Plans page
 - Don't make up information that's not here
-- If you don't know something, recommend contacting the team directly`;
+- If you don't know something, recommend contacting the team directly`
+  , [language]);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage = inputValue.trim();
@@ -206,14 +208,14 @@ Responde de manera útil y concisa:`;
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [inputValue, isLoading, messages, systemPrompt, language]);
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
-  };
+  }, [handleSendMessage]);
 
   return (
     <>
