@@ -45,7 +45,7 @@ function GuiaBienvenida() {
     es: {
       title: "Guía de PuraWeb CR",
       subtitle: "Tu Nuevo Sitio Web con PuraWeb CR",
-      hero: "Esta guía te ayudará a entender cómo funciona PuraWeb CR y cómo sacar el máximo provecho de nuestros servicios. A diferencia de una agencia tradicional, funcionamos como un servicio de suscripción: nosotros nos encargamos de la tecnología para que tú te encargues de tu negocio.",
+      hero: "Esta guía te ayudará a entender cómo funciona PuraWeb CR y cómo sacar el máximo provecho de nuestros servicios. Somos tu partner tecnológico: a diferencia de una agencia tradicional, funcionamos como un servicio de suscripción donde nos encargamos de la tecnología para que tú te encargues de tu negocio.",
       subtitle2: "Aquí encontrarás todo lo que necesitas saber sobre tu plan y nuestros servicios.",
       
       sections: {
@@ -143,7 +143,7 @@ function GuiaBienvenida() {
     en: {
       title: "PuraWeb CR Guide",
       subtitle: "Your New Website with PuraWeb CR",
-      hero: "This guide will help you understand how PuraWeb CR works and how to get the most out of our services. Unlike a traditional agency, we function as a subscription service: we take care of the technology so you can take care of your business.",
+      hero: "This guide will help you understand how PuraWeb CR works and how to get the most out of our services. We are your technology partner: unlike a traditional agency, we function as a subscription service where we take care of the technology so you can take care of your business.",
       subtitle2: "Here you'll find everything you need to know about your plan and our services.",
       
       sections: {
