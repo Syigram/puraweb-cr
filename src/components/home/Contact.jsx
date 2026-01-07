@@ -69,7 +69,7 @@ const Contact = memo(function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="contact" className="py-16 bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
