@@ -77,7 +77,27 @@ const Typewriter = memo(({ words }) => {
   );
 });
 
-// Static cards component - only rendered on desktop, no infinite animations
+// Floating cards animation - smooth infinite float
+const floatAnimation = {
+  y: [0, -15, 0],
+  transition: {
+    duration: 4,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+};
+
+const floatAnimationDelayed = {
+  y: [0, 15, 0],
+  transition: {
+    duration: 5,
+    repeat: Infinity,
+    ease: "easeInOut",
+    delay: 1
+  }
+};
+
+// Floating cards component - only rendered on desktop
 const DesktopHeroVisual = memo(({ language }) => {
   const isDesktop = useIsDesktop();
   
@@ -87,36 +107,46 @@ const DesktopHeroVisual = memo(({ language }) => {
   return (
     <div className="hidden lg:block relative">
       <div className="relative">
-        {/* Web Development Card - static with entrance animation only */}
+        {/* Web Development Card - floating animation */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="absolute top-0 right-0 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          className="absolute top-0 right-0"
         >
-          <Globe className="w-12 h-12 text-blue-900 mb-3" />
-          <h3 className="font-bold text-gray-900 mb-1">
-            {translations[language].services.webDev.title}
-          </h3>
-          <p className="text-sm text-gray-600">
-            {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
-          </p>
+          <motion.div
+            animate={floatAnimation}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          >
+            <Globe className="w-12 h-12 text-blue-900 mb-3" />
+            <h3 className="font-bold text-gray-900 mb-1">
+              {translations[language].services.webDev.title}
+            </h3>
+            <p className="text-sm text-gray-600">
+              {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+            </p>
+          </motion.div>
         </motion.div>
 
-        {/* E-commerce Card - static with entrance animation only */}
+        {/* E-commerce Card - floating animation (opposite direction) */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="absolute bottom-0 left-0 bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          className="absolute bottom-0 left-0"
         >
-          <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
-          <h3 className="font-bold text-gray-900 mb-1">
-            {translations[language].services.ecommerce.title}
-          </h3>
-          <p className="text-sm text-gray-600">
-            {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
-          </p>
+          <motion.div
+            animate={floatAnimationDelayed}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          >
+            <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
+            <h3 className="font-bold text-gray-900 mb-1">
+              {translations[language].services.ecommerce.title}
+            </h3>
+            <p className="text-sm text-gray-600">
+              {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+            </p>
+          </motion.div>
         </motion.div>
 
         {/* Central circle */}
