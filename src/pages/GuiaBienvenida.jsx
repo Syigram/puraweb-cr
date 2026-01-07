@@ -122,23 +122,9 @@ function GuiaBienvenida() {
         },
         
         contact: {
-          title: "¿Cómo contactarnos?",
-          hours: "Horario de Atención",
-          hoursDesc: "Lunes a Viernes de 8:00 AM - 6:00 PM, excepto Plan Empresarial (24/7)",
-          channel: "Canal Oficial",
-          channelDesc: "info@puraweb.cr o sistema de tickets desde tu panel",
-          response: "Tiempo de Respuesta",
-          responseDesc: "Dependerá del plan que hayas contratado (SLA)"
+          title: "¿Cómo contactarnos?"
         }
-      },
-      
-      nextSteps: {
-        title: "¿Qué sigue ahora?",
-        description: "¡Relájate! Estamos configurando tu entorno. Te avisaremos en breve para la primera revisión de diseño. Recuerda que tu primera mensualidad solo corre una vez que apruebes el diseño inicial.",
-        thanks: "¡Gracias por ser parte de PuraWeb CR!"
-      },
-      
-      cta: "Contáctanos"
+      }
     },
     en: {
       title: "PuraWeb CR Guide",
@@ -220,23 +206,9 @@ function GuiaBienvenida() {
         },
         
         contact: {
-          title: "How to contact us?",
-          hours: "Business Hours",
-          hoursDesc: "Monday to Friday 8:00 AM - 6:00 PM, except Business Plan (24/7)",
-          channel: "Official Channel",
-          channelDesc: "info@puraweb.cr or ticket system from your dashboard",
-          response: "Response Time",
-          responseDesc: "Will depend on the plan you've contracted (SLA)"
+          title: "How to contact us?"
         }
-      },
-      
-      nextSteps: {
-        title: "What's next?",
-        description: "Relax! We're setting up your environment. We'll notify you shortly for the first design review. Remember that your first monthly payment only runs once you approve the initial design.",
-        thanks: "Thank you for being part of PuraWeb CR!"
-      },
-      
-      cta: "Contact Us"
+      }
     }
   }), []);
 
