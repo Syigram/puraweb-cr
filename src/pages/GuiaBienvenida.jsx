@@ -24,9 +24,7 @@ import {
   Phone
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { createPageUrl } from "@/utils";
+import Contact from "@/components/home/Contact";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
@@ -38,7 +36,6 @@ const fadeInUp = {
 
 function GuiaBienvenida() {
   const { language } = useLanguage();
-  const navigate = useNavigate();
 
   // Memoize content object - only recreated when dependencies change
   const content = useMemo(() => ({
