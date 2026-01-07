@@ -79,21 +79,21 @@ const Typewriter = memo(({ words }) => {
 
 // Floating cards animation - smooth infinite float
 const floatAnimation = {
-  y: [0, -15, 0],
+  y: [0, -12, 0],
   transition: {
-    duration: 2.5,
+    duration: 1.8,
     repeat: Infinity,
     ease: "easeInOut"
   }
 };
 
 const floatAnimationDelayed = {
-  y: [0, 15, 0],
+  y: [0, 12, 0],
   transition: {
-    duration: 3,
+    duration: 2,
     repeat: Infinity,
     ease: "easeInOut",
-    delay: 0.5
+    delay: 0.3
   }
 };
 
