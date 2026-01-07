@@ -12,7 +12,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
 
-const Contact = memo(function Contact() {
+const Contact = memo(function Contact({ transparent = false }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
   const [formData, setFormData] = useState({
@@ -69,7 +69,7 @@ const Contact = memo(function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
