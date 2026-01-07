@@ -566,24 +566,24 @@ function GuiaBienvenida() {
               <Card className="bg-white border border-blue-200 hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <TrendingUp className="w-7 h-7 text-blue-900" />
-                    <h4 className="text-lg font-bold text-gray-900">
-                      {t.sections.freedom.noLock}
-                    </h4>
-                  </div>
-                  <p className="text-gray-700">{t.sections.freedom.noLockDesc}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-blue-200 hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
                     <Download className="w-7 h-7 text-blue-900" />
                     <h4 className="text-lg font-bold text-gray-900">
                       {t.sections.freedom.export}
                     </h4>
                   </div>
                   <p className="text-gray-700">{t.sections.freedom.exportDesc}</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white border border-red-200 hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <TrendingUp className="w-7 h-7 text-red-600" />
+                    <h4 className="text-lg font-bold text-gray-900">
+                      {t.sections.freedom.noLock}
+                    </h4>
+                  </div>
+                  <p className="text-gray-700">{t.sections.freedom.noLockDesc}</p>
                 </CardContent>
               </Card>
             </div>
