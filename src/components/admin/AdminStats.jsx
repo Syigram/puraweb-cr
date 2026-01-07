@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { base44 } from "@/api/base44Client";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Users, 
@@ -32,77 +33,69 @@ const COLORS = {
 };
 
 export default function AdminStats() {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data: stats, isLoading: loading } = useQuery({
+    queryKey: ['admin-stats'],
+    queryFn: async () => {
+      const [users, payments] = await Promise.all([
+        base44.entities.User.list(),
+        base44.entities.Payment.list()
+      ]);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [users, payments] = await Promise.all([
-          base44.entities.User.list(),
-          base44.entities.Payment.list()
-        ]);
+      // Calculate stats
+      const totalUsers = users.length;
+      const adminUsers = users.filter(u => u.role === "admin").length;
+      const regularUsers = totalUsers - adminUsers;
 
-        // Calculate stats
-        const totalUsers = users.length;
-        const adminUsers = users.filter(u => u.role === "admin").length;
-        const regularUsers = totalUsers - adminUsers;
+      // Payment stats
+      const successfulPayments = payments.filter(p => p.status === PAYMENT_STATUS.SUCCEEDED);
+      const totalRevenue = successfulPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
+      const totalTransactions = payments.length;
 
-        // Payment stats
-        const successfulPayments = payments.filter(p => p.status === PAYMENT_STATUS.SUCCEEDED);
-        const totalRevenue = successfulPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
-        const totalTransactions = payments.length;
+      // Plan distribution
+      const planCounts = {
+        [PLAN_IDS.BASIC]: 0,
+        [PLAN_IDS.PROFESSIONAL]: 0,
+        [PLAN_IDS.BUSINESS]: 0
+      };
+      
+      successfulPayments.forEach(p => {
+        if (p.plan_id && planCounts.hasOwnProperty(p.plan_id)) {
+          planCounts[p.plan_id]++;
+        }
+      });
 
-        // Plan distribution
-        const planCounts = {
-          [PLAN_IDS.BASIC]: 0,
-          [PLAN_IDS.PROFESSIONAL]: 0,
-          [PLAN_IDS.BUSINESS]: 0
-        };
-        
-        successfulPayments.forEach(p => {
-          if (p.plan_id && planCounts.hasOwnProperty(p.plan_id)) {
-            planCounts[p.plan_id]++;
-          }
-        });
+      const planDistribution = Object.entries(planCounts).map(([planId, count]) => ({
+        name: PLAN_LABELS.es[planId] || planId,
+        value: count,
+        planId
+      }));
 
-        const planDistribution = Object.entries(planCounts).map(([planId, count]) => ({
-          name: PLAN_LABELS.es[planId] || planId,
-          value: count,
-          planId
-        }));
+      // Monthly revenue (last 6 months)
+      const monthlyRevenue = calculateMonthlyRevenue(successfulPayments);
 
-        // Monthly revenue (last 6 months)
-        const monthlyRevenue = calculateMonthlyRevenue(successfulPayments);
+      // Payment status distribution
+      const statusCounts = {
+        succeeded: payments.filter(p => p.status === PAYMENT_STATUS.SUCCEEDED).length,
+        pending: payments.filter(p => p.status === PAYMENT_STATUS.PENDING).length,
+        failed: payments.filter(p => p.status === PAYMENT_STATUS.FAILED).length,
+        canceled: payments.filter(p => p.status === PAYMENT_STATUS.CANCELED).length
+      };
 
-        // Payment status distribution
-        const statusCounts = {
-          succeeded: payments.filter(p => p.status === PAYMENT_STATUS.SUCCEEDED).length,
-          pending: payments.filter(p => p.status === PAYMENT_STATUS.PENDING).length,
-          failed: payments.filter(p => p.status === PAYMENT_STATUS.FAILED).length,
-          canceled: payments.filter(p => p.status === PAYMENT_STATUS.CANCELED).length
-        };
-
-        setStats({
-          totalUsers,
-          regularUsers,
-          adminUsers,
-          totalRevenue,
-          totalTransactions,
-          successfulTransactions: successfulPayments.length,
-          planDistribution,
-          monthlyRevenue,
-          statusCounts
-        });
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
+      return {
+        totalUsers,
+        regularUsers,
+        adminUsers,
+        totalRevenue,
+        totalTransactions,
+        successfulTransactions: successfulPayments.length,
+        planDistribution,
+        monthlyRevenue,
+        statusCounts
+      };
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false
+  });
 
   if (loading) {
     return (

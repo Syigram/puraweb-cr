@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shield, Loader2, BarChart3, Users, CreditCard, MessageSquare, Mail, HelpCircle } from "lucide-react";
-import AdminStats from "@/components/admin/AdminStats";
-import AdminUsers from "@/components/admin/AdminUsers";
-import AdminPayments from "@/components/admin/AdminPayments";
-import AdminTickets from "@/components/admin/AdminTickets";
-import AdminContactMessages from "@/components/admin/AdminContactMessages";
+
+// Lazy load admin components
+const AdminStats = lazy(() => import("@/components/admin/AdminStats"));
+const AdminUsers = lazy(() => import("@/components/admin/AdminUsers"));
+const AdminPayments = lazy(() => import("@/components/admin/AdminPayments"));
+const AdminTickets = lazy(() => import("@/components/admin/AdminTickets"));
+const AdminContactMessages = lazy(() => import("@/components/admin/AdminContactMessages"));
+
+const TabLoader = () => (
+  <div className="flex items-center justify-center py-12">
+    <Loader2 className="w-8 h-8 animate-spin text-blue-900" />
+  </div>
+);
 
 const ADMIN_TAB_KEY = "adminDashboardTab";
 
@@ -121,23 +129,33 @@ export default function AdminDashboard() {
           </TabsList>
 
           <TabsContent value="stats">
-            <AdminStats />
+            <Suspense fallback={<TabLoader />}>
+              <AdminStats />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="users">
-            <AdminUsers />
+            <Suspense fallback={<TabLoader />}>
+              <AdminUsers />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="payments">
-            <AdminPayments />
+            <Suspense fallback={<TabLoader />}>
+              <AdminPayments />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="tickets">
-            <AdminTickets />
+            <Suspense fallback={<TabLoader />}>
+              <AdminTickets />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="messages">
-            <AdminContactMessages />
+            <Suspense fallback={<TabLoader />}>
+              <AdminContactMessages />
+            </Suspense>
           </TabsContent>
         </Tabs>
       </div>
