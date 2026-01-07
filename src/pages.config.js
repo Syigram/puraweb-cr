@@ -1,6 +1,7 @@
 import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
 import Contacto from './pages/Contacto';
+import GuiaBienvenida from './pages/GuiaBienvenida';
 import Home from './pages/Home';
 import Nosotros from './pages/Nosotros';
 import NosotrosManifiesto from './pages/NosotrosManifiesto';
@@ -12,7 +13,6 @@ import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import TerminosCondiciones from './pages/TerminosCondiciones';
 import UserDashboard from './pages/UserDashboard';
-import GuiaBienvenida from './pages/GuiaBienvenida';
 import __Layout from './Layout.jsx';
 
 
@@ -20,6 +20,7 @@ export const PAGES = {
     "AdminDashboard": AdminDashboard,
     "Checkout": Checkout,
     "Contacto": Contacto,
+    "GuiaBienvenida": GuiaBienvenida,
     "Home": Home,
     "Nosotros": Nosotros,
     "NosotrosManifiesto": NosotrosManifiesto,
@@ -31,7 +32,6 @@ export const PAGES = {
     "Support": Support,
     "TerminosCondiciones": TerminosCondiciones,
     "UserDashboard": UserDashboard,
-    "GuiaBienvenida": GuiaBienvenida,
 }
 
 export const pagesConfig = {

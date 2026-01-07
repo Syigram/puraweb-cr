@@ -203,88 +203,47 @@ export default function Servicios() {
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 relative overflow-hidden">
-        {/* Animated Background Elements - GPU accelerated with infinite float */}
+        {/* Static Background Elements - Optimized for performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
-            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl transform-gpu will-change-transform"
+            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              y: [0, -20, 0],
-              x: [0, 10, 0]
-            }}
-            transition={{ 
-              opacity: { duration: 0.8 },
-              scale: { duration: 0.8 },
-              y: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-              x: { duration: 10, repeat: Infinity, ease: "easeInOut" }
-            }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
           />
           <motion.div 
-            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl transform-gpu will-change-transform"
+            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              y: [0, 25, 0],
-              x: [0, -15, 0]
-            }}
-            transition={{ 
-              opacity: { duration: 0.8, delay: 0.1 },
-              scale: { duration: 0.8, delay: 0.1 },
-              y: { duration: 10, repeat: Infinity, ease: "easeInOut" },
-              x: { duration: 12, repeat: Infinity, ease: "easeInOut" }
-            }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
           />
           <motion.div 
-            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl transform-gpu will-change-transform"
+            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              y: [0, 15, 0],
-              x: [0, -10, 0]
-            }}
-            transition={{ 
-              opacity: { duration: 0.8, delay: 0.2 },
-              scale: { duration: 0.8, delay: 0.2 },
-              y: { duration: 9, repeat: Infinity, ease: "easeInOut" },
-              x: { duration: 11, repeat: Infinity, ease: "easeInOut" }
-            }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           />
         </div>
 
-        {/* Animated Geometric Shapes - with infinite rotation */}
+        {/* Static Geometric Shapes - Optimized */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div 
-            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20 transform-gpu"
-            initial={{ rotate: 0, opacity: 0 }}
-            animate={{ rotate: 360, opacity: 1 }}
-            transition={{ 
-              rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-              opacity: { duration: 0.6 }
-            }}
+            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
           />
           <motion.div 
-            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20 transform-gpu"
-            initial={{ rotate: 0, opacity: 0 }}
-            animate={{ rotate: -360, opacity: 1 }}
-            transition={{ 
-              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
-              opacity: { duration: 0.5, delay: 0.2 }
-            }}
+            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           />
           <motion.div 
-            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full transform-gpu"
-            initial={{ scale: 0 }}
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ 
-              duration: 5, 
-              repeat: Infinity, 
-              ease: "easeInOut",
-              delay: 0.3
-            }}
+            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           />
         </div>
 
