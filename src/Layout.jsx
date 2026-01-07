@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo, useCallback, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Menu, X, Globe, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { Menu, X, Globe, User, LogOut, LayoutDashboard, Shield, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -263,12 +263,26 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {t.nav.pricing}
               </Link>
-              <Link
-                to={createPageUrl("Nosotros")}
-                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
-              >
-                {language === 'es' ? 'Nosotros' : 'About'}
-              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-1 text-gray-700 hover:text-blue-900 transition-colors font-medium">
+                    {language === 'es' ? 'Nosotros' : 'About'}
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <Link to={createPageUrl("Nosotros")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={createPageUrl("GuiaBienvenida")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Link
                 to={createPageUrl("Support")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -326,13 +340,25 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                 >
                   {t.nav.pricing}
                 </Link>
-                <Link
-                  to={createPageUrl("Nosotros")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
-                >
-                  {language === 'es' ? 'Nosotros' : 'About'}
-                </Link>
+                <div className="px-4 py-2">
+                  <div className="text-xs font-semibold text-gray-500 mb-2 uppercase">
+                    {language === 'es' ? 'Nosotros' : 'About'}
+                  </div>
+                  <Link
+                    to={createPageUrl("Nosotros")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
+                  </Link>
+                  <Link
+                    to={createPageUrl("GuiaBienvenida")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
+                  </Link>
+                </div>
                 <Link
                   to={createPageUrl("Support")}
                   onClick={() => setIsMobileMenuOpen(false)}
