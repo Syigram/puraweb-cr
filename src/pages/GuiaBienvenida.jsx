@@ -107,8 +107,8 @@ function GuiaBienvenida() {
           notAllowed: "¿Qué NO está permitido?",
           notAllowedList: [
             "Revender nuestro servicio (hospedar sitios de terceros en tu cuenta)",
-            "Usar bots para crear cientos de páginas automáticamente",
-            "Sobrecargar el servidor intencionalmente"
+            "La cantidad de solicitudes no pueden exceder las capacidades técnicas de nuestro equipo",
+            "No puedes solicitar cambios que comprometan la integridad de nuestros servidores o infraestructura"
           ]
         },
         
@@ -205,8 +205,8 @@ function GuiaBienvenida() {
           notAllowed: "What is NOT allowed?",
           notAllowedList: [
             "Reselling our service (hosting third-party sites in your account)",
-            "Using bots to create hundreds of pages automatically",
-            "Intentionally overloading the server"
+            "The number of requests cannot exceed our team's technical capabilities",
+            "You cannot request changes that compromise the integrity of our servers or infrastructure"
           ]
         },
         
