@@ -263,31 +263,12 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {t.nav.pricing}
               </Link>
-
-              {/* About Us Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="text-gray-700 hover:text-blue-900 transition-colors font-medium flex items-center gap-1">
-                    {language === 'es' ? 'Nosotros' : 'About'}
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56">
-                  <Link to={createPageUrl("Nosotros")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to={createPageUrl("GuiaBienvenida")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
-                    </DropdownMenuItem>
-                  </Link>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
+              <Link
+                to={createPageUrl("Nosotros")}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
+              >
+                {language === 'es' ? 'Nosotros' : 'About'}
+              </Link>
               <Link
                 to={createPageUrl("Support")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -345,28 +326,13 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                 >
                   {t.nav.pricing}
                 </Link>
-
-                {/* About Us Submenu */}
-                <div className="space-y-1">
-                  <div className="px-4 py-2 text-sm font-semibold text-gray-500">
-                    {language === 'es' ? 'Nosotros' : 'About'}
-                  </div>
-                  <Link
-                    to={createPageUrl("Nosotros")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-8 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("GuiaBienvenida")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-8 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
-                  </Link>
-                </div>
-
+                <Link
+                  to={createPageUrl("Nosotros")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {language === 'es' ? 'Nosotros' : 'About'}
+                </Link>
                 <Link
                   to={createPageUrl("Support")}
                   onClick={() => setIsMobileMenuOpen(false)}
