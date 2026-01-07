@@ -162,10 +162,14 @@ export default function PoliticasPrivacidad() {
                 <p className="text-sm text-gray-500">{t.lastUpdate}</p>
               </CardHeader>
               <CardContent className="space-y-8">
+                <p className="text-gray-700 leading-relaxed">{t.intro}</p>
                 {t.sections.map((section, idx) => (
                   <div key={idx}>
                     <h3 className="text-xl font-semibold mb-3 text-green-900">{section.title}</h3>
-                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{section.content}</p>
+                    <p 
+                      className="text-gray-700 whitespace-pre-line leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: section.content }}
+                    />
                   </div>
                 ))}
               </CardContent>
