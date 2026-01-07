@@ -43,7 +43,7 @@ function GuiaBienvenida() {
   // Memoize content object - only recreated when dependencies change
   const content = useMemo(() => ({
     es: {
-      title: "Guía de Bienvenida",
+      title: "Guía de PuraWeb CR",
       subtitle: "Tu Nuevo Sitio Web con PuraWeb CR",
       hero: "¡Gracias por confiar en nosotros! Estamos emocionados de ser tu departamento de tecnología. A diferencia de una agencia tradicional, funcionamos como un servicio de suscripción: nosotros nos encargamos de la tecnología para que tú te encargues de tu negocio.",
       subtitle2: "Aquí tienes todo lo que necesitas saber para sacar el máximo provecho a tu plan.",
@@ -141,7 +141,7 @@ function GuiaBienvenida() {
       cta: "Contáctanos"
     },
     en: {
-      title: "Welcome Guide",
+      title: "PuraWeb CR Guide",
       subtitle: "Your New Website with PuraWeb CR",
       hero: "Thank you for trusting us! We're excited to be your technology department. Unlike a traditional agency, we function as a subscription service: we take care of the technology so you can take care of your business.",
       subtitle2: "Here's everything you need to know to get the most out of your plan.",
@@ -243,8 +243,8 @@ function GuiaBienvenida() {
   const t = content[language];
 
   const seoTitle = useMemo(() => language === 'es' 
-    ? 'Guía de Bienvenida - Cliente PuraWeb CR' 
-    : 'Welcome Guide - PuraWeb CR Client', [language]);
+    ? 'Guía de PuraWeb CR - Cliente' 
+    : 'PuraWeb CR Guide - Client', [language]);
   
   const seoDescription = useMemo(() => language === 'es'
     ? 'Guía completa para nuevos clientes de PuraWeb CR. Aprende sobre propiedad, soporte, cambios mensuales, pagos en línea y más.'

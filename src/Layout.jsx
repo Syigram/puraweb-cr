@@ -278,7 +278,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                   </Link>
                   <Link to={createPageUrl("GuiaBienvenida")}>
                     <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
+                      {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
                     </DropdownMenuItem>
                   </Link>
                 </DropdownMenuContent>
@@ -356,7 +356,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
                   >
-                    {language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'}
+                    {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
                   </Link>
                 </div>
                 <Link
