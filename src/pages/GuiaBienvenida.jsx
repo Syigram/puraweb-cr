@@ -330,10 +330,10 @@ function GuiaBienvenida() {
                 </CardContent>
               </Card>
 
-              <Card className="border border-blue-200 bg-white hover:shadow-lg transition-shadow">
+              <Card className="border border-red-200 bg-white hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Code className="w-8 h-8 text-blue-900" />
+                    <Code className="w-8 h-8 text-red-600" />
                     <h3 className="text-xl font-bold text-gray-900">{t.sections.ownership.ours}</h3>
                   </div>
                   <p className="text-gray-700 leading-relaxed">
