@@ -81,7 +81,7 @@ const Typewriter = memo(({ words }) => {
 const floatAnimation = {
   y: [0, -15, 0],
   transition: {
-    duration: 4,
+    duration: 2.5,
     repeat: Infinity,
     ease: "easeInOut"
   }
@@ -90,10 +90,10 @@ const floatAnimation = {
 const floatAnimationDelayed = {
   y: [0, 15, 0],
   transition: {
-    duration: 5,
+    duration: 3,
     repeat: Infinity,
     ease: "easeInOut",
-    delay: 1
+    delay: 0.5
   }
 };
 
