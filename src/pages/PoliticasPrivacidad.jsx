@@ -34,46 +34,39 @@ export default function PoliticasPrivacidad() {
       subtitle: "Cómo protegemos y manejamos tu información personal",
       backButton: "Volver a Políticas",
       lastUpdate: "Última actualización: Enero 2026",
+      intro: "En PuraWeb CR (en adelante, \"la Agencia\"), nos tomamos muy en serio la privacidad de su información. Esta Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos y protegemos sus datos personales de conformidad con la Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales (Ley No. 8968) de Costa Rica y los estándares internacionales de privacidad.",
       sections: [
         {
-          title: "1. Información que Recopilamos",
-          content: "En PuraWeb CR recopilamos únicamente la información necesaria para prestar nuestros servicios de desarrollo web. Esto incluye:\n\n• Datos de contacto: nombre, correo electrónico, teléfono y empresa\n• Información de facturación: datos necesarios para procesar pagos\n• Datos técnicos: información sobre el uso de nuestro sitio web\n• Comunicaciones: mensajes y solicitudes que nos envías"
+          title: "1. Responsable del Tratamiento de Datos",
+          content: "La entidad responsable de la base de datos es PuraWeb CR, con domicilio en San José, Costa Rica.\n\n<b>Correo de contacto para privacidad:</b> purawebsoluciones@gmail.com\n<b>Sitio Web:</b> https://purawebcr.com"
         },
         {
-          title: "2. Uso de la Información",
-          content: "Utilizamos tu información para:\n\n• Prestar y mejorar nuestros servicios de desarrollo web\n• Procesar pagos y gestionar suscripciones\n• Comunicarnos contigo sobre tu proyecto\n• Enviar actualizaciones técnicas y de seguridad\n• Cumplir con requisitos legales y fiscales"
+          title: "2. Información que Recopilamos",
+          content: "Dependiendo de su interacción con nuestros servicios, podemos recopilar los siguientes datos:\n\n<b>2.1. Datos proporcionados directamente por usted:</b>\n<b>Información de Identificación:</b> Nombre completo, número de cédula o identificación tributaria.\n<b>Información de Contacto:</b> Dirección de correo electrónico, número de teléfono (incluyendo WhatsApp) y dirección física.\n<b>Información del Negocio:</b> Datos sobre su empresa, logotipos, imágenes y textos que usted nos proporciona para la creación de su sitio web.\n\n<b>2.2. Datos de Facturación y Pago:</b>\nPara procesar sus suscripciones mensuales, utilizamos Stripe. La Agencia NO almacena ni tiene acceso a los números completos de su tarjeta de crédito o débito. Toda la información financiera es procesada directamente por Stripe mediante protocolos de encriptación y tokenización de nivel bancario (PCI DSS Nivel 1).\n\n<b>2.3. Datos de Navegación (Cookies):</b>\nDirección IP, tipo de navegador, tiempo de visita y páginas vistas, utilizados únicamente para fines analíticos y de mejora del rendimiento del sitio."
         },
         {
-          title: "3. Protección de Datos",
-          content: "Implementamos medidas de seguridad de nivel bancario:\n\n• Cifrado SSL/TLS en todas las comunicaciones\n• Almacenamiento seguro en servidores certificados\n• Backups automáticos encriptados\n• Acceso restringido solo a personal autorizado\n• Cumplimiento con estándares internacionales de seguridad"
+          title: "3. Finalidad del Uso de los Datos",
+          content: "Sus datos personales serán utilizados exclusivamente para los siguientes fines (\"Consentimiento Informado\"):\n\n<b>Prestación del Servicio:</b> Configuración, desarrollo y mantenimiento de su sitio web y ecosistema digital.\n<b>Gestión de Cobros:</b> Procesamiento de pagos recurrentes, emisión de facturas y gestión contable.\n<b>Soporte Técnico:</b> Comunicación vía Email, Ticket o WhatsApp para resolver incidencias o realizar cambios mensuales.\n<b>Comunicaciones:</b> Envío de notificaciones sobre el estado de su servicio, actualizaciones de seguridad o cambios en los términos."
         },
         {
-          title: "4. Compartir Información",
-          content: "No vendemos ni compartimos tu información personal con terceros, excepto:\n\n• Procesadores de pago (Stripe) para transacciones seguras\n• Proveedores de hosting y servicios técnicos necesarios\n• Cuando lo requiera la ley o autoridades competentes"
+          title: "4. Compartir Información con Terceros",
+          content: "La Agencia no vende, alquila ni comercializa sus datos personales con terceros. Sin embargo, para prestar el servicio, compartimos datos estrictamente necesarios con los siguientes proveedores de infraestructura:\n\n<b>Stripe Inc. (EE.UU.):</b> Para el procesamiento de pagos.\n<b>Proveedores de Hosting/Nube:</b> Para el alojamiento de su sitio web y bases de datos.\n<b>Google (Analytics/Workspace):</b> Para análisis de tráfico y gestión de correos/calendarios si su plan lo incluye.\n<b>WhatsApp (Meta):</b> Si elige utilizar este canal para soporte o notificaciones.\n\nTodos estos proveedores cumplen con estrictas normativas de seguridad internacional."
         },
         {
-          title: "5. Tus Derechos",
-          content: "Tienes derecho a:\n\n• Acceder a tu información personal\n• Rectificar datos incorrectos o desactualizados\n• Solicitar la eliminación de tus datos\n• Oponerte al procesamiento de tu información\n• Exportar tus datos en formato legible\n• Revocar consentimientos otorgados"
+          title: "5. Seguridad de los Datos",
+          content: "Implementamos medidas de seguridad técnicas, físicas y administrativas para proteger sus datos, incluyendo:\n\n• Uso de certificados de seguridad SSL (Secure Socket Layer) en todas nuestras comunicaciones.\n• Acceso restringido a las bases de datos solo a personal autorizado de la Agencia.\n• No almacenamiento de datos sensibles de pago en nuestros propios servidores."
         },
         {
-          title: "6. Retención de Datos",
-          content: "Conservamos tu información mientras:\n\n• Mantengas una suscripción activa con nosotros\n• Sea necesario para cumplir obligaciones legales\n• Durante el período de garantía de nuestros servicios\n• 5 años después de la finalización del servicio para fines fiscales"
+          title: "6. Derechos ARCO (Sus Derechos)",
+          content: "De acuerdo con la legislación costarricense (Ley 8968) y estándares globales, usted tiene los siguientes derechos sobre sus datos:\n\n<b>Acceso:</b> Conocer qué datos tenemos de usted.\n<b>Rectificación:</b> Solicitar la corrección de datos erróneos o desactualizados.\n<b>Cancelación:</b> Solicitar la eliminación de sus datos cuando ya no sean necesarios para la relación contractual.\n<b>Oposición:</b> Oponerse al tratamiento de sus datos para fines específicos.\n\nPara ejercer cualquiera de estos derechos, envíe una solicitud a purawebsoluciones@gmail.com."
         },
         {
-          title: "7. Cookies y Tecnologías de Rastreo",
-          content: "Utilizamos cookies esenciales para el funcionamiento del sitio, cookies de preferencias para guardar tu idioma, y cookies de análisis anónimas. Puedes gestionar las cookies desde la configuración de tu navegador."
+          title: "7. Retención de Datos y \"Uso Justo\"",
+          content: "Conservaremos sus datos personales mientras su suscripción esté activa. En caso de cancelación del servicio:\n\n• Mantendremos sus datos fiscales y de facturación por el tiempo exigido por las leyes tributarias de Costa Rica.\n• Sus datos de contenido web (imágenes, textos) podrán ser exportados según lo estipulado en nuestros Términos y Condiciones, y posteriormente serán eliminados de nuestros servidores activos."
         },
         {
-          title: "8. Transferencias Internacionales",
-          content: "Tu información puede ser procesada en servidores ubicados fuera de Costa Rica. Garantizamos que todos nuestros proveedores cumplen con estándares internacionales de protección de datos."
-        },
-        {
-          title: "9. Menores de Edad",
-          content: "Nuestros servicios no están dirigidos a menores de 18 años. No recopilamos intencionalmente información de menores de edad. Si descubrimos que hemos recopilado datos de un menor, los eliminaremos inmediatamente."
-        },
-        {
-          title: "10. Cambios a esta Política",
-          content: "Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos de cualquier cambio significativo por correo electrónico o mediante un aviso destacado en nuestro sitio web al menos 30 días antes de que los cambios entren en vigor."
+          title: "8. Cambios en la Política de Privacidad",
+          content: "Nos reservamos el derecho de actualizar esta política para reflejar cambios en nuestros servicios o en la legislación. Notificaremos cualquier cambio sustancial a través de su correo electrónico registrado o mediante un aviso destacado en nuestro sitio web."
         }
       ]
     },
@@ -82,46 +75,39 @@ export default function PoliticasPrivacidad() {
       subtitle: "How we protect and handle your personal information",
       backButton: "Back to Policies",
       lastUpdate: "Last updated: January 2026",
+      intro: "At PuraWeb CR (hereinafter, \"the Agency\"), we take the privacy of your information very seriously. This Privacy Policy describes how we collect, use, store, and protect your personal data in accordance with Costa Rica's Law for the Protection of Individuals Regarding the Processing of Their Personal Data (Law No. 8968) and international privacy standards.",
       sections: [
         {
-          title: "1. Information We Collect",
-          content: "At PuraWeb CR, we only collect information necessary to provide our web development services. This includes:\n\n• Contact information: name, email, phone, and company\n• Billing information: data needed to process payments\n• Technical data: information about your use of our website\n• Communications: messages and requests you send us"
+          title: "1. Data Controller",
+          content: "The entity responsible for the database is PuraWeb CR, located in San José, Costa Rica.\n\n<b>Privacy contact email:</b> purawebsoluciones@gmail.com\n<b>Website:</b> https://purawebcr.com"
         },
         {
-          title: "2. Use of Information",
-          content: "We use your information to:\n\n• Provide and improve our web development services\n• Process payments and manage subscriptions\n• Communicate with you about your project\n• Send technical and security updates\n• Comply with legal and tax requirements"
+          title: "2. Information We Collect",
+          content: "Depending on your interaction with our services, we may collect the following data:\n\n<b>2.1. Data provided directly by you:</b>\n<b>Identification Information:</b> Full name, ID number, or tax identification number.\n<b>Contact Information:</b> Email address, phone number (including WhatsApp), and physical address.\n<b>Business Information:</b> Data about your company, logos, images, and texts you provide for the creation of your website.\n\n<b>2.2. Billing and Payment Data:</b>\nTo process your monthly subscriptions, we use Stripe. The Agency does NOT store or have access to complete credit or debit card numbers. All financial information is processed directly by Stripe using bank-level encryption and tokenization protocols (PCI DSS Level 1).\n\n<b>2.3. Browsing Data (Cookies):</b>\nIP address, browser type, visit duration, and pages viewed, used solely for analytical purposes and site performance improvement."
         },
         {
-          title: "3. Data Protection",
-          content: "We implement bank-level security measures:\n\n• SSL/TLS encryption in all communications\n• Secure storage on certified servers\n• Encrypted automatic backups\n• Restricted access to authorized personnel only\n• Compliance with international security standards"
+          title: "3. Purpose of Data Use",
+          content: "Your personal data will be used exclusively for the following purposes (\"Informed Consent\"):\n\n<b>Service Provision:</b> Configuration, development, and maintenance of your website and digital ecosystem.\n<b>Billing Management:</b> Processing recurring payments, issuing invoices, and accounting management.\n<b>Technical Support:</b> Communication via Email, Ticket, or WhatsApp to resolve incidents or make monthly changes.\n<b>Communications:</b> Sending notifications about the status of your service, security updates, or changes to terms."
         },
         {
-          title: "4. Sharing Information",
-          content: "We do not sell or share your personal information with third parties, except:\n\n• Payment processors (Stripe) for secure transactions\n• Hosting and technical service providers as necessary\n• When required by law or competent authorities"
+          title: "4. Sharing Information with Third Parties",
+          content: "The Agency does not sell, rent, or commercialize your personal data with third parties. However, to provide our service, we share strictly necessary data with the following infrastructure providers:\n\n<b>Stripe Inc. (USA):</b> For payment processing.\n<b>Hosting/Cloud Providers:</b> For hosting your website and databases.\n<b>Google (Analytics/Workspace):</b> For traffic analysis and email/calendar management if your plan includes it.\n<b>WhatsApp (Meta):</b> If you choose to use this channel for support or notifications.\n\nAll these providers comply with strict international security regulations."
         },
         {
-          title: "5. Your Rights",
-          content: "You have the right to:\n\n• Access your personal information\n• Rectify incorrect or outdated data\n• Request deletion of your data\n• Object to processing of your information\n• Export your data in readable format\n• Revoke granted consents"
+          title: "5. Data Security",
+          content: "We implement technical, physical, and administrative security measures to protect your data, including:\n\n• Use of SSL (Secure Socket Layer) security certificates in all our communications.\n• Restricted access to databases only to authorized Agency personnel.\n• No storage of sensitive payment data on our own servers."
         },
         {
-          title: "6. Data Retention",
-          content: "We retain your information while:\n\n• You maintain an active subscription with us\n• Necessary to comply with legal obligations\n• During the warranty period of our services\n• 5 years after service termination for tax purposes"
+          title: "6. ARCO Rights (Your Rights)",
+          content: "In accordance with Costa Rican legislation (Law 8968) and global standards, you have the following rights over your data:\n\n<b>Access:</b> Know what data we have about you.\n<b>Rectification:</b> Request correction of erroneous or outdated data.\n<b>Cancellation:</b> Request deletion of your data when no longer necessary for the contractual relationship.\n<b>Opposition:</b> Object to the processing of your data for specific purposes.\n\nTo exercise any of these rights, send a request to purawebsoluciones@gmail.com."
         },
         {
-          title: "7. Cookies and Tracking Technologies",
-          content: "We use essential cookies for site functionality, preference cookies to save your language, and anonymous analytics cookies. You can manage cookies from your browser settings."
+          title: "7. Data Retention and \"Fair Use\"",
+          content: "We will retain your personal data while your subscription is active. In case of service cancellation:\n\n• We will keep your fiscal and billing data for the time required by Costa Rican tax laws.\n• Your web content data (images, texts) may be exported as stipulated in our Terms and Conditions, and will subsequently be deleted from our active servers."
         },
         {
-          title: "8. International Transfers",
-          content: "Your information may be processed on servers located outside Costa Rica. We ensure all our providers comply with international data protection standards."
-        },
-        {
-          title: "9. Minors",
-          content: "Our services are not directed to individuals under 18 years of age. We do not knowingly collect information from minors. If we discover we have collected data from a minor, we will delete it immediately."
-        },
-        {
-          title: "10. Changes to this Policy",
-          content: "We may update this privacy policy occasionally. We will notify you of any significant changes by email or through a prominent notice on our website at least 30 days before the changes take effect."
+          title: "8. Changes to the Privacy Policy",
+          content: "We reserve the right to update this policy to reflect changes in our services or legislation. We will notify any substantial changes through your registered email or through a prominent notice on our website."
         }
       ]
     }
