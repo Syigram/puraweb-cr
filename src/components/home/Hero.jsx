@@ -135,7 +135,7 @@ const DesktopHeroVisual = memo(({ language }) => {
           className="absolute bottom-0 left-0"
         >
           <motion.div
-            animate={floatAnimationDelayed}
+            animate={floatAnimationDown}
             className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
             <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
