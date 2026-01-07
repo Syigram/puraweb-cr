@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, memo } from "react";
+import React, { useMemo, memo } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
@@ -218,11 +218,6 @@ function GuiaBienvenida() {
   const seoDescription = useMemo(() => language === 'es'
     ? 'Guía completa para nuevos clientes de PuraWeb CR. Aprende sobre propiedad, soporte, cambios mensuales, pagos en línea y más.'
     : 'Complete guide for new PuraWeb CR clients. Learn about ownership, support, monthly changes, online payments and more.', [language]);
-
-  // Memoize navigation handler
-  const handleContactClick = useCallback(() => {
-    navigate(createPageUrl("Contacto"));
-  }, [navigate]);
 
   return (
     <>
