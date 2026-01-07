@@ -563,11 +563,10 @@ function GuiaBienvenida() {
                 {t.sections.contact.title}
               </h2>
             </div>
+            
+            {/* Contact Widget */}
+            <Contact />
           </motion.div>
-        </div>
-        
-        {/* Contact Widget */}
-        <Contact />
       </div>
     </>
   );
