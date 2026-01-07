@@ -568,7 +568,6 @@ function GuiaBienvenida() {
         
         {/* Contact Widget */}
         <Contact />
-        </div>
       </div>
     </>
   );
