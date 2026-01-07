@@ -77,8 +77,8 @@ const Typewriter = memo(({ words }) => {
   );
 });
 
-// Floating cards animation - smooth infinite float
-const floatAnimation = {
+// Floating cards animation - smooth infinite float (opposite directions)
+const floatAnimationUp = {
   y: [0, -100, 0],
   transition: {
     duration: 1.8,
@@ -87,13 +87,12 @@ const floatAnimation = {
   }
 };
 
-const floatAnimationDelayed = {
+const floatAnimationDown = {
   y: [0, 100, 0],
   transition: {
     duration: 2,
     repeat: Infinity,
-    ease: "easeInOut",
-    delay: 0.3
+    ease: "easeInOut"
   }
 };
 
