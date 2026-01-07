@@ -34,6 +34,8 @@ const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = useMemo(() => translations[language].about, [language]);
+  // Memoize manifesto translations to avoid re-accessing on each render
+  const manifestoT = useMemo(() => translations[language].manifesto, [language]);
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -243,16 +245,16 @@ const Nosotros = memo(function Nosotros() {
                         <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-bold mb-4">
                         <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                        {translations[language].manifesto.againstTitle}
+                        {manifestoT.againstTitle}
                         </span>
                         </h2>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        {translations[language].manifesto.againstSubtitle}
+                        {manifestoT.againstSubtitle}
                         </p>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {translations[language].manifesto.against.map((item, index) => (
+                        {manifestoT.against.map((item, index) => (
                         <div key={index}>
                 <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-400 group">
                 <CardContent className="p-6 text-center">

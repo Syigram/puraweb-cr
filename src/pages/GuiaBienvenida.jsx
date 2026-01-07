@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
+// Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
@@ -35,11 +36,12 @@ const fadeInUp = {
   transition: { duration: 0.6 }
 };
 
-export default function GuiaBienvenida() {
+function GuiaBienvenida() {
   const { language } = useLanguage();
   const navigate = useNavigate();
 
-  const content = {
+  // Memoize content object - only recreated when dependencies change
+  const content = useMemo(() => ({
     es: {
       title: "Guía de Bienvenida",
       subtitle: "Tu Nuevo Sitio Web con PuraWeb CR",
@@ -236,17 +238,22 @@ export default function GuiaBienvenida() {
       
       cta: "Contact Us"
     }
-  };
+  }), []);
 
   const t = content[language];
 
-  const seoTitle = language === 'es' 
+  const seoTitle = useMemo(() => language === 'es' 
     ? 'Guía de Bienvenida - Cliente PuraWeb CR' 
-    : 'Welcome Guide - PuraWeb CR Client';
+    : 'Welcome Guide - PuraWeb CR Client', [language]);
   
-  const seoDescription = language === 'es'
+  const seoDescription = useMemo(() => language === 'es'
     ? 'Guía completa para nuevos clientes de PuraWeb CR. Aprende sobre propiedad, soporte, cambios mensuales, pagos en línea y más.'
-    : 'Complete guide for new PuraWeb CR clients. Learn about ownership, support, monthly changes, online payments and more.';
+    : 'Complete guide for new PuraWeb CR clients. Learn about ownership, support, monthly changes, online payments and more.', [language]);
+
+  // Memoize navigation handler
+  const handleContactClick = useCallback(() => {
+    navigate(createPageUrl("Contacto"));
+  }, [navigate]);
 
   return (
     <>
@@ -651,7 +658,7 @@ export default function GuiaBienvenida() {
                 
                 <div className="flex justify-center">
                   <Button
-                    onClick={() => navigate(createPageUrl("Contacto"))}
+                    onClick={handleContactClick}
                     size="lg"
                     className="bg-white text-blue-900 hover:bg-blue-50 font-bold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all"
                   >
@@ -666,3 +673,5 @@ export default function GuiaBienvenida() {
     </>
   );
 }
+
+export default memo(GuiaBienvenida);
