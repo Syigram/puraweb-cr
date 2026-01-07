@@ -566,10 +566,11 @@ function GuiaBienvenida() {
             
             {/* Contact Widget */}
             <Contact />
-          </motion.div>
-      </div>
-    </>
-  );
+            </motion.div>
+            </div>
+            </div>
+            </>
+            );
 }
 
 export default memo(GuiaBienvenida);
