@@ -554,7 +554,7 @@ function GuiaBienvenida() {
           </motion.div>
 
           {/* 6. Contact Section */}
-          <motion.div {...fadeInUp} className="mb-16">
+          <motion.div {...fadeInUp}>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
                 <Phone className="w-6 h-6 text-white" />
@@ -563,75 +563,11 @@ function GuiaBienvenida() {
                 {t.sections.contact.title}
               </h2>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="bg-white border border-blue-200">
-                <CardContent className="p-6">
-                  <Calendar className="w-8 h-8 text-blue-900 mb-3" />
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    {t.sections.contact.hours}
-                  </h4>
-                  <p className="text-gray-700 text-sm">{t.sections.contact.hoursDesc}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-blue-200">
-                <CardContent className="p-6">
-                  <Mail className="w-8 h-8 text-blue-900 mb-3" />
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    {t.sections.contact.channel}
-                  </h4>
-                  <p className="text-gray-700 text-sm">{t.sections.contact.channelDesc}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-red-200">
-                <CardContent className="p-6">
-                  <Clock className="w-8 h-8 text-red-600 mb-3" />
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    {t.sections.contact.response}
-                  </h4>
-                  <p className="text-gray-700 text-sm">{t.sections.contact.responseDesc}</p>
-                </CardContent>
-              </Card>
-            </div>
           </motion.div>
-
-          {/* Next Steps / CTA */}
-          <motion.div {...fadeInUp}>
-            <Card className="bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 border-none shadow-2xl overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20" />
-              <CardContent className="p-8 md:p-12 relative z-10">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center">
-                    <Rocket className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-6">
-                  {t.nextSteps.title}
-                </h2>
-                
-                <p className="text-lg text-white/90 text-center mb-6 leading-relaxed max-w-3xl mx-auto">
-                  {t.nextSteps.description}
-                </p>
-                
-                <p className="text-2xl font-bold text-center text-white mb-8">
-                  {t.nextSteps.thanks}
-                </p>
-                
-                <div className="flex justify-center">
-                  <Button
-                    onClick={handleContactClick}
-                    size="lg"
-                    className="bg-white text-blue-900 hover:bg-blue-50 font-bold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all"
-                  >
-                    {t.cta}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+        </div>
+        
+        {/* Contact Widget */}
+        <Contact />
         </div>
       </div>
     </>
