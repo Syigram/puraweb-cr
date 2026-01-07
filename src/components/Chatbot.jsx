@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, memo } from "react";
 import { X, Send, MessageCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { base44 } from "@/api/base44Client";
 import { useLanguage } from "@/components/LanguageContext";
 
-export default function Chatbot() {
+const Chatbot = memo(function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -14,13 +14,19 @@ export default function Chatbot() {
   const messagesEndRef = useRef(null);
   const { language } = useLanguage();
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // Memoized scroll function
+  const scrollToBottom = useCallback(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
+  // Only scroll when messages change AND chat is open
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (isOpen && messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages, isOpen, scrollToBottom]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -300,4 +306,6 @@ Responde de manera útil y concisa:`;
       )}
     </>
   );
-}
+});
+
+export default Chatbot;
