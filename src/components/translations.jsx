@@ -65,11 +65,13 @@ export const translations = {
         "Soporte técnico",
         "Cancelación sin costo"
       ],
+      promoLabel: "¡Oferta!",
       plans: [
         {
           id: "basic",
           name: "Básico",
           price: "100,000",
+          originalPrice: "150,000",
           description: "Perfecto para pequeños negocios que inician su presencia digital",
           features: ["Web básica", "Galería de imágenes", "Landing page", "Blog", "Portafolio", "Sitio Web Responsive", "Hasta 6 páginas/secciones"],
           recommended: false,
@@ -79,6 +81,7 @@ export const translations = {
           id: "professional",
           name: "Profesional",
           price: "150,000",
+          originalPrice: "200,000",
           description: "Ideal para empresas en crecimiento que necesitan más potencia",
           features: ["E-Commerce o tienda online", "Sistema de citas o reservas", "Pagos con tarjeta", "Suscripciones y membresías", "Integración con Gmail", "Notificaciones por WhatsApp", "Hasta 10 páginas/secciones"],
           recommended: true,
