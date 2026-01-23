@@ -441,11 +441,13 @@ export const translations = {
         "Technical support",
         "Free cancellation"
       ],
+      promoLabel: "Promo!",
       plans: [
         {
           id: "basic",
           name: "Basic",
           price: "100,000",
+          originalPrice: "150,000",
           description: "Perfect for small businesses starting their digital journey",
           features: ["Basic website", "Image gallery", "Landing page", "Blog", "Portfolio", "Responsive Website", "Up to 6 pages/sections"],
           recommended: false,
@@ -455,6 +457,7 @@ export const translations = {
           id: "professional",
           name: "Professional",
           price: "150,000",
+          originalPrice: "200,000",
           description: "Ideal for growing companies needing more power and flexibility",
           features: ["E-Commerce or online store", "Appointment or booking system", "Card payments", "Subscriptions and memberships", "Gmail integration", "WhatsApp notifications", "Up to 10 pages/sections"],
           recommended: true,
