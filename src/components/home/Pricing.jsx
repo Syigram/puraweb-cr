@@ -54,11 +54,18 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
         {plan.description && (
           <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
         )}
-        <div className="flex items-baseline justify-center gap-2">
-          <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-            ₡{plan.price}
-          </span>
-          <span className="text-gray-600">/mes</span>
+        <div className="flex flex-col items-center gap-1">
+          {plan.originalPrice && (
+            <span className="text-lg text-gray-400 line-through">
+              ₡{plan.originalPrice}
+            </span>
+          )}
+          <div className="flex items-baseline justify-center gap-2">
+            <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+              ₡{plan.price}
+            </span>
+            <span className="text-gray-600">/mes</span>
+          </div>
         </div>
       </CardHeader>
 
