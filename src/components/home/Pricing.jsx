@@ -165,6 +165,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
               onNavigate={handlePlanSelect}
               mostPopularText={t.mostPopular}
               hasUserSelected={selectedPlan !== null}
+              promoLabel={t.promoLabel}
             />
           ))}
         </div>
