@@ -26,7 +26,7 @@ const staggerContainer = {
   }
 };
 
-const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected }) => {
+const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected, promoLabel }) => {
   const isHighlighted = isSelected || (plan.recommended && !hasUserSelected);
   
   return (
@@ -54,11 +54,21 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
         {plan.description && (
           <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
         )}
-        <div className="flex items-baseline justify-center gap-2">
-          <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-            ₡{plan.price}
-          </span>
-          <span className="text-gray-600">/mes</span>
+        <div className="flex flex-col items-center gap-1">
+          {plan.originalPrice && (
+            <div className="flex items-center gap-2">
+              <span className="text-xl text-gray-400 line-through">₡{plan.originalPrice}</span>
+              <Badge className="bg-green-100 text-green-700 text-xs px-2 py-0.5">
+                {promoLabel}
+              </Badge>
+            </div>
+          )}
+          <div className="flex items-baseline justify-center gap-2">
+            <span className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+              ₡{plan.price}
+            </span>
+            <span className="text-gray-600">/mes</span>
+          </div>
         </div>
       </CardHeader>
 
