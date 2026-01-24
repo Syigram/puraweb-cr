@@ -13,6 +13,7 @@ import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import TerminosCondiciones from './pages/TerminosCondiciones';
 import UserDashboard from './pages/UserDashboard';
+import Sitemap from './pages/Sitemap';
 import __Layout from './Layout.jsx';
 
 
@@ -32,6 +33,7 @@ export const PAGES = {
     "Support": Support,
     "TerminosCondiciones": TerminosCondiciones,
     "UserDashboard": UserDashboard,
+    "Sitemap": Sitemap,
 }
 
 export const pagesConfig = {
