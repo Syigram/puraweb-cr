@@ -284,6 +284,12 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                 </DropdownMenuContent>
               </DropdownMenu>
               <Link
+                to={createPageUrl("Portafolio")}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
+              >
+                {language === 'es' ? 'Portafolio' : 'Portfolio'}
+              </Link>
+              <Link
                 to={createPageUrl("Support")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
@@ -359,6 +365,13 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
                   </Link>
                 </div>
+                <Link
+                  to={createPageUrl("Portafolio")}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                >
+                  {language === 'es' ? 'Portafolio' : 'Portfolio'}
+                </Link>
                 <Link
                   to={createPageUrl("Support")}
                   onClick={() => setIsMobileMenuOpen(false)}
