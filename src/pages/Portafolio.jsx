@@ -235,7 +235,7 @@ export default function Portafolio() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Filter Section */}
-      <section className="py-8 border-y border-gray-100 bg-white/80 backdrop-blur-sm sticky top-16 z-40">
+      <section className="pt-28 pb-8 border-b border-gray-100 bg-white/80 backdrop-blur-sm sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap justify-center gap-2 md:gap-3">
             {categories.map((cat) => (
