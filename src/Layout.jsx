@@ -283,12 +283,41 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                   </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link
-                to={createPageUrl("Portafolio")}
-                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
-              >
-                {language === 'es' ? 'Portafolio' : 'Portfolio'}
-              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-1 text-gray-700 hover:text-blue-900 transition-colors font-medium">
+                    {language === 'es' ? 'Portafolio' : 'Portfolio'}
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <Link to={createPageUrl("Portafolio")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Portafolio Original' : 'Original Portfolio'}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={createPageUrl("PortafolioModal")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Con Modal' : 'With Modal'}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={createPageUrl("PortafolioExpandible")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Expandible' : 'Expandable'}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={createPageUrl("PortafolioGrid")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Grid Grande' : 'Large Grid'}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={createPageUrl("PortafolioLista")}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      {language === 'es' ? 'Vista Lista' : 'List View'}
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Link
                 to={createPageUrl("Support")}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
@@ -365,13 +394,46 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
                   </Link>
                 </div>
-                <Link
-                  to={createPageUrl("Portafolio")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
-                >
-                  {language === 'es' ? 'Portafolio' : 'Portfolio'}
-                </Link>
+                <div className="px-4 py-2">
+                  <div className="text-xs font-semibold text-gray-500 mb-2 uppercase">
+                    {language === 'es' ? 'Portafolio' : 'Portfolio'}
+                  </div>
+                  <Link
+                    to={createPageUrl("Portafolio")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Original' : 'Original'}
+                  </Link>
+                  <Link
+                    to={createPageUrl("PortafolioModal")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Con Modal' : 'With Modal'}
+                  </Link>
+                  <Link
+                    to={createPageUrl("PortafolioExpandible")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Expandible' : 'Expandable'}
+                  </Link>
+                  <Link
+                    to={createPageUrl("PortafolioGrid")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Grid Grande' : 'Large Grid'}
+                  </Link>
+                  <Link
+                    to={createPageUrl("PortafolioLista")}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
+                  >
+                    {language === 'es' ? 'Vista Lista' : 'List View'}
+                  </Link>
+                </div>
                 <Link
                   to={createPageUrl("Support")}
                   onClick={() => setIsMobileMenuOpen(false)}
