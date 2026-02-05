@@ -24,16 +24,17 @@ const staggerContainer = {
 const portfolioProjects = [
   {
     id: 1,
-    name: "Café Montaña Verde",
-    category: "restaurant",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",
+    name: "Torre Serenity",
+    category: "realestate",
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/26645c03e_serenity1.jpg",
     description: {
-      es: "Sitio web elegante para cafetería artesanal con sistema de reservas online y menú digital interactivo.",
-      en: "Elegant website for artisan coffee shop with online reservation system and interactive digital menu."
+      es: "Página web de bienes raíces para la venta de condominios exclusivos con galería interactiva y sistema de agendamiento de visitas.",
+      en: "Real estate website for exclusive condominium sales with interactive gallery and visit scheduling system."
     },
-    tags: ["E-Commerce", "Reservas", "Menú Digital"],
+    tags: ["Bienes Raíces", "Galería", "Agendamiento"],
     year: "2024",
-    plan: "Profesional"
+    plan: "Profesional",
+    demoUrl: "https://torreserenity.com/"
   },
   {
     id: 2,
@@ -104,6 +105,7 @@ const portfolioProjects = [
 
 const categories = [
   { id: "all", label: { es: "Todos", en: "All" } },
+  { id: "realestate", label: { es: "Bienes Raíces", en: "Real Estate" } },
   { id: "ecommerce", label: { es: "E-Commerce", en: "E-Commerce" } },
   { id: "corporate", label: { es: "Corporativo", en: "Corporate" } },
   { id: "health", label: { es: "Salud", en: "Health" } },
@@ -147,6 +149,7 @@ function PortfolioCard({ project, language }) {
           <Button
             size="sm"
             className="bg-white text-blue-900 hover:bg-blue-50 gap-2"
+            onClick={() => project.demoUrl && window.open(project.demoUrl, '_blank')}
           >
             <Eye className="w-4 h-4" />
             {language === "es" ? "Ver Demo" : "View Demo"}
