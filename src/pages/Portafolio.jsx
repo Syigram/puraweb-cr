@@ -234,61 +234,6 @@ export default function Portafolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full blur-3xl opacity-50" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-red-100 rounded-full blur-3xl opacity-50" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <Badge className="bg-blue-100 text-blue-800 mb-4">
-              {t.title}
-            </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              {t.subtitle}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8">
-              {t.description}
-            </p>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-8 md:gap-16 mt-12"
-          >
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                50+
-              </div>
-              <div className="text-gray-600 mt-1">{t.stats.projects}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
-                40+
-              </div>
-              <div className="text-gray-600 mt-1">{t.stats.clients}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">
-                100%
-              </div>
-              <div className="text-gray-600 mt-1">{t.stats.satisfaction}</div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Filter Section */}
       <section className="py-8 border-y border-gray-100 bg-white/80 backdrop-blur-sm sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-6">
