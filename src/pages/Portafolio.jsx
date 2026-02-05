@@ -243,7 +243,7 @@ export default function Portafolio() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent mb-3">
               {t.subtitle}
             </h1>
             <p className="text-gray-600 max-w-xl mx-auto">
