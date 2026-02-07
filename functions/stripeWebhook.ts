@@ -639,6 +639,10 @@ async function sendWhatsAppPaymentConfirmation(phoneNumber, amount, planId, paym
               language: { code: 'es' },
               components: [
                 {
+                  type: 'header', 
+                  parameters: [{ type: 'text', text: 'PuraWeb CR' }]
+                },
+                {
                   type: 'body',
                   parameters: [
                     { type: 'text', text: formattedAmount },
