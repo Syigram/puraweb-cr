@@ -25,6 +25,11 @@ Deno.serve(async (req) => {
       formattedPhone = formattedPhone.substring(1);
     }
 
+    console.log(`name ${name}`);
+    console.log(`phone ${phone}`);
+    console.log(`email ${email}`);
+    console.log(`message ${message}`);
+
     const response = await fetch(
       `https://graph.facebook.com/v22.0/${whatsappPhoneNumberId}/messages`,
       {
