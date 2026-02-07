@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
           type: 'template',
           template: {
             name: 'contacto_notificacion_puraweb',
-            language: { code: 'CRI' },
+            language: { code: 'es_CRI' },
             components: [
               {
                 type: 'body',
