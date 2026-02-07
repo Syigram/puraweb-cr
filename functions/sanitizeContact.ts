@@ -196,6 +196,14 @@ Deno.serve(async (req) => {
       `
     }).catch(err => console.error("Error sending email notification:", err));
 
+    // Send WhatsApp notification (fire-and-forget)
+    base44.asServiceRole.functions.invoke('whatsappContactNotification', {
+      name: sanitizedData.name,
+      phone: sanitizedData.phone,
+      email: sanitizedData.email,
+      message: sanitizedData.message
+    }).catch(err => console.error("Error sending WhatsApp notification:", err));
+
     return Response.json({ 
       success: true, 
       id: contactRequest.id 
