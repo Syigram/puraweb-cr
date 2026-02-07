@@ -47,6 +47,10 @@ Deno.serve(async (req) => {
             language: { code: 'es_CR' },
             components: [
               {
+                type: 'header', 
+                parameters: [{ type: 'text', text: 'PuraWeb CR' }]
+              },
+              {
                 type: 'body',
                 parameters: [
                   { type: 'text', text: name },
