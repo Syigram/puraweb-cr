@@ -1,8 +1,6 @@
 import React, { useState, useEffect, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Globe, ShoppingCart, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
-import { createPageUrl } from "@/utils";
+import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
@@ -196,7 +194,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
               {t.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-4 md:mb-6">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12">
               <Button
                 onClick={onGetStarted}
                 size="lg"
@@ -205,26 +203,18 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-              <Link to={createPageUrl("Portafolio")}>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6"
-                >
-                  <Eye className="w-5 h-5 mr-2" />
-                  {t.viewPortfolio}
-                </Button>
-              </Link>
+              <Button
+                onClick={() => {
+                  const el = document.getElementById("pricing");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+                size="lg"
+                variant="outline"
+                className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6"
+              >
+                {t.viewPlans}
+              </Button>
             </div>
-            <button
-              onClick={() => {
-                const el = document.getElementById("pricing");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="text-sm text-gray-500 hover:text-blue-900 transition-colors underline underline-offset-4 mb-8 md:mb-12"
-            >
-              {t.viewPlans}
-            </button>
 
             {/* Static stats - no CountUp animation for faster render */}
             <div className="grid grid-cols-3 gap-4 md:gap-6">
