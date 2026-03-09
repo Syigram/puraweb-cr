@@ -79,20 +79,20 @@ const Typewriter = memo(({ words }) => {
   );
 });
 
-// Floating cards animation - gentle float to avoid jank
+// Floating cards animation - smooth infinite float (opposite directions)
 const floatAnimationUp = {
-  y: [0, -12, 0],
+  y: [0, -100, 0],
   transition: {
-    duration: 4,
+    duration: 1.8,
     repeat: Infinity,
     ease: "easeInOut"
   }
 };
 
 const floatAnimationDown = {
-  y: [0, 12, 0],
+  y: [0, 100, 0],
   transition: {
-    duration: 5,
+    duration: 2,
     repeat: Infinity,
     ease: "easeInOut"
   }
@@ -175,13 +175,12 @@ const heroContainer = {
 const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
 const heroItem = {
-  hidden: { opacity: 0, y: isMobile ? 16 : 24, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: isMobile ? 16 : 24 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: {
-      duration: isMobile ? 0.5 : 0.65,
+      duration: isMobile ? 0.45 : 0.65,
       ease: [0.25, 0.46, 0.45, 0.94]
     }
   }
@@ -212,6 +211,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="inline-flex items-center gap-2 bg-white/75 backdrop-blur-md text-blue-900 px-4 py-2 rounded-full mb-6 shadow-sm ring-1 ring-blue-900/10"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
@@ -220,6 +220,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
@@ -233,6 +234,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.p
               className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               {t.description}
             </motion.p>
@@ -240,6 +242,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <Button
                 onClick={onGetStarted}
@@ -265,6 +268,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="grid grid-cols-3 gap-4 md:gap-6"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
