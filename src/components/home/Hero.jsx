@@ -211,6 +211,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="inline-flex items-center gap-2 bg-white/75 backdrop-blur-md text-blue-900 px-4 py-2 rounded-full mb-6 shadow-sm ring-1 ring-blue-900/10"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
