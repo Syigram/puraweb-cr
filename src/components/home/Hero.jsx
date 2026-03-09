@@ -220,7 +220,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
