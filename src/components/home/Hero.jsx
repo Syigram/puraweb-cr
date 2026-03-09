@@ -242,6 +242,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12"
               variants={prefersReducedMotion ? undefined : heroItem}
+              style={{ willChange: "transform, opacity" }}
             >
               <Button
                 onClick={onGetStarted}
