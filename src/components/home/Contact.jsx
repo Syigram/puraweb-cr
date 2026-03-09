@@ -178,6 +178,8 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="name">{t.form.name} *</Label>
                       <Input
                         id="name"
+                        name="name"
+                        autoComplete="name"
                         required
                         maxLength={100}
                         value={formData.name}
@@ -192,7 +194,9 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="email">{t.form.email} *</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
                         required
                         maxLength={150}
                         value={formData.email}
@@ -210,6 +214,8 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
+                        name="company"
+                        autoComplete="organization"
                         maxLength={100}
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -223,7 +229,9 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="phone">{t.form.phone}</Label>
                       <Input
                         id="phone"
+                        name="phone"
                         type="tel"
+                        autoComplete="tel"
                         maxLength={20}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
