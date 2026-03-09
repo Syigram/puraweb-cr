@@ -175,12 +175,13 @@ const heroContainer = {
 const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
 const heroItem = {
-  hidden: { opacity: 0, y: isMobile ? 16 : 24 },
+  hidden: { opacity: 0, y: isMobile ? 16 : 24, filter: "blur(4px)" },
   visible: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
-      duration: isMobile ? 0.45 : 0.65,
+      duration: isMobile ? 0.5 : 0.65,
       ease: [0.25, 0.46, 0.45, 0.94]
     }
   }
