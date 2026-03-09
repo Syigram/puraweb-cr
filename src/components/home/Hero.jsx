@@ -79,20 +79,20 @@ const Typewriter = memo(({ words }) => {
   );
 });
 
-// Floating cards animation - smooth infinite float (opposite directions)
+// Floating cards animation - gentle float to avoid jank
 const floatAnimationUp = {
-  y: [0, -100, 0],
+  y: [0, -12, 0],
   transition: {
-    duration: 1.8,
+    duration: 4,
     repeat: Infinity,
     ease: "easeInOut"
   }
 };
 
 const floatAnimationDown = {
-  y: [0, 100, 0],
+  y: [0, 12, 0],
   transition: {
-    duration: 2,
+    duration: 5,
     repeat: Infinity,
     ease: "easeInOut"
   }
