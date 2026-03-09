@@ -7,170 +7,181 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-// ─── Responsive desktop detection ───────────────────────────────────────────
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024);
+// Custom hook to detect desktop screens with throttled resize
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : false
+  );
+  
   useEffect(() => {
-    let timeout;
-    const handler = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setIsDesktop(window.innerWidth >= 1024), 150);
+    let timeoutId = null;
+    const checkDesktop = () => {
+      if (timeoutId) return;
+      timeoutId = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 1024);
+        timeoutId = null;
+      }, 150);
     };
-    window.addEventListener("resize", handler, { passive: true });
-    return () => { window.removeEventListener("resize", handler); clearTimeout(timeout); };
+    window.addEventListener('resize', checkDesktop);
+    return () => {
+      window.removeEventListener('resize', checkDesktop);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
+  
   return isDesktop;
-}
+};
 
-// ─── Typewriter ─────────────────────────────────────────────────────────────
-const Typewriter = memo(function Typewriter({ words }) {
-  const [displayed, setDisplayed] = useState("");
-  const [wordIdx, setWordIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-  const [started, setStarted] = useState(false);
+// Lightweight typewriter - deferred to not block FCP/LCP
+const Typewriter = memo(({ words }) => {
+  const [text, setText] = useState(words[0] || '');
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
+  // Defer typewriter animation until after initial paint
   useEffect(() => {
-    const start = setTimeout(() => setStarted(true), 600);
-    return () => clearTimeout(start);
+    const timer = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!started || !words?.length) return;
-    const current = words[wordIdx];
-    if (!deleting && charIdx < current.length) {
-      const t = setTimeout(() => {
-        setDisplayed(current.slice(0, charIdx + 1));
-        setCharIdx((c) => c + 1);
-      }, 60);
-      return () => clearTimeout(t);
-    }
-    if (!deleting && charIdx === current.length) {
-      if (words.length === 1) return;
-      const t = setTimeout(() => setDeleting(true), 2000);
-      return () => clearTimeout(t);
-    }
-    if (deleting && charIdx > 0) {
-      const t = setTimeout(() => {
-        setDisplayed(current.slice(0, charIdx - 1));
-        setCharIdx((c) => c - 1);
-      }, 35);
-      return () => clearTimeout(t);
-    }
-    if (deleting && charIdx === 0) {
-      setDeleting(false);
-      setWordIdx((w) => (w + 1) % words.length);
-    }
-  }, [started, charIdx, deleting, wordIdx, words]);
+    if (!isReady) return;
+    
+    const currentWord = words[wordIndex];
+    const speed = isDeleting ? 30 : 100;
 
-  return <>{displayed}<span className="animate-pulse">|</span></>;
-});
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < currentWord.length) {
+          setText(currentWord.slice(0, text.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), 1500);
+        }
+      } else {
+        if (text.length > 0) {
+          setText(text.slice(0, -1));
+        } else {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, speed);
 
-// ─── Desktop floating cards (only rendered on lg+) ───────────────────────────
-const DesktopHeroVisual = memo(function DesktopHeroVisual({ language }) {
-  const isDesktop = useIsDesktop();
-  if (!isDesktop) return null;
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <div className="relative hidden lg:block">
-      <div className="relative w-full h-96 lg:h-[500px]">
-        {/* Main mockup card */}
+    <span>
+      {text}
+      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+    </span>
+  );
+});
+
+// Floating cards animation - smooth infinite float (opposite directions)
+const floatAnimationUp = {
+  y: [0, -100, 0],
+  transition: {
+    duration: 1.8,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+};
+
+const floatAnimationDown = {
+  y: [0, 100, 0],
+  transition: {
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+};
+
+// Floating cards component - only rendered on desktop
+const DesktopHeroVisual = memo(({ language }) => {
+  const isDesktop = useIsDesktop();
+  
+  // Don't render anything on mobile/tablet - saves memory and CPU
+  if (!isDesktop) return null;
+  
+  return (
+    <div className="hidden lg:block relative">
+      <div className="relative">
+        {/* Web Development Card - floating animation */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700 rounded-2xl shadow-2xl overflow-hidden"
-          initial={{ opacity: 0, scale: 0.92, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          style={{ willChange: "transform, opacity" }}
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="absolute top-0 right-0"
         >
-          <div className="p-6 h-full flex flex-col justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <div className="flex-1 ml-2 bg-white/20 rounded px-3 py-1 text-white/70 text-xs">
-                puraweb.cr
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="h-8 bg-white/20 rounded-lg w-3/4" />
-              <div className="h-4 bg-white/10 rounded w-full" />
-              <div className="h-4 bg-white/10 rounded w-5/6" />
-              <div className="h-10 bg-red-500 rounded-lg w-1/3 mt-4" />
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="h-16 bg-white/10 rounded-xl" />
-              ))}
-            </div>
-          </div>
+          <motion.div
+            animate={floatAnimationUp}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          >
+            <Globe className="w-12 h-12 text-blue-900 mb-3" />
+            <h3 className="font-bold text-gray-900 mb-1">
+              {translations[language].services.webDev.title}
+            </h3>
+            <p className="text-sm text-gray-600">
+              {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+            </p>
+          </motion.div>
         </motion.div>
 
-        {/* Floating stat cards */}
+        {/* E-commerce Card - floating animation (opposite direction) */}
         <motion.div
-          className="absolute -left-8 top-16 bg-white rounded-xl shadow-lg p-4 w-40"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ willChange: "transform, opacity" }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="absolute bottom-0 left-0"
         >
-          <div className="flex items-center gap-2 mb-2">
-            <Globe className="w-4 h-4 text-blue-900" />
-            <span className="text-xs font-semibold text-gray-700">
-              {language === "es" ? "Visitas" : "Visits"}
-            </span>
-          </div>
-          <div className="text-2xl font-bold text-blue-900">+2.4k</div>
-          <div className="text-xs text-green-600 mt-1">↑ 18%</div>
+          <motion.div
+            animate={floatAnimationDown}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          >
+            <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
+            <h3 className="font-bold text-gray-900 mb-1">
+              {translations[language].services.ecommerce.title}
+            </h3>
+            <p className="text-sm text-gray-600">
+              {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+            </p>
+          </motion.div>
         </motion.div>
 
-        <motion.div
-          className="absolute -right-6 bottom-20 bg-white rounded-xl shadow-lg p-4 w-44"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          style={{ willChange: "transform, opacity" }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <ShoppingCart className="w-4 h-4 text-red-600" />
-            <span className="text-xs font-semibold text-gray-700">
-              {language === "es" ? "Ventas" : "Sales"}
-            </span>
+        {/* Central circle */}
+        <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
+          <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
+            <Sparkles className="w-20 h-20 text-blue-900" />
           </div>
-          <div className="text-2xl font-bold text-red-600">₡1.2M</div>
-          <div className="text-xs text-green-600 mt-1">↑ 32%</div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 });
 
-// ─── Hero animation variants ─────────────────────────────────────────────────
-// PERFORMANCE NOTE: filter:blur is intentionally removed.
-// Animating blur on a full-viewport element forces the browser to repaint
-// a massive GPU layer on every frame — extremely expensive on mobile GPUs
-// (S25+, iPhone 13, etc.) and causes visible jank at the end of the animation.
-// opacity + translateY are pure compositor-thread properties (S-Tier) and
-// remain smooth even on constrained hardware.
 const heroContainer = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
     }
   }
 };
 
 const heroItem = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+    filter: "blur(0px)",
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
-// ─── Main Hero ───────────────────────────────────────────────────────────────
+// Memoized Hero component for maximum performance
 const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].hero, [language]);
@@ -178,14 +189,14 @@ const Hero = memo(function Hero({ onGetStarted }) {
   
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      {/* Background blobs — static, no animation cost */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100 rounded-full opacity-30 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-red-100 rounded-full opacity-20 blur-3xl" />
+      {/* Static background - no animation for faster FCP/LCP */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full blur-2xl md:blur-3xl opacity-10" />
+        <div className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full blur-2xl md:blur-3xl opacity-10" />
       </div>
 
       <motion.div
-        className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-40 w-full"
+        className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-40"
         variants={prefersReducedMotion ? undefined : heroContainer}
         initial={prefersReducedMotion ? false : "hidden"}
         animate={prefersReducedMotion ? undefined : "visible"}
@@ -195,7 +206,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="inline-flex items-center gap-2 bg-white/75 backdrop-blur-md text-blue-900 px-4 py-2 rounded-full mb-6 shadow-sm ring-1 ring-blue-900/10"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
@@ -204,7 +214,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
@@ -218,7 +227,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.p
               className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               {t.description}
             </motion.p>
@@ -226,7 +234,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <Button
                 onClick={onGetStarted}
@@ -252,7 +259,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="grid grid-cols-3 gap-4 md:gap-6"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
@@ -269,22 +275,18 @@ const Hero = memo(function Hero({ onGetStarted }) {
             </motion.div>
           </div>
 
-          <motion.div
-            variants={prefersReducedMotion ? undefined : heroItem}
-            style={{ willChange: "transform, opacity" }}
-          >
+          <motion.div variants={prefersReducedMotion ? undefined : heroItem}>
             <DesktopHeroVisual language={language} />
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Simplified scroll indicator with CSS animation */}
       <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
         animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-        transition={prefersReducedMotion ? undefined : { delay: 0.9, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        style={{ willChange: "transform, opacity" }}
+        transition={prefersReducedMotion ? undefined : { delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
           <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
