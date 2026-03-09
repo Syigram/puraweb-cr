@@ -5,7 +5,7 @@ const RevealSection = memo(function RevealSection({
   children,
   className = "",
   delay = 0,
-  amount = 0.2,
+  amount = 0.15,
 }) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -16,10 +16,13 @@ const RevealSection = memo(function RevealSection({
   return (
     <motion.section
       className={className}
-      initial={{ opacity: 0, y: 48, scale: 0.98, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      // Only animate opacity + translateY — both run on the compositor thread (S-Tier).
+      // Removed filter:blur and scale to avoid expensive GPU repaints on mobile.
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.section>
