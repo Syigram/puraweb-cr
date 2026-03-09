@@ -165,19 +165,24 @@ const heroContainer = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.08,
+      staggerChildren: 0.10,
+      delayChildren: 0.05,
     }
   }
 };
 
+// Detect mobile once at module level to avoid per-render checks
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const heroItem = {
-  hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
+  hidden: { opacity: 0, y: isMobile ? 16 : 24 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
+    transition: {
+      duration: isMobile ? 0.45 : 0.65,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
   }
 };
 
