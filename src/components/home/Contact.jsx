@@ -84,6 +84,32 @@ const Contact = memo(function Contact({ transparent = false }) {
     setTouchedFields((prev) => (prev[fieldName] ? prev : { ...prev, [fieldName]: true }));
   };
 
+  // Detect autofill via animationstart on :-webkit-autofill (works in all modern browsers)
+  const formRef = useRef(null);
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form) return;
+
+    const handleAnimationStart = (e) => {
+      if (e.animationName === "autofillDetected") {
+        const fieldName = e.target.name || e.target.id;
+        if (fieldName && fieldName in initialTouchedFields) {
+          // Sync value into state then mark as touched
+          const value = e.target.value;
+          setFormData((prev) => {
+            if (prev[fieldName] === value) return prev;
+            return { ...prev, [fieldName]: value };
+          });
+          markFieldAsTouched(fieldName);
+        }
+      }
+    };
+
+    form.addEventListener("animationstart", handleAnimationStart, true);
+    return () => form.removeEventListener("animationstart", handleAnimationStart, true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
