@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, memo, useMemo } from "react";
+import React, { useState, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,9 +52,6 @@ const Contact = memo(function Contact({ transparent = false }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
-  const fieldRefs = useRef({});
-  const formDataRef = useRef(initialFormData);
-  const touchedFieldsRef = useRef(initialTouchedFields);
 
   const fieldValidation = useMemo(() => {
     const sanitizedName = sanitizeInput(formData.name);
@@ -86,65 +83,6 @@ const Contact = memo(function Contact({ transparent = false }) {
   const markFieldAsTouched = (fieldName) => {
     setTouchedFields((prev) => (prev[fieldName] ? prev : { ...prev, [fieldName]: true }));
   };
-
-  useEffect(() => {
-    formDataRef.current = formData;
-    touchedFieldsRef.current = touchedFields;
-  }, [formData, touchedFields]);
-
-  const syncAutofilledFields = useCallback(() => {
-    const nextData = {};
-    const nextTouched = {};
-
-    ["name", "email", "company", "phone", "message"].forEach((fieldName) => {
-      const element = fieldRefs.current[fieldName];
-      if (!element) return;
-
-      const domValue = element.value || "";
-      if (domValue && domValue !== formDataRef.current[fieldName]) {
-        nextData[fieldName] = domValue;
-        nextTouched[fieldName] = true;
-      }
-    });
-
-    if (Object.keys(nextData).length > 0) {
-      setFormData((prev) => ({ ...prev, ...nextData }));
-    }
-
-    if (Object.keys(nextTouched).length > 0) {
-      setTouchedFields((prev) => ({ ...prev, ...nextTouched }));
-    }
-  }, []);
-
-  const queueAutofillSync = useCallback(() => {
-    requestAnimationFrame(() => {
-      syncAutofilledFields();
-      setTimeout(syncAutofilledFields, 120);
-    });
-  }, [syncAutofilledFields]);
-
-  const handleAutofillStart = useCallback((e) => {
-    if (e.animationName === "autofill-start") {
-      queueAutofillSync();
-    }
-  }, [queueAutofillSync]);
-
-  useEffect(() => {
-    queueAutofillSync();
-
-    const timeouts = [250, 800, 1600].map((delay) =>
-      setTimeout(queueAutofillSync, delay)
-    );
-
-    window.addEventListener("focus", queueAutofillSync);
-    window.addEventListener("pageshow", queueAutofillSync);
-
-    return () => {
-      timeouts.forEach(clearTimeout);
-      window.removeEventListener("focus", queueAutofillSync);
-      window.removeEventListener("pageshow", queueAutofillSync);
-    };
-  }, [queueAutofillSync]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -183,18 +121,6 @@ const Contact = memo(function Contact({ transparent = false }) {
 
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
-      <style>{`
-        @keyframes autofill-start {
-          from {}
-          to {}
-        }
-
-        input:-webkit-autofill,
-        textarea:-webkit-autofill {
-          animation-name: autofill-start;
-          animation-duration: 0.01s;
-        }
-      `}</style>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
@@ -221,17 +147,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="name">{t.form.name} *</Label>
                       <Input
                         id="name"
-                        name="name"
-                        autoComplete="name"
                         required
                         maxLength={100}
                         value={formData.name}
-                        ref={(node) => {
-                          fieldRefs.current.name = node;
-                        }}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        onFocus={queueAutofillSync}
-                        onAnimationStart={handleAutofillStart}
                         onBlur={() => markFieldAsTouched("name")}
                         aria-invalid={getFieldState("name") === "invalid"}
                         placeholder="Nombre Completo"
@@ -242,18 +161,11 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="email">{t.form.email} *</Label>
                       <Input
                         id="email"
-                        name="email"
-                        autoComplete="email"
                         type="email"
                         required
                         maxLength={150}
                         value={formData.email}
-                        ref={(node) => {
-                          fieldRefs.current.email = node;
-                        }}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        onFocus={queueAutofillSync}
-                        onAnimationStart={handleAutofillStart}
                         onBlur={() => markFieldAsTouched("email")}
                         aria-invalid={getFieldState("email") === "invalid"}
                         placeholder="nombre@example.com"
@@ -267,16 +179,9 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
-                        name="organization"
-                        autoComplete="organization"
                         maxLength={100}
                         value={formData.company}
-                        ref={(node) => {
-                          fieldRefs.current.company = node;
-                        }}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        onFocus={queueAutofillSync}
-                        onAnimationStart={handleAutofillStart}
                         onBlur={() => markFieldAsTouched("company")}
                         aria-invalid={getFieldState("company") === "invalid"}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
@@ -287,17 +192,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="phone">{t.form.phone}</Label>
                       <Input
                         id="phone"
-                        name="tel"
-                        autoComplete="tel"
                         type="tel"
                         maxLength={20}
                         value={formData.phone}
-                        ref={(node) => {
-                          fieldRefs.current.phone = node;
-                        }}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        onFocus={queueAutofillSync}
-                        onAnimationStart={handleAutofillStart}
                         onBlur={() => markFieldAsTouched("phone")}
                         aria-invalid={getFieldState("phone") === "invalid"}
                         placeholder="+506 8402 7214"
@@ -334,17 +232,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                     <Label htmlFor="message">{t.form.message} * <span className="text-gray-400 font-normal text-sm">({formData.message.length}/2000)</span></Label>
                     <Textarea
                       id="message"
-                      name="message"
-                      autoComplete="off"
                       required
                       maxLength={2000}
                       value={formData.message}
-                      ref={(node) => {
-                        fieldRefs.current.message = node;
-                      }}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      onFocus={queueAutofillSync}
-                      onAnimationStart={handleAutofillStart}
                       onBlur={() => markFieldAsTouched("message")}
                       aria-invalid={getFieldState("message") === "invalid"}
                       placeholder={t.form.messagePlaceholder}
