@@ -52,6 +52,7 @@ const Contact = memo(function Contact({ transparent = false }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
+  const fieldRefs = useRef({});
 
   const fieldValidation = useMemo(() => {
     const sanitizedName = sanitizeInput(formData.name);
