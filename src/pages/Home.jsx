@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
+import RevealSection from "@/components/animations/RevealSection";
 import Hero from "../components/home/Hero";
 
 // Lazy load below-the-fold components for faster initial render
@@ -74,43 +75,53 @@ export default function Home() {
       <Hero onGetStarted={scrollToContact} />
       
       {/* Below-fold sections lazy loaded */}
-      <Suspense fallback={<SectionLoader />}>
-        <Services />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <Pricing onGetStarted={scrollToContact} />
-      </Suspense>
+      <RevealSection>
+        <Suspense fallback={<SectionLoader />}>
+          <Services />
+        </Suspense>
+      </RevealSection>
+      <RevealSection delay={0.05}>
+        <Suspense fallback={<SectionLoader />}>
+          <Pricing onGetStarted={scrollToContact} />
+        </Suspense>
+      </RevealSection>
       
       {/* CTA para ver planes completos */}
-      <div className="py-8 bg-white border-t border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-            {language === 'es' 
-              ? '¿Necesitas más detalles sobre nuestros planes?' 
-              : 'Need more details about our plans?'}
-          </h3>
-          <p className="text-gray-600 mb-6 text-lg">
-            {language === 'es'
-              ? 'Compara todas las características y encuentra el plan perfecto para tu negocio'
-              : 'Compare all features and find the perfect plan for your business'}
-          </p>
-          <Button
-            onClick={() => navigate(createPageUrl("Planes"))}
-            size="lg"
-            className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-          >
-            {language === 'es' ? 'Ver Planes Completos' : 'View Full Plans'}
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+      <RevealSection delay={0.08}>
+        <div className="py-8 bg-white border-t border-b border-gray-200">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+              {language === 'es' 
+                ? '¿Necesitas más detalles sobre nuestros planes?' 
+                : 'Need more details about our plans?'}
+            </h3>
+            <p className="text-gray-600 mb-6 text-lg">
+              {language === 'es'
+                ? 'Compara todas las características y encuentra el plan perfecto para tu negocio'
+                : 'Compare all features and find the perfect plan for your business'}
+            </p>
+            <Button
+              onClick={() => navigate(createPageUrl("Planes"))}
+              size="lg"
+              className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            >
+              {language === 'es' ? 'Ver Planes Completos' : 'View Full Plans'}
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
         </div>
-      </div>
+      </RevealSection>
       
-      <Suspense fallback={<SectionLoader />}>
-        <Benefits />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <Contact />
-      </Suspense>
+      <RevealSection delay={0.1}>
+        <Suspense fallback={<SectionLoader />}>
+          <Benefits />
+        </Suspense>
+      </RevealSection>
+      <RevealSection delay={0.12}>
+        <Suspense fallback={<SectionLoader />}>
+          <Contact />
+        </Suspense>
+      </RevealSection>
       </div>
       </>
       );
