@@ -1,4 +1,6 @@
 import React, { useState, useEffect, memo, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
@@ -204,15 +206,15 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
-                onClick={() => {
-                  const el = document.getElementById("pricing");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
+                asChild
                 size="lg"
                 variant="outline"
-                className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6"
+                className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 shadow-sm"
               >
-                {t.viewPlans}
+                <Link to={createPageUrl("Portafolio")}>
+                  {t.portfolioCta}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
               </Button>
             </div>
 
