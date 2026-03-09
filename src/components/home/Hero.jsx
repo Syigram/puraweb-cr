@@ -286,17 +286,18 @@ const Hero = memo(function Hero({ onGetStarted }) {
         </div>
       </motion.div>
 
-      {/* Simplified scroll indicator with CSS animation */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-        animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-        transition={prefersReducedMotion ? undefined : { delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
-          <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
+      {/* Scroll indicator - CSS only, no extra motion instance */}
+      {!prefersReducedMotion && (
+        <div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          style={{ animation: "heroFadeIn 0.5s ease-out 0.8s both" }}
+        >
+          <style>{`@keyframes heroFadeIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>
+          <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
+            <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
+          </div>
         </div>
-      </motion.div>
+      )}
     </section>
   );
 });
