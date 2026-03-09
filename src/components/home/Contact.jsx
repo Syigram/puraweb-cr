@@ -12,20 +12,77 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
 
+const initialFormData = {
+  name: "",
+  email: "",
+  company: "",
+  phone: "",
+  service_interest: "",
+  message: ""
+};
+
+const initialTouchedFields = {
+  name: false,
+  email: false,
+  company: false,
+  phone: false,
+  service_interest: false,
+  message: false
+};
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const getFieldClasses = (state) => {
+  if (state === "valid") {
+    return "border-green-500 focus-visible:ring-green-500/30";
+  }
+
+  if (state === "invalid") {
+    return "border-red-500 focus-visible:ring-red-500/30";
+  }
+
+  return "border-gray-300 focus-visible:ring-blue-900/30";
+};
+
 const Contact = memo(function Contact({ transparent = false }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    service_interest: "",
-    message: ""
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const [touchedFields, setTouchedFields] = useState(initialTouchedFields);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
+
+  const fieldValidation = useMemo(() => {
+    const sanitizedName = sanitizeInput(formData.name);
+    const sanitizedEmailValue = sanitizeEmail(formData.email);
+    const sanitizedCompany = sanitizeInput(formData.company);
+    const sanitizedPhoneValue = sanitizePhone(formData.phone);
+    const phoneDigits = sanitizedPhoneValue.replace(/\D/g, "");
+    const sanitizedMessage = sanitizeInput(formData.message);
+
+    return {
+      name: sanitizedName.length >= 2,
+      email: emailRegex.test(sanitizedEmailValue),
+      company: formData.company.trim() === "" ? null : sanitizedCompany.length >= 2,
+      phone: formData.phone.trim() === "" ? null : phoneDigits.length >= 8,
+      service_interest: formData.service_interest === "" ? null : true,
+      message: sanitizedMessage.length >= 10
+    };
+  }, [formData]);
+
+  const getFieldState = (fieldName) => {
+    if (!touchedFields[fieldName]) return "neutral";
+
+    const value = fieldValidation[fieldName];
+    if (value === true) return "valid";
+    if (value === false) return "invalid";
+    return "neutral";
+  };
+
+  const markFieldAsTouched = (fieldName) => {
+    setTouchedFields((prev) => (prev[fieldName] ? prev : { ...prev, [fieldName]: true }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,14 +109,8 @@ const Contact = memo(function Contact({ transparent = false }) {
       }
 
       setIsSuccess(true);
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        service_interest: "",
-        message: ""
-      });
+      setFormData(initialFormData);
+      setTouchedFields(initialTouchedFields);
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
       setError(t.form.errorMessage);
@@ -100,8 +151,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                         maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onBlur={() => markFieldAsTouched("name")}
+                        aria-invalid={getFieldState("name") === "invalid"}
                         placeholder="Nombre Completo"
-                        className="border-gray-300"
+                        className={getFieldClasses(getFieldState("name"))}
                       />
                     </div>
                     <div className="space-y-2">
@@ -113,8 +166,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                         maxLength={150}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onBlur={() => markFieldAsTouched("email")}
+                        aria-invalid={getFieldState("email") === "invalid"}
                         placeholder="nombre@example.com"
-                        className="border-gray-300"
+                        className={getFieldClasses(getFieldState("email"))}
                       />
                     </div>
                   </div>
@@ -127,8 +182,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                         maxLength={100}
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        onBlur={() => markFieldAsTouched("company")}
+                        aria-invalid={getFieldState("company") === "invalid"}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
-                        className="border-gray-300"
+                        className={getFieldClasses(getFieldState("company"))}
                       />
                     </div>
                     <div className="space-y-2">
@@ -139,8 +196,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                         maxLength={20}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onBlur={() => markFieldAsTouched("phone")}
+                        aria-invalid={getFieldState("phone") === "invalid"}
                         placeholder="+506 8402 7214"
-                        className="border-gray-300"
+                        className={getFieldClasses(getFieldState("phone"))}
                       />
                     </div>
                   </div>
@@ -149,9 +208,15 @@ const Contact = memo(function Contact({ transparent = false }) {
                     <Label htmlFor="service">{t.form.service}</Label>
                     <Select
                       value={formData.service_interest}
-                      onValueChange={(value) => setFormData({ ...formData, service_interest: value })}
+                      onValueChange={(value) => {
+                        setFormData({ ...formData, service_interest: value });
+                        markFieldAsTouched("service_interest");
+                      }}
                     >
-                      <SelectTrigger className="border-gray-300">
+                      <SelectTrigger
+                        aria-invalid={getFieldState("service_interest") === "invalid"}
+                        className={getFieldClasses(getFieldState("service_interest"))}
+                      >
                         <SelectValue placeholder={t.form.selectService} />
                       </SelectTrigger>
                       <SelectContent>
@@ -171,9 +236,11 @@ const Contact = memo(function Contact({ transparent = false }) {
                       maxLength={2000}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onBlur={() => markFieldAsTouched("message")}
+                      aria-invalid={getFieldState("message") === "invalid"}
                       placeholder={t.form.messagePlaceholder}
                       rows={5}
-                      className="border-gray-300 resize-none"
+                      className={`${getFieldClasses(getFieldState("message"))} resize-none`}
                     />
                   </div>
 
