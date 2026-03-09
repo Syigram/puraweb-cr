@@ -233,7 +233,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.p
               className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               {t.description}
             </motion.p>
