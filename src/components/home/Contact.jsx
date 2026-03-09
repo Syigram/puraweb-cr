@@ -147,6 +147,11 @@ const Contact = memo(function Contact({ transparent = false }) {
 
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
+      <style>{`
+        @keyframes autofillDetected { from {} to {} }
+        input:-webkit-autofill { animation-name: autofillDetected; animation-duration: 1ms; }
+        input:-webkit-autofill:focus { animation-name: autofillDetected; animation-duration: 1ms; }
+      `}</style>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
@@ -167,7 +172,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                   </Alert>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">{t.form.name} *</Label>
