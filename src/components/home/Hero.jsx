@@ -265,7 +265,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="grid grid-cols-3 gap-4 md:gap-6"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
