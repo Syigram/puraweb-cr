@@ -79,20 +79,20 @@ const Typewriter = memo(({ words }) => {
   );
 });
 
-// Floating cards animation - smooth infinite float (opposite directions)
+// Floating cards — subtle movement, GPU-friendly (translate only)
 const floatAnimationUp = {
-  y: [0, -100, 0],
+  y: [0, -18, 0],
   transition: {
-    duration: 1.8,
+    duration: 3.5,
     repeat: Infinity,
     ease: "easeInOut"
   }
 };
 
 const floatAnimationDown = {
-  y: [0, 100, 0],
+  y: [0, 18, 0],
   transition: {
-    duration: 2,
+    duration: 4,
     repeat: Infinity,
     ease: "easeInOut"
   }
@@ -175,12 +175,13 @@ const heroContainer = {
 const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
 const heroItem = {
-  hidden: { opacity: 0, y: isMobile ? 16 : 24 },
+  hidden: { opacity: 0, y: isMobile ? 16 : 24, filter: "blur(6px)" },
   visible: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
-      duration: isMobile ? 0.45 : 0.65,
+      duration: isMobile ? 0.5 : 0.65,
       ease: [0.25, 0.46, 0.45, 0.94]
     }
   }
