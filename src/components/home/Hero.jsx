@@ -76,9 +76,15 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span>
-      {text}
-      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+    <span className="relative inline-grid align-top">
+      <span className="invisible whitespace-nowrap">
+        {longestWord}
+        <span className="ml-1 inline-block">&nbsp;</span>
+      </span>
+      <span className="absolute inset-0 whitespace-nowrap">
+        {text}
+        <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+      </span>
     </span>
   );
 });
