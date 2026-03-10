@@ -303,10 +303,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="block w-full min-h-[1.2em]">
-                <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                  <Typewriter words={t.typewriterWords || [t.title2]} />
-                </span>
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+                <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
 
