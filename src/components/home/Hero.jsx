@@ -288,7 +288,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
       </div>
 
-      <div className="relative mx-auto px-6 py-32 lg:py-40 lg:max-w-6xl xl:max-w-7xl">
+      <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* LEFT — stagger en cascada al montar */}
