@@ -107,7 +107,8 @@ const DesktopHeroVisual = memo(({ language }) => {
   
   return (
     <div className="hidden lg:block relative">
-      <div className="relative">
+      {/* Altura fija para que las tarjetas absolutas no colapsen el contenedor */}
+      <div className="relative" style={{ height: "320px" }}>
         {/* Web Development Card - floating animation */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
