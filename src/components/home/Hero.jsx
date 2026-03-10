@@ -195,16 +195,9 @@ const Hero = memo(function Hero({ onGetStarted }) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
       {/* Static background - no animation for faster FCP/LCP */}
-      {/* Static background orbs - will-change:auto keeps them off the compositing layer */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div
-          className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full opacity-10"
-          style={{ filter: "blur(60px)" }}
-        />
-        <div
-          className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full opacity-10"
-          style={{ filter: "blur(60px)" }}
-        />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full blur-2xl md:blur-3xl opacity-10" />
+        <div className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full blur-2xl md:blur-3xl opacity-10" />
       </div>
 
       <motion.div
@@ -298,30 +291,15 @@ const Hero = memo(function Hero({ onGetStarted }) {
         </div>
       </motion.div>
 
-      {/* Scroll indicator - pure CSS, deferred 1.2s so it starts AFTER stagger finishes */}
+      {/* Scroll indicator - CSS only, no extra motion instance */}
       {!prefersReducedMotion && (
         <div
-          className="absolute bottom-10 left-1/2"
-          style={{
-            transform: "translate3d(-50%, 0, 0)",
-            animation: "scrollIndicatorIn 0.5s ease-out 1.2s both"
-          }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          style={{ animation: "heroFadeIn 0.5s ease-out 0.8s both" }}
         >
-          <style>{`
-            @keyframes scrollIndicatorIn {
-              from { opacity: 0; transform: translate3d(-50%, 10px, 0); }
-              to   { opacity: 1; transform: translate3d(-50%, 0px, 0); }
-            }
-            @keyframes scrollDot {
-              0%, 100% { transform: translate3d(0, 0, 0); opacity: 1; }
-              50%       { transform: translate3d(0, 10px, 0); opacity: 0.4; }
-            }
-          `}</style>
+          <style>{`@keyframes heroFadeIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>
           <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
-            <div
-              className="w-1 h-2 bg-blue-900 rounded-full"
-              style={{ animation: "scrollDot 1.4s ease-in-out 1.7s infinite" }}
-            />
+            <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
           </div>
         </div>
       )}
