@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo, useEffect, useRef } from "react";
+import React, { useState, memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,103 +12,20 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
 
-const initialFormData = {
-  name: "",
-  email: "",
-  company: "",
-  phone: "",
-  service_interest: "",
-  message: ""
-};
-
-const initialTouchedFields = {
-  name: false,
-  email: false,
-  company: false,
-  phone: false,
-  service_interest: false,
-  message: false
-};
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const getFieldClasses = (state) => {
-  if (state === "valid") {
-    return "border-green-500 focus-visible:ring-green-500/30";
-  }
-
-  if (state === "invalid") {
-    return "border-red-500 focus-visible:ring-red-500/30";
-  }
-
-  return "border-gray-300 focus-visible:ring-blue-900/30";
-};
-
 const Contact = memo(function Contact({ transparent = false }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
-  const [formData, setFormData] = useState(initialFormData);
-  const [touchedFields, setTouchedFields] = useState(initialTouchedFields);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    service_interest: "",
+    message: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
-
-  const fieldValidation = useMemo(() => {
-    const sanitizedName = sanitizeInput(formData.name);
-    const sanitizedEmailValue = sanitizeEmail(formData.email);
-    const sanitizedCompany = sanitizeInput(formData.company);
-    const sanitizedPhoneValue = sanitizePhone(formData.phone);
-    const phoneDigits = sanitizedPhoneValue.replace(/\D/g, "");
-    const sanitizedMessage = sanitizeInput(formData.message);
-
-    return {
-      name: sanitizedName.length >= 2,
-      email: emailRegex.test(sanitizedEmailValue),
-      company: formData.company.trim() === "" ? null : sanitizedCompany.length >= 2,
-      phone: formData.phone.trim() === "" ? null : phoneDigits.length >= 8,
-      service_interest: formData.service_interest === "" ? null : true,
-      message: sanitizedMessage.length >= 10
-    };
-  }, [formData]);
-
-  const getFieldState = (fieldName) => {
-    if (!touchedFields[fieldName]) return "neutral";
-
-    const value = fieldValidation[fieldName];
-    if (value === true) return "valid";
-    if (value === false) return "invalid";
-    return "neutral";
-  };
-
-  const markFieldAsTouched = (fieldName) => {
-    setTouchedFields((prev) => (prev[fieldName] ? prev : { ...prev, [fieldName]: true }));
-  };
-
-  // Detect autofill via animationstart on :-webkit-autofill (works in all modern browsers)
-  const formRef = useRef(null);
-  useEffect(() => {
-    const form = formRef.current;
-    if (!form) return;
-
-    const handleAnimationStart = (e) => {
-      if (e.animationName === "autofillDetected") {
-        const fieldName = e.target.name || e.target.id;
-        if (fieldName && fieldName in initialTouchedFields) {
-          // Sync value into state then mark as touched
-          const value = e.target.value;
-          setFormData((prev) => {
-            if (prev[fieldName] === value) return prev;
-            return { ...prev, [fieldName]: value };
-          });
-          markFieldAsTouched(fieldName);
-        }
-      }
-    };
-
-    form.addEventListener("animationstart", handleAnimationStart, true);
-    return () => form.removeEventListener("animationstart", handleAnimationStart, true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,8 +52,14 @@ const Contact = memo(function Contact({ transparent = false }) {
       }
 
       setIsSuccess(true);
-      setFormData(initialFormData);
-      setTouchedFields(initialTouchedFields);
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        phone: "",
+        service_interest: "",
+        message: ""
+      });
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
       setError(t.form.errorMessage);
@@ -147,11 +70,6 @@ const Contact = memo(function Contact({ transparent = false }) {
 
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
-      <style>{`
-        @keyframes autofillDetected { from {} to {} }
-        input:-webkit-autofill { animation-name: autofillDetected; animation-duration: 1ms; }
-        input:-webkit-autofill:focus { animation-name: autofillDetected; animation-duration: 1ms; }
-      `}</style>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
@@ -172,39 +90,31 @@ const Contact = memo(function Contact({ transparent = false }) {
                   </Alert>
                 )}
 
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">{t.form.name} *</Label>
                       <Input
                         id="name"
-                        name="name"
-                        autoComplete="name"
                         required
                         maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        onBlur={() => markFieldAsTouched("name")}
-                        aria-invalid={getFieldState("name") === "invalid"}
                         placeholder="Nombre Completo"
-                        className={getFieldClasses(getFieldState("name"))}
+                        className="border-gray-300"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">{t.form.email} *</Label>
                       <Input
                         id="email"
-                        name="email"
                         type="email"
-                        autoComplete="email"
                         required
                         maxLength={150}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        onBlur={() => markFieldAsTouched("email")}
-                        aria-invalid={getFieldState("email") === "invalid"}
                         placeholder="nombre@example.com"
-                        className={getFieldClasses(getFieldState("email"))}
+                        className="border-gray-300"
                       />
                     </div>
                   </div>
@@ -214,31 +124,23 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
-                        name="company"
-                        autoComplete="organization"
                         maxLength={100}
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        onBlur={() => markFieldAsTouched("company")}
-                        aria-invalid={getFieldState("company") === "invalid"}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
-                        className={getFieldClasses(getFieldState("company"))}
+                        className="border-gray-300"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">{t.form.phone}</Label>
                       <Input
                         id="phone"
-                        name="phone"
                         type="tel"
-                        autoComplete="tel"
                         maxLength={20}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        onBlur={() => markFieldAsTouched("phone")}
-                        aria-invalid={getFieldState("phone") === "invalid"}
                         placeholder="+506 8402 7214"
-                        className={getFieldClasses(getFieldState("phone"))}
+                        className="border-gray-300"
                       />
                     </div>
                   </div>
@@ -247,15 +149,9 @@ const Contact = memo(function Contact({ transparent = false }) {
                     <Label htmlFor="service">{t.form.service}</Label>
                     <Select
                       value={formData.service_interest}
-                      onValueChange={(value) => {
-                        setFormData({ ...formData, service_interest: value });
-                        markFieldAsTouched("service_interest");
-                      }}
+                      onValueChange={(value) => setFormData({ ...formData, service_interest: value })}
                     >
-                      <SelectTrigger
-                        aria-invalid={getFieldState("service_interest") === "invalid"}
-                        className={getFieldClasses(getFieldState("service_interest"))}
-                      >
+                      <SelectTrigger className="border-gray-300">
                         <SelectValue placeholder={t.form.selectService} />
                       </SelectTrigger>
                       <SelectContent>
@@ -275,11 +171,9 @@ const Contact = memo(function Contact({ transparent = false }) {
                       maxLength={2000}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      onBlur={() => markFieldAsTouched("message")}
-                      aria-invalid={getFieldState("message") === "invalid"}
                       placeholder={t.form.messagePlaceholder}
                       rows={5}
-                      className={`${getFieldClasses(getFieldState("message"))} resize-none`}
+                      className="border-gray-300 resize-none"
                     />
                   </div>
 

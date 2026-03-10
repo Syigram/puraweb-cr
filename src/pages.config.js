@@ -59,14 +59,14 @@ import Planes from './pages/Planes';
 import Politicas from './pages/Politicas';
 import PoliticasPrivacidad from './pages/PoliticasPrivacidad';
 import Portafolio from './pages/Portafolio';
-import PortafolioExpandible from './pages/PortafolioExpandible';
-import PortafolioGrid from './pages/PortafolioGrid';
-import PortafolioLista from './pages/PortafolioLista';
-import PortafolioModal from './pages/PortafolioModal';
 import Servicios from './pages/Servicios';
 import Support from './pages/Support';
 import TerminosCondiciones from './pages/TerminosCondiciones';
 import UserDashboard from './pages/UserDashboard';
+import PortafolioModal from './pages/PortafolioModal';
+import PortafolioExpandible from './pages/PortafolioExpandible';
+import PortafolioGrid from './pages/PortafolioGrid';
+import PortafolioLista from './pages/PortafolioLista';
 import __Layout from './Layout.jsx';
 
 
@@ -83,14 +83,14 @@ export const PAGES = {
     "Politicas": Politicas,
     "PoliticasPrivacidad": PoliticasPrivacidad,
     "Portafolio": Portafolio,
-    "PortafolioExpandible": PortafolioExpandible,
-    "PortafolioGrid": PortafolioGrid,
-    "PortafolioLista": PortafolioLista,
-    "PortafolioModal": PortafolioModal,
     "Servicios": Servicios,
     "Support": Support,
     "TerminosCondiciones": TerminosCondiciones,
     "UserDashboard": UserDashboard,
+    "PortafolioModal": PortafolioModal,
+    "PortafolioExpandible": PortafolioExpandible,
+    "PortafolioGrid": PortafolioGrid,
+    "PortafolioLista": PortafolioLista,
 }
 
 export const pagesConfig = {
