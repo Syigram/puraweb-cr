@@ -83,7 +83,7 @@ const Typewriter = memo(({ words }) => {
     <span className="relative inline-block align-top whitespace-nowrap" style={{ minWidth: reservedWidth }}>
       <span className="invisible select-none">{longestWord || '\u00A0'}</span>
       <span className="absolute inset-0 inline-flex items-center whitespace-nowrap">
-        <span>{text || '\u00A0'}</span>
+        <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">{text || '\u00A0'}</span>
         <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
       </span>
     </span>
