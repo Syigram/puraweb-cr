@@ -72,12 +72,9 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span className="relative inline-block">
+    <span>
       {text}
-      <span
-        className="border-r-2 border-red-600 animate-pulse"
-        style={{ display: "inline-block", width: "2px", marginLeft: "3px", verticalAlign: "text-bottom", height: "0.85em" }}
-      />
+      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
   );
 });
@@ -231,10 +228,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span
-                className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent"
-                style={{ display: "block", minHeight: "1.2em", overflow: "hidden", whiteSpace: "nowrap" }}
-              >
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </h1>
@@ -309,10 +303,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span
-                className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent"
-                style={{ display: "block", minHeight: "1.2em", overflow: "hidden", whiteSpace: "nowrap" }}
-              >
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
