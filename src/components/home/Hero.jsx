@@ -76,8 +76,8 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span>
-      {text}
+    <span className="inline-flex items-center whitespace-nowrap" style={{ minWidth: reservedWidth }}>
+      <span>{text}</span>
       <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
   );
