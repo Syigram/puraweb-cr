@@ -292,17 +292,18 @@ const Hero = memo(function Hero({ onGetStarted }) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* LEFT — stagger en cascada al montar */}
-          <motion.div variants={heroContainer} initial="hidden" animate="visible" className="w-full min-w-0">
+          <motion.div variants={heroContainer} initial="hidden" animate="visible">
             <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
             </motion.div>
 
-            <motion.h1 variants={heroItem} className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight w-full">
-              <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent block">
+            <motion.h1 variants={heroItem} className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
               </span>
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent block min-h-[1.2em] w-full">
+              <br />
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
