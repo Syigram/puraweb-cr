@@ -165,24 +165,19 @@ const heroContainer = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.10,
-      delayChildren: 0.05,
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
     }
   }
 };
 
-// Detect mobile once at module level to avoid per-render checks
-const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
 const heroItem = {
-  hidden: { opacity: 0, y: isMobile ? 16 : 24 },
+  hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: isMobile ? 0.45 : 0.65,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    }
+    filter: "blur(0px)",
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -211,7 +206,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="inline-flex items-center gap-2 bg-white/75 backdrop-blur-md text-blue-900 px-4 py-2 rounded-full mb-6 shadow-sm ring-1 ring-blue-900/10"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
@@ -220,7 +214,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
@@ -234,7 +227,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.p
               className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               {t.description}
             </motion.p>
@@ -242,7 +234,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <Button
                 onClick={onGetStarted}
@@ -268,7 +259,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
             <motion.div
               className="grid grid-cols-3 gap-4 md:gap-6"
               variants={prefersReducedMotion ? undefined : heroItem}
-              style={{ willChange: "transform, opacity" }}
             >
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
@@ -291,18 +281,17 @@ const Hero = memo(function Hero({ onGetStarted }) {
         </div>
       </motion.div>
 
-      {/* Scroll indicator - CSS only, no extra motion instance */}
-      {!prefersReducedMotion && (
-        <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          style={{ animation: "heroFadeIn 0.5s ease-out 0.8s both" }}
-        >
-          <style>{`@keyframes heroFadeIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>
-          <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
-            <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
-          </div>
+      {/* Simplified scroll indicator with CSS animation */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+        animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+        transition={prefersReducedMotion ? undefined : { delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="w-6 h-10 border-2 border-blue-900/70 rounded-full flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm">
+          <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
         </div>
-      )}
+      </motion.div>
     </section>
   );
 });
