@@ -107,8 +107,7 @@ const DesktopHeroVisual = memo(({ language }) => {
   
   return (
     <div className="hidden lg:block relative">
-      {/* Altura fija para que las tarjetas absolutas no colapsen el contenedor */}
-      <div className="relative" style={{ height: "320px" }}>
+      <div className="relative">
         {/* Web Development Card - floating animation */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
@@ -304,8 +303,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              {/* Altura fija para evitar layout shift durante el typewriter */}
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent block" style={{ minHeight: "1.25em", height: "1.25em" }}>
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
