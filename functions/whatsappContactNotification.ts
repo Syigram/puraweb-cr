@@ -48,15 +48,15 @@ Deno.serve(async (req) => {
             components: [
               {
                 type: 'header', 
-                parameters: [{ type: 'text', text: 'PuraWeb CR' }]
+                parameters: [{ type: 'text', parameter_name: "titulo", text: 'PuraWeb CR' }]
               },
               {
                 type: 'body',
                 parameters: [
-                  { type: 'text', text: name },
-                  { type: 'text', text: phone || 'No proporcionado' },
-                  { type: 'text', text: email },
-                  { type: 'text', text: message }
+                  { type: 'text', parameter_name: "nombre", text: name },
+                  { type: 'text', parameter_name: "telefono", text: phone || 'No proporcionado' },
+                  { type: 'text', parameter_name: "correo", text: email },
+                  { type: 'text', parameter_name: "mensaje", text: message }
                 ]
               }
             ]

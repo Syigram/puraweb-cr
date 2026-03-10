@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo, useCallback, useEffect } from "react";
+import React, { useState, memo, useMemo, useCallback } from "react";
 import { Check, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -7,24 +7,8 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { motion, useReducedMotion } from "framer-motion";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.1 }
-  }
-};
+import { motion } from "framer-motion";
+import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
 const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularText, hasUserSelected, promoLabel }) => {
   const isHighlighted = isSelected || (plan.recommended && !hasUserSelected);
@@ -110,13 +94,10 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
   const navigate = useNavigate();
   const t = useMemo(() => translations[language].pricing, [language]);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const timer = requestAnimationFrame(() => setIsVisible(true));
-    return () => cancelAnimationFrame(timer);
-  }, []);
+  const { ref: headerRef, isInView: headerInView } = useScrollReveal();
+  const { ref: gridRef, isInView: gridInView } = useScrollReveal();
+  const { ref: featuresRef, isInView: featuresInView } = useScrollReveal();
 
   const handlePlanSelect = useCallback((planId) => {
     navigate(createPageUrl(`Checkout?plan=${planId}`));
@@ -129,48 +110,60 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
   const plans = t.plans || [];
 
   return (
-    <section id="pricing" className={`${compact ? 'pt-20 pb-8' : 'pt-20 pb-8'} bg-white relative overflow-hidden`}>
+    <section id="pricing" className="pt-20 pb-8 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white pointer-events-none" aria-hidden="true" />
 
       <div className="relative max-w-7xl mx-auto px-6">
-        <motion.div 
+
+        {/* Header */}
+        <motion.div
+          ref={headerRef}
           className="text-center mb-16"
-          variants={staggerContainer}
+          variants={staggerContainer(0.12)}
           initial="hidden"
-          animate={isVisible && !prefersReducedMotion ? "visible" : "hidden"}
+          animate={headerInView ? "visible" : "hidden"}
         >
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
-            variants={fadeInUp}
-          >
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
               {t.title}
             </span>
           </motion.h2>
-          <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
-            variants={fadeInUp}
-          >
+          <motion.p variants={fadeUp} className="text-xl text-gray-600 max-w-2xl mx-auto">
             {t.subtitle}
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Cards */}
+        <motion.div
+          ref={gridRef}
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          animate={gridInView ? "visible" : "hidden"}
+        >
           {plans.map((plan) => (
-            <PricingCard
-              key={plan.name}
-              plan={plan}
-              isSelected={selectedPlan === plan.name}
-              onSelect={handleCardClick}
-              onNavigate={handlePlanSelect}
-              mostPopularText={t.mostPopular}
-              hasUserSelected={selectedPlan !== null}
-              promoLabel={t.promoLabel}
-            />
+            <motion.div key={plan.name} variants={cardReveal}>
+              <PricingCard
+                plan={plan}
+                isSelected={selectedPlan === plan.name}
+                onSelect={handleCardClick}
+                onNavigate={handlePlanSelect}
+                mostPopularText={t.mostPopular}
+                hasUserSelected={selectedPlan !== null}
+                promoLabel={t.promoLabel}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-12">
+        {/* Common features */}
+        <motion.div
+          ref={featuresRef}
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <p className="text-gray-700 font-medium mb-4">{t.additionalInfo}</p>
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 max-w-4xl mx-auto">
             {t.commonFeatures?.map((feature, idx) => (
@@ -182,7 +175,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
