@@ -106,18 +106,18 @@ const DesktopHeroVisual = memo(({ language }) => {
   if (!isDesktop) return null;
   
   return (
-    <div className="hidden lg:block relative">
-      <div className="relative">
+    <div className="hidden lg:flex relative w-full h-[500px] items-center justify-center">
+      <div className="relative w-full max-w-[450px] h-full flex items-center justify-center">
         {/* Web Development Card - floating animation */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="absolute top-0 right-0"
+          className="absolute top-8 right-0 z-10"
         >
           <motion.div
             animate={floatAnimationUp}
-            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300 w-64"
           >
             <Globe className="w-12 h-12 text-blue-900 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -134,11 +134,11 @@ const DesktopHeroVisual = memo(({ language }) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="absolute bottom-0 left-0"
+          className="absolute bottom-8 left-0 z-10"
         >
           <motion.div
             animate={floatAnimationDown}
-            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300 w-64"
           >
             <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -151,9 +151,11 @@ const DesktopHeroVisual = memo(({ language }) => {
         </motion.div>
 
         {/* Central circle */}
-        <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
-          <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
-            <Sparkles className="w-20 h-20 text-blue-900" />
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-72 h-72 bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
+            <div className="w-64 h-64 bg-white rounded-full flex items-center justify-center">
+              <Sparkles className="w-24 h-24 text-blue-900" />
+            </div>
           </div>
         </div>
       </div>
@@ -228,7 +230,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[2.5em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </h1>
@@ -292,7 +294,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* LEFT — stagger en cascada al montar */}
-          <motion.div variants={heroContainer} initial="hidden" animate="visible">
+          <motion.div variants={heroContainer} initial="hidden" animate="visible" className="min-w-0">
             <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
@@ -303,7 +305,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[2.5em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
