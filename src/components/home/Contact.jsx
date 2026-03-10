@@ -1,6 +1,4 @@
 import React, { useState, memo, useMemo } from "react";
-import { motion } from "framer-motion";
-import { useScrollReveal, slideInLeft, slideInRight } from "@/components/animations/useScrollReveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,19 +68,11 @@ const Contact = memo(function Contact({ transparent = false }) {
     }
   };
 
-  const { ref: formRef, isInView: formInView } = useScrollReveal();
-  const { ref: infoRef, isInView: infoInView } = useScrollReveal();
-
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
-          <motion.div
-            ref={formRef}
-            variants={slideInLeft}
-            initial="hidden"
-            animate={formInView ? "visible" : "hidden"}
-          >
+          <div>
             <Card className="border-0 shadow-xl">
               <CardContent className="p-8">
                 {isSuccess && (
@@ -204,16 +194,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                 </form>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            ref={infoRef}
-            className="space-y-8"
-            variants={slideInRight}
-            initial="hidden"
-            animate={infoInView ? "visible" : "hidden"}
-          >
+          <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.getInTouch}</h3>
               <p className="text-gray-600 leading-relaxed mb-8">
@@ -254,7 +238,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

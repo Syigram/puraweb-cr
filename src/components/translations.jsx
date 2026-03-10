@@ -12,9 +12,9 @@ export const translations = {
       title1: "Transforma Tu",
       title2: "Presencia Digital",
       typewriterWords: ["Presencia Digital", "Sitio Web Único", "Tienda Online", "Identidad Web"],
-      description: "Somos un equipo de costarricenses que construye el futuro digital de Costa Rica. Creamos sitios web premium con la pasión y rapidez que su negocio necesita para liderar.",
+      description: "Creamos sitios web impresionantes y plataformas de comercio electrónico poderosas que ayudan a las empresas en Costa Rica a prosperar en el mundo digital. Desde el concepto hasta el lanzamiento, entregamos excelencia.",
       getStarted: "Comenzar",
-      portfolioCta: "Ver nuestro portafolio",
+      viewPlans: "Ver Planes",
       stat1: "Proyectos Entregados",
       stat2: "Satisfacción del Cliente",
       stat3: "Soporte Disponible"
@@ -388,9 +388,9 @@ export const translations = {
       title1: "Transform Your",
       title2: "Digital Presence",
       typewriterWords: ["Digital Presence", "Unique Website", "Online Store", "Web Identity"],
-      description: "We are a team of Costa Ricans building the digital future of Costa Rica. We create premium websites with the passion and speed your business needs to lead.",
+      description: "We craft stunning websites and powerful e-commerce platforms that help businesses in Costa Rica thrive in the digital world. From concept to launch, we deliver excellence.",
       getStarted: "Get Started",
-      portfolioCta: "View our portfolio",
+      viewPlans: "View Plans",
       stat1: "Projects Delivered",
       stat2: "Client Satisfaction",
       stat3: "Support Available"

@@ -1,12 +1,10 @@
 import React, { memo, useMemo } from "react";
-import { motion } from "framer-motion";
 import { Target, Users, Award, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
-import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
 const BenefitCard = memo(({ icon: Icon, title, description }) => (
-  <motion.div variants={cardReveal}>
+  <div className="group">
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-200">
       <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mb-6">
         <Icon className="w-7 h-7 text-white" />
@@ -14,15 +12,12 @@ const BenefitCard = memo(({ icon: Icon, title, description }) => (
       <h3 className="text-2xl font-bold mb-3">{title}</h3>
       <p className="text-blue-200 leading-relaxed">{description}</p>
     </div>
-  </motion.div>
+  </div>
 ));
 
 const Benefits = memo(function Benefits() {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].benefits, [language]);
-
-  const { ref: headerRef, isInView: headerInView } = useScrollReveal();
-  const { ref: gridRef, isInView: gridInView } = useScrollReveal();
 
   const benefits = useMemo(() => [
     { icon: Target, title: t.resultsDriven.title, description: t.resultsDriven.description },
@@ -33,6 +28,7 @@ const Benefits = memo(function Benefits() {
 
   return (
     <section id="benefits" className="py-24 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950 text-white relative overflow-hidden">
+      {/* Simplified background pattern */}
       <div 
         className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
@@ -43,31 +39,16 @@ const Benefits = memo(function Benefits() {
       />
 
       <div className="relative max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">{t.title}</h2>
+          <p className="text-xl text-blue-200 max-w-2xl mx-auto">{t.subtitle}</p>
+        </div>
 
-        {/* Header */}
-        <motion.div
-          ref={headerRef}
-          className="text-center mb-16"
-          variants={staggerContainer(0.12)}
-          initial="hidden"
-          animate={headerInView ? "visible" : "hidden"}
-        >
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold mb-4">{t.title}</motion.h2>
-          <motion.p variants={fadeUp} className="text-xl text-blue-200 max-w-2xl mx-auto">{t.subtitle}</motion.p>
-        </motion.div>
-
-        {/* Cards */}
-        <motion.div
-          ref={gridRef}
-          className="grid md:grid-cols-2 gap-8"
-          variants={staggerContainer(0.1)}
-          initial="hidden"
-          animate={gridInView ? "visible" : "hidden"}
-        >
+        <div className="grid md:grid-cols-2 gap-8">
           {benefits.map((benefit, index) => (
             <BenefitCard key={index} {...benefit} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

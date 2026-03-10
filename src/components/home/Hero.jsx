@@ -1,6 +1,4 @@
 import React, { useState, useEffect, memo, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
@@ -161,69 +159,28 @@ const DesktopHeroVisual = memo(({ language }) => {
   );
 });
 
-// Stagger variants para la entrada del Hero — solo desktop
-const heroContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.13, delayChildren: 0.1 }
-  }
-};
-
-const heroItem = {
-  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const heroVisualVariant = {
-  hidden: { opacity: 0, x: 40, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }
-  }
-};
-
-// CSS-only fade-in for mobile (no JS animation cost)
-const mobileFadeInStyle = {
-  animation: "heroFadeIn 0.6s ease-out both"
-};
-
 // Memoized Hero component for maximum performance
 const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].hero, [language]);
-  const isDesktop = useIsDesktop();
+  
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+      {/* Static background - no animation for faster FCP/LCP */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full blur-2xl md:blur-3xl opacity-10" />
+        <div className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full blur-2xl md:blur-3xl opacity-10" />
+      </div>
 
-  // Mobile: pure CSS fade-in, no Framer Motion overhead
-  if (!isDesktop) {
-    return (
-      <>
-        <style>{`
-          @keyframes heroFadeIn {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-20 right-10 w-72 h-72 bg-blue-900 rounded-full blur-2xl opacity-10" />
-            <div className="absolute bottom-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-2xl opacity-10" />
-          </div>
-
-          <div className="relative max-w-7xl mx-auto px-6 py-24" style={mobileFadeInStyle}>
+      <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-40">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div>
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
               </span>
@@ -233,141 +190,60 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </span>
             </h1>
 
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
               {t.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12">
               <Button
                 onClick={onGetStarted}
                 size="lg"
-                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base px-6 py-5 shadow-xl"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base md:text-lg px-6 md:px-8 py-5 md:py-6 shadow-xl hover:shadow-2xl transition-shadow"
               >
                 {t.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
-                asChild
+                onClick={() => {
+                  const el = document.getElementById("pricing");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
                 size="lg"
                 variant="outline"
-                className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-base px-6 py-5 shadow-sm"
+                className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6"
               >
-                <Link to={createPageUrl("Portafolio")}>
-                  {t.portfolioCta}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
+                {t.viewPlans}
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            {/* Static stats - no CountUp animation for faster render */}
+            <div className="grid grid-cols-3 gap-4 md:gap-6">
               <div>
-                <div className="text-2xl font-bold text-blue-900 mb-1">150+</div>
-                <div className="text-xs text-gray-600">{t.stat1}</div>
+                <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
+                <div className="text-xs md:text-sm text-gray-600">{t.stat1}</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-900 mb-1">98%</div>
-                <div className="text-xs text-gray-600">{t.stat2}</div>
+                <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">98%</div>
+                <div className="text-xs md:text-sm text-gray-600">{t.stat2}</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-900 mb-1">24/7</div>
-                <div className="text-xs text-gray-600">{t.stat3}</div>
+                <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">24/7</div>
+                <div className="text-xs md:text-sm text-gray-600">{t.stat3}</div>
               </div>
             </div>
           </div>
-        </section>
-      </>
-    );
-  }
 
-  // Desktop: full Framer Motion animations
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      {/* Static background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-          {/* LEFT — stagger en cascada al montar */}
-          <motion.div variants={heroContainer} initial="hidden" animate="visible">
-            <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">{t.badge}</span>
-            </motion.div>
-
-            <motion.h1 variants={heroItem} className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
-                {t.title1}
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block min-w-[18rem] lg:min-w-[22rem] xl:min-w-[28rem]">
-                <Typewriter words={t.typewriterWords || [t.title2]} />
-              </span>
-            </motion.h1>
-
-            <motion.p variants={heroItem} className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-              {t.description}
-            </motion.p>
-
-            <motion.div variants={heroItem} className="flex flex-row gap-4 mb-12">
-              <Button
-                onClick={onGetStarted}
-                size="lg"
-                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-shadow"
-              >
-                {t.getStarted}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-lg px-8 py-6 shadow-sm"
-              >
-                <Link to={createPageUrl("Portafolio")}>
-                  {t.portfolioCta}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </Button>
-            </motion.div>
-
-            <motion.div variants={heroItem} className="grid grid-cols-3 gap-6">
-              <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
-                <div className="text-sm text-gray-600">{t.stat1}</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
-                <div className="text-sm text-gray-600">{t.stat2}</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
-                <div className="text-sm text-gray-600">{t.stat3}</div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* RIGHT — entra desde la derecha con delay */}
-          <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
-            <DesktopHeroVisual language={language} />
-          </motion.div>
+          {/* Desktop visual with animations - only renders on lg+ screens */}
+          <DesktopHeroVisual language={language} />
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
-      >
+      {/* Simplified scroll indicator with CSS animation */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2">
           <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 });
