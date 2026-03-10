@@ -292,7 +292,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* LEFT — stagger en cascada al montar */}
-          <motion.div variants={heroContainer} initial="hidden" animate="visible" className="max-w-2xl">
+          <motion.div variants={heroContainer} initial="hidden" animate="visible" className="w-full lg:max-w-3xl xl:max-w-4xl">
             <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
