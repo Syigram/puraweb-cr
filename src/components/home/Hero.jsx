@@ -195,9 +195,16 @@ const Hero = memo(function Hero({ onGetStarted }) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
       {/* Static background - no animation for faster FCP/LCP */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full blur-2xl md:blur-3xl opacity-10" />
-        <div className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full blur-2xl md:blur-3xl opacity-10" />
+      {/* Static background orbs - will-change:auto keeps them off the compositing layer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full opacity-10"
+          style={{ filter: "blur(60px)" }}
+        />
+        <div
+          className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full opacity-10"
+          style={{ filter: "blur(60px)" }}
+        />
       </div>
 
       <motion.div
