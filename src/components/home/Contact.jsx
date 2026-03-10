@@ -204,9 +204,6 @@ const Contact = memo(function Contact({ transparent = false }) {
                 </form>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Close form motion.div */}
           </motion.div>
 
           {/* Contact Info */}
