@@ -1,4 +1,6 @@
 import React, { useState, memo, useMemo } from "react";
+import { motion } from "framer-motion";
+import { useScrollReveal, slideInLeft, slideInRight } from "@/components/animations/useScrollReveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
