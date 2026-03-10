@@ -161,7 +161,11 @@ const DesktopHeroVisual = memo(({ language }) => {
   );
 });
 
-const heroContainer = {
+// Detect mobile once at module level — avoids per-render checks
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 1024;
+
+// Desktop: full blur+opacity+y premium animation
+const heroContainerDesktop = {
   hidden: {},
   visible: {
     transition: {
@@ -171,7 +175,7 @@ const heroContainer = {
   }
 };
 
-const heroItem = {
+const heroItemDesktop = {
   hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
   visible: {
     opacity: 1,
@@ -180,6 +184,29 @@ const heroItem = {
     transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
   }
 };
+
+// Mobile: NO blur — only opacity+y. GPU-friendly, smooth on any phone.
+const heroContainerMobile = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    }
+  }
+};
+
+const heroItemMobile = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+const heroContainer = isMobileDevice ? heroContainerMobile : heroContainerDesktop;
+const heroItem = isMobileDevice ? heroItemMobile : heroItemDesktop;
 
 // Memoized Hero component for maximum performance
 const Hero = memo(function Hero({ onGetStarted }) {
