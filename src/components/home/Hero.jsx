@@ -334,7 +334,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </Button>
             </motion.div>
 
-            <motion.div variants={heroItem} className="grid grid-cols-3 gap-6">
+            <motion.div variants={heroItem} className="grid grid-cols-3 gap-6 w-full max-w-sm">
               <div>
                 <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
                 <div className="text-sm text-gray-600">{t.stat1}</div>
