@@ -206,8 +206,17 @@ const Contact = memo(function Contact({ transparent = false }) {
             </Card>
           </div>
 
+          {/* Close form motion.div */}
+          </motion.div>
+
           {/* Contact Info */}
-          <div className="space-y-8">
+          <motion.div
+            ref={infoRef}
+            className="space-y-8"
+            variants={slideInRight}
+            initial="hidden"
+            animate={infoInView ? "visible" : "hidden"}
+          >
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.getInTouch}</h3>
               <p className="text-gray-600 leading-relaxed mb-8">
