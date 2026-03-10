@@ -71,23 +71,10 @@ const Typewriter = memo(({ words }) => {
     return () => clearTimeout(timer);
   }, [text, isDeleting, wordIndex, words, isReady]);
 
-  // Find the longest word to reserve its space (prevents layout shift)
-  const longestWord = useMemo(() => 
-    words.reduce((a, b) => a.length > b.length ? a : b, ''),
-    [words]
-  );
-
   return (
-    <span className="relative inline-block align-top">
-      {/* Invisible longest word to reserve height/width — prevents layout shift */}
-      <span className="invisible whitespace-pre-wrap" aria-hidden="true">
-        {longestWord}
-      </span>
-      {/* Visible typewriter text overlaid on top */}
-      <span className="absolute top-0 left-0 whitespace-pre-wrap">
-        {text}
-        <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
-      </span>
+    <span>
+      {text}
+      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
   );
 });
@@ -241,7 +228,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </h1>
@@ -316,7 +303,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
