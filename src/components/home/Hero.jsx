@@ -38,6 +38,10 @@ const Typewriter = memo(({ words }) => {
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const reservedWidth = useMemo(
+    () => `${Math.max(...words.map((word) => word.length), 0) + 2}ch`,
+    [words]
+  );
 
   // Defer typewriter animation until after initial paint
   useEffect(() => {
