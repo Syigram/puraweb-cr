@@ -161,24 +161,6 @@ const DesktopHeroVisual = memo(({ language }) => {
   );
 });
 
-// CSS-only entrance animation styles (no framer-motion overhead on Hero mount)
-const heroEntranceStyles = `
-@keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes heroFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.hero-item-1 { animation: heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
-.hero-item-2 { animation: heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.18s both; }
-.hero-item-3 { animation: heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
-.hero-item-4 { animation: heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.42s both; }
-.hero-item-5 { animation: heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.54s both; }
-.hero-visual  { animation: heroFadeIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
-`;
-
 // Memoized Hero component for maximum performance
 const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
@@ -186,10 +168,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
   
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      {/* Inject CSS-only animations — zero JS overhead */}
-      <style>{heroEntranceStyles}</style>
-
-      {/* Static background blobs */}
+      {/* Static background - no animation for faster FCP/LCP */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-blue-900 rounded-full blur-2xl md:blur-3xl opacity-10" />
         <div className="absolute bottom-20 left-10 w-72 md:w-96 h-72 md:h-96 bg-red-600 rounded-full blur-2xl md:blur-3xl opacity-10" />
@@ -198,13 +177,12 @@ const Hero = memo(function Hero({ onGetStarted }) {
       <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 lg:py-40">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
-            {/* Each child staggers in independently via CSS */}
-            <div className="hero-item-1 inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t.badge}</span>
             </div>
 
-            <h1 className="hero-item-2 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
               </span>
@@ -214,11 +192,11 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </span>
             </h1>
 
-            <p className="hero-item-3 text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
               {t.description}
             </p>
 
-            <div className="hero-item-4 flex flex-col sm:flex-row gap-4 mb-8 md:mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12">
               <Button
                 onClick={onGetStarted}
                 size="lg"
@@ -240,7 +218,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </Button>
             </div>
 
-            <div className="hero-item-5 grid grid-cols-3 gap-4 md:gap-6">
+            {/* Static stats - no CountUp animation for faster render */}
+            <div className="grid grid-cols-3 gap-4 md:gap-6">
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-blue-900 mb-1">150+</div>
                 <div className="text-xs md:text-sm text-gray-600">{t.stat1}</div>
@@ -256,14 +235,12 @@ const Hero = memo(function Hero({ onGetStarted }) {
             </div>
           </div>
 
-          {/* Desktop visual */}
-          <div className="hero-visual">
-            <DesktopHeroVisual language={language} />
-          </div>
+          {/* Desktop visual with animations - only renders on lg+ screens */}
+          <DesktopHeroVisual language={language} />
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Simplified scroll indicator with CSS animation */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2">
           <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
