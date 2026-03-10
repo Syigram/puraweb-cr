@@ -274,7 +274,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-2 border-blue-900/20 bg-white/80 backdrop-blur-md text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 shadow-sm"
+                className="border-2 border-blue-900/20 bg-white/95 lg:bg-white/80 lg:backdrop-blur-md text-blue-900 hover:bg-blue-50 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 shadow-sm"
               >
                 <Link to={createPageUrl("Portafolio")}>
                   {t.portfolioCta}
