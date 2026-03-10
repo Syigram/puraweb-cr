@@ -7,12 +7,11 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-// Custom hook to detect desktop screens with throttled resize
 const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(() => 
-    typeof window !== 'undefined' ? window.innerWidth >= 1024 : false
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : false
   );
-  
+
   useEffect(() => {
     let timeoutId = null;
     const checkDesktop = () => {
@@ -22,28 +21,27 @@ const useIsDesktop = () => {
         timeoutId = null;
       }, 150);
     };
-    window.addEventListener('resize', checkDesktop);
+
+    window.addEventListener("resize", checkDesktop);
     return () => {
-      window.removeEventListener('resize', checkDesktop);
+      window.removeEventListener("resize", checkDesktop);
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
-  
+
   return isDesktop;
 };
 
-// Lightweight typewriter - deferred to not block FCP/LCP
 const Typewriter = memo(({ words }) => {
-  const [text, setText] = useState(words[0] || '');
+  const [text, setText] = useState(words[0] || "");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const longestWord = useMemo(
-    () => words.reduce((longest, current) => current.length > longest.length ? current : longest, words[0] || ''),
+    () => words.reduce((longest, current) => current.length > longest.length ? current : longest, words[0] || ""),
     [words]
   );
 
-  // Defer typewriter animation until after initial paint
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 100);
     return () => clearTimeout(timer);
@@ -51,7 +49,7 @@ const Typewriter = memo(({ words }) => {
 
   useEffect(() => {
     if (!isReady) return;
-    
+
     const currentWord = words[wordIndex];
     const speed = isDeleting ? 30 : 100;
 
@@ -62,13 +60,11 @@ const Typewriter = memo(({ words }) => {
         } else {
           setTimeout(() => setIsDeleting(true), 1500);
         }
+      } else if (text.length > 0) {
+        setText(text.slice(0, -1));
       } else {
-        if (text.length > 0) {
-          setText(text.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
-        }
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
       }
     }, speed);
 
@@ -76,17 +72,16 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span className="relative inline-grid align-top">
+    <span className="relative inline-grid align-top max-w-full">
       <span className="invisible whitespace-nowrap pr-3">{longestWord}</span>
-      <span className="absolute inset-0 whitespace-nowrap">
+      <span className="absolute inset-0 whitespace-nowrap max-w-full">
         {text}
         <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
       </span>
     </span>
   );
-});'}](?json) to=functions.find_replace code  പ്രതിഷേധ to=functions.find_replace  天天中彩票是不是json 彩彩票娱乐assistant to=functions.find_replace კომენტary  天天送钱彩票jsonៈ{
+});
 
-// Floating cards animation - smooth infinite float (opposite directions)
 const floatAnimationUp = {
   y: [0, -100, 0],
   transition: {
@@ -105,17 +100,14 @@ const floatAnimationDown = {
   }
 };
 
-// Floating cards component - only rendered on desktop
 const DesktopHeroVisual = memo(({ language }) => {
   const isDesktop = useIsDesktop();
-  
-  // Don't render anything on mobile/tablet - saves memory and CPU
+
   if (!isDesktop) return null;
-  
+
   return (
     <div className="hidden lg:block relative">
       <div className="relative">
-        {/* Web Development Card - floating animation */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -131,12 +123,11 @@ const DesktopHeroVisual = memo(({ language }) => {
               {translations[language].services.webDev.title}
             </h3>
             <p className="text-sm text-gray-600">
-              {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
+              {language === "es" ? "Sitios responsivos personalizados" : "Custom responsive sites"}
             </p>
           </motion.div>
         </motion.div>
 
-        {/* E-commerce Card - floating animation (opposite direction) */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -152,12 +143,11 @@ const DesktopHeroVisual = memo(({ language }) => {
               {translations[language].services.ecommerce.title}
             </h3>
             <p className="text-sm text-gray-600">
-              {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
+              {language === "es" ? "Tiendas en línea poderosas" : "Powerful online stores"}
             </p>
           </motion.div>
         </motion.div>
 
-        {/* Central circle */}
         <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 to-red-600 rounded-full flex items-center justify-center shadow-2xl">
           <div className="w-56 h-56 bg-white rounded-full flex items-center justify-center">
             <Sparkles className="w-20 h-20 text-blue-900" />
@@ -168,7 +158,6 @@ const DesktopHeroVisual = memo(({ language }) => {
   );
 });
 
-// Stagger variants para la entrada del Hero — solo desktop
 const heroContainer = {
   hidden: { opacity: 0 },
   visible: {
@@ -197,25 +186,22 @@ const heroVisualVariant = {
   }
 };
 
-// CSS-only fade-in for mobile (no JS animation cost)
 const mobileFadeInStyle = {
   animation: "heroFadeIn 0.6s ease-out both"
 };
 
-// Memoized Hero component for maximum performance
 const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].hero, [language]);
   const isDesktop = useIsDesktop();
 
-  // Mobile: pure CSS fade-in, no Framer Motion overhead
   if (!isDesktop) {
     return (
       <>
         <style>{`
           @keyframes heroFadeIn {
             from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(0); }
           }
         `}</style>
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
@@ -235,7 +221,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block overflow-x-visible">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </h1>
@@ -286,10 +272,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
     );
   }
 
-  // Desktop: full Framer Motion animations
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-      {/* Static background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
@@ -297,8 +281,6 @@ const Hero = memo(function Hero({ onGetStarted }) {
 
       <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-          {/* LEFT — stagger en cascada al montar */}
           <motion.div variants={heroContainer} initial="hidden" animate="visible">
             <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
@@ -310,7 +292,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block overflow-x-visible">
                 <Typewriter words={t.typewriterWords || [t.title2]} />
               </span>
             </motion.h1>
@@ -357,14 +339,12 @@ const Hero = memo(function Hero({ onGetStarted }) {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — entra desde la derecha con delay */}
           <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
             <DesktopHeroVisual language={language} />
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: -8 }}
