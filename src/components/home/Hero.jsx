@@ -72,9 +72,12 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span>
+    <span className="relative inline-block">
       {text}
-      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+      <span
+        className="border-r-2 border-red-600 animate-pulse"
+        style={{ display: "inline-block", width: "2px", marginLeft: "3px", verticalAlign: "text-bottom", height: "0.85em" }}
+      />
     </span>
   );
 });
