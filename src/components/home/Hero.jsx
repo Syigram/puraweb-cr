@@ -259,7 +259,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 w-full max-w-xs">
               <div>
                 <div className="text-2xl font-bold text-blue-900 mb-1">150+</div>
                 <div className="text-xs text-gray-600">{t.stat1}</div>
