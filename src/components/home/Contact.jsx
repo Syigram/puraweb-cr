@@ -70,11 +70,19 @@ const Contact = memo(function Contact({ transparent = false }) {
     }
   };
 
+  const { ref: formRef, isInView: formInView } = useScrollReveal();
+  const { ref: infoRef, isInView: infoInView } = useScrollReveal();
+
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
-          <div>
+          <motion.div
+            ref={formRef}
+            variants={slideInLeft}
+            initial="hidden"
+            animate={formInView ? "visible" : "hidden"}
+          >
             <Card className="border-0 shadow-xl">
               <CardContent className="p-8">
                 {isSuccess && (
