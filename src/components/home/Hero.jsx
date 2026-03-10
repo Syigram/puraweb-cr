@@ -161,8 +161,8 @@ const DesktopHeroVisual = memo(({ language }) => {
   );
 });
 
-// Stagger variants para la entrada del Hero
-const heroContainer = {
+// Stagger variants para la entrada del Hero — desktop (con blur, más rico)
+const heroContainerDesktop = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -170,13 +170,31 @@ const heroContainer = {
   }
 };
 
-const heroItem = {
+const heroItemDesktop = {
   hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
   visible: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+// Variantes móvil — solo opacity+y, sin blur (bajo consumo GPU)
+const heroContainerMobile = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 }
+  }
+};
+
+const heroItemMobile = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" }
   }
 };
 
