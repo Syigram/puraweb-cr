@@ -69,10 +69,20 @@ const Contact = memo(function Contact({ transparent = false }) {
     }
   };
 
+  const { ref: sectionRef, isVisible } = useScrollReveal(0.1);
+
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div
+          ref={sectionRef}
+          className="grid lg:grid-cols-2 gap-12"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateY(0)" : "translateY(28px)",
+            transition: "opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1)",
+          }}
+        >
           <div>
             <Card className="border-0 shadow-xl">
               <CardContent className="p-8">
