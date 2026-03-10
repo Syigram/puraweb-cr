@@ -212,7 +212,11 @@ const heroVisualVariant = {
 const Hero = memo(function Hero({ onGetStarted }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].hero, [language]);
-  
+  const isDesktop = useIsDesktop();
+
+  const heroContainer = isDesktop ? heroContainerDesktop : heroContainerMobile;
+  const heroItem = isDesktop ? heroItemDesktop : heroItemMobile;
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
       {/* Static background */}
