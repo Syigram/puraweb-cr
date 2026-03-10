@@ -257,7 +257,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
