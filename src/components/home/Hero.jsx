@@ -38,10 +38,6 @@ const Typewriter = memo(({ words }) => {
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const reservedWidth = useMemo(
-    () => `${Math.max(...words.map((word) => word.length), 0) + 2}ch`,
-    [words]
-  );
 
   // Defer typewriter animation until after initial paint
   useEffect(() => {
@@ -76,8 +72,8 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span className="inline-flex items-center whitespace-nowrap" style={{ minWidth: reservedWidth }}>
-      <span>{text}</span>
+    <span>
+      {text}
       <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
   );
