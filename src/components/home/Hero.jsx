@@ -207,8 +207,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
       <>
         <style>{`
           @keyframes heroFadeIn {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; filter: blur(8px); }
+            to   { opacity: 1; filter: blur(0px); }
           }
         `}</style>
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
