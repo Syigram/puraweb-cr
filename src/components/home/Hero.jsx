@@ -76,12 +76,12 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span className="relative inline-block align-top whitespace-nowrap">
-      <span className="invisible">{longestWord}</span>
-      <span className="absolute inset-0">
-        {text}
-        <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
-      </span>
+    <span
+      className="inline-block align-top whitespace-nowrap"
+      style={{ width: `${Math.max(longestWord.length + 2, 18)}ch` }}
+    >
+      {text}
+      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
     </span>
   );
 });
