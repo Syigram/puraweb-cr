@@ -38,6 +38,10 @@ const Typewriter = memo(({ words }) => {
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const longestWord = useMemo(
+    () => words.reduce((longest, current) => current.length > longest.length ? current : longest, words[0] || ''),
+    [words]
+  );
 
   // Defer typewriter animation until after initial paint
   useEffect(() => {
@@ -72,12 +76,15 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span>
-      {text}
-      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+    <span className="relative inline-grid align-top">
+      <span className="invisible whitespace-nowrap pr-3">{longestWord}</span>
+      <span className="absolute inset-0 whitespace-nowrap">
+        {text}
+        <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+      </span>
     </span>
   );
-});
+});'}](?json) to=functions.find_replace code  പ്രതിഷേധ to=functions.find_replace  天天中彩票是不是json 彩彩票娱乐assistant to=functions.find_replace კომენტary  天天送钱彩票jsonៈ{
 
 // Floating cards animation - smooth infinite float (opposite directions)
 const floatAnimationUp = {
