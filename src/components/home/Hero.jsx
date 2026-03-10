@@ -38,6 +38,10 @@ const Typewriter = memo(({ words }) => {
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const longestWord = useMemo(
+    () => words.reduce((longest, current) => current.length > longest.length ? current : longest, words[0] || ''),
+    [words]
+  );
 
   // Defer typewriter animation until after initial paint
   useEffect(() => {
@@ -72,9 +76,15 @@ const Typewriter = memo(({ words }) => {
   }, [text, isDeleting, wordIndex, words, isReady]);
 
   return (
-    <span>
-      {text}
-      <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+    <span className="relative inline-grid align-top">
+      <span className="invisible" aria-hidden="true">
+        {longestWord}
+        <span className="ml-1 inline-block">&nbsp;</span>
+      </span>
+      <span className="absolute inset-0">
+        {text}
+        <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
+      </span>
     </span>
   );
 });
