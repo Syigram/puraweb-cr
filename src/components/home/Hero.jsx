@@ -232,13 +232,13 @@ const Hero = memo(function Hero({ onGetStarted }) {
               <span className="text-sm font-medium">{t.badge}</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight max-w-full">
               <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
                 {t.title1}
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
-                <Typewriter words={t.typewriterWords || [t.title2]} />
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block max-w-full overflow-hidden">
+                <Typewriter words={t.typewriterWords || [t.title2]} fixedWidth={false} className="max-w-full" />
               </span>
             </h1>
 
