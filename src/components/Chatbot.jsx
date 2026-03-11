@@ -223,7 +223,7 @@ Responde de manera útil y concisa:`;
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 shadow-2xl z-50 flex items-center justify-center"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 shadow-2xl z-50 flex items-center justify-center"
           aria-label={language === 'es' ? 'Abrir chat' : 'Open chat'}
         >
           <MessageCircle className="w-6 h-6 text-white" />
@@ -232,9 +232,9 @@ Responde de manera útil y concisa:`;
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-full max-w-md h-[600px] flex flex-col shadow-2xl z-50 md:max-w-md sm:max-w-[calc(100vw-3rem)]">
+        <Card className="fixed inset-x-3 bottom-3 top-20 flex flex-col overflow-hidden rounded-2xl shadow-2xl z-50 max-h-[calc(100vh-5.75rem)] sm:inset-x-auto sm:top-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-md sm:h-[600px]">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-900 to-blue-700 text-white rounded-t-lg">
+          <div className="flex items-center justify-between p-3 sm:p-4 border-b bg-gradient-to-r from-blue-900 to-blue-700 text-white rounded-t-2xl sm:rounded-t-lg">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                 <MessageCircle className="w-5 h-5" />
@@ -257,14 +257,14 @@ Responde de manera útil y concisa:`;
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 bg-gray-50">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-3 ${
                     message.role === 'user'
                       ? 'bg-blue-900 text-white'
                       : 'bg-white text-gray-800 shadow-sm'
@@ -285,7 +285,7 @@ Responde de manera útil y concisa:`;
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t bg-white rounded-b-lg">
+          <div className="p-3 sm:p-4 border-t bg-white rounded-b-2xl sm:rounded-b-lg">
             <div className="flex gap-2">
               <Input
                 value={inputValue}
