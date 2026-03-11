@@ -220,7 +220,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
             to   { opacity: 1; transform: translateY(0); }
           }
         `}</style>
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+        <section className="relative min-h-screen flex items-center overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-20 right-10 w-72 h-72 bg-blue-900 rounded-full blur-2xl opacity-10" />
             <div className="absolute bottom-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-2xl opacity-10" />
