@@ -33,7 +33,7 @@ const useIsDesktop = () => {
 };
 
 // Lightweight typewriter - deferred to not block FCP/LCP
-const Typewriter = memo(({ words }) => {
+const Typewriter = memo(({ words, fixedWidth = true, className = "" }) => {
   const [text, setText] = useState(words[0] || '');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
