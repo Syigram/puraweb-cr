@@ -77,8 +77,8 @@ const Typewriter = memo(({ words, fixedWidth = true, className = "" }) => {
 
   return (
     <span
-      className="inline-block align-top whitespace-nowrap"
-      style={{ width: `${Math.max(longestWord.length + 2, 18)}ch` }}
+      className={`inline-block align-top ${fixedWidth ? 'whitespace-nowrap' : 'whitespace-normal break-words max-w-full'} ${className}`}
+      style={fixedWidth ? { width: `${Math.max(longestWord.length + 2, 18)}ch` } : undefined}
     >
       {text}
       <span className="border-r-2 border-red-600 ml-1 inline-block animate-pulse">&nbsp;</span>
