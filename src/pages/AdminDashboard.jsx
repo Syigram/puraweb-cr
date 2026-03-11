@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Loader2, BarChart3, Users, CreditCard, MessageSquare, Mail, HelpCircle } from "lucide-react";
+import { Shield, Loader2, BarChart3, Users, CreditCard, Mail, HelpCircle, BookOpen } from "lucide-react";
 
 // Lazy load admin components
 const AdminStats = lazy(() => import("@/components/admin/AdminStats"));
@@ -11,6 +11,7 @@ const AdminUsers = lazy(() => import("@/components/admin/AdminUsers"));
 const AdminPayments = lazy(() => import("@/components/admin/AdminPayments"));
 const AdminTickets = lazy(() => import("@/components/admin/AdminTickets"));
 const AdminContactMessages = lazy(() => import("@/components/admin/AdminContactMessages"));
+const AdminKnowledgeBase = lazy(() => import("@/components/admin/AdminKnowledgeBase"));
 
 const TabLoader = () => (
   <div className="flex items-center justify-center py-12">
@@ -82,7 +83,7 @@ export default function AdminDashboard() {
                 Panel de Administración
               </h1>
               <p className="text-blue-200 mt-1">
-                Gestiona usuarios, pagos y visualiza estadísticas de la plataforma.
+                Gestiona usuarios, pagos, mensajes y la base de conocimiento del asistente.
               </p>
             </div>
           </div>
@@ -90,7 +91,7 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-5 gap-1 h-auto">
+          <TabsList className="bg-white border-0 shadow-lg w-full p-1.5 rounded-xl grid grid-cols-3 sm:grid-cols-6 gap-1 h-auto">
             <TabsTrigger 
               value="stats" 
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
@@ -126,6 +127,13 @@ export default function AdminDashboard() {
               <Mail className="w-4 h-4" />
               <span className="hidden sm:inline">Mensajes</span>
             </TabsTrigger>
+            <TabsTrigger 
+              value="knowledge" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span className="hidden sm:inline">Knowledge Base</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="stats">
@@ -155,6 +163,12 @@ export default function AdminDashboard() {
           <TabsContent value="messages">
             <Suspense fallback={<TabLoader />}>
               <AdminContactMessages />
+            </Suspense>
+          </TabsContent>
+
+          <TabsContent value="knowledge">
+            <Suspense fallback={<TabLoader />}>
+              <AdminKnowledgeBase />
             </Suspense>
           </TabsContent>
         </Tabs>
