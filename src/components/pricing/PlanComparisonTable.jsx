@@ -91,7 +91,7 @@ function PlanComparisonTable() {
         {
           title: "General Information",
           rows: [
-            { label: "Price", values: ["₡100,000", "₡150,000", "₡250,000"] },
+            { label: "Price", values: ["₡100,000", "₡150,000", "₡250,000"], originalValues: ["₡150,000", "₡200,000", null], promoLabel: "Promo!" },
             { label: "Objective", values: ["Digital presence", "Growth and sales", "Comprehensive solution"] }
           ]
         },
