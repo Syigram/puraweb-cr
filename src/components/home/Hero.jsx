@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Globe, ShoppingCart, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
@@ -251,11 +251,10 @@ const Hero = memo(function Hero({ onGetStarted }) {
               <Button
                 onClick={onGetStarted}
                 size="lg"
-                className="relative bg-gradient-to-r from-red-600 via-red-500 to-red-600 hover:from-red-700 hover:via-red-600 hover:to-red-700 text-white text-base font-bold px-8 py-5 shadow-[0_0_24px_rgba(206,17,38,0.45)] hover:shadow-[0_0_36px_rgba(206,17,38,0.65)] transition-all duration-300 rounded-xl border border-red-400/30"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base px-6 py-5 shadow-xl"
               >
-                <Zap className="w-4 h-4 mr-2 fill-white" />
                 {t.getStarted}
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
                 asChild
@@ -327,9 +326,8 @@ const Hero = memo(function Hero({ onGetStarted }) {
               <Button
                 onClick={onGetStarted}
                 size="lg"
-                className="relative bg-gradient-to-r from-red-600 via-red-500 to-red-600 hover:from-red-700 hover:via-red-600 hover:to-red-700 text-white text-lg font-bold px-10 py-6 shadow-[0_0_32px_rgba(206,17,38,0.45)] hover:shadow-[0_0_48px_rgba(206,17,38,0.65)] hover:scale-105 transition-all duration-300 rounded-xl border border-red-400/30"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-shadow"
               >
-                <Zap className="w-5 h-5 mr-2 fill-white" />
                 {t.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
