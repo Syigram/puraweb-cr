@@ -356,10 +356,10 @@ const Contact = memo(function Contact({ transparent = false }) {
                   <Button
                     type="button"
                     onClick={() => window.open(`https://wa.me/50684027214?text=${encodeURIComponent(language === 'es' ? 'Hola, me gustaría obtener más información sobre sus servicios.' : 'Hello, I would like to get more information about your services.')}`, '_blank')}
-                    className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-lg py-6"
+                    className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg py-6"
                   >
                     {language === 'es' ? 'Enviar por WhatsApp' : 'Send via WhatsApp'}
-                    <MessageCircle className="w-5 h-5 ml-2" />
+                    <MessageCircle className="w-5 h-5 ml-2 text-white" />
                   </Button>
                 </form>
               </CardContent>
