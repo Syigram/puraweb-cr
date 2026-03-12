@@ -540,7 +540,7 @@ export default function Checkout() {
               
               <div className="mt-6 flex justify-center space-x-4 opacity-50 grayscale">
                 <img
-                  src="https://spponeimages.azureedge.net/prod/2df62105-9e81-464c-a5ce-ab608de237d1Visa_Brandmark%20Thumb.png?v=0"
+                  src="https://spponeimages.azureedge.net/prod/62ad4a8f-1c74-4545-b721-619d252d8ea3VisaBrandmark2022.png?v=0"
                   className="h-6 w-auto object-contain"
                   alt="Visa"
                 />
