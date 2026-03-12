@@ -318,7 +318,7 @@ const Nosotros = memo(function Nosotros() {
                 <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
                 <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
-                <Badge className="mb-6 bg-green-100 text-green-800 px-6 py-2 text-sm">
+                <Badge className="mb-6 bg-green-100 text-green-800 hover:bg-green-100 px-6 py-2 text-sm cursor-default">
                 <Award className="w-4 h-4 mr-2" />
                 {language === 'es' ? 'Garantizado' : 'Guaranteed'}
                 </Badge>
