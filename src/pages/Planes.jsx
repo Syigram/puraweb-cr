@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, memo } from "react";
+import React, { useMemo, useCallback, useEffect, memo, useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight, ExternalLink, Sparkles, Eye, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
