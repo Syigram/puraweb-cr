@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, memo, useMemo } from "react";
 import { motion } from "framer-motion";
-import { useScrollReveal, slideInLeft, slideInRight } from "@/components/animations/useScrollReveal";
+import { useScrollReveal } from "@/components/animations/useScrollReveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,6 +55,14 @@ function getValidationClass(state) {
   return "border-gray-300";
 }
 
+const contactFadeReveal = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
 const Contact = memo(function Contact({ transparent = false }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
@@ -70,6 +78,8 @@ const Contact = memo(function Contact({ transparent = false }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
   const inputRefs = useRef({});
+  const autofillTimeoutsRef = useRef([]);
+  const nativeFormRef = useRef(null);
 
   const fieldStates = useMemo(() => ({
     name: getFieldState("name", formData.name),
@@ -95,23 +105,40 @@ const Contact = memo(function Contact({ transparent = false }) {
     });
   }, []);
 
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
+  const clearAutofillTimeouts = useCallback(() => {
+    autofillTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    autofillTimeoutsRef.current = [];
+  }, []);
+
+  const scheduleAutofillSync = useCallback((delays = [0, 120, 350, 800, 1500]) => {
+    clearAutofillTimeouts();
+    autofillTimeoutsRef.current = delays.map((delay) => window.setTimeout(() => {
       if (document.visibilityState === "visible") {
         syncAutofilledValues();
       }
-    }, 500);
+    }, delay));
+  }, [clearAutofillTimeouts, syncAutofilledValues]);
 
-    window.addEventListener("focus", syncAutofilledValues);
-    window.addEventListener("pageshow", syncAutofilledValues);
-    syncAutofilledValues();
+  useEffect(() => {
+    const handleWindowResume = () => scheduleAutofillSync([0, 120, 350, 800]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        scheduleAutofillSync([0, 120, 350]);
+      }
+    };
+
+    scheduleAutofillSync();
+    window.addEventListener("focus", handleWindowResume);
+    window.addEventListener("pageshow", handleWindowResume);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.clearInterval(intervalId);
-      window.removeEventListener("focus", syncAutofilledValues);
-      window.removeEventListener("pageshow", syncAutofilledValues);
+      clearAutofillTimeouts();
+      window.removeEventListener("focus", handleWindowResume);
+      window.removeEventListener("pageshow", handleWindowResume);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [syncAutofilledValues]);
+  }, [clearAutofillTimeouts, scheduleAutofillSync]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +162,10 @@ const Contact = memo(function Contact({ transparent = false }) {
       if (response.data.error) {
         setError(response.data.error);
         return;
+      }
+
+      if (nativeFormRef.current?.contains(document.activeElement)) {
+        document.activeElement.blur();
       }
 
       setIsSuccess(true);
@@ -163,11 +194,11 @@ const Contact = memo(function Contact({ transparent = false }) {
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
             ref={formRef}
-            variants={slideInLeft}
+            variants={contactFadeReveal}
             initial="hidden"
             animate={formInView ? "visible" : "hidden"}
           >
-            <Card className="border-0 shadow-xl">
+            <Card className="border-0 shadow-xl [transform:none]">
               <CardContent className="p-8">
                 {isSuccess && (
                   <Alert className="mb-6 bg-green-50 border-green-200">
@@ -184,7 +215,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                   </Alert>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={nativeFormRef} onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">{t.form.name} *</Label>
@@ -320,7 +351,7 @@ const Contact = memo(function Contact({ transparent = false }) {
           <motion.div
             ref={infoRef}
             className="space-y-8"
-            variants={slideInRight}
+            variants={contactFadeReveal}
             initial="hidden"
             animate={infoInView ? "visible" : "hidden"}
           >
