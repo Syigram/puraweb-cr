@@ -359,7 +359,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                     className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-lg py-6"
                   >
                     {language === 'es' ? 'Enviar por WhatsApp' : 'Send via WhatsApp'}
-                    <MessageCircle className="w-5 h-5 ml-2" />
+                    <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/3dd3a14c9_whatsapp.png" alt="WhatsApp" className="w-5 h-5 ml-2 brightness-0 invert" />
                   </Button>
                 </form>
               </CardContent>
