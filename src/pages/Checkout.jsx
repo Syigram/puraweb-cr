@@ -538,10 +538,21 @@ export default function Checkout() {
                 </form>
               )}
               
-              <div className="mt-6 flex justify-center space-x-4 opacity-50 grayscale">
-                {/* Simple placeholders for card logos if needed, or just text */}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-6" alt="Visa" />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-6" alt="Mastercard" />
+              <div className="mt-6 flex justify-center items-center space-x-4 opacity-60 grayscale">
+                <img
+                  src="https://spponeimages.azureedge.net/prod/2df62105-9e81-464c-a5ce-ab608de237d1Visa_Brandmark%20Thumb.png?v=0"
+                  className="h-6 w-auto object-contain"
+                  alt="Visa"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                  className="h-6 w-auto object-contain"
+                  alt="Mastercard"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </CardContent>
           </Card>
