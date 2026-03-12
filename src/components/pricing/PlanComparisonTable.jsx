@@ -163,7 +163,7 @@ function PlanComparisonTable() {
   const t = content[language];
 
   // Memoize renderValue function
-  const renderValue = useCallback((value, isGeneralSection = false, rowLabel = '') => {
+  const renderValue = useCallback((value, isGeneralSection = false, rowLabel = '', originalValue = null, promoLabel = null) => {
     if (typeof value === "boolean") {
       return (
         <div className="flex items-center justify-center">
@@ -175,8 +175,20 @@ function PlanComparisonTable() {
         </div>
       );
     }
-    
 
+    if (originalValue) {
+      return (
+        <div className="flex flex-col items-center gap-1">
+          {promoLabel && (
+            <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+              {promoLabel}
+            </span>
+          )}
+          <span className="text-sm text-gray-400 line-through">{originalValue}</span>
+          <span className="text-lg font-bold text-blue-900">{value}</span>
+        </div>
+      );
+    }
     
     return (
       <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
