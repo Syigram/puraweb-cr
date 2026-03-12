@@ -39,8 +39,6 @@ function equalizeCardHeights(container) {
 const Services = memo(function Services() {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].services, [language]);
-  const gridContainerRef = useRef(null);
-
   const { ref: headerRef, isInView: headerInView } = useScrollReveal();
   const { ref: gridRef, isInView: gridInView } = useScrollReveal();
 
