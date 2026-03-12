@@ -191,6 +191,16 @@ const Contact = memo(function Contact({ transparent = false }) {
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
+        {!transparent && (
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                {t.title}
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
+          </div>
+        )}
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
             ref={formRef}
