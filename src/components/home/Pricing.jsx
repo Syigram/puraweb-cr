@@ -142,7 +142,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
           animate={gridInView ? "visible" : "hidden"}
         >
           {plans.map((plan) => (
-            <motion.div key={plan.name} variants={cardReveal}>
+            <motion.div key={plan.name} variants={cardReveal} className="h-full">
               <PricingCard
                 plan={plan}
                 isSelected={selectedPlan === plan.name}
