@@ -95,7 +95,10 @@ export default function Home() {
               : 'Compare all features and find the perfect plan for your business'}
           </p>
           <Button
-            onClick={() => navigate(createPageUrl("Planes"))}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              navigate(createPageUrl("Planes?scroll=comparacion-detallada"));
+            }}
             size="lg"
             className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
           >

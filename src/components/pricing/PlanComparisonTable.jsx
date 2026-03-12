@@ -186,7 +186,7 @@ function PlanComparisonTable() {
   }, []);
 
   return (
-    <div className="pt-16 pb-16 bg-gradient-to-b from-white to-gray-50">
+    <div id="comparacion-detallada" className="pt-16 pb-16 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">

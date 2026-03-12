@@ -8,7 +8,7 @@ import { base44 } from "@/api/base44Client";
 import { useLanguage } from "@/components/LanguageContext";
 import { buildKnowledgeBasePrompt } from "@/components/chatbot/buildKnowledgeBasePrompt";
 
-const Chatbot = memo(function Chatbot() {
+const Chatbot = memo(function Chatbot({ disabled = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -50,6 +50,12 @@ const Chatbot = memo(function Chatbot() {
       scrollToBottom();
     }
   }, [messages, isOpen, scrollToBottom]);
+
+  useEffect(() => {
+    if (disabled && isOpen) {
+      setIsOpen(false);
+    }
+  }, [disabled, isOpen]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -132,7 +138,7 @@ const Chatbot = memo(function Chatbot() {
 
   return (
     <>
-      {!isOpen && (
+      {!disabled && !isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 shadow-2xl z-50 flex items-center justify-center"
@@ -142,7 +148,7 @@ const Chatbot = memo(function Chatbot() {
         </Button>
       )}
 
-      {isOpen && (
+      {!disabled && isOpen && (
         <Card className="fixed inset-x-3 bottom-3 top-20 flex flex-col overflow-hidden rounded-2xl shadow-2xl z-50 max-h-[calc(100vh-5.75rem)] sm:inset-x-auto sm:top-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-md sm:h-[600px]">
           <div className="flex items-center justify-between p-3 sm:p-4 border-b bg-gradient-to-r from-blue-900 to-blue-700 text-white rounded-t-2xl sm:rounded-t-lg">
             <div className="flex items-center gap-3 min-w-0">

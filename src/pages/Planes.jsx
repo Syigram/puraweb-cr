@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, memo } from "react";
+import React, { useMemo, useCallback, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,20 @@ function Planes() {
   const handleContactClick = useCallback(() => {
     navigate(createPageUrl("Home") + "#contact");
   }, [navigate]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetId = urlParams.get("scroll");
+
+    if (!targetId) return;
+
+    requestAnimationFrame(() => {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }, []);
 
   const seoTitle = useMemo(() => language === 'es' 
     ? 'Planes y Precios de Desarrollo Web'

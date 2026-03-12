@@ -100,6 +100,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
   const { ref: featuresRef, isInView: featuresInView } = useScrollReveal();
 
   const handlePlanSelect = useCallback((planId) => {
+    window.scrollTo(0, 0);
     navigate(createPageUrl(`Checkout?plan=${planId}`));
   }, [navigate]);
 

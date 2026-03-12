@@ -209,6 +209,11 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
     }
   }, []);
 
+  const handleTopNavigation = useCallback(() => {
+    window.scrollTo(0, 0);
+    setIsMobileMenuOpen(false);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Critical CSS inlined for faster FCP - variables needed immediately */}
@@ -235,6 +240,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
             {/* Logo */}
             <Link
                 to={createPageUrl("Home")}
+                onClick={handleTopNavigation}
                 className="flex items-center group"
               >
                 <img 
@@ -252,13 +258,22 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
             <div className="hidden md:flex items-center gap-6">
               {/* Primary Navigation Links */}
               <Link
+                to={createPageUrl("Home")}
+                onClick={handleTopNavigation}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
+              >
+                {language === 'es' ? 'Inicio' : 'Home'}
+              </Link>
+              <Link
                 to={createPageUrl("Servicios")}
+                onClick={handleTopNavigation}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
                 {t.nav.services}
               </Link>
               <Link
                 to={createPageUrl("Planes")}
+                onClick={handleTopNavigation}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
                 {t.nav.pricing}
@@ -271,55 +286,28 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
-                  <Link to={createPageUrl("Nosotros")}>
+                  <Link to={createPageUrl("Nosotros")} onClick={handleTopNavigation}>
                     <DropdownMenuItem className="cursor-pointer">
                       {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
                     </DropdownMenuItem>
                   </Link>
-                  <Link to={createPageUrl("GuiaBienvenida")}>
+                  <Link to={createPageUrl("GuiaBienvenida")} onClick={handleTopNavigation}>
                     <DropdownMenuItem className="cursor-pointer">
                       {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
                     </DropdownMenuItem>
                   </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-1 text-gray-700 hover:text-blue-900 transition-colors font-medium">
-                    {language === 'es' ? 'Portafolio' : 'Portfolio'}
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56">
-                  <Link to={createPageUrl("Portafolio")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Portafolio Original' : 'Original Portfolio'}
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to={createPageUrl("PortafolioModal")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Con Modal' : 'With Modal'}
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to={createPageUrl("PortafolioExpandible")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Expandible' : 'Expandable'}
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to={createPageUrl("PortafolioGrid")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Grid Grande' : 'Large Grid'}
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to={createPageUrl("PortafolioLista")}>
-                    <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Vista Lista' : 'List View'}
-                    </DropdownMenuItem>
-                  </Link>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Link
+                to={createPageUrl("Portafolio")}
+                onClick={handleTopNavigation}
+                className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
+              >
+                {language === 'es' ? 'Portafolio' : 'Portfolio'}
+              </Link>
               <Link
                 to={createPageUrl("Support")}
+                onClick={handleTopNavigation}
                 className="text-gray-700 hover:text-blue-900 transition-colors font-medium"
               >
                 {language === 'es' ? 'Soporte' : 'Support'}
@@ -362,82 +350,51 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               {/* Primary Navigation Links */}
               <div className="space-y-1 mb-4">
                 <Link
+                  to={createPageUrl("Home")}
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
+                >
+                  {language === 'es' ? 'Inicio' : 'Home'}
+                </Link>
+                <Link
                   to={createPageUrl("Servicios")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
                 >
                   {t.nav.services}
                 </Link>
                 <Link
                   to={createPageUrl("Planes")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
                 >
                   {t.nav.pricing}
                 </Link>
-                <div className="px-4 py-2">
-                  <div className="text-xs font-semibold text-gray-500 mb-2 uppercase">
-                    {language === 'es' ? 'Nosotros' : 'About'}
-                  </div>
-                  <Link
-                    to={createPageUrl("Nosotros")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("GuiaBienvenida")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
-                  </Link>
-                </div>
-                <div className="px-4 py-2">
-                  <div className="text-xs font-semibold text-gray-500 mb-2 uppercase">
-                    {language === 'es' ? 'Portafolio' : 'Portfolio'}
-                  </div>
-                  <Link
-                    to={createPageUrl("Portafolio")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Original' : 'Original'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("PortafolioModal")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Con Modal' : 'With Modal'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("PortafolioExpandible")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Expandible' : 'Expandable'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("PortafolioGrid")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Grid Grande' : 'Large Grid'}
-                  </Link>
-                  <Link
-                    to={createPageUrl("PortafolioLista")}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors"
-                  >
-                    {language === 'es' ? 'Vista Lista' : 'List View'}
-                  </Link>
-                </div>
+                <Link
+                  to={createPageUrl("Nosotros")}
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
+                >
+                  {language === 'es' ? 'Nosotros' : 'About'}
+                </Link>
+                <Link
+                  to={createPageUrl("GuiaBienvenida")}
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
+                >
+                  {language === 'es' ? 'Guía' : 'Guide'}
+                </Link>
+                <Link
+                  to={createPageUrl("Portafolio")}
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
+                >
+                  {language === 'es' ? 'Portafolio' : 'Portfolio'}
+                </Link>
                 <Link
                   to={createPageUrl("Support")}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-900 rounded-lg transition-colors font-medium"
+                  onClick={handleTopNavigation}
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
                 >
                   {language === 'es' ? 'Soporte' : 'Support'}
                 </Link>
@@ -471,7 +428,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
       <main>{children}</main>
 
       {/* Chatbot */}
-      <Chatbot />
+      <Chatbot disabled={isMobileMenuOpen} />
 
       {/* Footer */}
       <footer className="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950 text-white py-12">
