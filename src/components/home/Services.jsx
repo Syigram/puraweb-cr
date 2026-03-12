@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Globe, ShoppingCart, Smartphone, Zap, ShieldCheck, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
