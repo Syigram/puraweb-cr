@@ -13,7 +13,7 @@ export const translations = {
       title2: "Presencia Digital",
       typewriterWords: ["Presencia Digital", "Sitio Web Único", "Tienda Online", "Identidad Web"],
       description: "Somos un equipo de costarricenses que construye el futuro digital de Costa Rica. Creamos sitios web premium con la pasión y rapidez que su negocio necesita para liderar.",
-      getStarted: "Comenzar",
+      getStarted: "Ver Planes",
       portfolioCta: "Ver nuestro portafolio",
       stat1: "Proyectos Entregados",
       stat2: "Satisfacción del Cliente",
