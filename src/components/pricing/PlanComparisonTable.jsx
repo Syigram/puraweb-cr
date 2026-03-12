@@ -280,7 +280,7 @@ function PlanComparisonTable() {
                   const isGeneralSection = sectionIdx === 0;
                   return (
                     <div key={sectionIdx} className={`mb-6 last:mb-0 ${
-                      isGeneralSection ? 'bg-gradient-to-r from-blue-50 via-slate-50 to-blue-50 -mx-6 px-6 py-4 rounded-lg border-l-4 border-blue-900' : ''
+                      isGeneralSection ? 'bg-gradient-to-r from-blue-50 via-slate-50 to-blue-50 -mx-6 px-6 py-4 rounded-lg md:border-l-4 border-t-4 md:border-t-0 border-blue-900' : ''
                     }`}>
                       <h4 className={`font-bold mb-3 pb-2 ${
                         isGeneralSection 
