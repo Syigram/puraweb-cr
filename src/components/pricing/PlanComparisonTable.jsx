@@ -218,7 +218,7 @@ function PlanComparisonTable() {
                           <tr>
                             <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
                               isGeneralSection 
-                                ? 'text-base font-extrabold text-gray-900' 
+                                ? 'text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-700' 
                                 : 'text-xs font-semibold text-gray-700'
                             }`}>
                               Plan
