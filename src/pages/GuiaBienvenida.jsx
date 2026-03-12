@@ -1,578 +1,685 @@
-import React, { useMemo, memo } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useMemo, useCallback, useEffect, memo } from "react";
 import { useLanguage } from "@/components/LanguageContext";
-import SEO from "@/components/SEO";
+import { translations } from "@/components/translations";
 import { 
-  Rocket, 
-  HandshakeIcon, 
-  Shield, 
-  Clock, 
-  Zap, 
-  CreditCard, 
-  Heart,
-  CheckCircle2,
-  AlertCircle,
-  Users,
-  Code,
-  Database,
-  Headphones,
-  TrendingUp,
-  Award,
-  Download,
-  Calendar,
-  Mail,
-  Phone
+  ChevronDown, Sparkles, Zap, Heart, Rocket, Shield, TrendingUp, 
+  Code, Award, Users, Target, Eye, ArrowRight, BookOpen
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import Contact from "@/components/home/Contact";
+import { motion } from "framer-motion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
-// Memoized animation config - defined outside component to prevent recreation
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 }
-};
-
-function GuiaBienvenida() {
-  const { language } = useLanguage();
-
-  // Memoize content object - only recreated when dependencies change
-  const content = useMemo(() => ({
-    es: {
-      title: "Guía de PuraWeb CR",
-      subtitle: "Tu Nuevo Sitio Web con PuraWeb CR",
-      hero: "Esta guía te ayudará a entender cómo funciona PuraWeb CR y cómo sacar el máximo provecho de nuestros servicios. Somos tu partner tecnológico: a diferencia de una agencia tradicional, funcionamos como un servicio de suscripción donde nos encargamos de la tecnología para que tú te encargues de tu negocio.",
-      subtitle2: "Aquí encontrarás todo lo que necesitas saber sobre tu plan y nuestros servicios.",
-      
-      sections: {
-        ownership: {
-          title: "¿Cómo funciona nuestra relación?",
-          tagline: "Tú eres el dueño del contenido, nosotros del motor",
-          yours: "Tu Propiedad",
-          yoursDesc: "Todo lo que escribas, tus fotos, tu logo y tu base de datos de clientes son 100% tuyos.",
-          ours: "Nuestra Propiedad",
-          oursDesc: "El código, los servidores y la estructura técnica nos pertenecen. Te damos una licencia de uso mientras tu suscripción esté activa.",
-          benefit: "¿Por qué es bueno esto?",
-          benefitDesc: "Porque si algo técnico se rompe, es problema nuestro, no tuyo. Tú no pagas por reparaciones de servidor."
-        },
-        
-        support: {
-          title: "Soporte y Cambios Mensuales",
-          intro: "Sabemos que los negocios evolucionan. Por eso, tu plan incluye horas para realizar cambios.",
-          whatIs: "¿Qué se considera un 'Cambio Mensual'?",
-          whatIsDesc: "Son mejoras estéticas o de contenido que tú solicitas.",
-          examples: [
-            "Cambiar textos o imágenes",
-            "Agregar una nueva sección (ej. 'Nuestros Servicios')",
-            "Cambiar colores o agregar una funcionalidad nueva"
-          ],
-          rule: "Regla de los 30 Minutos",
-          ruleDesc: "Cada solicitud consume un mínimo de 30 minutos de tu saldo mensual.",
-          tip: "Tip: Agrupa varios cambios pequeños en una sola solicitud para aprovechar mejor tu tiempo.",
-          bugs: "¿Qué pasa si hay un error (Bug)?",
-          bugsDesc: "Si el sitio falla (ej. un botón no funciona o la página no carga), eso no consume tus horas. Es nuestra responsabilidad y lo arreglaremos sin costo lo antes posible.",
-          rollover: "Banco de Horas (Rollover)",
-          rolloverDesc: "¿Este mes no necesitas cambios pero el próximo quieres lanzar algo grande?",
-          rolloverBenefit: "Puedes acumular tus horas hasta por 3 meses.",
-          rolloverExample: "Ejemplo: Si tu plan tiene 5 horas, puedes guardar las de enero y febrero para tener 15 horas disponibles en marzo y hacer una renovación mayor."
-        },
-        
-        payments: {
-          title: "Ventas en Línea y Pagos (Stripe)",
-          intro: "Si tu sitio vende productos o cobra suscripciones, utilizamos Stripe por su seguridad mundial. Es vital que entiendas los costos reales de vender en internet para que fijes bien tus precios.",
-          noCommission: "Nosotros no cobramos comisión por tus ventas, pero la cadena financiera sí:",
-          fees: [
-            {
-              currency: "Dólares ($)",
-              rate: "~ 6% por venta",
-              reason: "Tarifa Stripe + Tarjetas Internacionales + Transferencia"
-            },
-            {
-              currency: "Colones (₡)",
-              rate: "~ 8% por venta",
-              reason: "Incluye lo anterior + Conversión de moneda (Stripe opera en USD)"
-            }
-          ],
-          note: "Nota: Estos montos son retenidos automáticamente por la pasarela de pago y los bancos, no por la agencia."
-        },
-        
-        fairUse: {
-          title: "Política de Uso Justo (Para Planes Ilimitados)",
-          unlimited: "¿Qué significa 'Ilimitado'?",
-          unlimitedDesc: "Significa que puedes pedir todo lo que tu negocio necesite para crecer orgánicamente.",
-          notAllowed: "¿Qué NO está permitido?",
-          notAllowedList: [
-            "Revender nuestro servicio (hospedar sitios de terceros en tu cuenta)",
-            "La cantidad de solicitudes no pueden exceder las capacidades técnicas de nuestro equipo",
-            "No puedes solicitar cambios que comprometan la integridad de nuestros servidores o infraestructura"
-          ]
-        },
-        
-        freedom: {
-          title: "Libertad Total",
-          intro: "Esperamos trabajar contigo por años, pero si decides irte:",
-          noLock: "Sin ataduras",
-          noLockDesc: "Puedes cancelar cuando quieras.",
-          export: "Llévate tus datos",
-          exportDesc: "Tienes derecho a pedir una exportación de tu contenido (textos e imágenes). Te entregaremos todo en un plazo máximo de 30 días hábiles."
-        },
-        
-        contact: {
-          title: "¿Cómo contactarnos?"
-        }
-      }
-    },
-    en: {
-      title: "PuraWeb CR Guide",
-      subtitle: "Your New Website with PuraWeb CR",
-      hero: "This guide will help you understand how PuraWeb CR works and how to get the most out of our services. We are your technology partner: unlike a traditional agency, we function as a subscription service where we take care of the technology so you can take care of your business.",
-      subtitle2: "Here you'll find everything you need to know about your plan and our services.",
-      
-      sections: {
-        ownership: {
-          title: "How does our relationship work?",
-          tagline: "You own the content, we own the engine",
-          yours: "Your Property",
-          yoursDesc: "Everything you write, your photos, your logo, and your customer database are 100% yours.",
-          ours: "Our Property",
-          oursDesc: "The code, servers, and technical structure belong to us. We give you a license to use while your subscription is active.",
-          benefit: "Why is this good?",
-          benefitDesc: "Because if something technical breaks, it's our problem, not yours. You don't pay for server repairs."
-        },
-        
-        support: {
-          title: "Support and Monthly Changes",
-          intro: "We know businesses evolve. That's why your plan includes hours for making changes.",
-          whatIs: "What is considered a 'Monthly Change'?",
-          whatIsDesc: "They are aesthetic or content improvements that you request.",
-          examples: [
-            "Change texts or images",
-            "Add a new section (e.g. 'Our Services')",
-            "Change colors or add a new functionality"
-          ],
-          rule: "30-Minute Rule",
-          ruleDesc: "Each request consumes a minimum of 30 minutes from your monthly balance.",
-          tip: "Tip: Group several small changes in a single request to make better use of your time.",
-          bugs: "What if there's a bug?",
-          bugsDesc: "If the site fails (e.g. a button doesn't work or the page doesn't load), that doesn't consume your hours. It's our responsibility and we'll fix it at no cost ASAP.",
-          rollover: "Hour Bank (Rollover)",
-          rolloverDesc: "Don't need changes this month but want to launch something big next month?",
-          rolloverBenefit: "You can accumulate your hours for up to 3 months.",
-          rolloverExample: "Example: If your plan has 5 hours, you can save January and February's hours to have 15 hours available in March for a major renovation."
-        },
-        
-        payments: {
-          title: "Online Sales and Payments (Stripe)",
-          intro: "If your site sells products or charges subscriptions, we use Stripe for its worldwide security. It's vital that you understand the real costs of selling online so you can price correctly.",
-          noCommission: "We don't charge commission on your sales, but the financial chain does:",
-          fees: [
-            {
-              currency: "Dollars ($)",
-              rate: "~ 6% per sale",
-              reason: "Stripe fee + International Cards + Transfer"
-            },
-            {
-              currency: "Colones (₡)",
-              rate: "~ 8% per sale",
-              reason: "Includes the above + Currency conversion (Stripe operates in USD)"
-            }
-          ],
-          note: "Note: These amounts are automatically withheld by the payment gateway and banks, not by the agency."
-        },
-        
-        fairUse: {
-          title: "Fair Use Policy (For Unlimited Plans)",
-          unlimited: "What does 'Unlimited' mean?",
-          unlimitedDesc: "It means you can request everything your business needs to grow organically.",
-          notAllowed: "What is NOT allowed?",
-          notAllowedList: [
-            "Reselling our service (hosting third-party sites in your account)",
-            "The number of requests cannot exceed our team's technical capabilities",
-            "You cannot request changes that compromise the integrity of our servers or infrastructure"
-          ]
-        },
-        
-        freedom: {
-          title: "Total Freedom",
-          intro: "We hope to work with you for years, but if you decide to leave:",
-          noLock: "No lock-in",
-          noLockDesc: "You can cancel whenever you want.",
-          export: "Take your data",
-          exportDesc: "You have the right to request an export of your content (texts and images). We'll deliver everything within a maximum of 30 business days."
-        },
-        
-        contact: {
-          title: "How to contact us?"
-        }
-      }
-    }
-  }), []);
-
-  const t = content[language];
-
-  const seoTitle = useMemo(() => language === 'es' 
-    ? 'Guía de PuraWeb CR - Cliente' 
-    : 'PuraWeb CR Guide - Client', [language]);
-  
-  const seoDescription = useMemo(() => language === 'es'
-    ? 'Guía completa para nuevos clientes de PuraWeb CR. Aprende sobre propiedad, soporte, cambios mensuales, pagos en línea y más.'
-    : 'Complete guide for new PuraWeb CR clients. Learn about ownership, support, monthly changes, online payments and more.', [language]);
-
-  return (
-    <>
-      <SEO 
-        title={seoTitle}
-        description={seoDescription}
-        canonical={`https://puraweb.cr/${language === 'es' ? 'guia-bienvenida' : 'welcome-guide'}`}
-        language={language}
-      />
-      
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
-        {/* Hero Section */}
-        <div className="relative pt-24 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-red-900/5" />
-          
-          <motion.div 
-            className="max-w-5xl mx-auto px-6 relative z-10"
-            {...fadeInUp}
-          >
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-2xl">
-                <Rocket className="w-10 h-10 text-white" />
-              </div>
+// Hero Styles - 20 Versiones Diferentes
+const heroStyles = [
+  // 1. Gradient Minimal
+  {
+    id: 1,
+    name: "Gradient Minimal",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 flex items-center justify-center">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-blue-400/5 rounded-full blur-3xl" />
+        </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div className="inline-block mb-6 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+              <p className="text-white/80 text-sm font-medium">{lang === 'es' ? '✨ Bienvenido a PuraWeb CR' : '✨ Welcome to PuraWeb CR'}</p>
             </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-blue-900 via-blue-700 to-red-700 bg-clip-text text-transparent">
-              {t.title}
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              {lang === 'es' ? 'Nuestra Guía de Valores y Principios' : 'Our Values & Principles Guide'}
             </h1>
-            
-            <p className="text-xl md:text-2xl text-center text-gray-600 font-medium mb-8">
-              {t.subtitle}
+            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+              {lang === 'es' 
+                ? 'Descubre cómo trabajamos y por qué cada decisión que tomamos está alineada con tu éxito.'
+                : 'Discover how we work and why every decision we make is aligned with your success.'}
             </p>
-            
-            <Card className="bg-white border border-blue-200 shadow-xl">
-              <CardContent className="p-8 md:p-12">
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
-                  {t.hero}
-                </p>
-                <p className="text-base md:text-lg text-gray-600 font-semibold">
-                  {t.subtitle2}
-                </p>
-              </CardContent>
-            </Card>
+            <Button className="bg-white text-blue-900 hover:bg-white/90 px-8 py-6 text-lg">
+              {lang === 'es' ? 'Comienza el Viaje' : 'Begin the Journey'} <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </motion.div>
         </div>
+      </div>
+    )
+  },
 
-        <div className="max-w-6xl mx-auto px-6 pb-20">
-          {/* 1. Ownership Section */}
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                <HandshakeIcon className="w-6 h-6 text-white" />
+  // 2. Glass Morphism
+  {
+    id: 2,
+    name: "Glass Morphism",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-1/4 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.7 }}
+            className="backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-12 md:p-16 shadow-2xl"
+          >
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-purple-400 mb-6">
+                <Sparkles className="w-8 h-8 text-white" />
               </div>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  {t.sections.ownership.title}
-                </h2>
-                <p className="text-blue-600 font-medium">
-                  {t.sections.ownership.tagline}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <Card className="border border-blue-200 bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Users className="w-8 h-8 text-blue-900" />
-                    <h3 className="text-xl font-bold text-gray-900">{t.sections.ownership.yours}</h3>
-                  </div>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.sections.ownership.yoursDesc}
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border border-red-200 bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Code className="w-8 h-8 text-red-600" />
-                    <h3 className="text-xl font-bold text-gray-900">{t.sections.ownership.ours}</h3>
-                  </div>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.sections.ownership.oursDesc}
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="bg-blue-50 border border-blue-300">
-              <CardContent className="p-6">
-                <div className="flex gap-4">
-                  <Award className="w-8 h-8 text-blue-900 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">
-                      {t.sections.ownership.benefit}
-                    </h4>
-                    <p className="text-gray-700">
-                      {t.sections.ownership.benefitDesc}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* 2. Support Section */}
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
-                <Headphones className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.support.title}
-              </h2>
-            </div>
-
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              {t.sections.support.intro}
-            </p>
-
-            <Card className="bg-white border border-blue-200 mb-6 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {t.sections.support.whatIs}
-                </h3>
-                <p className="text-gray-700 mb-4">{t.sections.support.whatIsDesc}</p>
-                
-                <div className="space-y-2">
-                  {t.sections.support.examples.map((example, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-900 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">{example}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <Card className="bg-white border border-blue-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Clock className="w-6 h-6 text-blue-900" />
-                    <h4 className="text-lg font-bold text-gray-900">
-                      {t.sections.support.rule}
-                    </h4>
-                  </div>
-                  <p className="text-gray-700 mb-3">{t.sections.support.ruleDesc}</p>
-                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                    <p className="text-sm text-blue-900 font-medium">
-                      💡 {t.sections.support.tip}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-red-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <AlertCircle className="w-6 h-6 text-red-600" />
-                    <h4 className="text-lg font-bold text-gray-900">
-                      {t.sections.support.bugs}
-                    </h4>
-                  </div>
-                  <p className="text-gray-700">{t.sections.support.bugsDesc}</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="bg-white border border-blue-200">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Database className="w-8 h-8 text-blue-900" />
-                  <h4 className="text-xl font-bold text-gray-900">
-                    {t.sections.support.rollover}
-                  </h4>
-                </div>
-                <p className="text-gray-700 mb-3">{t.sections.support.rolloverDesc}</p>
-                <p className="text-blue-900 font-semibold mb-4">
-                  ✨ {t.sections.support.rolloverBenefit}
-                </p>
-                <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                  <p className="text-gray-700">{t.sections.support.rolloverExample}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* 3. Payments Section */}
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
-                <CreditCard className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.payments.title}
-              </h2>
-            </div>
-
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              {t.sections.payments.intro}
-            </p>
-
-            <Card className="bg-white border border-blue-200 mb-6">
-              <CardContent className="p-6">
-                <p className="text-lg font-semibold text-gray-900 mb-4">
-                  {t.sections.payments.noCommission}
-                </p>
-                
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b-2 border-blue-200">
-                        <th className="text-left py-3 px-4 text-gray-900 font-bold">
-                          {language === 'es' ? 'Si cobras en...' : 'If you charge in...'}
-                        </th>
-                        <th className="text-left py-3 px-4 text-gray-900 font-bold">
-                          {language === 'es' ? 'Comisión total estimada' : 'Estimated total commission'}
-                        </th>
-                        <th className="text-left py-3 px-4 text-gray-900 font-bold">
-                          {language === 'es' ? '¿Por qué?' : 'Why?'}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {t.sections.payments.fees.map((fee, index) => (
-                        <tr key={index} className="border-b border-gray-200 hover:bg-blue-50">
-                          <td className="py-4 px-4 font-semibold text-gray-900">{fee.currency}</td>
-                          <td className="py-4 px-4 text-blue-900 font-bold">{fee.rate}</td>
-                          <td className="py-4 px-4 text-gray-700">{fee.reason}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-              <p className="text-sm text-red-900">
-                ⚠️ {t.sections.payments.note}
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                {lang === 'es' ? 'Transparencia Total' : 'Total Transparency'}
+              </h1>
+              <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                {lang === 'es'
+                  ? 'La base de nuestra relación contigo es la claridad absoluta. Sin sorpresas, sin letra pequeña.'
+                  : 'The foundation of our relationship with you is absolute clarity. No surprises, no fine print.'}
               </p>
             </div>
           </motion.div>
+        </div>
+      </div>
+    )
+  },
 
-          {/* 4. Fair Use Section */}
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.fairUse.title}
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-white border border-blue-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Zap className="w-8 h-8 text-blue-900" />
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {t.sections.fairUse.unlimited}
-                    </h3>
-                  </div>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.sections.fairUse.unlimitedDesc}
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-red-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <AlertCircle className="w-8 h-8 text-red-600" />
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {t.sections.fairUse.notAllowed}
-                    </h3>
-                  </div>
-                  <ul className="space-y-2">
-                    {t.sections.fairUse.notAllowedList.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-red-600 font-bold">✗</span>
-                        <span className="text-gray-700">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
-
-          {/* 5. Freedom Section */}
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.freedom.title}
-              </h2>
-            </div>
-
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              {t.sections.freedom.intro}
+  // 3. Animated Grid
+  {
+    id: 3,
+    name: "Animated Grid",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-white flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-6xl md:text-7xl font-black mb-6 bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900 bg-clip-text text-transparent">
+              {lang === 'es' ? 'Más que Código' : 'More Than Code'}
+            </h1>
+            <p className="text-2xl text-gray-700 max-w-3xl mx-auto mb-12 leading-relaxed">
+              {lang === 'es'
+                ? 'Creamos soluciones digitales que transforman negocio.'
+                : 'We create digital solutions that transform your business.'}
             </p>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-white border border-blue-200 hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Download className="w-7 h-7 text-blue-900" />
-                    <h4 className="text-lg font-bold text-gray-900">
-                      {t.sections.freedom.export}
-                    </h4>
-                  </div>
-                  <p className="text-gray-700">{t.sections.freedom.exportDesc}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-red-200 hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <TrendingUp className="w-7 h-7 text-red-600" />
-                    <h4 className="text-lg font-bold text-gray-900">
-                      {t.sections.freedom.noLock}
-                    </h4>
-                  </div>
-                  <p className="text-gray-700">{t.sections.freedom.noLockDesc}</p>
-                </CardContent>
-              </Card>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Button className="bg-blue-900 text-white hover:bg-blue-800 px-8 py-6 text-lg">
+                {lang === 'es' ? 'Explorar' : 'Explore'}
+              </Button>
+              <Button variant="outline" className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 px-8 py-6 text-lg">
+                {lang === 'es' ? 'Aprender Más' : 'Learn More'}
+              </Button>
             </div>
           </motion.div>
+        </div>
+      </div>
+    )
+  },
 
-          {/* 6. Contact Section */}
-          <motion.div {...fadeInUp}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
-                <Phone className="w-6 h-6 text-white" />
+  // 4. Dark Asymmetric
+  {
+    id: 4,
+    name: "Dark Asymmetric",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-r from-gray-900 to-black flex items-center overflow-hidden">
+        <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-900/20 to-transparent" />
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 w-full md:w-1/2">
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+            <div className="mb-6">
+              <span className="inline-block px-4 py-2 bg-blue-600/20 rounded-lg text-blue-400 text-sm font-semibold">BIENVENIDA</span>
+            </div>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Tu Aliado Digital' : 'Your Digital Ally'}
+            </h1>
+            <p className="text-xl text-gray-300 mb-8">
+              {lang === 'es'
+                ? 'Construimos el futuro digital de Costa Rica con pasión y precisión.'
+                : 'We build Costa Rica\'s digital future with passion and precision.'}
+            </p>
+            <Button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-6 text-lg">
+              {lang === 'es' ? 'Comenzar Ahora' : 'Start Now'} <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 5. Neon Glow
+  {
+    id: 5,
+    name: "Neon Glow",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-6xl md:text-7xl font-black text-white mb-6 drop-shadow-lg" style={{ textShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}>
+              {lang === 'es' ? 'Futura Digital' : 'Digital Future'}
+            </h1>
+            <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+              {lang === 'es'
+                ? 'Donde la tecnología y la pasión se encuentran para crear experiencias excepcionales.'
+                : 'Where technology and passion meet to create exceptional experiences.'}
+            </p>
+            <Button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-6 text-lg">
+              {lang === 'es' ? 'Descubre Más' : 'Discover More'}
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 6. Minimalist Clean
+  {
+    id: 6,
+    name: "Minimalist Clean",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-white flex items-center justify-center">
+        <div className="max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+            <div className="mb-8 inline-block">
+              <div className="w-20 h-20 bg-blue-900 rounded-2xl flex items-center justify-center">
+                <Heart className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.contact.title}
-              </h2>
             </div>
-            
-            {/* Contact Widget */}
-            <div className="w-full overflow-hidden">
-              <Contact transparent />
-            </div>
-            </motion.div>
-            </div>
-            </div>
-            </>
-            );
-}
+            <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
+              {lang === 'es' ? 'Hecho con Amor' : 'Made with Love'}
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Cada proyecto es un compromiso hacia la excelencia y la satisfacción de nuestros clientes.'
+                : 'Every project is a commitment to excellence and customer satisfaction.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
 
-export default memo(GuiaBienvenida);
+  // 7. Bold Typography
+  {
+    id: 7,
+    name: "Bold Typography",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-b from-blue-900 to-blue-800 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute text-gray-700 text-9xl font-black opacity-10 top-10 left-0">PURA</div>
+          <div className="absolute text-gray-700 text-9xl font-black opacity-10 bottom-10 right-0">WEB</div>
+        </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center">
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.7 }}
+            className="text-6xl md:text-8xl font-black text-white mb-8 leading-tight"
+          >
+            {lang === 'es' ? 'Valor Real' : 'Real Value'}
+          </motion.h1>
+          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            {lang === 'es'
+              ? 'Inversión inteligente en tu futuro digital.'
+              : 'Smart investment in your digital future.'}
+          </p>
+        </div>
+      </div>
+    )
+  },
+
+  // 8. Dual Tone Split
+  {
+    id: 8,
+    name: "Dual Tone Split",
+    component: (t, lang) => (
+      <div className="relative min-h-screen flex overflow-hidden">
+        <div className="w-1/2 bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center hidden md:flex">
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} className="text-center text-white px-8">
+            <Code className="w-20 h-20 mx-auto mb-6" />
+            <h2 className="text-4xl font-bold">{lang === 'es' ? 'Tecnología' : 'Technology'}</h2>
+          </motion.div>
+        </div>
+        <div className="w-full md:w-1/2 bg-white flex items-center justify-center">
+          <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} className="text-center px-8 max-w-xl">
+            <Heart className="w-16 h-16 text-blue-900 mx-auto mb-6" />
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+              {lang === 'es' ? 'Pasión Tica' : 'Costa Rican Passion'}
+            </h1>
+            <p className="text-lg text-gray-600">
+              {lang === 'es'
+                ? 'La combinación perfecta para tu negocio.'
+                : 'The perfect combination for your business.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 9. Particle Effect
+  {
+    id: 9,
+    name: "Particle Effect",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-blue-400 rounded-full"
+            initial={{ x: Math.random() * 1000 - 500, y: Math.random() * 1000 - 500, opacity: 0 }}
+            animate={{ 
+              x: Math.random() * 1000 - 500, 
+              y: Math.random() * 1000 - 500,
+              opacity: [0, 0.8, 0]
+            }}
+            transition={{ duration: 20 + Math.random() * 10, repeat: Infinity }}
+          />
+        ))}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Innovación Constante' : 'Constant Innovation'}
+            </h1>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'En movimiento hacia el futuro.'
+                : 'Moving towards the future.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 10. Glitch Effect
+  {
+    id: 10,
+    name: "Glitch Effect",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.h1 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-7xl font-black text-white relative"
+          >
+            <div className="inline-block relative">
+              {lang === 'es' ? 'Código Limpio' : 'Clean Code'}
+              <motion.div
+                className="absolute inset-0 text-blue-500/50 font-black"
+                animate={{ x: [0, 2, -2, 0] }}
+                transition={{ duration: 0.2, repeat: Infinity }}
+              >
+                {lang === 'es' ? 'Código Limpio' : 'Clean Code'}
+              </motion.div>
+            </div>
+          </motion.h1>
+          <p className="text-xl text-gray-400 mt-8 max-w-2xl mx-auto">
+            {lang === 'es'
+              ? 'Arquitectura de siguiente nivel.'
+              : 'Next-level architecture.'}
+          </p>
+        </div>
+      </div>
+    )
+  },
+
+  // 11. Cards Showcase
+  {
+    id: 11,
+    name: "Cards Showcase",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center">
+        <div className="max-w-5xl mx-auto px-6 py-32">
+          <motion.h1 
+            initial={{ opacity: 0, y: -30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.6 }}
+            className="text-6xl md:text-7xl font-bold text-white text-center mb-12"
+          >
+            {lang === 'es' ? 'Valores en Acción' : 'Values in Action'}
+          </motion.h1>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: Sparkles, title: lang === 'es' ? 'Excelencia' : 'Excellence' },
+              { icon: Shield, title: lang === 'es' ? 'Seguridad' : 'Security' },
+              { icon: Rocket, title: lang === 'es' ? 'Velocidad' : 'Speed' }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-2xl p-8 text-center hover:border-blue-500 transition-all"
+              >
+                <item.icon className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  // 12. Radial Gradient
+  {
+    id: 12,
+    name: "Radial Gradient",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-radial-gradient from-blue-500/20 via-transparent to-transparent" style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 70%)'
+        }} />
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Centro del Universo' : 'Center of Universe'}
+            </h1>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Tu negocio en el epicentro de la transformación digital.'
+                : 'Your business at the epicenter of digital transformation.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 13. Wave Animation
+  {
+    id: 13,
+    name: "Wave Animation",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-b from-blue-900 to-white flex items-center justify-center overflow-hidden">
+        <svg className="absolute bottom-0 left-0 right-0 h-40" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <motion.path
+            d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z"
+            fill="white"
+            animate={{ d: "M0,60 Q300,10 600,60 T1200,60 L1200,120 L0,120 Z" }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+        </svg>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Flujo Natural' : 'Natural Flow'}
+            </h1>
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Procesos simples, resultados extraordinarios.'
+                : 'Simple processes, extraordinary results.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 14. Holographic
+  {
+    id: 14,
+    name: "Holographic",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-br from-cyan-900 via-blue-900 to-purple-900 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div className="absolute top-1/4 left-1/4 w-96 h-96 border-2 border-cyan-500/30 rounded-3xl" animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity }} />
+          <motion.div className="absolute top-1/3 right-1/4 w-80 h-80 border-2 border-purple-500/30 rounded-full" animate={{ rotate: -360 }} transition={{ duration: 25, repeat: Infinity }} />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Futuro Hoy' : 'Future Today'}
+            </h1>
+            <p className="text-xl text-cyan-200 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Tecnología que transforma realidades.'
+                : 'Technology that transforms realities.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 15. Stacked Text
+  {
+    id: 15,
+    name: "Stacked Text",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-white flex items-center justify-center overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 py-32">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="text-center">
+            <div className="space-y-4 mb-8">
+              <h1 className="text-7xl md:text-8xl font-black text-gray-900">
+                {lang === 'es' ? 'PURA' : 'PURE'}
+              </h1>
+              <h1 className="text-6xl md:text-7xl font-black text-blue-900">
+                {lang === 'es' ? 'EXCELENCIA' : 'EXCELLENCE'}
+              </h1>
+              <h1 className="text-5xl md:text-6xl font-black text-gray-500">
+                {lang === 'es' ? 'DIGITAL' : 'DIGITAL'}
+              </h1>
+            </div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Tres palabras que definen nuestro compromiso.'
+                : 'Three words that define our commitment.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 16. Mesh Gradient
+  {
+    id: 16,
+    name: "Mesh Gradient",
+    component: (t, lang) => (
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)'
+      }}>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
+              {lang === 'es' ? 'Colores de Éxito' : 'Colors of Success'}
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
+              {lang === 'es'
+                ? 'Diversidad de soluciones, un mismo compromiso.'
+                : 'Diversity of solutions, same commitment.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 17. Floating Elements
+  {
+    id: 17,
+    name: "Floating Elements",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center overflow-hidden">
+        {[Sparkles, Code, Award].map((Icon, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            initial={{ y: 0, x: 0 }}
+            animate={{ y: [-50, 50, -50], x: [-30, 30, -30] }}
+            transition={{ duration: 6 + i * 2, repeat: Infinity }}
+            style={{ left: `${20 + i * 35}%`, top: `${20 + i * 10}%`, opacity: 0.1 }}
+          >
+            <Icon className="w-40 h-40 text-blue-500" />
+          </motion.div>
+        ))}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'En Movimiento' : 'In Motion'}
+            </h1>
+            <p className="text-xl text-gray-400">
+              {lang === 'es'
+                ? 'Siempre evolucionando por ti.'
+                : 'Always evolving for you.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 18. Brutalist Design
+  {
+    id: 18,
+    name: "Brutalist Design",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="max-w-5xl mx-auto px-6 py-32">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+            <div className="border-8 border-black p-12 md:p-16 bg-white">
+              <h1 className="text-7xl md:text-8xl font-black text-black mb-6 leading-none">
+                {lang === 'es' ? 'SIN FILTROS' : 'NO FILTERS'}
+              </h1>
+              <div className="h-1 w-32 bg-black mb-8" />
+              <p className="text-xl text-black font-bold max-w-2xl">
+                {lang === 'es'
+                  ? 'Diseño honesto. Tecnología pura. Resultados reales.'
+                  : 'Honest design. Pure technology. Real results.'}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 19. Cyberpunk
+  {
+    id: 19,
+    name: "Cyberpunk",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden" style={{
+        backgroundImage: 'repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 2px)'
+      }}>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ duration: 0.8 }}
+            className="border-4 border-cyan-400 p-12 relative"
+          >
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-r-4 border-cyan-400" />
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-l-4 border-cyan-400" />
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-r-4 border-cyan-400" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-l-4 border-cyan-400" />
+            <h1 className="text-6xl md:text-7xl font-black text-cyan-400 mb-6" style={{ textShadow: '0 0 20px rgba(34, 211, 238, 0.5)' }}>
+              {lang === 'es' ? '> FUTURO' : '> FUTURE'}
+            </h1>
+            <p className="text-cyan-300 text-lg">
+              {lang === 'es'
+                ? '[ CARGANDO INNOVACIÓN ]'
+                : '[ LOADING INNOVATION ]'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  },
+
+  // 20. Aurora Borealis
+  {
+    id: 20,
+    name: "Aurora Borealis",
+    component: (t, lang) => (
+      <div className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20"
+            animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+            transition={{ duration: 15, repeat: Infinity }}
+          />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              {lang === 'es' ? 'Luces del Éxito' : 'Lights of Success'}
+            </h1>
+            <p className="text-xl text-cyan-200 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Iluminando el camino hacia tu transformación digital.'
+                : 'Lighting the path to your digital transformation.'}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  }
+];
+
+const GuiaBienvenidaHeroSelector = memo(function GuiaBienvenidaHeroSelector() {
+  const { language } = useLanguage();
+  const [selectedHero, setSelectedHero] = useState(0);
+  const t = useMemo(() => translations[language], [language]);
+
+  useEffect(() => {
+    document.title = `${language === 'es' ? 'Guía de Bienvenida' : 'Welcome Guide'} - PuraWeb CR`;
+  }, [language]);
+
+  const CurrentHero = heroStyles[selectedHero].component;
+
+  return (
+    <div className="relative min-h-screen">
+      {/* Hero Selector */}
+      <div className="fixed top-32 right-6 z-50">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="gap-2 bg-white text-gray-900 hover:bg-gray-100 shadow-xl border-2 border-blue-900">
+              <Sparkles className="w-5 h-5" />
+              <span className="hidden md:inline">{heroStyles[selectedHero].name}</span>
+              <span className="md:hidden">{selectedHero + 1}</span>
+              <ChevronDown className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+            {heroStyles.map((style, index) => (
+              <DropdownMenuItem
+                key={style.id}
+                onClick={() => setSelectedHero(index)}
+                className={`cursor-pointer ${selectedHero === index ? 'bg-blue-100 text-blue-900 font-semibold' : ''}`}
+              >
+                <span className="font-mono text-sm">{index + 1}.</span>
+                <span className="ml-2">{style.name}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Current Hero */}
+      <CurrentHero t={t} lang={language} />
+
+      {/* Hero Counter - Bottom */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-gray-200 shadow-lg">
+          <p className="text-sm font-semibold text-gray-900">
+            {selectedHero + 1} / {heroStyles.length}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+export default GuiaBienvenidaHeroSelector;
