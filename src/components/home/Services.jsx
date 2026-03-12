@@ -8,13 +8,13 @@ import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/compone
 
 const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
   <motion.div variants={cardReveal} className="h-full">
-    <Card className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 h-full bg-white flex flex-col">
-      <CardContent className="p-8 flex flex-col h-full">
-        <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6 flex-shrink-0`}>
+    <Card className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 h-full bg-white">
+      <CardContent className="p-8">
+        <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
           <Icon className="w-8 h-8 text-white" />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-3 flex-shrink-0">{title}</h3>
-        <p className="text-gray-600 leading-relaxed flex-grow">{description}</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
+        <p className="text-gray-600 leading-relaxed">{description}</p>
       </CardContent>
     </Card>
   </motion.div>
@@ -59,7 +59,7 @@ const Services = memo(function Services() {
         {/* Cards grid */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
           variants={staggerContainer(0.09)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
