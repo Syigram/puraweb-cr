@@ -289,7 +289,7 @@ export const translations = {
       ],
       ctaTitle: "¿Listo para Elevar tu Presencia Digital?",
       ctaSubtitle: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos digitales",
-      ctaButton: "Agenda una Consulta Gratuita"
+      ctaButton: "Quiero mi Web Ahora"
     },
     manifesto: {
       title: "Nosotros",
@@ -665,7 +665,7 @@ export const translations = {
       ],
       ctaTitle: "Ready to Elevate Your Digital Presence?",
       ctaSubtitle: "Let's talk about how we can help you achieve your digital goals",
-      ctaButton: "Schedule a Free Consultation"
+      ctaButton: "Get My Website Now"
     },
     manifesto: {
       title: "About Us",
