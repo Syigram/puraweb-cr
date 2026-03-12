@@ -56,7 +56,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
         </div>
       </CardHeader>
 
-      <CardContent className="px-6 pb-8">
+      <CardContent className="px-6 pb-8 flex flex-col flex-1">
         <ul className="space-y-4 mb-8">
           {plan.features?.map((feature, idx) => (
             <li key={idx} className="flex items-start gap-3">
