@@ -368,7 +368,7 @@ const Nosotros = memo(function Nosotros() {
               </p>
               <Button
                 onClick={handleContactClick}
-                className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-6 text-lg font-semibold shadow-xl"
+                className="bg-white text-blue-900 hover:bg-gray-100 w-full sm:w-auto px-8 py-6 text-lg font-semibold shadow-xl"
               >
                 {t.ctaButton}
                 <ArrowRight className="ml-2 w-5 h-5" />
