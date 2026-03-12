@@ -106,25 +106,30 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="name">{t.form.name} *</Label>
                       <Input
                         id="name"
+                        name="name"
+                        autoComplete="name"
                         required
+                        minLength={2}
                         maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Nombre Completo"
-                        className="border-gray-300"
+                        className="contact-field border-gray-300"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">{t.form.email} *</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
                         required
                         maxLength={150}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="nombre@example.com"
-                        className="border-gray-300"
+                        className="contact-field border-gray-300"
                       />
                     </div>
                   </div>
@@ -134,23 +139,29 @@ const Contact = memo(function Contact({ transparent = false }) {
                       <Label htmlFor="company">{t.form.company}</Label>
                       <Input
                         id="company"
+                        name="company"
+                        autoComplete="organization"
                         maxLength={100}
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
-                        className="border-gray-300"
+                        className="contact-field border-gray-300"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">{t.form.phone}</Label>
                       <Input
                         id="phone"
+                        name="phone"
                         type="tel"
+                        autoComplete="tel"
+                        inputMode="tel"
+                        pattern="[0-9+()\-\s]{8,20}"
                         maxLength={20}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+506 8402 7214"
-                        className="border-gray-300"
+                        className="contact-field border-gray-300"
                       />
                     </div>
                   </div>
@@ -161,7 +172,7 @@ const Contact = memo(function Contact({ transparent = false }) {
                       value={formData.service_interest}
                       onValueChange={(value) => setFormData({ ...formData, service_interest: value })}
                     >
-                      <SelectTrigger className="border-gray-300">
+                      <SelectTrigger className={formData.service_interest ? "border-green-500 focus:ring-green-500" : "border-gray-300"}>
                         <SelectValue placeholder={t.form.selectService} />
                       </SelectTrigger>
                       <SelectContent>
@@ -177,13 +188,16 @@ const Contact = memo(function Contact({ transparent = false }) {
                     <Label htmlFor="message">{t.form.message} * <span className="text-gray-400 font-normal text-sm">({formData.message.length}/2000)</span></Label>
                     <Textarea
                       id="message"
+                      name="message"
+                      autoComplete="on"
                       required
+                      minLength={10}
                       maxLength={2000}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={t.form.messagePlaceholder}
                       rows={5}
-                      className="border-gray-300 resize-none"
+                      className="contact-field border-gray-300 resize-none"
                     />
                   </div>
 
