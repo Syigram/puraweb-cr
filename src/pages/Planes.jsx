@@ -264,7 +264,7 @@ function Planes() {
       <PlanComparisonTable />
 
       {/* CTA Asesoría — al final, justo antes del footer */}
-      <div className="pt-12 pb-16 bg-white">
+      <div className="pb-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
