@@ -14,6 +14,8 @@ function Planes() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
+  const [activeVariant, setActiveVariant] = useState("A");
+
   const handleContactClick = useCallback(() => {
     navigate(createPageUrl("Home") + "#contact");
   }, [navigate]);
