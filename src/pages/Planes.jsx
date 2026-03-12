@@ -26,8 +26,17 @@ function Planes() {
 
     requestAnimationFrame(() => {
       const targetElement = document.getElementById(targetId);
+      const navigationElement = document.querySelector("nav");
+
       if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        const navigationOffset = navigationElement?.offsetHeight || 88;
+        const extraSpacing = 28;
+        const targetTop = targetElement.getBoundingClientRect().top + window.scrollY - navigationOffset - extraSpacing;
+
+        window.scrollTo({
+          top: Math.max(targetTop, 0),
+          behavior: "smooth"
+        });
       }
     });
   }, []);
