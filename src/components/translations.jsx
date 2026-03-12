@@ -280,7 +280,7 @@ export const translations = {
       guarantees: [
         "Respuesta en menos de 24 horas en días hábiles",
         "Sitios web optimizados y rápidos en cualquier dispositivo",
-        "Diseño adaptable que se ajusta perfectamente a cualquier pantalla",
+        "Diseño adaptable a cualquier pantalla o dispositivo",
         "Arquitectura de alto rendimiento que garantiza la estabilidad",
         "Backups automáticos diarios de tu información",
         "Certificado SSL y seguridad de nivel bancario",
