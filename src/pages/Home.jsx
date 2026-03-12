@@ -26,9 +26,11 @@ export default function Home() {
   const { language } = useLanguage();
 
   const scrollToContact = useCallback(() => {
-    const element = document.getElementById("contact");
+    const element = document.getElementById("pricing");
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const navHeight = 80;
+      const top = element.getBoundingClientRect().top + window.scrollY - navHeight;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   }, []);
 
