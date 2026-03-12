@@ -22,7 +22,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
             ? "border-2 border-red-600 shadow-2xl"
             : "border-gray-200 hover:shadow-xl"
         }`}
-        style={{ transform: isHighlighted ? 'scale(1.05)' : 'scale(1)', minHeight: '460px' }}
+        style={{ transform: isHighlighted ? 'scale(1.05)' : 'scale(1)' }}
       >
       {plan.recommended && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
