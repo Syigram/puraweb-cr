@@ -540,7 +540,7 @@ export default function Checkout() {
               
               <div className="mt-6 flex justify-center space-x-4 opacity-50 grayscale">
                 {/* Simple placeholders for card logos if needed, or just text */}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-6" alt="Visa" />
+                <div className="flex h-6 items-center rounded-sm border border-slate-200 bg-white px-3 text-sm font-bold tracking-[0.18em] text-[#1434CB]">VISA</div>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-6" alt="Mastercard" />
               </div>
             </CardContent>
