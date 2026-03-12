@@ -229,52 +229,51 @@ function PlanComparisonTable() {
                     
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
-                      {sectionIdx === 0 && (
-                        <thead className="bg-gray-50">
-                          <tr>
-                            <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
-                              isGeneralSection 
-                                ? 'text-base font-extrabold text-gray-900' 
-                                : 'text-xs font-semibold text-gray-700'
-                            }`}>
-                              Plan
-                            </th>
-                            {t.plans.map((plan, idx) => (
-                              <th
-                                key={idx}
-                                className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
-                                  isGeneralSection 
-                                    ? 'text-base font-extrabold text-gray-900' 
-                                    : 'text-xs font-semibold text-gray-700'
-                                }`}
-                              >
-                                {plan}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                      )}
-                      <tbody className={`divide-y divide-gray-200 ${isGeneralSection ? 'bg-white' : 'bg-white'}`}>
-                        {section.rows.map((row, rowIdx) => (
-                          <tr key={rowIdx} className={`transition-colors ${
-                            isGeneralSection 
-                              ? 'hover:bg-gray-50' 
-                              : 'hover:bg-gray-50'
-                          }`}>
-                            <td className={`px-6 py-5 whitespace-nowrap font-medium w-1/4 ${
-                              isGeneralSection ? 'text-lg text-gray-900 font-bold' : 'text-sm text-gray-900'
-                            }`}>
-                              {row.label}
-                            </td>
-                            {row.values.map((value, valueIdx) => (
-                              <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
-                                isGeneralSection ? 'py-5' : 'py-4'
-                              }`}>
-                                {renderValue(value, isGeneralSection, row.label)}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
+                     {sectionIdx === 0 && (
+                       <thead className="bg-gray-50 border-b-2 border-gray-200">
+                         <tr>
+                           <th className="px-6 py-5 text-left w-1/4">
+                             <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Plan</span>
+                           </th>
+                           {t.plans.map((plan, idx) => {
+                             const planStyles = [
+                               { label: "text-gray-700", accent: "border-gray-300" },
+                               { label: "text-blue-900", accent: "border-blue-500" },
+                               { label: "text-gray-700", accent: "border-gray-300" },
+                             ];
+                             const style = planStyles[idx] || planStyles[0];
+                             return (
+                               <th
+                                 key={idx}
+                                 className={`px-6 py-5 text-center w-1/4`}
+                               >
+                                 <span className={`block text-lg font-extrabold tracking-tight ${style.label}`}>
+                                   {plan}
+                                 </span>
+                                 <span className={`block mt-1 mx-auto w-8 h-0.5 rounded-full bg-current opacity-30`} />
+                               </th>
+                             );
+                           })}
+                         </tr>
+                       </thead>
+                     )}
+                     <tbody className="divide-y divide-gray-200 bg-white">
+                       {section.rows.map((row, rowIdx) => (
+                         <tr key={rowIdx} className="hover:bg-gray-50 transition-colors">
+                           <td className={`px-6 py-5 whitespace-nowrap font-medium w-1/4 ${
+                             isGeneralSection ? 'text-lg text-gray-900 font-bold' : 'text-sm text-gray-900'
+                           }`}>
+                             {row.label}
+                           </td>
+                           {row.values.map((value, valueIdx) => (
+                             <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
+                               isGeneralSection ? 'py-5' : 'py-4'
+                             }`}>
+                               {renderValue(value, isGeneralSection, row.label, row.originalValues?.[valueIdx] || null, row.promoLabel || null)}
+                             </td>
+                           ))}
+                         </tr>
+                       ))}
                       </tbody>
                     </table>
                   </div>
