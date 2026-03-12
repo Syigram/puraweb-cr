@@ -17,7 +17,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
     <div className="h-full transition-all duration-300 ease-out" style={{ marginTop: isHighlighted ? '-16px' : '0' }}>
       <Card
         onClick={() => onSelect(plan.name)}
-        className={`relative h-full cursor-pointer transition-all duration-300 ease-out ${
+        className={`relative h-full flex flex-col cursor-pointer transition-all duration-300 ease-out ${
           isHighlighted
             ? "border-2 border-red-600 shadow-2xl"
             : "border-gray-200 hover:shadow-xl"
