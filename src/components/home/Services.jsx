@@ -90,7 +90,7 @@ const Services = memo(function Services() {
 
         {/* Cards grid */}
         <motion.div
-          ref={(el) => { gridRef(el); gridContainerRef.current = el; }}
+          ref={(el) => { gridRef.current = el; gridContainerRef.current = el; }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer(0.09)}
           initial="hidden"
