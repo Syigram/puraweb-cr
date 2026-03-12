@@ -58,6 +58,11 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/GuiaBienvenida" element={
+        <LayoutWrapper currentPageName="GuiaBienvenida">
+          <GuiaBienvenida />
+        </LayoutWrapper>
+      } />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
