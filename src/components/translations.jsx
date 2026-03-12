@@ -107,7 +107,7 @@ export const translations = {
       },
       dedicatedTeam: {
         title: "Ventas Sin Fronteras con Stripe",
-        description: "Transformamos tu sitio en una máquina de ventas. Implementamos pasarelas de pago modernas y seguras usando Stripe, permitiendo que tus clientes paguen de forma fluida y profesional."
+        description: "Transformamos tu sitio en una máquina de ventas. Implementamos pasarelas de pago modernas y seguras usando Stripe, permitiendo que tus clientes paguen de forma fluida y profesional. Stripe es la plataforma de pago más segura y confiable a nivel mundial."
       },
       quality: {
         title: "Experiencia de Usuario (UX) Superior",
