@@ -305,7 +305,7 @@ function PlanComparisonTable() {
                               {row.label}
                             </span>
                             <div className="flex-shrink-0 ml-4">
-                              {renderValue(row.values[planIdx], isGeneralSection, row.label)}
+                              {renderValue(row.values[planIdx], isGeneralSection, row.label, row.originalValues?.[planIdx] || null, row.promoLabel || null)}
                             </div>
                           </div>
                         ))}
