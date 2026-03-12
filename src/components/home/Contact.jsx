@@ -191,7 +191,7 @@ const Contact = memo(function Contact({ transparent = false }) {
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
-        {transparent && (
+        {!transparent && (
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
