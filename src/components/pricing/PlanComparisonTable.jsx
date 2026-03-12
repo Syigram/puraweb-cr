@@ -16,7 +16,6 @@ function PlanComparisonTable() {
         {
           title: "Información General",
           rows: [
-            { label: "Precio", values: ["₡100,000", "₡150,000", "₡250,000"] },
             { label: "Objetivo", values: ["Presencia digital", "Crecimiento y ventas", "Solución integral"] }
           ]
         },
