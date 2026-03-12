@@ -112,7 +112,7 @@ export default function Home() {
         <Benefits />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
-        <Contact />
+        <Contact showContactTitle={false} />
       </Suspense>
       </div>
       </>
