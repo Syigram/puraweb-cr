@@ -230,40 +230,12 @@ function GuiaBienvenida() {
       />
       
       <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
-        {/* Hero Section */}
-        <div className="relative pt-24 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-red-900/5" />
-          
-          <motion.div 
-            className="max-w-5xl mx-auto px-6 relative z-10"
-            {...fadeInUp}
-          >
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-2xl">
-                <Rocket className="w-10 h-10 text-white" />
-              </div>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-blue-900 via-blue-700 to-red-700 bg-clip-text text-transparent">
-              {t.title}
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-center text-gray-600 font-medium mb-8">
-              {t.subtitle}
-            </p>
-            
-            <Card className="bg-white border border-blue-200 shadow-xl">
-              <CardContent className="p-8 md:p-12">
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
-                  {t.hero}
-                </p>
-                <p className="text-base md:text-lg text-gray-600 font-semibold">
-                  {t.subtitle2}
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
+        {/* Hero Section with Selector */}
+        <HeroSelector 
+          title={t.title}
+          subtitle={t.subtitle}
+          language={language}
+        />
 
         <div className="max-w-6xl mx-auto px-6 pb-20">
           {/* 1. Ownership Section */}
