@@ -16,7 +16,7 @@ function PlanComparisonTable() {
         {
           title: "Información General",
           rows: [
-            { label: "Precio", values: ["₡100,000", "₡150,000", "₡250,000"], originalValues: ["₡150,000", "₡200,000", null], promoLabel: "¡Oferta!" },
+            { label: "Precio", values: ["₡100,000", "₡150,000", "₡250,000"] },
             { label: "Objetivo", values: ["Presencia digital", "Crecimiento y ventas", "Solución integral"] }
           ]
         },
@@ -91,7 +91,7 @@ function PlanComparisonTable() {
         {
           title: "General Information",
           rows: [
-            { label: "Price", values: ["₡100,000", "₡150,000", "₡250,000"], originalValues: ["₡150,000", "₡200,000", null], promoLabel: "Promo!" },
+            { label: "Price", values: ["₡100,000", "₡150,000", "₡250,000"] },
             { label: "Objective", values: ["Digital presence", "Growth and sales", "Comprehensive solution"] }
           ]
         },
@@ -163,7 +163,7 @@ function PlanComparisonTable() {
   const t = content[language];
 
   // Memoize renderValue function
-  const renderValue = useCallback((value, isGeneralSection = false, rowLabel = '', originalValue = null, promoLabel = null) => {
+  const renderValue = useCallback((value, isGeneralSection = false, rowLabel = '') => {
     if (typeof value === "boolean") {
       return (
         <div className="flex items-center justify-center">
@@ -175,20 +175,8 @@ function PlanComparisonTable() {
         </div>
       );
     }
+    
 
-    if (originalValue) {
-      return (
-        <div className="flex flex-col items-center gap-1">
-          {promoLabel && (
-            <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-              {promoLabel}
-            </span>
-          )}
-          <span className="text-sm text-gray-400 line-through">{originalValue}</span>
-          <span className="text-lg font-bold text-blue-900">{value}</span>
-        </div>
-      );
-    }
     
     return (
       <span className={`${isGeneralSection ? 'text-base font-semibold' : 'text-sm'} text-gray-700`}>
@@ -228,18 +216,25 @@ function PlanComparisonTable() {
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
-                        <thead className="bg-gradient-to-r from-slate-800 to-blue-950">
+                        <thead className="bg-gray-50">
                           <tr>
-                            <th className="px-6 py-6 text-left w-1/4">
-                              <span className="text-xs font-semibold uppercase tracking-widest text-blue-300">
-                                {language === 'es' ? 'Plan' : 'Plan'}
-                              </span>
+                            <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
+                              isGeneralSection 
+                                ? 'text-base font-extrabold text-gray-900' 
+                                : 'text-xs font-semibold text-gray-700'
+                            }`}>
+                              Plan
                             </th>
                             {t.plans.map((plan, idx) => (
-                              <th key={idx} className="px-6 py-6 text-center w-1/4">
-                                <span className="block text-lg font-bold tracking-wide text-white" style={{ fontFamily: "'Georgia', serif", letterSpacing: '0.04em' }}>
-                                  {plan}
-                                </span>
+                              <th
+                                key={idx}
+                                className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
+                                  isGeneralSection 
+                                    ? 'text-base font-extrabold text-gray-900' 
+                                    : 'text-xs font-semibold text-gray-700'
+                                }`}
+                              >
+                                {plan}
                               </th>
                             ))}
                           </tr>
@@ -258,11 +253,11 @@ function PlanComparisonTable() {
                               {row.label}
                             </td>
                             {row.values.map((value, valueIdx) => (
-                             <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
-                               isGeneralSection ? 'py-5' : 'py-4'
-                             }`}>
-                               {renderValue(value, isGeneralSection, row.label, row.originalValues?.[valueIdx] || null, row.promoLabel || null)}
-                             </td>
+                              <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
+                                isGeneralSection ? 'py-5' : 'py-4'
+                              }`}>
+                                {renderValue(value, isGeneralSection, row.label)}
+                              </td>
                             ))}
                           </tr>
                         ))}
@@ -305,7 +300,7 @@ function PlanComparisonTable() {
                               {row.label}
                             </span>
                             <div className="flex-shrink-0 ml-4">
-                              {renderValue(row.values[planIdx], isGeneralSection, row.label, row.originalValues?.[planIdx] || null, row.promoLabel || null)}
+                              {renderValue(row.values[planIdx], isGeneralSection, row.label)}
                             </div>
                           </div>
                         ))}
