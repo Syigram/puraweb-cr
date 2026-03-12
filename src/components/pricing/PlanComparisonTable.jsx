@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, memo } from "react";
-import { Check, X } from "lucide-react";
+import { Check, X, Tag } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/components/LanguageContext";
 
