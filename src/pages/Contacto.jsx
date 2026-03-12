@@ -99,7 +99,7 @@ export default function Contacto() {
       </section>
 
       {/* Contact Form Section */}
-      <Contact showContactTitle={true} />
+      <Contact transparent={true} showContactTitle={true} />
     </div>
     </>
   );
