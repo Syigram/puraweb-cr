@@ -59,7 +59,7 @@ const Services = memo(function Services() {
         {/* Cards grid */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
           variants={staggerContainer(0.09)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
