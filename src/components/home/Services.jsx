@@ -55,11 +55,16 @@ const Services = memo(function Services() {
 
   // Equalize after render and on resize/language change
   useEffect(() => {
-    const container = gridContainerRef.current;
+    const run = () => {
+      const container = gridRef.current;
+      if (container) equalizeCardHeights(container);
+    };
     // Delay to let framer-motion animations settle
-    const timeout = setTimeout(() => equalizeCardHeights(container), 600);
+    const timeout = setTimeout(run, 600);
 
-    const handleResize = () => equalizeCardHeights(container);
+    const handleResize = () => {
+      if (gridRef.current) equalizeCardHeights(gridRef.current);
+    };
     window.addEventListener('resize', handleResize);
 
     return () => {
