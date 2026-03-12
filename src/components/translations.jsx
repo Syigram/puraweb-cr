@@ -665,7 +665,7 @@ export const translations = {
       ],
       ctaTitle: "Ready to Elevate Your Digital Presence?",
       ctaSubtitle: "Let's talk about how we can help you achieve your digital goals",
-      ctaButton: "Schedule a Free Consultation"
+      ctaButton: "Contact Us"
     },
     manifesto: {
       title: "About Us",
