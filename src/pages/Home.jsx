@@ -97,26 +97,14 @@ export default function Home() {
               ? 'Compara todas las características y encuentra el plan perfecto para tu negocio'
               : 'Compare all features and find the perfect plan for your business'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => navigate(createPageUrl("Planes?scroll=comparacion-detallada"))}
-              size="lg"
-              className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            >
-              {language === 'es' ? 'Ver Planes Completos' : 'View Full Plans'}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Link to={createPageUrl("Contacto")}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50 font-semibold px-8 py-6 text-lg transition-all duration-300 w-full sm:w-auto"
-              >
-                <MessageCircle className="mr-2 w-5 h-5" />
-                {language === 'es' ? 'Contáctanos' : 'Contact Us'}
-              </Button>
-            </Link>
-          </div>
+          <Button
+            onClick={() => navigate(createPageUrl("Planes?scroll=comparacion-detallada"))}
+            size="lg"
+            className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+          >
+            {language === 'es' ? 'Ver Planes Completos' : 'View Full Plans'}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
         </div>
       </div>
       
