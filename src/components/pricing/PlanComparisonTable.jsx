@@ -228,25 +228,18 @@ function PlanComparisonTable() {
                     {/* Section Rows */}
                     <table className="min-w-full divide-y divide-gray-200 table-fixed">
                       {sectionIdx === 0 && (
-                        <thead className="bg-gray-50">
+                        <thead className="bg-gradient-to-r from-slate-800 to-blue-950">
                           <tr>
-                            <th className={`px-6 py-5 text-left uppercase tracking-wider w-1/4 ${
-                              isGeneralSection 
-                                ? 'text-base font-extrabold text-gray-900' 
-                                : 'text-xs font-semibold text-gray-700'
-                            }`}>
-                              Plan
+                            <th className="px-6 py-6 text-left w-1/4">
+                              <span className="text-xs font-semibold uppercase tracking-widest text-blue-300">
+                                {language === 'es' ? 'Plan' : 'Plan'}
+                              </span>
                             </th>
                             {t.plans.map((plan, idx) => (
-                              <th
-                                key={idx}
-                                className={`px-6 py-5 text-center uppercase tracking-wider w-1/4 ${
-                                  isGeneralSection 
-                                    ? 'text-base font-extrabold text-gray-900' 
-                                    : 'text-xs font-semibold text-gray-700'
-                                }`}
-                              >
-                                {plan}
+                              <th key={idx} className="px-6 py-6 text-center w-1/4">
+                                <span className="block text-lg font-bold tracking-wide text-white" style={{ fontFamily: "'Georgia', serif", letterSpacing: '0.04em' }}>
+                                  {plan}
+                                </span>
                               </th>
                             ))}
                           </tr>
