@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState, useRef, useEffect, useCallback } from "react";
+import React, { memo, useMemo, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Globe, ShoppingCart, Smartphone, Zap, ShieldCheck, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,13 +6,9 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
-const ServiceCard = memo(React.forwardRef(({ icon: Icon, title, description, color, minHeight }, ref) => (
+const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
   <motion.div variants={cardReveal}>
-    <Card
-      ref={ref}
-      className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 bg-white"
-      style={minHeight ? { minHeight } : undefined}
-    >
+    <Card className="service-card group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 bg-white">
       <CardContent className="p-8">
         <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
           <Icon className="w-8 h-8 text-white" />
@@ -22,13 +18,28 @@ const ServiceCard = memo(React.forwardRef(({ icon: Icon, title, description, col
       </CardContent>
     </Card>
   </motion.div>
-)));
+));
+
+function equalizeCardHeights(container) {
+  if (!container) return;
+  const cards = container.querySelectorAll('.service-card');
+  // Reset heights first
+  cards.forEach(card => { card.style.minHeight = ''; });
+  // Measure tallest
+  let tallest = 0;
+  cards.forEach(card => {
+    tallest = Math.max(tallest, card.offsetHeight);
+  });
+  // Apply tallest to all
+  if (tallest > 0) {
+    cards.forEach(card => { card.style.minHeight = tallest + 'px'; });
+  }
+}
 
 const Services = memo(function Services() {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].services, [language]);
-  const [maxHeight, setMaxHeight] = useState(0);
-  const cardRefs = useRef([]);
+  const gridContainerRef = useRef(null);
 
   const { ref: headerRef, isInView: headerInView } = useScrollReveal();
   const { ref: gridRef, isInView: gridInView } = useScrollReveal();
@@ -42,31 +53,20 @@ const Services = memo(function Services() {
     { icon: ShieldCheck, title: t.securitySupport.title, description: t.securitySupport.description, color: "from-blue-700 to-blue-500" }
   ], [t]);
 
-  const calcMaxHeight = useCallback(() => {
-    // Reset min-height temporarily to measure natural heights
-    cardRefs.current.forEach(el => {
-      if (el) el.style.minHeight = 'auto';
-    });
-    // Use rAF to measure after reset
-    requestAnimationFrame(() => {
-      let tallest = 0;
-      cardRefs.current.forEach(el => {
-        if (el) tallest = Math.max(tallest, el.scrollHeight);
-      });
-      setMaxHeight(tallest);
-    });
-  }, []);
-
+  // Equalize after render and on resize/language change
   useEffect(() => {
-    calcMaxHeight();
-    const observer = new ResizeObserver(calcMaxHeight);
-    cardRefs.current.forEach(el => { if (el) observer.observe(el); });
-    return () => observer.disconnect();
-  }, [calcMaxHeight, language]);
+    const container = gridContainerRef.current;
+    // Delay to let framer-motion animations settle
+    const timeout = setTimeout(() => equalizeCardHeights(container), 600);
 
-  const setCardRef = useCallback((index) => (el) => {
-    cardRefs.current[index] = el;
-  }, []);
+    const handleResize = () => equalizeCardHeights(container);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [language]);
 
   return (
     <section id="services" className="py-24 bg-gradient-to-b from-white to-gray-50">
@@ -90,19 +90,14 @@ const Services = memo(function Services() {
 
         {/* Cards grid */}
         <motion.div
-          ref={gridRef}
+          ref={(el) => { gridRef(el); gridContainerRef.current = el; }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer(0.09)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
         >
           {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              ref={setCardRef(index)}
-              minHeight={maxHeight > 0 ? maxHeight : undefined}
-              {...service}
-            />
+            <ServiceCard key={index} {...service} />
           ))}
         </motion.div>
       </div>
