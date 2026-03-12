@@ -2,7 +2,7 @@ import React, { useCallback, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
