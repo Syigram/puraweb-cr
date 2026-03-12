@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, useEffect } from "react";
+import React, { memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Globe, ShoppingCart, Smartphone, Zap, ShieldCheck, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,8 +7,8 @@ import { translations } from "@/components/translations";
 import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
 const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
-  <motion.div variants={cardReveal}>
-    <Card className="service-card group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 bg-white">
+  <motion.div variants={cardReveal} className="h-full">
+    <Card className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 h-full bg-white">
       <CardContent className="p-8">
         <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
           <Icon className="w-8 h-8 text-white" />
@@ -20,25 +20,10 @@ const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
   </motion.div>
 ));
 
-function equalizeCardHeights(container) {
-  if (!container) return;
-  const cards = container.querySelectorAll('.service-card');
-  // Reset heights first
-  cards.forEach(card => { card.style.minHeight = ''; });
-  // Measure tallest
-  let tallest = 0;
-  cards.forEach(card => {
-    tallest = Math.max(tallest, card.offsetHeight);
-  });
-  // Apply tallest to all
-  if (tallest > 0) {
-    cards.forEach(card => { card.style.minHeight = tallest + 'px'; });
-  }
-}
-
 const Services = memo(function Services() {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].services, [language]);
+
   const { ref: headerRef, isInView: headerInView } = useScrollReveal();
   const { ref: gridRef, isInView: gridInView } = useScrollReveal();
 
@@ -50,26 +35,6 @@ const Services = memo(function Services() {
     { icon: CreditCard, title: t.payments.title, description: t.payments.description, color: "from-purple-600 to-purple-800" },
     { icon: ShieldCheck, title: t.securitySupport.title, description: t.securitySupport.description, color: "from-blue-700 to-blue-500" }
   ], [t]);
-
-  // Equalize after render and on resize/language change
-  useEffect(() => {
-    const run = () => {
-      const container = gridRef.current;
-      if (container) equalizeCardHeights(container);
-    };
-    // Delay to let framer-motion animations settle
-    const timeout = setTimeout(run, 600);
-
-    const handleResize = () => {
-      if (gridRef.current) equalizeCardHeights(gridRef.current);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [language]);
 
   return (
     <section id="services" className="py-24 bg-gradient-to-b from-white to-gray-50">
@@ -94,7 +59,7 @@ const Services = memo(function Services() {
         {/* Cards grid */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
           variants={staggerContainer(0.09)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
