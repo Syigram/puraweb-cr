@@ -7,7 +7,7 @@ import { translations } from "@/components/translations";
 import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
 const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
-  <motion.div variants={cardReveal}>
+  <motion.div variants={cardReveal} className="h-full">
     <Card className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 h-full bg-white">
       <CardContent className="p-8">
         <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
