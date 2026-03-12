@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Globe, ShoppingCart } from "lucide-react";
+import { ArrowRight, Sparkles, Globe, ShoppingCart, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
