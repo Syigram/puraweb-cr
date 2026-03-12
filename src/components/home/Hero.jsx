@@ -251,10 +251,11 @@ const Hero = memo(function Hero({ onGetStarted }) {
               <Button
                 onClick={onGetStarted}
                 size="lg"
-                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base px-6 py-5 shadow-xl"
+                className="relative bg-gradient-to-r from-red-600 via-red-500 to-red-600 hover:from-red-700 hover:via-red-600 hover:to-red-700 text-white text-base font-bold px-8 py-5 shadow-[0_0_24px_rgba(206,17,38,0.45)] hover:shadow-[0_0_36px_rgba(206,17,38,0.65)] transition-all duration-300 rounded-xl border border-red-400/30"
               >
+                <Zap className="w-4 h-4 mr-2 fill-white" />
                 {t.getStarted}
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button
                 asChild
