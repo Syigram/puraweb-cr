@@ -96,7 +96,6 @@ export default function Home() {
           </p>
           <Button
             onClick={() => {
-              window.scrollTo(0, 0);
               navigate(createPageUrl("Planes?scroll=comparacion-detallada"));
             }}
             size="lg"

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, memo, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useLayoutEffect, memo, useCallback, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { createPageUrl } from "@/utils";
 import { Menu, X, Globe, User, LogOut, LayoutDashboard, Shield, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -210,9 +211,13 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
   }, []);
 
   const handleTopNavigation = useCallback(() => {
-    window.scrollTo(0, 0);
     setIsMobileMenuOpen(false);
   }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    setIsMobileMenuOpen(false);
+  }, [location.pathname, location.search]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -425,7 +430,17 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               </nav>
 
       {/* Main Content */}
-      <main>{children}</main>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.main
+          key={`${location.pathname}${location.search}`}
+          initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {children}
+        </motion.main>
+      </AnimatePresence>
 
       {/* Chatbot */}
       <Chatbot disabled={isMobileMenuOpen} />
