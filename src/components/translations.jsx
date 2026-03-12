@@ -389,7 +389,7 @@ export const translations = {
       title2: "Digital Presence",
       typewriterWords: ["Digital Presence", "Unique Website", "Online Store", "Web Identity"],
       description: "We are a team of Costa Ricans building the digital future of Costa Rica. We create premium websites with the passion and speed your business needs to lead.",
-      getStarted: "Get Started",
+      getStarted: "View Plans",
       portfolioCta: "View our portfolio",
       stat1: "Projects Delivered",
       stat2: "Client Satisfaction",
