@@ -311,6 +311,23 @@ const Nosotros = memo(function Nosotros() {
                 </div>
                 ))}
                 </div>
+
+                {/* CTA to Guide */}
+                <div className="mt-16 text-center">
+                  <p className="text-lg text-gray-600 mb-4">
+                    {language === 'es' 
+                      ? '¿Querés conocer en detalle cómo es colaborar con PuraWeb CR?' 
+                      : 'Want to learn more about what it\'s like to work with PuraWeb CR?'}
+                  </p>
+                  <Button
+                    onClick={() => navigate(createPageUrl("GuiaBienvenida"))}
+                    variant="outline"
+                    className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50"
+                  >
+                    {language === 'es' ? 'Leer nuestra Guía' : 'Read our Guide'}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
                 </div>
                 </section>
 
