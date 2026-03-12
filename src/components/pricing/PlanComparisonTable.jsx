@@ -265,11 +265,11 @@ function PlanComparisonTable() {
                               {row.label}
                             </td>
                             {row.values.map((value, valueIdx) => (
-                              <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
-                                isGeneralSection ? 'py-5' : 'py-4'
-                              }`}>
-                                {renderValue(value, isGeneralSection, row.label)}
-                              </td>
+                             <td key={valueIdx} className={`px-6 text-center align-middle w-1/4 ${
+                               isGeneralSection ? 'py-5' : 'py-4'
+                             }`}>
+                               {renderValue(value, isGeneralSection, row.label, row.originalValues?.[valueIdx] || null, row.promoLabel || null)}
+                             </td>
                             ))}
                           </tr>
                         ))}
