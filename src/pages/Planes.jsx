@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, memo } from "react";
+import React, { useMemo, useCallback, useEffect, useState, memo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
 import Pricing from "@/components/home/Pricing";
 import PlanComparisonTable from "@/components/pricing/PlanComparisonTable";
+import PortfolioCTA from "@/components/pricing/PortfolioCTA";
 
 function Planes() {
   const navigate = useNavigate();
