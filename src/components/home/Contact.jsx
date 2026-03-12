@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Send, CheckCircle, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useLanguage } from "@/components/LanguageContext";
@@ -352,16 +352,6 @@ const Contact = memo(function Contact({ transparent = false }) {
                       </>
                     )}
                   </Button>
-
-                  <a
-                    href="https://wa.me/50684027214"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-lg py-6 rounded-md font-medium transition-all duration-200"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    {language === 'es' ? 'Enviar por WhatsApp' : 'Send via WhatsApp'}
-                  </a>
                 </form>
               </CardContent>
             </Card>

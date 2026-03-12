@@ -6,13 +6,13 @@ import { translations } from "@/components/translations";
 import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
 const BenefitCard = memo(({ icon: Icon, title, description }) => (
-  <motion.div variants={cardReveal} className="h-full">
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-200 h-full flex flex-col">
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mb-6 flex-shrink-0">
+  <motion.div variants={cardReveal}>
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-200">
+      <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center mb-6">
         <Icon className="w-7 h-7 text-white" />
       </div>
       <h3 className="text-2xl font-bold mb-3">{title}</h3>
-      <p className="text-blue-200 leading-relaxed flex-grow">{description}</p>
+      <p className="text-blue-200 leading-relaxed">{description}</p>
     </div>
   </motion.div>
 ));
@@ -59,7 +59,7 @@ const Benefits = memo(function Benefits() {
         {/* Cards */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 auto-rows-fr"
+          className="grid md:grid-cols-2 gap-8"
           variants={staggerContainer(0.1)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
