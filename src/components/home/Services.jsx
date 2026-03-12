@@ -6,10 +6,14 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useScrollReveal, fadeUp, staggerContainer, cardReveal } from "@/components/animations/useScrollReveal";
 
-const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
-  <motion.div variants={cardReveal} className="h-full">
-    <Card className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 h-full bg-white flex flex-col">
-      <CardContent className="p-8 flex-1 flex flex-col">
+const ServiceCard = memo(React.forwardRef(({ icon: Icon, title, description, color, minHeight }, ref) => (
+  <motion.div variants={cardReveal}>
+    <Card
+      ref={ref}
+      className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-0 bg-white"
+      style={minHeight ? { minHeight } : undefined}
+    >
+      <CardContent className="p-8">
         <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-6`}>
           <Icon className="w-8 h-8 text-white" />
         </div>
@@ -18,7 +22,7 @@ const ServiceCard = memo(({ icon: Icon, title, description, color }) => (
       </CardContent>
     </Card>
   </motion.div>
-));
+)));
 
 const Services = memo(function Services() {
   const { language } = useLanguage();
