@@ -136,7 +136,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
         {/* Cards */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start"
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch"
           variants={staggerContainer(0.12)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
