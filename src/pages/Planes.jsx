@@ -142,9 +142,18 @@ function Planes() {
       />
       <div className="pt-20">
       <Pricing compact />
-      
-      {/* CTA Section */}
-      <div className="pb-8 bg-white">
+
+      {/* Portfolio CTA (con selector de variante) */}
+      <PortfolioCTA
+        showSelector={true}
+        variantIndex={portfolioVariant}
+        onVariantChange={setPortfolioVariant}
+      />
+
+      <PlanComparisonTable />
+
+      {/* CTA Asesoría - al final, justo antes del footer */}
+      <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -163,9 +172,7 @@ function Planes() {
                   </div>
                   <div className="flex-1 text-center md:text-left">
                     <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                      {language === 'es' 
-                        ? '¿Necesita asesoría personalizada?' 
-                        : 'Need personalized advice?'}
+                      {language === 'es' ? '¿Necesita asesoría personalizada?' : 'Need personalized advice?'}
                     </h3>
                     <p className="text-gray-600 text-base md:text-lg">
                       {language === 'es'
@@ -188,8 +195,6 @@ function Planes() {
           </motion.div>
         </div>
       </div>
-
-      <PlanComparisonTable />
     </div>
     </>
   );
