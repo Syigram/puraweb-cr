@@ -555,8 +555,8 @@ function GuiaBienvenida() {
 
           {/* 6. Contact Section */}
           <motion.div {...fadeInUp}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
                 <Phone className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -565,7 +565,9 @@ function GuiaBienvenida() {
             </div>
             
             {/* Contact Widget */}
-            <Contact transparent />
+            <div className="w-full overflow-hidden">
+              <Contact transparent />
+            </div>
             </motion.div>
             </div>
             </div>
