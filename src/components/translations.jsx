@@ -289,7 +289,7 @@ export const translations = {
       ],
       ctaTitle: "¿Listo para Elevar tu Presencia Digital?",
       ctaSubtitle: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos digitales",
-      ctaButton: "Agenda una Consulta Gratuita"
+      ctaButton: "Contáctanos"
     },
     manifesto: {
       title: "Nosotros",
