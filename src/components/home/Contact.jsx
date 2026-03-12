@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo } from "react";
+import React, { useState, useEffect, useRef, useCallback, memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal, slideInLeft, slideInRight } from "@/components/animations/useScrollReveal";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,47 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
 
+const VALID_SERVICE_OPTIONS = ["web_development", "ecommerce", "both", "custom"];
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[0-9+()\-\s]{8,20}$/;
+
+function getFieldState(field, value) {
+  const trimmedValue = value.trim();
+
+  if (!trimmedValue) {
+    return "default";
+  }
+
+  switch (field) {
+    case "name":
+      return trimmedValue.length >= 2 ? "valid" : "invalid";
+    case "email":
+      return EMAIL_REGEX.test(trimmedValue) ? "valid" : "invalid";
+    case "company":
+      return trimmedValue.length >= 2 ? "valid" : "invalid";
+    case "phone":
+      return PHONE_REGEX.test(trimmedValue) ? "valid" : "invalid";
+    case "message":
+      return trimmedValue.length >= 10 ? "valid" : "invalid";
+    case "service_interest":
+      return VALID_SERVICE_OPTIONS.includes(value) ? "valid" : "default";
+    default:
+      return "default";
+  }
+}
+
+function getValidationClass(state) {
+  if (state === "valid") {
+    return "border-green-500 focus-visible:ring-green-500";
+  }
+
+  if (state === "invalid") {
+    return "border-red-500 focus-visible:ring-red-500";
+  }
+
+  return "border-gray-300";
+}
+
 const Contact = memo(function Contact({ transparent = false }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
@@ -28,6 +69,49 @@ const Contact = memo(function Contact({ transparent = false }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
+  const inputRefs = useRef({});
+
+  const fieldStates = useMemo(() => ({
+    name: getFieldState("name", formData.name),
+    email: getFieldState("email", formData.email),
+    company: getFieldState("company", formData.company),
+    phone: getFieldState("phone", formData.phone),
+    message: getFieldState("message", formData.message),
+    service_interest: getFieldState("service_interest", formData.service_interest)
+  }), [formData]);
+
+  const syncAutofilledValues = useCallback(() => {
+    setFormData((current) => {
+      const nextValues = {
+        name: inputRefs.current.name?.value ?? current.name,
+        email: inputRefs.current.email?.value ?? current.email,
+        company: inputRefs.current.company?.value ?? current.company,
+        phone: inputRefs.current.phone?.value ?? current.phone,
+        message: inputRefs.current.message?.value ?? current.message
+      };
+
+      const hasChanges = Object.entries(nextValues).some(([key, value]) => value !== current[key]);
+      return hasChanges ? { ...current, ...nextValues } : current;
+    });
+  }, []);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        syncAutofilledValues();
+      }
+    }, 500);
+
+    window.addEventListener("focus", syncAutofilledValues);
+    window.addEventListener("pageshow", syncAutofilledValues);
+    syncAutofilledValues();
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener("focus", syncAutofilledValues);
+      window.removeEventListener("pageshow", syncAutofilledValues);
+    };
+  }, [syncAutofilledValues]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,9 +196,11 @@ const Contact = memo(function Contact({ transparent = false }) {
                         minLength={2}
                         maxLength={100}
                         value={formData.name}
+                        ref={(node) => { inputRefs.current.name = node; }}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Nombre Completo"
-                        className="contact-field border-gray-300"
+                        aria-invalid={fieldStates.name === "invalid"}
+                        className={getValidationClass(fieldStates.name)}
                       />
                     </div>
                     <div className="space-y-2">
@@ -127,9 +213,11 @@ const Contact = memo(function Contact({ transparent = false }) {
                         required
                         maxLength={150}
                         value={formData.email}
+                        ref={(node) => { inputRefs.current.email = node; }}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="nombre@example.com"
-                        className="contact-field border-gray-300"
+                        aria-invalid={fieldStates.email === "invalid"}
+                        className={getValidationClass(fieldStates.email)}
                       />
                     </div>
                   </div>
@@ -141,11 +229,14 @@ const Contact = memo(function Contact({ transparent = false }) {
                         id="company"
                         name="company"
                         autoComplete="organization"
+                        minLength={2}
                         maxLength={100}
                         value={formData.company}
+                        ref={(node) => { inputRefs.current.company = node; }}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         placeholder={language === 'es' ? 'Tu Empresa' : 'Your Company'}
-                        className="contact-field border-gray-300"
+                        aria-invalid={fieldStates.company === "invalid"}
+                        className={getValidationClass(fieldStates.company)}
                       />
                     </div>
                     <div className="space-y-2">
@@ -159,9 +250,11 @@ const Contact = memo(function Contact({ transparent = false }) {
                         pattern="[0-9+()\-\s]{8,20}"
                         maxLength={20}
                         value={formData.phone}
+                        ref={(node) => { inputRefs.current.phone = node; }}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+506 8402 7214"
-                        className="contact-field border-gray-300"
+                        aria-invalid={fieldStates.phone === "invalid"}
+                        className={getValidationClass(fieldStates.phone)}
                       />
                     </div>
                   </div>
@@ -172,7 +265,8 @@ const Contact = memo(function Contact({ transparent = false }) {
                       value={formData.service_interest}
                       onValueChange={(value) => setFormData({ ...formData, service_interest: value })}
                     >
-                      <SelectTrigger className={formData.service_interest ? "border-green-500 focus:ring-green-500" : "border-gray-300"}>
+                      <SelectTrigger className={getValidationClass(fieldStates.service_interest)}>
+
                         <SelectValue placeholder={t.form.selectService} />
                       </SelectTrigger>
                       <SelectContent>
@@ -194,10 +288,12 @@ const Contact = memo(function Contact({ transparent = false }) {
                       minLength={10}
                       maxLength={2000}
                       value={formData.message}
+                      ref={(node) => { inputRefs.current.message = node; }}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={t.form.messagePlaceholder}
                       rows={5}
-                      className="contact-field border-gray-300 resize-none"
+                      aria-invalid={fieldStates.message === "invalid"}
+                      className={`${getValidationClass(fieldStates.message)} resize-none`}
                     />
                   </div>
 
