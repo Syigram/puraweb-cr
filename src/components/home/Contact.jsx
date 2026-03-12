@@ -63,7 +63,7 @@ const contactFadeReveal = {
   }
 };
 
-const Contact = memo(function Contact({ transparent = false }) {
+const Contact = memo(function Contact({ transparent = false, showContactTitle = true }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
   const [formData, setFormData] = useState({
