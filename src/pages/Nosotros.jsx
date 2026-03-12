@@ -349,7 +349,7 @@ const Nosotros = memo(function Nosotros() {
             {/* CTA Section */}
             <section className="py-20 px-6 bg-white">
             <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-12 shadow-2xl text-center relative overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-6 sm:p-12 shadow-2xl text-center relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
