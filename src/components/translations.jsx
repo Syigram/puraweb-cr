@@ -207,7 +207,7 @@ export const translations = {
       heroTitle: "Tecnología Premium al Alcance de Todos",
       heroSubtitle: "Nacimos para democratizar el diseño web de alto nivel en Costa Rica. Creemos que toda PYME merece una presencia digital excepcional sin comprometer su presupuesto.",
       missionTitle: "Nuestra Misión",
-      missionText: "Cerrar la brecha entre el diseño de alta gama y la accesibilidad para las pequeñas y medianas empresas costarricenses, ofreciendo soluciones digitales de nivel corporativo a precios justos y transparentes.",
+      missionText: "Construir el futuro digital de las empresas ticas mediante el diseño de alta gama y soluciones de alto rendimiento, asegurando que la excelencia tecnológica sea accesible para todos los negocios locales.",
       visionTitle: "Nuestra Visión",
       visionText: "Convertirnos en el aliado tecnológico preferido de emprendedores y PYMEs en Costa Rica, elevando el estándar de la web nacional y compitiendo globalmente con tecnología de clase mundial.",
       valuesTitle: "Nuestros Valores Fundamentales",
@@ -279,9 +279,9 @@ export const translations = {
       guaranteeTitle: "Nuestro Compromiso",
       guarantees: [
         "Respuesta en menos de 24 horas en días hábiles",
-        "Sitios con velocidad de carga menor a 2 segundos",
-        "Diseño responsive perfecto en todos los dispositivos",
-        "Código limpio y documentado para fácil mantenimiento",
+        "Sitios web optimizados y rápidos en cualquier dispositivo",
+        "Diseño adaptable que se ajusta perfectamente a cualquier pantalla",
+        "Arquitectura de alto rendimiento que garantiza la estabilidad",
         "Backups automáticos diarios de tu información",
         "Certificado SSL y seguridad de nivel bancario",
         "Cancelación sin penalización en cualquier momento",
@@ -336,7 +336,7 @@ export const translations = {
         },
         {
           title: "Tecnología Obsoleta",
-          description: "Usamos las herramientas más modernas, no legacy code de hace 10 años."
+          description: "Usamos las herramientas más modernas para que su sitio luzca impecable y cargue al instante."
         }
       ],
       promiseTitle: "Nuestra Promesa Inquebrantable",
@@ -583,7 +583,7 @@ export const translations = {
       heroTitle: "Premium Technology for Everyone",
       heroSubtitle: "We were born to democratize high-end web design in Costa Rica. We believe every SME deserves an exceptional digital presence without compromising their budget.",
       missionTitle: "Our Mission",
-      missionText: "To bridge the gap between high-end design and accessibility for Costa Rican small and medium businesses, offering corporate-level digital solutions at fair and transparent prices.",
+      missionText: "To build the digital future of Costa Rican businesses through high-end design and high-performance solutions, ensuring that technological excellence is accessible to all local businesses.",
       visionTitle: "Our Vision",
       visionText: "To become the preferred technology partner for entrepreneurs and SMEs in Costa Rica, raising the standard of the national web and competing globally with world-class technology.",
       valuesTitle: "Our Core Values",
@@ -655,9 +655,9 @@ export const translations = {
       guaranteeTitle: "Our Commitment",
       guarantees: [
         "Response within 24 hours on business days",
-        "Sites with loading speed under 2 seconds",
-        "Perfect responsive design on all devices",
-        "Clean and documented code for easy maintenance",
+        "Optimized and fast websites on any device",
+        "Responsive design that adapts perfectly to any screen",
+        "High-performance architecture that guarantees stability",
         "Automatic daily backups of your information",
         "SSL certificate and bank-level security",
         "Cancellation without penalty at any time",
@@ -712,7 +712,7 @@ export const translations = {
         },
         {
           title: "Obsolete Technology",
-          description: "We use the most modern tools, not 10-year-old legacy code."
+          description: "We use the most modern tools so your site looks flawless and loads instantly."
         }
       ],
       promiseTitle: "Our Unbreakable Promise",
