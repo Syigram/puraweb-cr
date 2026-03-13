@@ -5,19 +5,22 @@ import { Shield, Eye, Handshake, CheckCircle, Lock, Users, Star, Award, Zap, Fil
 // ─── Shared animation presets ───────────────────────────────────────────────
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
   transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }
 });
 
 const fadeIn = (delay = 0) => ({
   initial: { opacity: 0 },
-  animate: { opacity: 1 },
+  whileInView: { opacity: 1 },
+  viewport: { once: true },
   transition: { duration: 0.6, delay }
 });
 
 const scaleIn = (delay = 0) => ({
   initial: { opacity: 0, scale: 0.85 },
-  animate: { opacity: 1, scale: 1 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: { once: true },
   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }
 });
 

@@ -53,7 +53,7 @@ const AuthenticatedApp = () => {
         {Object.entries(Pages).map(([path, Page]) => (
           <Route key={path} path={`/${path}`} element={<Page />} />
         ))}
-        <Route path="/ComoTrabajamos" element={<LayoutWrapper currentPageName="ComoTrabajamos"><ComoTrabajamos /></LayoutWrapper>} />
+        <Route path="/ComoTrabajamos" element={<ComoTrabajamos />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </LayoutWrapper>
