@@ -296,9 +296,9 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                       {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
                     </DropdownMenuItem>
                   </Link>
-                  <Link to={createPageUrl("GuiaBienvenida")} onClick={handleTopNavigation}>
+                  <Link to={createPageUrl("ComoTrabajamos")} onClick={handleTopNavigation}>
                     <DropdownMenuItem className="cursor-pointer">
-                      {language === 'es' ? 'Guía de PuraWeb CR' : 'PuraWeb CR Guide'}
+                      {language === 'es' ? 'Cómo Trabajamos' : 'How We Work'}
                     </DropdownMenuItem>
                   </Link>
                 </DropdownMenuContent>
@@ -383,11 +383,11 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                   {language === 'es' ? 'Nosotros' : 'About'}
                 </Link>
                 <Link
-                  to={createPageUrl("GuiaBienvenida")}
+                  to={createPageUrl("ComoTrabajamos")}
                   onClick={handleTopNavigation}
                   className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
                 >
-                  {language === 'es' ? 'Guía' : 'Guide'}
+                  {language === 'es' ? 'Cómo Trabajamos' : 'How We Work'}
                 </Link>
                 <Link
                   to={createPageUrl("Portafolio")}
