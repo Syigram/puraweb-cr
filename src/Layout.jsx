@@ -218,6 +218,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     setIsMobileMenuOpen(false);
+    setIsAboutOpen(false);
   }, [location.pathname, location.search]);
 
   return (
