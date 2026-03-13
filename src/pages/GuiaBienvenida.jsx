@@ -35,7 +35,7 @@ const fadeInUp = {
   transition: { duration: 0.6 }
 };
 
-function GuiaBienvenida() {
+function ComoTrabajamos() {
   const { language } = useLanguage();
 
   // Memoize content object - only recreated when dependencies change
@@ -548,4 +548,4 @@ function GuiaBienvenida() {
             );
 }
 
-export default memo(GuiaBienvenida);
+export default memo(ComoTrabajamos);
