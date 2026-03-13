@@ -49,6 +49,7 @@
  */
 import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
+import ComoTrabajamos from './pages/ComoTrabajamos';
 import Contacto from './pages/Contacto';
 import GuiaBienvenida from './pages/GuiaBienvenida';
 import Home from './pages/Home';
@@ -73,6 +74,7 @@ import __Layout from './Layout.jsx';
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
     "Checkout": Checkout,
+    "ComoTrabajamos": ComoTrabajamos,
     "Contacto": Contacto,
     "GuiaBienvenida": GuiaBienvenida,
     "Home": Home,
