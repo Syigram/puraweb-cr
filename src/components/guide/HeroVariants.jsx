@@ -84,20 +84,52 @@ export const heroVariants = [
     render: (t) => (
       <div className="relative pt-32 pb-20 px-6 bg-white overflow-hidden">
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-red-50 rounded-full blur-3xl opacity-70 pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
-            <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
-              <BadgeCheck className="w-5 h-5 text-white" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-16">
+            {/* Left: text content */}
+            <div className="flex-1 min-w-0">
+              <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
+                <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
+                  <BadgeCheck className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
+              </motion.div>
+              <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
+                {t.title}
+              </motion.h1>
+              <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
+              <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
+                {t.subtitle}
+              </motion.p>
             </div>
-            <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
-          </motion.div>
-          <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
-            {t.title}
-          </motion.h1>
-          <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
-          <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-            {t.subtitle}
-          </motion.p>
+            {/* Right: decorative Workflow illustration — desktop only */}
+            <motion.div
+              {...scaleIn(0.2)}
+              className="hidden md:flex flex-col items-center justify-center flex-shrink-0 w-72 lg:w-80"
+            >
+              <div className="relative w-full">
+                {/* Central hub */}
+                <div className="w-20 h-20 rounded-2xl bg-blue-900 flex items-center justify-center shadow-xl mx-auto mb-6">
+                  <Workflow className="w-10 h-10 text-white" />
+                </div>
+                {/* Step nodes */}
+                <div className="flex justify-between gap-3">
+                  {[
+                    { icon: Users, label: 'Cliente', color: 'bg-blue-50 border-blue-200 text-blue-800' },
+                    { icon: Zap, label: 'Proceso', color: 'bg-red-50 border-red-200 text-red-700' },
+                    { icon: Award, label: 'Entrega', color: 'bg-blue-50 border-blue-200 text-blue-800' },
+                  ].map(({ icon: Icon, label, color }, i) => (
+                    <div key={label} className={`flex flex-col items-center gap-2 flex-1 border rounded-xl px-2 py-3 ${color}`}>
+                      <Icon className="w-5 h-5" />
+                      <span className="text-xs font-semibold">{label}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Connector line */}
+                <div className="absolute top-10 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-200 via-red-300 to-blue-200 -z-10" />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     )
