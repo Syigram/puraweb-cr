@@ -147,6 +147,7 @@ const UserMenuButton = memo(function UserMenuButton() {
 const LayoutContent = memo(function LayoutContent({ children, currentPageName }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = useMemo(() => translations[language], [language]);
