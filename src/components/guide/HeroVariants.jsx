@@ -646,6 +646,34 @@ export const heroVariants = [
     )
   },
 
+  // 21. Fondo Home Page
+  {
+    id: 21,
+    name: 'Home Background',
+    render: (t) => (
+      <motion.div className="relative pt-28 pb-16 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
+        </div>
+        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-5 leading-tight"
+          >
+            {t.title}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
+          >
+            {t.subtitle}
+          </motion.p>
+        </div>
+      </motion.div>
+    )
+  },
+
   // 20. Fondo suave + barra de progreso / indicadores de confianza
   {
     id: 20,
