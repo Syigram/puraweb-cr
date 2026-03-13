@@ -591,12 +591,12 @@ function ComoTrabajamos() {
 
           {/* 6. Contact Section */}
           <motion.div {...fadeInUp}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
-                <Phone className="w-6 h-6 text-white" />
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                {t.sections.contact.title}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+                {language === 'es' ? 'Contáctenos' : 'Contact Us'}
               </h2>
             </div>
             
