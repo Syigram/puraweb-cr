@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Eye, Handshake, CheckCircle, Lock, Users, Star, Award, Zap, FileText, Globe, Heart, Sparkles, BadgeCheck } from 'lucide-react';
+import { Shield, Eye, Handshake, CheckCircle, Lock, Users, Star, Award, Zap, FileText, Globe, Heart, Sparkles, BadgeCheck, Workflow } from 'lucide-react';
 
 // ─── Shared animation presets ───────────────────────────────────────────────
 const fadeUp = (delay = 0) => ({
