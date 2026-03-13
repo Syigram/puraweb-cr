@@ -19,18 +19,18 @@ function HeroSelector({ title, subtitle, language }) {
 
   const t = { title, subtitle };
 
-  return (
-    <div className="w-full">
-      {/* Hero Display */}
-      <div className="w-full">
-        {selectedHero.render(t, language)}
-      </div>
+  const floatingSelector = createPortal(
+    <>
+      {/* Close overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 z-[998]" onClick={() => setIsOpen(false)} />
+      )}
 
-      {/* Floating selector — bottom left, always visible */}
-      <div className="fixed bottom-6 left-6 z-50">
+      {/* Floating button */}
+      <div className="fixed bottom-6 left-6 z-[999]">
         <div className="relative">
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpen(prev => !prev)}
             className="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-4 py-2.5 rounded-2xl shadow-xl text-sm font-semibold transition-colors"
           >
             <span className="hidden sm:inline">{language === 'es' ? 'Estilo Hero:' : 'Hero Style:'}</span>
@@ -59,11 +59,14 @@ function HeroSelector({ title, subtitle, language }) {
           )}
         </div>
       </div>
+    </>,
+    document.body
+  );
 
-      {/* Close dropdown when clicking outside */}
-      {isOpen && (
-        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-      )}
+  return (
+    <div className="w-full">
+      {selectedHero.render(t, language)}
+      {floatingSelector}
     </div>
   );
 }
