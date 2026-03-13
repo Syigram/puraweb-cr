@@ -369,48 +369,48 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
           {/* Contact Info */}
           <motion.div
             ref={infoRef}
-            className="space-y-8"
+            className="space-y-6"
             variants={contactFadeReveal}
             initial="hidden"
             animate={infoInView ? "visible" : "hidden"}
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.getInTouch}</h3>
-              <p className="text-gray-600 leading-relaxed mb-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-6">{t.getInTouch}</h3>
+              <p className="text-gray-600 leading-relaxed mb-4 sm:mb-8 text-sm sm:text-base">
                 {t.description}
               </p>
             </div>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-white" />
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-blue-50 rounded-xl">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.email}</h4>
-                  <p className="text-gray-600">purawebsoluciones@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-6 bg-red-50 rounded-xl">
-                <div className="w-12 h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.phone}</h4>
-                  <p className="text-gray-600">+506 8402 7214</p>
-                  <p className="text-gray-600">{t.info.phoneAvailable}</p>
+                <div className="min-w-0">
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.email}</h4>
+                  <p className="text-gray-600 text-sm break-all">purawebsoluciones@gmail.com</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-white" />
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-red-50 rounded-xl">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{t.info.location}</h4>
-                  <p className="text-gray-600">{t.info.locationCity}</p>
-                  <p className="text-gray-600">{t.info.locationServing}</p>
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.phone}</h4>
+                  <p className="text-gray-600 text-sm">+506 8402 7214</p>
+                  <p className="text-gray-600 text-sm">{t.info.phoneAvailable}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-blue-50 rounded-xl">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.location}</h4>
+                  <p className="text-gray-600 text-sm">{t.info.locationCity}</p>
+                  <p className="text-gray-600 text-sm">{t.info.locationServing}</p>
                 </div>
               </div>
             </div>
