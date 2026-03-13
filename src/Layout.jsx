@@ -396,7 +396,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="overflow-hidden bg-blue-50"
+                      className="overflow-hidden"
                     >
                       <Link
                         to={createPageUrl("Nosotros")}
