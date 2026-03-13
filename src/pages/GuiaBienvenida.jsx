@@ -591,7 +591,7 @@ function ComoTrabajamos() {
 
           {/* 6. Contact Section */}
           <motion.div {...fadeInUp}>
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
                 <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
