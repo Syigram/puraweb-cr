@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
-import { HeroAcentoRojo } from "@/components/guide/HeroVariants";
+import HeroSelector from "@/components/guide/HeroSelector";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
@@ -229,8 +229,13 @@ function ComoTrabajamos() {
         language={language}
       />
       
-      <div className="min-h-screen bg-white">
-        <HeroAcentoRojo title={t.title} subtitle={t.subtitle} />
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+        {/* Hero Section with Selector */}
+        <HeroSelector 
+          title={t.title}
+          subtitle={t.subtitle}
+          language={language}
+        />
 
         <div className="max-w-6xl mx-auto px-6 pb-20 pt-16">
           {/* 1. Ownership Section */}
