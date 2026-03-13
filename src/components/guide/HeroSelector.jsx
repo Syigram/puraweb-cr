@@ -20,13 +20,8 @@ function HeroSelector({ title, subtitle, language }) {
 
   return (
     <div className="w-full">
-      {/* Hero Display */}
-      <div className="w-full">
-        {selectedHero.render(t, language)}
-      </div>
-
-      {/* Selector Dropdown — below the Hero, above next section */}
-      <div className="relative bg-white border-y border-gray-200 px-6 py-3">
+      {/* Selector Dropdown — above the Hero, below the nav */}
+      <div className="relative bg-white border-b border-gray-200 px-6 py-3 pt-20">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <p className="text-sm font-semibold text-gray-600 whitespace-nowrap">
             {language === 'es' ? 'Estilo del Hero:' : 'Hero Style:'}
@@ -64,6 +59,11 @@ function HeroSelector({ title, subtitle, language }) {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Hero Display */}
+      <div className="w-full">
+        {selectedHero.render(t, language)}
       </div>
 
       {/* Close dropdown when clicking outside */}
