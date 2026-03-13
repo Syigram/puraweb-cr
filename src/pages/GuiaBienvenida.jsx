@@ -237,7 +237,7 @@ function ComoTrabajamos() {
           language={language}
         />
 
-        <div className="max-w-6xl mx-auto px-6 pb-20">
+        <div className="max-w-6xl mx-auto px-6 pb-20 pt-16">
           {/* 1. Ownership Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
