@@ -209,7 +209,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
             animate={formInView ? "visible" : "hidden"}
           >
             <Card className="border-0 shadow-xl [transform:none]">
-              <CardContent className="p-8">
+              <CardContent className="p-4 sm:p-8">
                 {isSuccess && (
                   <Alert className="mb-6 bg-green-50 border-green-200">
                     <CheckCircle className="w-4 h-4 text-green-600" />
