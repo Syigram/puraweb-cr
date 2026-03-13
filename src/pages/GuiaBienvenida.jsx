@@ -229,7 +229,7 @@ function ComoTrabajamos() {
         language={language}
       />
       
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-white">
         <HeroAcentoRojo title={t.title} subtitle={t.subtitle} />
 
         <div className="max-w-6xl mx-auto px-6 pb-20 pt-16">
