@@ -24,8 +24,9 @@ import {
   Phone
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { BadgeCheck, Network } from "lucide-react";
 import Contact from "@/components/home/Contact";
-import HeroSelector from "@/components/guide/HeroSelector";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
