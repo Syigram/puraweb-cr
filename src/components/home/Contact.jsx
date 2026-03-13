@@ -189,7 +189,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
   const { ref: infoRef, isInView: infoInView } = useScrollReveal();
 
   return (
-    <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
+    <section id="contact" className={`py-4 sm:py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {!transparent && showContactTitle && (
           <div className="text-center mb-12">
