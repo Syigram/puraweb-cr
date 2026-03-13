@@ -679,7 +679,7 @@ export const heroVariants = [
     id: 22,
     name: 'Servicios Background',
     render: (t) => (
-      <div className="relative pt-32 pb-16 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+      <section className="pt-32 pb-16 px-6 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
         {/* Blobs — animados igual que Servicios/Nosotros */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
