@@ -84,20 +84,45 @@ export const heroVariants = [
     render: (t) => (
       <div className="relative pt-32 pb-20 px-6 bg-white overflow-hidden">
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-red-50 rounded-full blur-3xl opacity-70 pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
-            <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
-              <BadgeCheck className="w-5 h-5 text-white" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex items-center gap-12">
+            {/* Left: text content */}
+            <div className="flex-1">
+              <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
+                <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
+                  <BadgeCheck className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
+              </motion.div>
+              <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
+                {t.title}
+              </motion.h1>
+              <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
+              <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
+                {t.subtitle}
+              </motion.p>
             </div>
-            <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
-          </motion.div>
-          <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
-            {t.title}
-          </motion.h1>
-          <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
-          <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-            {t.subtitle}
-          </motion.p>
+
+            {/* Right: decorative diamond — desktop only */}
+            <motion.div
+              {...scaleIn(0.2)}
+              className="hidden lg:flex items-center justify-center flex-shrink-0 w-64 xl:w-80"
+            >
+              <div className="relative">
+                {/* Outer ring */}
+                <div className="w-56 h-56 xl:w-72 xl:h-72 rounded-full border-2 border-blue-100 flex items-center justify-center">
+                  {/* Inner ring */}
+                  <div className="w-40 h-40 xl:w-52 xl:h-52 rounded-full bg-gradient-to-br from-blue-50 to-red-50 border border-red-100 flex items-center justify-center">
+                    <Diamond className="w-20 h-20 xl:w-24 xl:h-24 text-blue-900 opacity-90" strokeWidth={1.2} />
+                  </div>
+                </div>
+                {/* Small accent dots */}
+                <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-red-600 opacity-70" />
+                <div className="absolute bottom-6 left-2 w-2 h-2 rounded-full bg-blue-300 opacity-60" />
+                <div className="absolute top-1/2 -right-3 w-2 h-2 rounded-full bg-red-300 opacity-50" />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     )
