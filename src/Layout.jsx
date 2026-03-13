@@ -377,20 +377,44 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                 >
                   {t.nav.pricing}
                 </Link>
-                <Link
-                  to={createPageUrl("Nosotros")}
-                  onClick={handleTopNavigation}
-                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
+                <button
+                  onClick={() => setIsAboutOpen(!isAboutOpen)}
+                  className="flex w-full items-center justify-between rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
                 >
-                  {language === 'es' ? 'Nosotros' : 'About'}
-                </Link>
-                <Link
-                  to={createPageUrl("ComoTrabajamos")}
-                  onClick={handleTopNavigation}
-                  className="block w-full rounded-lg px-4 py-3 text-left font-medium text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
-                >
-                  {language === 'es' ? 'Cómo Trabajamos' : 'How We Work'}
-                </Link>
+                  <span>{language === 'es' ? 'Nosotros' : 'About'}</span>
+                  <motion.div
+                    animate={{ rotate: isAboutOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.div>
+                </button>
+                <AnimatePresence>
+                  {isAboutOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden bg-blue-50"
+                    >
+                      <Link
+                        to={createPageUrl("Nosotros")}
+                        onClick={handleTopNavigation}
+                        className="block w-full px-4 py-3 pl-8 text-left font-medium text-gray-700 transition-colors hover:text-blue-900"
+                      >
+                        {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
+                      </Link>
+                      <Link
+                        to={createPageUrl("ComoTrabajamos")}
+                        onClick={handleTopNavigation}
+                        className="block w-full px-4 py-3 pl-8 text-left font-medium text-gray-700 transition-colors hover:text-blue-900"
+                      >
+                        {language === 'es' ? 'Cómo Trabajamos' : 'How We Work'}
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <Link
                   to={createPageUrl("Portafolio")}
                   onClick={handleTopNavigation}
