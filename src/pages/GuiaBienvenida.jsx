@@ -230,12 +230,7 @@ function ComoTrabajamos() {
       />
       
       <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
-        {/* Hero Section with Selector */}
-        <HeroSelector 
-          title={t.title}
-          subtitle={t.subtitle}
-          language={language}
-        />
+        <HeroAcentoRojo title={t.title} subtitle={t.subtitle} />
 
         <div className="max-w-6xl mx-auto px-6 pb-20 pt-16">
           {/* 1. Ownership Section */}
