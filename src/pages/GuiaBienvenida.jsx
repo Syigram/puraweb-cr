@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
 import { 
-  Rocket, 
   HandshakeIcon, 
   Shield, 
   Clock, 
@@ -19,13 +18,11 @@ import {
   TrendingUp,
   Award,
   Download,
-  Calendar,
-  Mail,
-  Phone
+  Phone,
+  BadgeCheck,
+  Network
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { BadgeCheck, Network } from "lucide-react";
 import Contact from "@/components/home/Contact";
 
 // Memoized animation config - defined outside component to prevent recreation
