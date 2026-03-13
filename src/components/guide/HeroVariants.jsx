@@ -674,27 +674,57 @@ export const heroVariants = [
     )
   },
 
-  // 22. Fondo Servicios
+  // 22. Fondo Servicios / Nosotros (exacto)
   {
     id: 22,
     name: 'Servicios Background',
     render: (t) => (
-      <motion.div className="relative pt-28 pb-16 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
-        {/* Blobs */}
+      <div className="relative pt-32 pb-16 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+        {/* Blobs — animados igual que Servicios/Nosotros */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl" />
+          <motion.div
+            className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          />
+          <motion.div
+            className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-red-400/15 to-orange-400/15 rounded-full blur-3xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          />
+          <motion.div
+            className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 rounded-full blur-3xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
         </div>
-        {/* Geometric shapes */}
+        {/* Geometric shapes — animadas igual que Servicios/Nosotros */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20" />
-          <div className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20" />
-          <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full" />
+          <motion.div
+            className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          />
+          <motion.div
+            className="absolute bottom-40 left-1/4 w-24 h-24 border-4 border-red-600/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          />
+          <motion.div
+            className="absolute top-1/3 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-900/10 to-transparent rounded-full"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          />
         </div>
         <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight"
           >
             <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
@@ -702,13 +732,13 @@ export const heroVariants = [
             </span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
             className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
           >
             {t.subtitle}
           </motion.p>
         </div>
-      </motion.div>
+      </div>
     )
   },
 
