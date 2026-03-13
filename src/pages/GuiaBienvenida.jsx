@@ -228,12 +228,77 @@ function ComoTrabajamos() {
       />
       
       <div className="min-h-screen bg-white">
-        {/* Hero Section with Selector */}
-        <HeroSelector 
-          title={t.title}
-          subtitle={t.subtitle}
-          language={language}
-        />
+        {/* Hero Section - Acento Rojo Elegante */}
+        <div className="relative pt-32 pb-20 px-6 bg-white overflow-hidden">
+          <div className="absolute bottom-0 right-0 w-80 h-80 bg-red-50 rounded-full blur-3xl opacity-70 pointer-events-none" />
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
+              {/* Text column */}
+              <div className="flex-1">
+                <motion.div
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="flex items-center gap-3 mb-7"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
+                    <BadgeCheck className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">
+                    {language === 'es' ? 'Claridad & Compromiso' : 'Clarity & Commitment'}
+                  </span>
+                </motion.div>
+                <motion.h1
+                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6"
+                >
+                  {t.title}
+                </motion.h1>
+                <motion.div
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.14 }}
+                  className="w-16 h-0.5 bg-red-600 mb-6"
+                />
+                <motion.p
+                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
+                  className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed"
+                >
+                  {t.subtitle}
+                </motion.p>
+              </div>
+
+              {/* Icon column — visible only on large screens */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                className="hidden lg:flex flex-shrink-0 items-center justify-center w-72 xl:w-80"
+              >
+                <div className="relative flex items-center justify-center w-64 h-64 xl:w-72 xl:h-72">
+                  <div className="absolute inset-0 rounded-full border-2 border-blue-100" />
+                  <div className="absolute inset-6 rounded-full border border-red-100" />
+                  <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-2xl">
+                    <Network className="w-14 h-14 text-white" />
+                  </div>
+                  {[
+                    { top: '6%',  left: '50%', color: 'bg-blue-900', size: 'w-4 h-4' },
+                    { top: '50%', left: '6%',  color: 'bg-red-600',  size: 'w-3 h-3' },
+                    { top: '50%', left: '88%', color: 'bg-blue-400', size: 'w-3 h-3' },
+                    { top: '88%', left: '50%', color: 'bg-red-300',  size: 'w-2 h-2' },
+                  ].map((dot, i) => (
+                    <motion.div
+                      key={i}
+                      className={`absolute ${dot.size} ${dot.color} rounded-full -translate-x-1/2 -translate-y-1/2`}
+                      style={{ top: dot.top, left: dot.left }}
+                      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
 
         <div className="max-w-7xl mx-auto px-6 pb-20 pt-16">
           {/* 1. Ownership Section */}
