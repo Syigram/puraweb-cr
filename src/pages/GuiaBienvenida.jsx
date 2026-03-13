@@ -229,7 +229,7 @@ function ComoTrabajamos() {
         language={language}
       />
       
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-white">
         {/* Hero Section with Selector */}
         <HeroSelector 
           title={t.title}
