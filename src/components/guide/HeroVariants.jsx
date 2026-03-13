@@ -679,8 +679,7 @@ export const heroVariants = [
     id: 22,
     name: 'Servicios Background',
     render: (t) => (
-      <section className="pt-32 pb-16 px-6 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
-        {/* Blobs — animados igual que Servicios/Nosotros */}
+      <div className="pt-32 pb-16 px-6 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
@@ -701,7 +700,6 @@ export const heroVariants = [
             transition={{ duration: 0.8, delay: 0.2 }}
           />
         </div>
-        {/* Geometric shapes — animadas igual que Servicios/Nosotros */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div
             className="absolute top-32 right-1/4 w-32 h-32 border-4 border-blue-900/20"
@@ -738,8 +736,7 @@ export const heroVariants = [
             {t.subtitle}
           </motion.p>
         </div>
-      </section>
-
+      </div>
     )
   },
 
