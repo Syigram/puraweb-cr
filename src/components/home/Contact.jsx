@@ -190,7 +190,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
 
   return (
     <section id="contact" className={`py-16 ${transparent ? 'bg-transparent' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {!transparent && showContactTitle && (
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -201,7 +201,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
           </div>
         )}
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           <motion.div
             ref={formRef}
             variants={contactFadeReveal}
