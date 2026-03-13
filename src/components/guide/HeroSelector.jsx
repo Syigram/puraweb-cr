@@ -20,58 +20,48 @@ function HeroSelector({ title, subtitle, language }) {
 
   return (
     <div className="w-full">
-      {/* Selector Dropdown — above the Hero, below the nav */}
-      <div className="relative bg-white border-b border-gray-200 px-6 py-3 pt-20">
-        <div className="max-w-5xl mx-auto flex items-center gap-4">
-          <p className="text-sm font-semibold text-gray-600 whitespace-nowrap">
-            {language === 'es' ? 'Estilo del Hero:' : 'Hero Style:'}
-          </p>
-
-          <div className="relative w-full max-w-xs">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="w-full px-4 py-2 bg-white border-2 border-gray-300 rounded-xl text-left font-medium text-gray-900 flex items-center justify-between hover:border-blue-500 transition-colors text-sm"
-            >
-              <span>{selectedHero.name}</span>
-              <ChevronDown 
-                className={`w-4 h-4 text-gray-600 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-
-            {isOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-gray-300 rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto">
-                <div className="p-2 space-y-1">
-                  {heroVariants.map((hero) => (
-                    <button
-                      key={hero.id}
-                      onClick={() => handleSelectHero(hero.id)}
-                      className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                        selectedHeroId === hero.id
-                          ? 'bg-blue-900 text-white'
-                          : 'text-gray-900 hover:bg-gray-100'
-                      }`}
-                    >
-                      {hero.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* Hero Display */}
       <div className="w-full">
         {selectedHero.render(t, language)}
       </div>
 
+      {/* Floating selector — bottom left, always visible */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <div className="relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-4 py-2.5 rounded-2xl shadow-xl text-sm font-semibold transition-colors"
+          >
+            <span className="hidden sm:inline">{language === 'es' ? 'Estilo Hero:' : 'Hero Style:'}</span>
+            <span className="max-w-[120px] truncate">{selectedHero.name}</span>
+            <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {isOpen && (
+            <div className="absolute bottom-full left-0 mb-2 w-52 bg-white border border-gray-200 rounded-2xl shadow-2xl max-h-72 overflow-y-auto">
+              <div className="p-1.5 space-y-0.5">
+                {heroVariants.map((hero) => (
+                  <button
+                    key={hero.id}
+                    onClick={() => handleSelectHero(hero.id)}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                      selectedHeroId === hero.id
+                        ? 'bg-blue-900 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {hero.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Close dropdown when clicking outside */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
       )}
     </div>
   );
