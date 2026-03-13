@@ -84,20 +84,56 @@ export const heroVariants = [
     render: (t) => (
       <div className="relative pt-32 pb-20 px-6 bg-white overflow-hidden">
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-red-50 rounded-full blur-3xl opacity-70 pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
-            <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
-              <BadgeCheck className="w-5 h-5 text-white" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
+            {/* Text column */}
+            <div className="flex-1">
+              <motion.div {...fadeIn(0)} className="flex items-center gap-3 mb-7">
+                <div className="w-10 h-10 rounded-xl bg-red-700 flex items-center justify-center">
+                  <BadgeCheck className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
+              </motion.div>
+              <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
+                {t.title}
+              </motion.h1>
+              <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
+              <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
+                {t.subtitle}
+              </motion.p>
             </div>
-            <span className="text-red-700 text-sm font-semibold uppercase tracking-widest">Claridad & Compromiso</span>
-          </motion.div>
-          <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight mb-6">
-            {t.title}
-          </motion.h1>
-          <motion.div {...fadeIn(0.14)} className="w-16 h-0.5 bg-red-600 mb-6" />
-          <motion.p {...fadeUp(0.18)} className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-            {t.subtitle}
-          </motion.p>
+
+            {/* Icon column — visible only on large screens */}
+            <motion.div
+              {...scaleIn(0.2)}
+              className="hidden lg:flex flex-shrink-0 items-center justify-center w-72 xl:w-80"
+            >
+              <div className="relative flex items-center justify-center w-64 h-64 xl:w-72 xl:h-72">
+                {/* Outer ring */}
+                <div className="absolute inset-0 rounded-full border-2 border-blue-100" />
+                {/* Mid ring */}
+                <div className="absolute inset-6 rounded-full border border-red-100" />
+                {/* Center icon */}
+                <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-2xl">
+                  <Network className="w-14 h-14 text-white" />
+                </div>
+                {/* Satellite dots */}
+                {[
+                  { top: '6%',  left: '50%', color: 'bg-blue-900', size: 'w-4 h-4' },
+                  { top: '50%', left: '6%',  color: 'bg-red-600',  size: 'w-3 h-3' },
+                  { top: '50%', left: '88%', color: 'bg-blue-400', size: 'w-3 h-3' },
+                  { top: '88%', left: '50%', color: 'bg-red-300',  size: 'w-2 h-2' },
+                ].map((dot, i) => (
+                  <motion.div
+                    key={i}
+                    className={`absolute ${dot.size} ${dot.color} rounded-full -translate-x-1/2 -translate-y-1/2`}
+                    style={{ top: dot.top, left: dot.left }}
+                    {...fadeIn(0.3 + i * 0.08)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     )
