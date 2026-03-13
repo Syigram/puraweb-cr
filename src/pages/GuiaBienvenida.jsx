@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
-import HeroSelector from "@/components/guide/HeroSelector";
+import { HeroAcentoRojo } from "@/components/guide/HeroVariants";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
