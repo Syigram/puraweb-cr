@@ -113,12 +113,7 @@ const floatAnimationDown = {
 };
 
 // Floating cards component - only rendered on desktop
-const DesktopHeroVisual = memo(({ language }) => {
-  const isDesktop = useIsDesktop();
-  
-  // Don't render anything on mobile/tablet - saves memory and CPU
-  if (!isDesktop) return null;
-  
+const DesktopHeroVisual = memo(({ language, isDesktop }) => {
   return (
     <div className="hidden lg:block relative">
       <div className="relative">
