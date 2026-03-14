@@ -355,12 +355,10 @@ const Hero = memo(function Hero({ onGetStarted }) {
               </motion.div>
             </motion.div>
 
-            {/* RIGHT — entra desde la derecha con delay, solo si isDesktop es true */}
-            {isDesktop && (
-              <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
-                <DesktopHeroVisual language={language} isDesktop={isDesktop} />
-              </motion.div>
-            )}
+            {/* RIGHT — entra desde la derecha con delay */}
+            <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
+              <DesktopHeroVisual language={language} />
+            </motion.div>
           </div>
         </div>
 
