@@ -36,6 +36,11 @@ const fadeInUp = {
 
 function ComoTrabajamos() {
   const { language } = useLanguage();
+  const [selectedIcon, setSelectedIcon] = useState("network");
+  
+  const handleIconSelect = useCallback((iconId) => {
+    setSelectedIcon(iconId);
+  }, []);
 
   // Memoize content object - only recreated when dependencies change
   const content = useMemo(() => ({
