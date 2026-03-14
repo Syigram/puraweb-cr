@@ -19,11 +19,11 @@ import {
   Award,
   Download,
   Phone,
-  BadgeCheck
+  BadgeCheck,
+  Network
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
-import HeroIconPicker from "@/components/HeroIconPicker";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
@@ -272,9 +272,29 @@ function ComoTrabajamos() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="hidden lg:flex flex-shrink-0 items-center justify-center"
+                className="hidden lg:flex flex-shrink-0 items-center justify-center w-72 xl:w-80"
               >
-                <HeroIconPicker />
+                <div className="relative flex items-center justify-center w-64 h-64 xl:w-72 xl:h-72">
+                  <div className="absolute inset-0 rounded-full border-2 border-blue-100" />
+                  <div className="absolute inset-6 rounded-full border border-red-100" />
+                  <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-2xl">
+                    <Network className="w-14 h-14 text-white" />
+                  </div>
+                  {[
+                    { top: '6%',  left: '50%', color: 'bg-blue-900', size: 'w-4 h-4' },
+                    { top: '50%', left: '6%',  color: 'bg-red-600',  size: 'w-3 h-3' },
+                    { top: '50%', left: '88%', color: 'bg-blue-400', size: 'w-3 h-3' },
+                    { top: '88%', left: '50%', color: 'bg-red-300',  size: 'w-2 h-2' },
+                  ].map((dot, i) => (
+                    <motion.div
+                      key={i}
+                      className={`absolute ${dot.size} ${dot.color} rounded-full -translate-x-1/2 -translate-y-1/2`}
+                      style={{ top: dot.top, left: dot.left }}
+                      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
+                    />
+                  ))}
+                </div>
               </motion.div>
             </div>
           </div>
