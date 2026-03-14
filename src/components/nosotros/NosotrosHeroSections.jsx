@@ -34,7 +34,7 @@ export function Hero1({ t, language }) {
         </div>
         <motion.div variants={fadeIn} initial="hidden" animate="visible" transition={{ delay: 0.2 }}
           className="hidden lg:flex items-center justify-center w-64 h-64 rounded-3xl bg-gradient-to-br from-blue-900 to-blue-700 shadow-2xl flex-shrink-0">
-          <Heart className="w-28 h-28 text-white opacity-90" />
+          <Rocket className="w-28 h-28 text-white opacity-90" />
         </motion.div>
       </div>
     </section>
