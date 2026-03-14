@@ -110,11 +110,12 @@ export default function TechGlobeIcon() {
           return (
             <circle key={`t${i}`} r="3" fill="#CE1126"
               className={`travel-dot travel-${i}`}
-              style={{ animationDelay: `${delay}s` }}>
+              style={{ animationDelay: `${delay}s`, opacity: 0 }}>
               <animateMotion
                 dur="2s"
                 repeatCount="indefinite"
                 begin={`${delay}s`}
+                fill="freeze"
                 path={`M${NODES[a].cx},${NODES[a].cy} L${NODES[b].cx},${NODES[b].cy}`}
               />
             </circle>
