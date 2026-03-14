@@ -116,7 +116,7 @@ const UserMenuButton = memo(function UserMenuButton() {
           {user.full_name || user.email?.split('@')[0]}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align="end" className="w-48" modal={false}>
         <Link to={createPageUrl("UserDashboard")}>
           <DropdownMenuItem className="cursor-pointer">
             <LayoutDashboard className="w-4 h-4 mr-2" />
