@@ -286,6 +286,20 @@ function ComoTrabajamos() {
            </div>
          </div>
 
+        {/* Icon Selector for Mobile */}
+        <motion.div 
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="lg:hidden bg-gradient-to-b from-blue-50 to-white px-6 py-12"
+        >
+          <div className="max-w-7xl mx-auto">
+            <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
+              {language === 'es' ? 'Nuestros Valores' : 'Our Values'}
+            </h3>
+            <IconSelector selectedId={selectedIcon} onSelect={handleIconSelect} />
+          </div>
+        </motion.div>
+
         <div className="max-w-7xl mx-auto px-6 pb-20 pt-16">
           {/* 1. Ownership Section */}
           <motion.div {...fadeInUp} className="mb-16">
