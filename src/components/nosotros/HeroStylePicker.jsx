@@ -14,10 +14,8 @@ export default function HeroStylePicker({ selected, onSelect }) {
 
   const current = HERO_SECTIONS.find(h => h.id === selected);
 
-  return (
-    <div
-      style={{ position: 'fixed', bottom: '24px', left: '24px', zIndex: 9999 }}
-    >
+  const picker = (
+    <div style={{ position: 'fixed', bottom: '24px', left: '24px', zIndex: 9999 }}>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -54,7 +52,6 @@ export default function HeroStylePicker({ selected, onSelect }) {
         )}
       </AnimatePresence>
 
-      {/* Toggle button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
@@ -70,4 +67,6 @@ export default function HeroStylePicker({ selected, onSelect }) {
       </motion.button>
     </div>
   );
+
+  return createPortal(picker, document.body);
 }
