@@ -125,6 +125,7 @@ const DesktopHeroVisual = memo(({ language }) => {
           className="absolute top-0 right-0"
         >
           <motion.div
+            initial="visible"
             animate={floatAnimationUp}
             className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
