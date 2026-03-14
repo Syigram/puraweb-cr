@@ -11,6 +11,8 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import { HERO_SECTIONS } from "@/components/nosotros/NosotrosHeroSections";
+import HeroStylePicker from "@/components/nosotros/HeroStylePicker";
 
 // Animation variants matching Servicios page
 const fadeInUp = {
