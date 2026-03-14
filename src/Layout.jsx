@@ -232,6 +232,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
         }
         /* Critical above-the-fold styles */
         .nav-transition { transition: background-color 0.3s, box-shadow 0.3s; }
+        html { scrollbar-gutter: stable; }
       `}</style>
       
       {/* Navigation */}
