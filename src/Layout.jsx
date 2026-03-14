@@ -285,7 +285,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               >
                 {t.nav.pricing}
               </Link>
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-1 text-gray-700 hover:text-blue-900 transition-colors font-medium">
                     {language === 'es' ? 'Nosotros' : 'About'}
