@@ -19,8 +19,7 @@ import {
   Award,
   Download,
   Phone,
-  BadgeCheck,
-  Network
+  BadgeCheck
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
