@@ -80,7 +80,7 @@ export function Hero3({ t, language }) {
         <div className="flex-1 py-16 lg:py-20">
           <motion.span variants={fadeIn} initial="hidden" animate="visible"
             className="inline-block bg-red-50 text-red-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-            {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
+            {language === 'es' ? 'Quiénes Somos' : 'Who We Are'}
           </motion.span>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible"
             className="text-4xl md:text-5xl font-bold text-blue-900 leading-tight mb-6">
