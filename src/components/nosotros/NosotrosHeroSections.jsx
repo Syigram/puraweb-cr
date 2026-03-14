@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import TechGlobeIcon from "./TechGlobeIcon";
+import HeroIconPicker from "./HeroIconPicker";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
