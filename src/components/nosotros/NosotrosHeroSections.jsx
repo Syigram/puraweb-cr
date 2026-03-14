@@ -34,6 +34,14 @@ export function Hero1({ t, language }) {
         </div>
 
       </div>
+        <motion.div
+          variants={fadeIn} initial="hidden" animate="visible"
+          transition={{ delay: 0.2 }}
+          className="hidden lg:flex items-center justify-center flex-shrink-0"
+        >
+          <TechGlobeIcon />
+        </motion.div>
+      </div>
     </section>
   );
 }
