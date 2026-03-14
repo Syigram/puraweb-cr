@@ -38,7 +38,7 @@ export function Hero1({ t, language }) {
           transition={{ delay: 0.2 }}
           className="hidden lg:flex items-center justify-center flex-shrink-0"
         >
-          <TechGlobeIcon />
+          <HeroIconPicker />
         </motion.div>
       </div>
     </section>
