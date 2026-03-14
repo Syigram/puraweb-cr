@@ -99,6 +99,22 @@ Typewriter.displayName = "Typewriter";
 const DesktopHeroVisual = memo(({ language }) => {
   return (
     <div className="relative">
+      <style>{`
+        @keyframes floatUp {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-100px); }
+        }
+        @keyframes floatDown {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(100px); }
+        }
+        .float-up {
+          animation: floatUp 3.6s ease-in-out infinite;
+        }
+        .float-down {
+          animation: floatDown 4s ease-in-out infinite;
+        }
+      `}</style>
       <div className="relative">
         {/* Web Development Card - floating animation */}
         <motion.div
@@ -107,10 +123,8 @@ const DesktopHeroVisual = memo(({ language }) => {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="absolute top-0 right-0"
         >
-          <motion.div
-            initial={{ y: 0 }}
-            animate={floatAnimationUp}
-            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          <div
+            className="float-up bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
             <Globe className="w-12 h-12 text-blue-900 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -119,7 +133,7 @@ const DesktopHeroVisual = memo(({ language }) => {
             <p className="text-sm text-gray-600">
               {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
             </p>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* E-commerce Card - floating animation (opposite direction) */}
@@ -129,10 +143,8 @@ const DesktopHeroVisual = memo(({ language }) => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           className="absolute bottom-0 left-0"
         >
-          <motion.div
-            initial={{ y: 0 }}
-            animate={floatAnimationDown}
-            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          <div
+            className="float-down bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
             <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -141,7 +153,7 @@ const DesktopHeroVisual = memo(({ language }) => {
             <p className="text-sm text-gray-600">
               {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
             </p>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Central circle */}
