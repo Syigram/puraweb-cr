@@ -113,9 +113,9 @@ const floatAnimationDown = {
 };
 
 // Floating cards component - only rendered on desktop
-const DesktopHeroVisual = memo(({ language, isDesktop }) => {
+const DesktopHeroVisual = memo(({ language }) => {
   return (
-    <div className="hidden lg:block relative">
+    <div className="relative">
       <div className="relative">
         {/* Web Development Card - floating animation */}
         <motion.div
