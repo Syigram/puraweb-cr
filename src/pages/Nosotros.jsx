@@ -40,6 +40,7 @@ const Nosotros = memo(function Nosotros() {
   const manifestoT = useMemo(() => translations[language].manifesto, [language]);
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
+  const [heroVariant, setHeroVariant] = useState(1);
 
   useEffect(() => {
     document.title = `${t.title} - PuraWeb CR`;
