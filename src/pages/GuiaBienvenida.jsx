@@ -34,6 +34,7 @@ const fadeInUp = {
 };
 
 function ComoTrabajamos() {
+  const [selectedIconId, setSelectedIconId] = React.useState('network');
   const { language } = useLanguage();
 
   // Memoize content object - only recreated when dependencies change
