@@ -116,7 +116,7 @@ const UserMenuButton = memo(function UserMenuButton() {
           {user.full_name || user.email?.split('@')[0]}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48" modal={false}>
+      <DropdownMenuContent align="end" className="w-48">
         <Link to={createPageUrl("UserDashboard")}>
           <DropdownMenuItem className="cursor-pointer">
             <LayoutDashboard className="w-4 h-4 mr-2" />
@@ -232,7 +232,6 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
         }
         /* Critical above-the-fold styles */
         .nav-transition { transition: background-color 0.3s, box-shadow 0.3s; }
-        html { scrollbar-gutter: stable; }
       `}</style>
       
       {/* Navigation */}
@@ -293,7 +292,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     <ChevronDown className="w-4 h-4" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56" modal={false}>
+                <DropdownMenuContent align="start" className="w-56">
                   <Link to={createPageUrl("Nosotros")} onClick={handleTopNavigation}>
                     <DropdownMenuItem className="cursor-pointer">
                       {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
