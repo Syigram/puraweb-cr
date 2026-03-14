@@ -118,7 +118,7 @@ export function Hero1({ t, language }) {
             {t.heroSubtitle}
           </motion.p>
         </div>
-
+        <GearsIcon />
       </div>
     </section>
   );
