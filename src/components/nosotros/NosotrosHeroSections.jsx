@@ -33,7 +33,6 @@ export function Hero1({ t, language }) {
           </motion.p>
         </div>
 
-      </div>
         <motion.div
           variants={fadeIn} initial="hidden" animate="visible"
           transition={{ delay: 0.2 }}
