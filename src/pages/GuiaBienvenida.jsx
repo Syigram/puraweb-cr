@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
+import TransparencyIconsShowcase from "@/components/workflow/TransparencyIcons";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
