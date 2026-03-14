@@ -93,26 +93,7 @@ const Typewriter = memo(({ words, fixedWidth = true, className = "" }) => {
 
 Typewriter.displayName = "Typewriter";
 
-// Floating cards animation - smooth infinite float (opposite directions)
-const floatAnimationUp = {
-  y: [0, -100, 0],
-  transition: {
-    duration: 1.8,
-    repeat: Infinity,
-    ease: "easeInOut",
-    delay: 0.6
-  }
-};
-
-const floatAnimationDown = {
-  y: [0, 100, 0],
-  transition: {
-    duration: 2,
-    repeat: Infinity,
-    ease: "easeInOut",
-    delay: 0.6
-  }
-};
+// No usar Framer Motion para animaciones infinitas - CSS puro es más confiable
 
 // Floating cards component - only rendered on desktop
 const DesktopHeroVisual = memo(({ language }) => {
