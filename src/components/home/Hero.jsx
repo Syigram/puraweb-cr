@@ -7,28 +7,32 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-// Custom hook to detect desktop screens with throttled resize
+// Custom hook to detect desktop screens using matchMedia (more reliable)
 const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(() => 
-    typeof window !== 'undefined' ? window.innerWidth >= 1024 : false
-  );
-  
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(min-width: 1024px)').matches;
+  });
+
   useEffect(() => {
-    let timeoutId = null;
-    const checkDesktop = () => {
-      if (timeoutId) return;
-      timeoutId = setTimeout(() => {
-        setIsDesktop(window.innerWidth >= 1024);
-        timeoutId = null;
-      }, 150);
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    
+    // Set initial state based on current media query state
+    setIsDesktop(mediaQuery.matches);
+    
+    // Create listener for media query changes
+    const handleChange = (e) => {
+      setIsDesktop(e.matches);
     };
-    window.addEventListener('resize', checkDesktop);
+    
+    // Use addEventListener for better compatibility
+    mediaQuery.addEventListener('change', handleChange);
+    
     return () => {
-      window.removeEventListener('resize', checkDesktop);
-      if (timeoutId) clearTimeout(timeoutId);
+      mediaQuery.removeEventListener('change', handleChange);
     };
   }, []);
-  
+
   return isDesktop;
 };
 
