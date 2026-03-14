@@ -1,9 +1,9 @@
-import React, { useEffect, memo, useMemo, useCallback, useState } from "react";
+import React, { useEffect, memo, useMemo, useCallback } from "react";
 import { 
   Sparkles, Target, Eye, 
   CheckCircle2, ArrowRight, Heart, Rocket, Users, Award, X
 } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,50 +11,32 @@ import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { HERO_SECTIONS } from "@/components/nosotros/NosotrosHeroSections";
-import HeroStylePicker from "@/components/nosotros/HeroStylePicker";
+import { Hero1 } from "@/components/nosotros/NosotrosHeroSections";
 
-
-const HERO_STORAGE_KEY = 'nosotros_hero_style';
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
 
 const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = useMemo(() => translations[language].about, [language]);
   const manifestoT = useMemo(() => translations[language].manifesto, [language]);
-  const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
-  const [heroId, setHeroId] = useState(() => {
-    const saved = localStorage.getItem(HERO_STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 1;
-  });
-
-  const handleHeroSelect = useCallback((id) => {
-    setHeroId(id);
-    localStorage.setItem(HERO_STORAGE_KEY, String(id));
-  }, []);
 
   useEffect(() => {
     document.title = `${t.title} - PuraWeb CR`;
     window.scrollTo(0, 0);
-    const timer = requestAnimationFrame(() => setIsVisible(true));
-    return () => cancelAnimationFrame(timer);
   }, [t.title]);
 
   const handleContactClick = useCallback(() => {
     navigate(createPageUrl("Home") + "#contact");
   }, [navigate]);
 
-  const heroEntry = useMemo(() => HERO_SECTIONS.find(h => h.id === heroId) || HERO_SECTIONS[0], [heroId]);
-  const HeroComponent = heroEntry.Component;
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
-      {/* Dynamic Hero Section */}
-      <HeroComponent t={t} language={language} />
-
-      {/* Floating Hero Style Picker */}
-      <HeroStylePicker selected={heroId} onSelect={handleHeroSelect} />
+      {/* Hero Section */}
+      <Hero1 t={t} language={language} />
 
       {/* Team Image Section */}
       <section className="py-16 px-6 bg-white">
@@ -68,7 +50,6 @@ const Nosotros = memo(function Nosotros() {
                 loading="lazy"
               />
             </div>
-            
             <div className="space-y-6">
               <Badge className="bg-blue-100 text-blue-900 px-6 py-2 text-sm">
                 <Users className="w-4 h-4 mr-2" />
@@ -91,222 +72,175 @@ const Nosotros = memo(function Nosotros() {
       <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <Card className="h-full border-2 border-blue-100 hover:border-blue-200 transition-all hover:shadow-xl">
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center mb-6">
-                    <Target className="w-8 h-8 text-white" />
-                  </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                    {t.missionTitle}
-                  </h2>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    {t.missionText}
-                  </p>
-                </CardContent>
-                </Card>
+            <Card className="h-full border-2 border-blue-100 hover:border-blue-200 transition-all hover:shadow-xl">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center mb-6">
+                  <Target className="w-8 h-8 text-white" />
                 </div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">{t.missionTitle}</h2>
+                <p className="text-gray-600 text-lg leading-relaxed">{t.missionText}</p>
+              </CardContent>
+            </Card>
+            <Card className="h-full border-2 border-red-100 hover:border-red-200 transition-all hover:shadow-xl">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mb-6">
+                  <Eye className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">{t.visionTitle}</h2>
+                <p className="text-gray-600 text-lg leading-relaxed">{t.visionText}</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
-                <div>
-                <Card className="h-full border-2 border-red-100 hover:border-red-200 transition-all hover:shadow-xl">
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mb-6">
-                    <Eye className="w-8 h-8 text-white" />
-                  </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                    {t.visionTitle}
-                  </h2>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    {t.visionText}
-                  </p>
-                </CardContent>
-                </Card>
-                </div>
-                </div>
-                </div>
-                </section>
-
-                {/* Core Values */}
-                <section className="py-20 px-6 bg-white">
-                <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+      {/* Core Values */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.valuesTitle}
-                </span>
-                </h2>
-                </div>
+              </span>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            {t.values.map((value, index) => (
+              <Card key={index} className="h-full hover:shadow-xl transition-all border-2 hover:border-blue-200">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center flex-shrink-0">
+                      <Sparkles className="w-6 h-6 text-blue-900" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-3">{value.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                {t.values.map((value, index) => (
-                <div key={index}>
-                <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-blue-200">
-                  <CardContent className="p-8">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center flex-shrink-0">
-                        <Sparkles className="w-6 h-6 text-blue-900" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                          {value.title}
-                        </h3>
-                        <p className="text-gray-600 leading-relaxed">
-                          {value.description}
-                        </p>
-                        </div>
-                        </div>
-                        </CardContent>
-                        </Card>
-                        </div>
-                        ))}
-                        </div>
-                        </div>
-                        </section>
-
-                        {/* Against Section - What we fight */}
-                        <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-                        <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                        {manifestoT.againstTitle}
-                        </span>
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        {manifestoT.againstSubtitle}
-                        </p>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {manifestoT.against.map((item, index) => (
-                        <div key={index}>
-                <Card className="h-full hover:shadow-xl transition-all border-2 hover:border-red-400 group">
+      {/* Against Section */}
+      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                {manifestoT.againstTitle}
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{manifestoT.againstSubtitle}</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {manifestoT.against.map((item, index) => (
+              <Card key={index} className="h-full hover:shadow-xl transition-all border-2 hover:border-red-400 group">
                 <CardContent className="p-6 text-center">
                   <div className="w-14 h-14 rounded-full bg-red-700/30 flex items-center justify-center mx-auto mb-4 group-hover:bg-red-700/40 transition-all">
                     <X className="w-7 h-7 text-red-700" />
                   </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {item.description}
-                    </p>
-                    </CardContent>
-                    </Card>
-                    </div>
-                    ))}
-                    </div>
-                    </div>
-                    </section>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                    {/* Process */}
-                    <section className="py-20 px-6 bg-white">
-                    <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                    <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
-                    {t.processTitle}
-                    </span>
-                    </h2>
-                    <p className="text-xl text-gray-600">{t.processSubtitle}</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {t.processSteps.map((step, index) => (
-                    <div key={index} className="relative">
+      {/* Process */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+                {t.processTitle}
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600">{t.processSubtitle}</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {t.processSteps.map((step, index) => (
+              <div key={index} className="relative">
                 <Card className="h-full hover:shadow-xl transition-all">
                   <CardContent className="p-6">
-                    <div className="text-6xl font-bold text-blue-100 mb-4">
-                      {step.step}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {step.description}
-                    </p>
+                    <div className="text-6xl font-bold text-blue-100 mb-4">{step.step}</div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
                   </CardContent>
                 </Card>
                 {index < t.processSteps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                <ArrowRight className="w-8 h-8 text-blue-200" />
-                </div>
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                    <ArrowRight className="w-8 h-8 text-blue-200" />
+                  </div>
                 )}
-                </div>
-                ))}
-                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-16 text-center">
+            <p className="text-lg text-gray-600 mb-4">
+              {language === 'es' 
+                ? '¿Querés conocer en detalle cómo es colaborar con PuraWeb CR?' 
+                : "Want to learn more about what it's like to work with PuraWeb CR?"}
+            </p>
+            <Button
+              onClick={() => navigate(createPageUrl("GuiaBienvenida"))}
+              variant="outline"
+              className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50"
+            >
+              {language === 'es' ? 'Leer nuestra Guía' : 'Read our Guide'}
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
 
-                {/* CTA to Guide */}
-                <div className="mt-16 text-center">
-                  <p className="text-lg text-gray-600 mb-4">
-                    {language === 'es' 
-                      ? '¿Querés conocer en detalle cómo es colaborar con PuraWeb CR?' 
-                      : 'Want to learn more about what it\'s like to work with PuraWeb CR?'}
-                  </p>
-                  <Button
-                    onClick={() => navigate(createPageUrl("GuiaBienvenida"))}
-                    variant="outline"
-                    className="border-2 border-blue-900 text-blue-900 hover:bg-blue-50"
-                  >
-                    {language === 'es' ? 'Leer nuestra Guía' : 'Read our Guide'}
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </div>
-                </div>
-                </section>
-
-                {/* Guarantees */}
-                <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-                <div className="max-w-5xl mx-auto">
-                <div className="text-center mb-12">
-                <Badge className="mb-6 bg-green-100 text-green-800 hover:bg-green-100 px-6 py-2 text-sm cursor-default">
-                <Award className="w-4 h-4 mr-2" />
-                {language === 'es' ? 'Garantizado' : 'Guaranteed'}
-                </Badge>
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+      {/* Guarantees */}
+      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <Badge className="mb-6 bg-green-100 text-green-800 hover:bg-green-100 px-6 py-2 text-sm cursor-default">
+              <Award className="w-4 h-4 mr-2" />
+              {language === 'es' ? 'Garantizado' : 'Guaranteed'}
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
                 {t.guaranteeTitle}
-                </span>
-                </h2>
-                </div>
+              </span>
+            </h2>
+          </div>
+          <Card className="border-2 border-green-100">
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-2 gap-4">
+                {t.guarantees.map((guarantee, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700 leading-relaxed">{guarantee}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
-                <div>
-            <Card className="border-2 border-green-100">
-              <CardContent className="p-8">
-                <div className="grid md:grid-cols-2 gap-4">
-                  {t.guarantees.map((guarantee, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 leading-relaxed">{guarantee}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            </div>
-            </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="py-20 px-6 bg-white">
-            <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-6 sm:p-12 shadow-2xl text-center relative overflow-hidden">
-            {/* Background Pattern */}
+      {/* CTA Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 rounded-3xl p-6 sm:p-12 shadow-2xl text-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
                 backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
                 backgroundSize: '40px 40px'
               }} />
             </div>
-
             <div className="relative z-10">
               <Rocket className="w-16 h-16 text-white mx-auto mb-6" />
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {t.ctaTitle}
-              </h2>
-              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                {t.ctaSubtitle}
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t.ctaTitle}</h2>
+              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">{t.ctaSubtitle}</p>
               <Button
                 onClick={handleContactClick}
                 className="bg-white text-blue-900 hover:bg-gray-100 w-full sm:w-auto px-8 py-6 text-lg font-semibold shadow-xl"
