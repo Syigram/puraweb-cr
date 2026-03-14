@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import HeroIconPicker from "./HeroIconPicker";
+import TechGlobeIcon from "./TechGlobeIcon";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -38,7 +38,7 @@ export function Hero1({ t, language }) {
           transition={{ delay: 0.2 }}
           className="hidden lg:flex items-center justify-center flex-shrink-0"
         >
-          <HeroIconPicker />
+          <TechGlobeIcon />
         </motion.div>
       </div>
     </section>
