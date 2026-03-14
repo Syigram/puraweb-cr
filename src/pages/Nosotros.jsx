@@ -32,19 +32,28 @@ const staggerContainer = {
   }
 };
 
+const HERO_STORAGE_KEY = 'nosotros_hero_style';
+
 const Nosotros = memo(function Nosotros() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const t = useMemo(() => translations[language].about, [language]);
-  // Memoize manifesto translations to avoid re-accessing on each render
   const manifestoT = useMemo(() => translations[language].manifesto, [language]);
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
+  const [heroId, setHeroId] = useState(() => {
+    const saved = localStorage.getItem(HERO_STORAGE_KEY);
+    return saved ? parseInt(saved, 10) : 1;
+  });
+
+  const handleHeroSelect = useCallback((id) => {
+    setHeroId(id);
+    localStorage.setItem(HERO_STORAGE_KEY, String(id));
+  }, []);
 
   useEffect(() => {
     document.title = `${t.title} - PuraWeb CR`;
     window.scrollTo(0, 0);
-    // Delay animation start to ensure smooth initial render
     const timer = requestAnimationFrame(() => setIsVisible(true));
     return () => cancelAnimationFrame(timer);
   }, [t.title]);
