@@ -15,7 +15,8 @@ function Planes() {
   const { language } = useLanguage();
 
   const handleContactClick = useCallback(() => {
-    navigate(createPageUrl("Home") + "#contact");
+    navigate(createPageUrl("Contacto"));
+    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
   }, [navigate]);
 
   useEffect(() => {
