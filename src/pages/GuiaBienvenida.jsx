@@ -24,7 +24,6 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
-import TransparencyIconsShowcase from "@/components/workflow/TransparencyIcons";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
@@ -302,23 +301,8 @@ function ComoTrabajamos() {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 pb-20 pt-16">
-           {/* Transparency Icons Showcase */}
-           <motion.div {...fadeInUp} className="mb-20">
-             <div className="mb-8">
-               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                 {language === 'es' ? 'Nuestro Flujo de Trabajo' : 'Our Workflow'}
-               </h2>
-               <p className="text-lg text-gray-600">
-                 {language === 'es' 
-                   ? 'Explora nuestro proceso transparente y los valores que guían nuestro trabajo'
-                   : 'Explore our transparent process and the values that guide our work'}
-               </p>
-             </div>
-             <TransparencyIconsShowcase />
-           </motion.div>
-
-           {/* 1. Ownership Section */}
-           <motion.div {...fadeInUp} className="mb-16">
+          {/* 1. Ownership Section */}
+          <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
                 <HandshakeIcon className="w-6 h-6 text-white" />
