@@ -292,7 +292,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     <ChevronDown className="w-4 h-4" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuContent align="start" className="w-56" modal={false}>
                   <Link to={createPageUrl("Nosotros")} onClick={handleTopNavigation}>
                     <DropdownMenuItem className="cursor-pointer">
                       {language === 'es' ? 'Sobre Nosotros' : 'About Us'}
