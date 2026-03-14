@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import TechGlobeIcon from "./TechGlobeIcon";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
