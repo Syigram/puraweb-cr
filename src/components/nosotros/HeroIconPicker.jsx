@@ -30,9 +30,14 @@ const components = {
   team:     lazy(() => import("./icons/TeamNetworkIcon")),
   dna:      lazy(() => import("./icons/DNACodeIcon")),
   map:      lazy(() => import("./icons/MapPinNetworkIcon")),
-  terminal: lazy(() => import("./icons/TerminalTypingIcon")),
-  growth:   lazy(() => import("./icons/GrowthChartIcon")),
-  infinity: lazy(() => import("./icons/InfinityLoopIcon")),
+  terminal:   lazy(() => import("./icons/TerminalTypingIcon")),
+  growth:     lazy(() => import("./icons/GrowthChartIcon")),
+  infinity:   lazy(() => import("./icons/InfinityLoopIcon")),
+  mapradar:   lazy(() => import("./icons/MapPinRadarIcon")),
+  mapglobe:   lazy(() => import("./icons/MapPinGlobeIcon")),
+  mapcluster: lazy(() => import("./icons/MapPinClusterIcon")),
+  maproute:   lazy(() => import("./icons/MapPinRouteIcon")),
+  mapsignal:  lazy(() => import("./icons/MapPinSignalIcon")),
 };
 
 const IconFallback = () => (
