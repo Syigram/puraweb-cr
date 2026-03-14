@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Rocket } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -34,7 +34,7 @@ export function Hero1({ t, language }) {
         </div>
         <motion.div variants={fadeIn} initial="hidden" animate="visible" transition={{ delay: 0.2 }}
           className="hidden lg:flex items-center justify-center w-64 h-64 rounded-3xl bg-gradient-to-br from-blue-900 to-blue-700 shadow-2xl flex-shrink-0">
-          <Rocket className="w-28 h-28 text-white opacity-90" />
+          <Heart className="w-28 h-28 text-white opacity-90" />
         </motion.div>
       </div>
     </section>
