@@ -204,8 +204,8 @@ export const translations = {
     },
     about: {
       title: "Nosotros",
-      heroTitle: "Tecnología Premium al Alcance de Todos",
-      heroSubtitle: "Nacimos para democratizar el diseño web de alto nivel en Costa Rica. Creemos que toda PYME merece una presencia digital excepcional sin comprometer su presupuesto.",
+      heroTitle: "Ingeniería costarricense de clase mundial para su negocio",
+      heroSubtitle: "Somos su aliado tecnológico, comprometidos con crear herramientas digitales modernas que aceleran el crecimiento de su empresa.",
       missionTitle: "Nuestra Misión",
       missionText: "Construir el futuro digital de las empresas ticas mediante el diseño de alta gama y soluciones de alto rendimiento, asegurando que la excelencia tecnológica sea accesible para todos los negocios locales.",
       visionTitle: "Nuestra Visión",
