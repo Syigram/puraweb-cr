@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from "react";
+import React, { useMemo, memo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
+import IconSelector from "@/components/como-trabajamos/IconSelector";
 
 // Memoized animation config - defined outside component to prevent recreation
 const fadeInUp = {
