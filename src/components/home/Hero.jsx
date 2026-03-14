@@ -7,32 +7,28 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 
-// Custom hook to detect desktop screens using matchMedia (more reliable)
+// Custom hook to detect desktop screens with throttled resize
 const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(min-width: 1024px)').matches;
-  });
-
+  const [isDesktop, setIsDesktop] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : false
+  );
+  
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1024px)');
-    
-    // Set initial state based on current media query state
-    setIsDesktop(mediaQuery.matches);
-    
-    // Create listener for media query changes
-    const handleChange = (e) => {
-      setIsDesktop(e.matches);
+    let timeoutId = null;
+    const checkDesktop = () => {
+      if (timeoutId) return;
+      timeoutId = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 1024);
+        timeoutId = null;
+      }, 150);
     };
-    
-    // Use addEventListener for better compatibility
-    mediaQuery.addEventListener('change', handleChange);
-    
+    window.addEventListener('resize', checkDesktop);
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      window.removeEventListener('resize', checkDesktop);
+      if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
-
+  
   return isDesktop;
 };
 
@@ -93,28 +89,34 @@ const Typewriter = memo(({ words, fixedWidth = true, className = "" }) => {
 
 Typewriter.displayName = "Typewriter";
 
-// No usar Framer Motion para animaciones infinitas - CSS puro es más confiable
+// Floating cards animation - smooth infinite float (opposite directions)
+const floatAnimationUp = {
+  y: [0, -100, 0],
+  transition: {
+    duration: 1.8,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+};
+
+const floatAnimationDown = {
+  y: [0, 100, 0],
+  transition: {
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+};
 
 // Floating cards component - only rendered on desktop
 const DesktopHeroVisual = memo(({ language }) => {
+  const isDesktop = useIsDesktop();
+  
+  // Don't render anything on mobile/tablet - saves memory and CPU
+  if (!isDesktop) return null;
+  
   return (
-    <div className="relative">
-      <style>{`
-        @keyframes floatUp {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-100px); }
-        }
-        @keyframes floatDown {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(100px); }
-        }
-        .float-up {
-          animation: floatUp 3.6s ease-in-out infinite;
-        }
-        .float-down {
-          animation: floatDown 4s ease-in-out infinite;
-        }
-      `}</style>
+    <div className="hidden lg:block relative">
       <div className="relative">
         {/* Web Development Card - floating animation */}
         <motion.div
@@ -123,8 +125,9 @@ const DesktopHeroVisual = memo(({ language }) => {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="absolute top-0 right-0"
         >
-          <div
-            className="float-up bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          <motion.div
+            animate={floatAnimationUp}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
             <Globe className="w-12 h-12 text-blue-900 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -133,7 +136,7 @@ const DesktopHeroVisual = memo(({ language }) => {
             <p className="text-sm text-gray-600">
               {language === 'es' ? 'Sitios responsivos personalizados' : 'Custom responsive sites'}
             </p>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* E-commerce Card - floating animation (opposite direction) */}
@@ -143,8 +146,9 @@ const DesktopHeroVisual = memo(({ language }) => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           className="absolute bottom-0 left-0"
         >
-          <div
-            className="float-down bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
+          <motion.div
+            animate={floatAnimationDown}
+            className="bg-white rounded-2xl shadow-2xl p-6 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-transform duration-300"
           >
             <ShoppingCart className="w-12 h-12 text-red-600 mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">
@@ -153,7 +157,7 @@ const DesktopHeroVisual = memo(({ language }) => {
             <p className="text-sm text-gray-600">
               {language === 'es' ? 'Tiendas en línea poderosas' : 'Powerful online stores'}
             </p>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Central circle */}
@@ -207,171 +211,174 @@ const Hero = memo(function Hero({ onGetStarted }) {
   const t = useMemo(() => translations[language].hero, [language]);
   const isDesktop = useIsDesktop();
 
-  return (
-    <>
-      <style>{`
-        @keyframes heroFadeIn {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      {/* Mobile Layout - pure CSS fade-in, no Framer Motion overhead */}
-      <section className="lg:hidden relative min-h-screen flex items-center overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-red-50" key="mobile-hero">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-blue-900 rounded-full blur-2xl opacity-10" />
-          <div className="absolute bottom-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-2xl opacity-10" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 py-24" style={mobileFadeInStyle}>
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">{t.badge}</span>
+  // Mobile: pure CSS fade-in, no Framer Motion overhead
+  if (!isDesktop) {
+    return (
+      <>
+        <style>{`
+          @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+        <section className="relative min-h-screen flex items-center overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 right-10 w-72 h-72 bg-blue-900 rounded-full blur-2xl opacity-10" />
+            <div className="absolute bottom-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-2xl opacity-10" />
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight max-w-full">
-            <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
-              {t.title1}
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block max-w-full overflow-hidden">
-              <Typewriter words={t.typewriterWords || [t.title2]} fixedWidth={false} className="max-w-full" />
-            </span>
-          </h1>
+          <div className="relative max-w-7xl mx-auto px-6 py-24" style={mobileFadeInStyle}>
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">{t.badge}</span>
+            </div>
 
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
-            {t.description}
-          </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight max-w-full">
+              <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
+                {t.title1}
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block max-w-full overflow-hidden">
+                <Typewriter words={t.typewriterWords || [t.title2]} fixedWidth={false} className="max-w-full" />
+              </span>
+            </h1>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Button
-              onClick={onGetStarted}
-              size="lg"
-              className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base px-6 py-5 shadow-xl"
-            >
-              {t.getStarted}
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-base px-6 py-5 shadow-sm"
-            >
-              <Link to={createPageUrl("Portafolio")}>
-                {t.portfolioCta}
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
+              {t.description}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <Button
+                onClick={onGetStarted}
+                size="lg"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-base px-6 py-5 shadow-xl"
+              >
+                {t.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <div className="text-2xl font-bold text-blue-900 mb-1">150+</div>
-              <div className="text-xs text-gray-600">{t.stat1}</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-blue-900 mb-1">98%</div>
-              <div className="text-xs text-gray-600">{t.stat2}</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-blue-900 mb-1">24/7</div>
-              <div className="text-xs text-gray-600">{t.stat3}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Desktop Layout - full Framer Motion animations */}
-      <section className="hidden lg:flex relative min-h-screen items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50" key="desktop-hero">
-        {/* Static background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-            {/* LEFT — stagger en cascada al montar */}
-            <motion.div variants={heroContainer} initial="hidden" animate="visible">
-              <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-medium">{t.badge}</span>
-              </motion.div>
-
-              <motion.h1 variants={heroItem} className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
-                  {t.title1}
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
-                  <Typewriter words={t.typewriterWords || [t.title2]} />
-                </span>
-              </motion.h1>
-
-              <motion.p variants={heroItem} className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-                {t.description}
-              </motion.p>
-
-              <motion.div variants={heroItem} className="flex flex-row gap-4 mb-12">
-                <Button
-                  onClick={onGetStarted}
-                  size="lg"
-                  className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-shadow"
-                >
-                  {t.getStarted}
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-base px-6 py-5 shadow-sm"
+              >
+                <Link to={createPageUrl("Portafolio")}>
+                  {t.portfolioCta}
                   <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-lg px-8 py-6 shadow-sm"
-                >
-                  <Link to={createPageUrl("Portafolio")}>
-                    {t.portfolioCta}
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Link>
-                </Button>
-              </motion.div>
+                </Link>
+              </Button>
+            </div>
 
-              <motion.div variants={heroItem} className="grid grid-cols-3 gap-6">
-                <div>
-                  <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
-                  <div className="text-sm text-gray-600">{t.stat1}</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
-                  <div className="text-sm text-gray-600">{t.stat2}</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
-                  <div className="text-sm text-gray-600">{t.stat3}</div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* RIGHT — entra desde la derecha con delay */}
-            <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
-              <DesktopHeroVisual language={language} />
-            </motion.div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <div className="text-2xl font-bold text-blue-900 mb-1">150+</div>
+                <div className="text-xs text-gray-600">{t.stat1}</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-900 mb-1">98%</div>
+                <div className="text-xs text-gray-600">{t.stat2}</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-900 mb-1">24/7</div>
+                <div className="text-xs text-gray-600">{t.stat3}</div>
+              </div>
+            </div>
           </div>
+        </section>
+      </>
+    );
+  }
+
+  // Desktop: full Framer Motion animations
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+      {/* Static background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl opacity-10" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+          {/* LEFT — stagger en cascada al montar */}
+          <motion.div variants={heroContainer} initial="hidden" animate="visible">
+            <motion.div variants={heroItem} className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">{t.badge}</span>
+            </motion.div>
+
+            <motion.h1 variants={heroItem} className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent">
+                {t.title1}
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent min-h-[1.2em] block">
+                <Typewriter words={t.typewriterWords || [t.title2]} />
+              </span>
+            </motion.h1>
+
+            <motion.p variants={heroItem} className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
+              {t.description}
+            </motion.p>
+
+            <motion.div variants={heroItem} className="flex flex-row gap-4 mb-12">
+              <Button
+                onClick={onGetStarted}
+                size="lg"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-shadow"
+              >
+                {t.getStarted}
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-2 border-blue-900/20 bg-white/80 text-blue-900 hover:bg-blue-50 text-lg px-8 py-6 shadow-sm"
+              >
+                <Link to={createPageUrl("Portafolio")}>
+                  {t.portfolioCta}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            </motion.div>
+
+            <motion.div variants={heroItem} className="grid grid-cols-3 gap-6">
+              <div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">150+</div>
+                <div className="text-sm text-gray-600">{t.stat1}</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">98%</div>
+                <div className="text-sm text-gray-600">{t.stat2}</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-blue-900 mb-1">24/7</div>
+                <div className="text-sm text-gray-600">{t.stat3}</div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT — entra desde la derecha con delay */}
+          <motion.div variants={heroVisualVariant} initial="hidden" animate="visible">
+            <DesktopHeroVisual language={language} />
+          </motion.div>
         </div>
+      </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
-        >
-          <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
-          </div>
-        </motion.div>
-      </section>
-    </>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="w-6 h-10 border-2 border-blue-900 rounded-full flex items-start justify-center p-2">
+          <div className="w-1 h-2 bg-blue-900 rounded-full animate-bounce" />
+        </div>
+      </motion.div>
+    </section>
   );
 });
 
