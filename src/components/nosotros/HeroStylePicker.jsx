@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Palette, ChevronUp, ChevronDown, Check } from "lucide-react";
 import { HERO_SECTIONS } from "./NosotrosHeroSections";
