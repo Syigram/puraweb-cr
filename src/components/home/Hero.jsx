@@ -286,7 +286,7 @@ const Hero = memo(function Hero({ onGetStarted }) {
       </section>
 
       {/* Desktop Layout - full Framer Motion animations */}
-      <section className="hidden lg:flex relative min-h-screen items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
+      <section className="hidden lg:flex relative min-h-screen items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50" key="desktop-hero">
         {/* Static background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-96 h-96 bg-blue-900 rounded-full blur-3xl opacity-10" />
