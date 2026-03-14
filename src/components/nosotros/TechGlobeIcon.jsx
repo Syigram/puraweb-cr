@@ -1,126 +1,142 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 
-const nodes = [
-  { cx: 100, cy: 40 },
-  { cx: 170, cy: 75 },
-  { cx: 155, cy: 155 },
-  { cx: 75, cy: 165 },
-  { cx: 30, cy: 100 },
-  { cx: 130, cy: 110 },
+const NODES = [
+  { cx: 100, cy: 38 },
+  { cx: 168, cy: 72 },
+  { cx: 158, cy: 155 },
+  { cx: 75,  cy: 168 },
+  { cx: 28,  cy: 105 },
+  { cx: 128, cy: 112 },
 ];
 
-const connections = [
-  [0, 1], [1, 2], [2, 3], [3, 4], [4, 0], [0, 5], [1, 5], [2, 5], [3, 5], [4, 5],
+const CONNECTIONS = [
+  [0, 1], [1, 2], [2, 3], [3, 4], [4, 0],
+  [0, 5], [1, 5], [2, 5], [3, 5], [4, 5],
+];
+
+// Pulses travel along specific connections
+const PULSES = [
+  { conn: 0, delay: 0 },
+  { conn: 2, delay: 0.8 },
+  { conn: 4, delay: 1.6 },
+  { conn: 6, delay: 2.4 },
+  { conn: 8, delay: 0.4 },
 ];
 
 export default function TechGlobeIcon() {
   return (
-    <div className="relative w-56 h-56 flex items-center justify-center select-none">
-      {/* Outer glow ring */}
-      <motion.div
-        className="absolute inset-0 rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(0,43,127,0.12) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.08, 1] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <div className="relative w-60 h-60 flex items-center justify-center select-none">
+      <style>{`
+        @keyframes spinCW  { from { transform: rotate(0deg);   } to { transform: rotate(360deg);  } }
+        @keyframes spinCCW { from { transform: rotate(0deg);   } to { transform: rotate(-360deg); } }
+        @keyframes pulse   { 0%,100% { r: 3; opacity: 0.9; } 50% { r: 5; opacity: 0.5; } }
+        @keyframes nodeGlow { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes travelPulse {
+          0%   { opacity: 0; }
+          5%   { opacity: 1; }
+          95%  { opacity: 1; }
+          100% { opacity: 0; }
+        }
 
-      {/* Rotating dashed orbit rings */}
-      <motion.svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 200 200"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-      >
-        <ellipse cx="100" cy="100" rx="90" ry="36" fill="none" stroke="#002B7F" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.3" />
-      </motion.svg>
+        .orbit-cw  { transform-origin: 100px 100px; animation: spinCW  16s linear infinite; }
+        .orbit-ccw { transform-origin: 100px 100px; animation: spinCCW 22s linear infinite; }
+        .orbit-cw2 { transform-origin: 100px 100px; animation: spinCW  30s linear infinite; }
 
-      <motion.svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 200 200"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-      >
-        <ellipse cx="100" cy="100" rx="36" ry="90" fill="none" stroke="#CE1126" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.25" />
-      </motion.svg>
+        .node-pulse-0 { animation: nodeGlow 2.2s ease-in-out 0.0s infinite; }
+        .node-pulse-1 { animation: nodeGlow 2.2s ease-in-out 0.4s infinite; }
+        .node-pulse-2 { animation: nodeGlow 2.2s ease-in-out 0.8s infinite; }
+        .node-pulse-3 { animation: nodeGlow 2.2s ease-in-out 1.2s infinite; }
+        .node-pulse-4 { animation: nodeGlow 2.2s ease-in-out 1.6s infinite; }
+        .node-pulse-5 { animation: nodeGlow 2.2s ease-in-out 2.0s infinite; }
 
-      {/* Main SVG: globe circle + circuit lines + nodes */}
-      <svg viewBox="0 0 200 200" className="w-full h-full" style={{ zIndex: 1 }}>
-        {/* Globe outer circle */}
-        <circle cx="100" cy="100" r="88" fill="none" stroke="#002B7F" strokeWidth="1.2" opacity="0.18" />
+        .center-pulse { animation: pulse 2.5s ease-in-out infinite; }
 
-        {/* Circuit connection lines */}
-        {connections.map(([a, b], i) => (
-          <motion.line
+        .travel-dot { animation: travelPulse 2s ease-in-out infinite; }
+        .travel-0 { animation-delay: 0s; }
+        .travel-1 { animation-delay: 0.7s; }
+        .travel-2 { animation-delay: 1.4s; }
+        .travel-3 { animation-delay: 2.1s; }
+        .travel-4 { animation-delay: 2.8s; }
+      `}</style>
+
+      <svg viewBox="0 0 200 200" className="w-full h-full">
+        {/* Soft background glow */}
+        <defs>
+          <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#002B7F" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="#002B7F" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#CE1126" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#CE1126" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="96" fill="url(#bgGlow)" />
+
+        {/* Outer circle border */}
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#002B7F" strokeWidth="0.8" opacity="0.15" />
+
+        {/* Rotating orbit rings */}
+        <g className="orbit-cw">
+          <ellipse cx="100" cy="100" rx="90" ry="32"
+            fill="none" stroke="#002B7F" strokeWidth="0.9" strokeDasharray="5 5" opacity="0.3" />
+        </g>
+        <g className="orbit-ccw">
+          <ellipse cx="100" cy="100" rx="32" ry="90"
+            fill="none" stroke="#CE1126" strokeWidth="0.9" strokeDasharray="5 5" opacity="0.22" />
+        </g>
+        <g className="orbit-cw2">
+          <ellipse cx="100" cy="100" rx="65" ry="55"
+            fill="none" stroke="#002B7F" strokeWidth="0.7" strokeDasharray="3 7" opacity="0.15"
+            transform="rotate(45 100 100)" />
+        </g>
+
+        {/* Connection lines */}
+        {CONNECTIONS.map(([a, b], i) => (
+          <line
             key={i}
-            x1={nodes[a].cx} y1={nodes[a].cy}
-            x2={nodes[b].cx} y2={nodes[b].cy}
+            x1={NODES[a].cx} y1={NODES[a].cy}
+            x2={NODES[b].cx} y2={NODES[b].cy}
             stroke="#002B7F"
             strokeWidth="1"
             strokeLinecap="round"
-            opacity="0.35"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.35 }}
-            transition={{ duration: 1.2, delay: i * 0.12, ease: "easeOut" }}
+            opacity="0.28"
           />
         ))}
 
-        {/* Pulse lines (animated traveling dots) */}
-        {connections.slice(0, 5).map(([a, b], i) => (
-          <motion.circle
-            key={`pulse-${i}`}
-            r="2.5"
-            fill="#CE1126"
-            opacity="0.7"
-            animate={{
-              cx: [nodes[a].cx, nodes[b].cx, nodes[a].cx],
-              cy: [nodes[a].cy, nodes[b].cy, nodes[a].cy],
-            }}
-            transition={{
-              duration: 2.4,
-              delay: i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+        {/* Traveling pulse dots along connections */}
+        {PULSES.map(({ conn, delay }, i) => {
+          const [a, b] = CONNECTIONS[conn];
+          return (
+            <circle key={`t${i}`} r="3" fill="#CE1126"
+              className={`travel-dot travel-${i}`}
+              style={{ animationDelay: `${delay}s` }}>
+              <animateMotion
+                dur="2s"
+                repeatCount="indefinite"
+                begin={`${delay}s`}
+                path={`M${NODES[a].cx},${NODES[a].cy} L${NODES[b].cx},${NODES[b].cy}`}
+              />
+            </circle>
+          );
+        })}
 
-        {/* Static nodes */}
-        {nodes.map((n, i) => (
-          <g key={`node-${i}`}>
-            <motion.circle
-              cx={n.cx} cy={n.cy} r="7"
-              fill="white"
-              stroke="#002B7F"
-              strokeWidth="1.5"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-            />
-            <motion.circle
-              cx={n.cx} cy={n.cy} r="3.5"
-              fill="#002B7F"
-              initial={{ scale: 0 }}
-              animate={{ scale: [1, 1.4, 1] }}
-              transition={{ duration: 2, delay: 0.6 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-            />
+        {/* Nodes */}
+        {NODES.map((n, i) => (
+          <g key={`n${i}`} className={`node-pulse-${i}`}>
+            <circle cx={n.cx} cy={n.cy} r="9"  fill="white" stroke="#002B7F" strokeWidth="1.5" opacity="0.9" />
+            <circle cx={n.cx} cy={n.cy} r="4"  fill="#002B7F" />
           </g>
         ))}
 
         {/* Center hub */}
-        <circle cx="100" cy="100" r="18" fill="#002B7F" opacity="0.07" />
-        <motion.circle
-          cx="100" cy="100" r="11"
-          fill="white"
-          stroke="#002B7F"
-          strokeWidth="2"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <circle cx="100" cy="100" r="5" fill="#CE1126" opacity="0.9" />
+        <circle cx="100" cy="100" r="20" fill="url(#hubGlow)" />
+        <circle cx="100" cy="100" r="13" fill="white" stroke="#002B7F" strokeWidth="2" />
+        <circle cx="100" cy="100" r="6"  fill="#CE1126" className="center-pulse" />
 
-        {/* "</>" label */}
-        <text x="100" y="194" textAnchor="middle" fontSize="9" fill="#002B7F" opacity="0.45" fontFamily="monospace">{"</>"}</text>
+        {/* Code label */}
+        <text x="100" y="196" textAnchor="middle" fontSize="9"
+          fill="#002B7F" opacity="0.4" fontFamily="monospace">{"</>"}</text>
       </svg>
     </div>
   );
