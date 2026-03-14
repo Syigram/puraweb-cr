@@ -100,7 +100,7 @@ const floatAnimationUp = {
     duration: 1.8,
     repeat: Infinity,
     ease: "easeInOut",
-    delayChildren: 0.6
+    delay: 0.6
   }
 };
 
@@ -110,7 +110,7 @@ const floatAnimationDown = {
     duration: 2,
     repeat: Infinity,
     ease: "easeInOut",
-    delayChildren: 0.6
+    delay: 0.6
   }
 };
 
