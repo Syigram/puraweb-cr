@@ -25,7 +25,7 @@ export function Hero1({ t, language }) {
           <motion.div variants={fadeIn} initial="hidden" animate="visible" className="flex items-center gap-3 mb-6">
             <div className="w-1 h-14 bg-red-600 rounded-full" />
             <span className="text-red-600 text-sm font-semibold uppercase tracking-widest">
-              {language === 'es' ? 'Ingeniería Costarricense' : 'Costa Rican Engineering'}
+              {language === 'es' ? 'Quiénes Somos' : 'Who We Are'}
             </span>
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible"
