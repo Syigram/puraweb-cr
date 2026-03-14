@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from "react";
+import React, { useMemo, memo, useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import SEO from "@/components/SEO";
