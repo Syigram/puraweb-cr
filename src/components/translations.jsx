@@ -580,8 +580,8 @@ export const translations = {
     },
     about: {
       title: "About Us",
-      heroTitle: "Premium Technology for Everyone",
-      heroSubtitle: "We were born to democratize high-end web design in Costa Rica. We believe every SME deserves an exceptional digital presence without compromising their budget.",
+      heroTitle: "World-class Costa Rican engineering for your business",
+      heroSubtitle: "We are your technology partner, committed to building modern digital tools that accelerate your company's growth.",
       missionTitle: "Our Mission",
       missionText: "To build the digital future of Costa Rican businesses through high-end design and high-performance solutions, ensuring that technological excellence is accessible to all local businesses.",
       visionTitle: "Our Vision",
