@@ -142,7 +142,7 @@ export function Hero5({ t, language }) {
               <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <span className="text-red-600 text-sm font-semibold uppercase tracking-widest">PuraWeb CR</span>
+              <span className="text-red-600 text-sm font-semibold uppercase tracking-widest">{language === 'es' ? 'Quiénes Somos' : 'Who We Are'}</span>
             </motion.div>
             <motion.h1 variants={fadeUp} initial="hidden" animate="visible"
               className="text-4xl md:text-5xl font-bold text-blue-900 leading-tight mb-4">
