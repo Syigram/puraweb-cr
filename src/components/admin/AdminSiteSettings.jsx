@@ -18,11 +18,11 @@ function useSettingsRecord(section, allRecords) {
   return allRecords?.find(r => r.section === section) ?? null;
 }
 
-function FieldGroup({ label, icon: Icon, children }) {
+function FieldGroup({ label, icon: FieldIcon, children }) {
   return (
     <div className="space-y-1.5">
       <Label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-        {Icon && <Icon className="w-4 h-4 text-blue-700" />}
+        {FieldIcon && <FieldIcon className="w-4 h-4 text-blue-700" />}
         {label}
       </Label>
       {children}
