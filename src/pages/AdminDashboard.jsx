@@ -135,6 +135,13 @@ export default function AdminDashboard() {
               <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Knowledge Base</span>
             </TabsTrigger>
+            <TabsTrigger 
+              value="settings" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-blue-700 data-[state=active]:text-white data-[state=active]:shadow-md rounded-lg py-3 px-4 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <Settings className="w-4 h-4" />
+              <span className="hidden sm:inline">Sitio</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="stats">
