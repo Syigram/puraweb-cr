@@ -179,6 +179,12 @@ export default function AdminDashboard() {
               <AdminKnowledgeBase />
             </Suspense>
           </TabsContent>
+
+          <TabsContent value="settings">
+            <Suspense fallback={<TabLoader />}>
+              <AdminSiteSettings />
+            </Suspense>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
