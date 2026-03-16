@@ -481,6 +481,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
                     src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png" 
                     alt="PuraWeb CR" 
                     className="h-10 w-auto"
+                    style={{ filter: "brightness(0) invert(1)" }}
                   />
                   </div>
                 <p className="text-blue-200 text-sm">
