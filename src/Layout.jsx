@@ -472,7 +472,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
       <Chatbot disabled={isMobileMenuOpen} />
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#001A4D] via-[#002266] to-[#001A4D] text-white py-12">
+      <footer className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-5 gap-8">
             <div>
