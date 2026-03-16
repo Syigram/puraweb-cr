@@ -476,7 +476,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-5 gap-8">
             <div>
-                <div className="inline-flex items-center mb-4 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
+                <div className="flex items-center gap-2 mb-4">
                   <img 
                     src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6901cf191d3736d23a1ebf19/d19c70359_logo5.png" 
                     alt="PuraWeb CR" 
