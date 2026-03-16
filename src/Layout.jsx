@@ -15,6 +15,7 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { base44 } from "@/api/base44Client";
 import Chatbot from "@/components/Chatbot";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 // Shared auth state to avoid multiple API calls
 let authPromise = null;
