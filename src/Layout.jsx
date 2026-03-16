@@ -519,9 +519,12 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
               <div>
               <h3 className="font-semibold mb-4">{t.footer.contactTitle}</h3>
               <ul className="space-y-2 text-sm text-blue-200">
-                <li>{t.footer.location}</li>
-                <li>info@puraweb.cr</li>
-                <li>+506 1234 5678</li>
+                <li>{siteSettings?.contact?.location_city || t.footer.location}</li>
+                <li>{siteSettings?.contact?.contact_email || "info@puraweb.cr"}</li>
+                <li>{siteSettings?.contact?.contact_phone || "+506 1234 5678"}</li>
+                {siteSettings?.contact?.business_hours && (
+                  <li>{siteSettings.contact.business_hours}</li>
+                )}
               </ul>
               </div>
               <div>
