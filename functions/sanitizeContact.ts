@@ -196,6 +196,84 @@ Deno.serve(async (req) => {
       `
     }).catch(err => console.error("Error sending email notification:", err));
 
+    // Send copy to sygramdev@gmail.com
+    base44.asServiceRole.integrations.Core.SendEmail({
+      to: "sygramdev@gmail.com",
+      from_name: "PuraWeb CR - Formulario de Contacto",
+      subject: `[Copia] Consulta de ${escapedName}${escapedCompany ? ` - ${escapedCompany}` : ''}`,
+      body: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #002B7F 0%, #0052CC 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; text-align: center; }
+    .header h1 { margin: 0; font-size: 24px; }
+    .copy-badge { background: #FFA500; color: white; font-size: 12px; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-top: 8px; }
+    .content { background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none; }
+    .field { margin-bottom: 20px; }
+    .label { font-weight: 600; color: #002B7F; margin-bottom: 5px; display: block; }
+    .value { color: #374151; }
+    .message-box { background: white; padding: 20px; border-left: 4px solid #002B7F; border-radius: 4px; margin-top: 10px; }
+    .footer { background: #f3f4f6; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; border-radius: 0 0 8px 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📧 Nueva Consulta de Cliente</h1>
+      <span class="copy-badge">COPIA</span>
+    </div>
+    
+    <div class="content">
+      <div class="field">
+        <span class="label">👤 Nombre:</span>
+        <span class="value">${escapedName}</span>
+      </div>
+      
+      <div class="field">
+        <span class="label">✉️ Correo Electrónico:</span>
+        <span class="value">${escapedEmail}</span>
+      </div>
+      
+      ${escapedCompany ? `
+      <div class="field">
+        <span class="label">🏢 Empresa:</span>
+        <span class="value">${escapedCompany}</span>
+      </div>
+      ` : ''}
+      
+      ${escapedPhone ? `
+      <div class="field">
+        <span class="label">📱 Teléfono:</span>
+        <span class="value">${escapedPhone}</span>
+      </div>
+      ` : ''}
+      
+      ${sanitizedData.service_interest ? `
+      <div class="field">
+        <span class="label">💼 Servicio de Interés:</span>
+        <span class="value">${serviceLabels[sanitizedData.service_interest] || sanitizedData.service_interest}</span>
+      </div>
+      ` : ''}
+      
+      <div class="field">
+        <span class="label">💬 Mensaje:</span>
+        <div class="message-box">${escapedMessage}</div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      Copia del formulario de contacto - PuraWeb CR
+    </div>
+  </div>
+</body>
+</html>
+      `
+    }).catch(err => console.error("Error sending copy email:", err));
+
     // Send WhatsApp notification (fire-and-forget)
     base44.asServiceRole.functions.invoke('whatsappContactNotification', {
       name: sanitizedData.name,
