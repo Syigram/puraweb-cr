@@ -152,6 +152,7 @@ const LayoutContent = memo(function LayoutContent({ children, currentPageName })
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = useMemo(() => translations[language], [language]);
+  const { data: siteSettings } = useSiteSettings();
 
   // Preload critical resources for LCP optimization
   useEffect(() => {
