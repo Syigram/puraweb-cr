@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Loader2, BarChart3, Users, CreditCard, Mail, HelpCircle, BookOpen } from "lucide-react";
+import { Shield, Loader2, BarChart3, Users, CreditCard, Mail, HelpCircle, BookOpen, Settings } from "lucide-react";
 
 // Lazy load admin components
 const AdminStats = lazy(() => import("@/components/admin/AdminStats"));
@@ -12,6 +12,7 @@ const AdminPayments = lazy(() => import("@/components/admin/AdminPayments"));
 const AdminTickets = lazy(() => import("@/components/admin/AdminTickets"));
 const AdminContactMessages = lazy(() => import("@/components/admin/AdminContactMessages"));
 const AdminKnowledgeBase = lazy(() => import("@/components/admin/AdminKnowledgeBase"));
+const AdminSiteSettings = lazy(() => import("@/components/admin/AdminSiteSettings"));
 
 const TabLoader = () => (
   <div className="flex items-center justify-center py-12">
