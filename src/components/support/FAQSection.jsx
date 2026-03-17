@@ -100,12 +100,7 @@ const translations = {
       {
         category: "billing",
         question: "Can I change plans at any time?",
-        answer: "Yes, you can upgrade or change your plan at any time. If you upgrade to a higher plan, you will be charged the prorated difference. If you downgrade, the change will apply on your next billing cycle."
-      },
-      {
-        category: "billing",
-        question: "Do you offer refunds?",
-        answer: "We offer refunds within the first 14 days after your first subscription if you are not satisfied with our service. Contact us through the support form to request a refund."
+        answer: "Yes, changing plans is possible. However, we recommend contacting our team first to assess the feasibility together based on your current project and subscription status. This ensures the transition is as smooth as possible for you."
       },
       {
         category: "technical",
