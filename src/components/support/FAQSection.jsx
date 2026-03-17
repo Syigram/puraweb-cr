@@ -66,7 +66,7 @@ const translations = {
       {
         category: "plans",
         question: "¿Cuál es la diferencia entre los planes?",
-        answer: "Plan Básico: ideal para presencia online simple (hasta 6 páginas, formulario de contacto). Plan Profesional: para negocios en crecimiento (hasta 12 páginas, CMS, redes sociales). Plan Empresa: solución completa con e-commerce, páginas ilimitadas y soporte 24/7."
+        answer: "Los planes se diferencian principalmente por el alcance del proyecto y las funcionalidades incluidas. El Plan Básico (hasta 6 páginas) está orientado a establecer una presencia digital esencial; incluye landing page, blog y sistema de citas. El Plan Profesional (hasta 12 páginas) apunta al crecimiento y las ventas, sumando e-commerce y pagos en línea. El Plan Empresa (páginas ilimitadas) es una solución integral para negocios que necesitan más, con sitio web corporativo, soluciones a la medida e integración de tecnologías avanzadas."
       },
       {
         category: "plans",
@@ -130,7 +130,7 @@ const translations = {
       {
         category: "plans",
         question: "What is the difference between the plans?",
-        answer: "Basic Plan: ideal for simple online presence (up to 6 pages, contact form). Professional Plan: for growing businesses (up to 12 pages, CMS, social media). Business Plan: complete solution with e-commerce, unlimited pages, and 24/7 support."
+        answer: "The plans differ mainly in project scope and included features. The Basic Plan (up to 6 pages) focuses on establishing an essential digital presence; it includes a landing page, blog, and appointment system. The Professional Plan (up to 12 pages) targets growth and sales, adding e-commerce and online payments. The Business Plan (unlimited pages) is a comprehensive solution for businesses that need more, with a corporate website, custom-built solutions, and advanced technology integrations."
       },
       {
         category: "plans",
