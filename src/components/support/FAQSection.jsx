@@ -120,22 +120,22 @@ const translations = {
       {
         category: "general",
         question: "How do I start the development process?",
-        answer: "Once you choose a plan and complete payment, we will contact you within 24-48 hours to schedule an initial meeting. In this meeting, we will discuss your needs, goals, and desired design."
+        answer: "If it's your first time using our service, the process starts by selecting a plan and completing payment under the 'One-Time Payment' option. With this option, you pay only 50% upfront to kick off the work; once the site is delivered, you pay the remaining 50%. After confirming payment, we'll reach out within 24-48 hours to schedule an initial meeting to discuss your needs, goals, and desired design."
       },
       {
         category: "general",
         question: "Do I need to provide content for my site?",
-        answer: "Ideally yes, but we can help. If you have texts, images, and logos, great. If not, we offer content writing and stock image selection services as part of our Professional and Business plans."
+        answer: "Ideally yes, but we can help. If you have texts, images, and logos, great. If not, we offer content writing and stock image selection services. We also offer custom image design and logo creation for an additional fee on top of your plan — this is a one-time service."
       },
       {
         category: "plans",
         question: "What is the difference between the plans?",
-        answer: "Basic Plan: ideal for simple online presence (5 pages, contact form). Professional Plan: for growing businesses (10 pages, CMS, social media). Business Plan: complete solution with e-commerce, unlimited pages, and 24/7 support."
+        answer: "Basic Plan: ideal for simple online presence (up to 6 pages, contact form). Professional Plan: for growing businesses (up to 12 pages, CMS, social media). Business Plan: complete solution with e-commerce, unlimited pages, and 24/7 support."
       },
       {
         category: "plans",
         question: "Can I try the service before paying?",
-        answer: "We offer a free consultation where we analyze your needs and show you examples of our work. Additionally, you have a 14-day satisfaction guarantee after your first subscription."
+        answer: "We offer a free consultation where we analyze your needs and show you examples of our work."
       }
     ]
   }
