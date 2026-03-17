@@ -56,22 +56,22 @@ const translations = {
       {
         category: "general",
         question: "¿Cómo inicio el proceso de desarrollo?",
-        answer: "Una vez que elijas un plan y completes el pago, nos pondremos en contacto contigo en 24-48 horas para agendar una reunión inicial. En esta reunión discutiremos tus necesidades, objetivos y diseño deseado."
+        answer: "Si es la primera vez que utilizas nuestro servicio, el proceso comienza seleccionando un plan y realizando el pago bajo la modalidad 'Pago Único'. Con esta modalidad pagas únicamente el 50% del primer mes para dar inicio a los trabajos; una vez entregado el sitio, se liquida el 50% restante. Tras confirmar el pago, nos pondremos en contacto contigo en 24-48 horas para agendar una reunión inicial donde discutiremos tus necesidades, objetivos y diseño deseado."
       },
       {
         category: "general",
         question: "¿Necesito proporcionar contenido para mi sitio?",
-        answer: "Idealmente sí, pero podemos ayudarte. Si tienes textos, imágenes y logos, genial. Si no, ofrecemos servicios de redacción de contenido y selección de imágenes de stock como parte de nuestros planes Profesional y Empresa."
+        answer: "Idealmente sí, pero podemos ayudarte. Si tienes textos, imágenes y logos, genial. Si no, ofrecemos servicios de redacción de contenido y selección de imágenes de stock. Además, ofrecemos diseño de imágenes personalizadas y creación de logo por un costo adicional al plan — este es un servicio único que se realiza una sola vez."
       },
       {
         category: "plans",
         question: "¿Cuál es la diferencia entre los planes?",
-        answer: "Plan Básico: ideal para presencia online simple (5 páginas, formulario de contacto). Plan Profesional: para negocios en crecimiento (10 páginas, CMS, redes sociales). Plan Empresa: solución completa con e-commerce, páginas ilimitadas y soporte 24/7."
+        answer: "Plan Básico: ideal para presencia online simple (hasta 6 páginas, formulario de contacto). Plan Profesional: para negocios en crecimiento (hasta 12 páginas, CMS, redes sociales). Plan Empresa: solución completa con e-commerce, páginas ilimitadas y soporte 24/7."
       },
       {
         category: "plans",
         question: "¿Puedo probar el servicio antes de pagar?",
-        answer: "Ofrecemos una consulta gratuita donde analizamos tus necesidades y te mostramos ejemplos de nuestro trabajo. Además, tienes 14 días de garantía de satisfacción después de tu primera suscripción."
+        answer: "Ofrecemos una consulta gratuita donde analizamos tus necesidades y te mostramos ejemplos de nuestro trabajo."
       }
     ]
   },
