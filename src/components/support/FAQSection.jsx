@@ -36,12 +36,7 @@ const translations = {
       {
         category: "billing",
         question: "¿Puedo cambiar de plan en cualquier momento?",
-        answer: "Sí, puedes actualizar o cambiar tu plan en cualquier momento. Si actualizas a un plan superior, se te cobrará la diferencia prorrateada. Si bajas de plan, el cambio se aplicará en tu próximo ciclo de facturación."
-      },
-      {
-        category: "billing",
-        question: "¿Ofrecen reembolsos?",
-        answer: "Ofrecemos reembolsos dentro de los primeros 14 días después de tu primera suscripción si no estás satisfecho con nuestro servicio. Contáctanos a través del formulario de soporte para solicitar un reembolso."
+        answer: "Sí, es posible cambiar de plan. Sin embargo, te recomendamos contactar primero con nuestro equipo para evaluar juntos la viabilidad del cambio según el estado actual de tu proyecto y suscripción. Así nos aseguramos de que la transición sea lo más fluida posible para ti."
       },
       {
         category: "technical",
