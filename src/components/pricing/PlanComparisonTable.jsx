@@ -36,7 +36,7 @@ function PlanComparisonTable() {
         {
           title: "Soporte y Mantenimiento",
           rows: [
-            { label: "Soporte (mantenimiento)", values: ["3 horas", "5 horas", "15+ horas"] },
+            { label: "Soporte (mantenimiento)", values: ["Ilimitado", "Ilimitado", "Ilimitado"] },
             { label: "Cambios mensuales", values: ["2 horas", "5 horas", "Ilimitadas (bajo fair use)"] },
             { label: "Tiempo respuesta (SLA)", values: ["48 horas", "24 horas", "4 horas"] },
             { label: "Días de atención", values: ["Lunes a Viernes", "Lunes a Viernes", "24/7 (Emergencias críticas)"] },
@@ -53,9 +53,9 @@ function PlanComparisonTable() {
             { label: "Galería de imágenes", values: [true, true, true] },
             { label: "Redes sociales y WhatsApp", values: [true, true, true] },
             { label: "Formulario de contacto", values: [true, true, true] },
-            { label: "Sistema citas o reservas", values: [false, true, true] },
-            { label: "Integración con Gmail", values: [false, true, true] },
-            { label: "Notificaciones WhatsApp", values: [false, true, true] }
+            { label: "Sistema citas o reservas", values: [true, true, true] },
+            { label: "Integración con Gmail", values: [true, true, true] },
+            { label: "Notificaciones WhatsApp", values: [true, true, true] }
           ]
         },
         {
@@ -75,7 +75,7 @@ function PlanComparisonTable() {
             { label: "Sitio web corporativo", values: [false, false, true] },
             { label: "Ecosistema digital completo", values: [false, false, true] },
             { label: "Formularios personalizados", values: [false, false, true] },
-            { label: "Asistente virtual (IA)", values: [false, false, true] },
+            { label: "Asistente virtual o chatbot (IA)", values: [false, false, true] },
             { label: "Integración con APIs", values: [false, false, true] },
             { label: "Integración con DBs externas", values: [false, false, true] }
           ]
@@ -110,7 +110,7 @@ function PlanComparisonTable() {
         {
           title: "Support and Maintenance",
           rows: [
-            { label: "Support (maintenance)", values: ["3 hours", "5 hours", "15+ hours"] },
+            { label: "Support (maintenance)", values: ["Unlimited", "Unlimited", "Unlimited"] },
             { label: "Monthly changes", values: ["2 hours", "5 hours", "Unlimited (fair use)"] },
             { label: "Response time (SLA)", values: ["48 hours", "24 hours", "4 hours"] },
             { label: "Service days", values: ["Mon-Fri", "Mon-Fri", "24/7 (Critical emergencies)"] },
@@ -127,9 +127,9 @@ function PlanComparisonTable() {
             { label: "Image gallery", values: [true, true, true] },
             { label: "Social media and WhatsApp", values: [true, true, true] },
             { label: "Contact form", values: [true, true, true] },
-            { label: "Appointments or booking system", values: [false, true, true] },
-            { label: "Gmail integration", values: [false, true, true] },
-            { label: "WhatsApp notifications", values: [false, true, true] }
+            { label: "Appointments or booking system", values: [true, true, true] },
+            { label: "Gmail integration", values: [true, true, true] },
+            { label: "WhatsApp notifications", values: [true, true, true] }
           ]
         },
         {
@@ -149,7 +149,7 @@ function PlanComparisonTable() {
             { label: "Corporate website", values: [false, false, true] },
             { label: "Complete digital ecosystem", values: [false, false, true] },
             { label: "Custom forms", values: [false, false, true] },
-            { label: "Virtual Assistant (AI)", values: [false, false, true] },
+            { label: "Virtual Assistant or chatbot (AI)", values: [false, false, true] },
             { label: "API integration", values: [false, false, true] },
             { label: "External DB integration", values: [false, false, true] }
           ]
