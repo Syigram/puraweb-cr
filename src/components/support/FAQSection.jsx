@@ -61,7 +61,7 @@ const translations = {
       {
         category: "general",
         question: "¿Necesito proporcionar contenido para mi sitio?",
-        answer: "Idealmente sí, pero podemos ayudarte. Si tienes textos, imágenes y logos, genial. Si no, ofrecemos servicios de redacción de contenido y selección de imágenes de stock. Además, ofrecemos diseño de imágenes personalizadas y creación de logo por un costo adicional al plan — este es un servicio único que se realiza una sola vez."
+        answer: "Idealmente sí, pero podemos ayudarte. Si tienes textos, imágenes y logos, genial. Si no, ofrecemos servicios de redacción de contenido y selección de imágenes de stock. Además, ofrecemos diseño de imágenes personalizadas y creación de logo por un costo adicional al plan, este es un servicio único que se realiza una sola vez."
       },
       {
         category: "plans",
