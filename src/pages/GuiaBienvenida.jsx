@@ -20,7 +20,10 @@ import {
   Download,
   Phone,
   BadgeCheck,
-  Network
+  Network,
+  Layout,
+  Palette,
+  Star
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Contact from "@/components/home/Contact";
@@ -56,6 +59,32 @@ function ComoTrabajamos() {
           benefitDesc: "Porque si algo técnico se rompe, es problema nuestro, no tuyo. Tú no pagas por reparaciones de servidor."
         },
         
+        templates: {
+          title: "Diseño con Plantillas Prediseñadas",
+          tagline: "Belleza profesional, entrega rápida",
+          intro: "Trabajamos con un sistema de plantillas cuidadosamente seleccionadas. Te presentamos una lista de temas y diseños prediseñados para que elijas el estilo que mejor represente tu marca — sin demoras ni costos extra.",
+          howWorks: "¿Cómo funciona?",
+          steps: [
+            "Te mostramos un catálogo de diseños modernos y profesionales",
+            "Tú eliges el que más te gusta (o nos das referencias de estilo)",
+            "Nosotros lo personalizamos con tus colores, logo y contenido"
+          ],
+          customTitle: "¿Quieres un diseño 100% personalizado?",
+          customOptions: [
+            {
+              icon: "enterprise",
+              title: "Plan Empresarial",
+              desc: "Incluye diseño a medida desde cero. Ideal para marcas que necesitan una identidad visual única y diferenciada."
+            },
+            {
+              icon: "addon",
+              title: "Diseño Personalizado como Add-on",
+              desc: "También puedes agregar diseño completo a la medida por un precio adicional a cualquier plan, pagado una única vez."
+            }
+          ],
+          note: "La mayoría de los clientes queda completamente satisfecha con nuestras plantillas, que están optimizadas para conversión y experiencia de usuario."
+        },
+
         support: {
           title: "Soporte y Cambios Mensuales",
           intro: "Sabemos que los negocios evolucionan. Por eso, tu plan incluye horas para realizar cambios.",
