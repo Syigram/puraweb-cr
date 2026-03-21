@@ -23,7 +23,7 @@ export default function Checkout() {
 
     // Configuration for plans using plan IDs estandarizados
     // Stripe stores amounts in smallest currency unit (centavos for CRC)
-    // Display prices: 100,000 / 150,000 / 250,000 CRC
+    // Display prices: 100,000 / 150,000 / 350,000 CRC
     const plans = {
       [PLAN_IDS.BASIC]: { 
         fullPrice: 100000, 
