@@ -62,7 +62,7 @@ function ComoTrabajamos() {
         templates: {
           title: "Diseño con Plantillas Prediseñadas",
           tagline: "Belleza profesional, entrega rápida",
-          intro: "Trabajamos con un sistema de plantillas cuidadosamente seleccionadas. Te presentamos una lista de temas y diseños prediseñados para que elijas el estilo que mejor represente tu marca — sin demoras ni costos extra.",
+          intro: "Trabajamos con un sistema de plantillas cuidadosamente seleccionadas. Te presentamos una lista de temas, diseños y colores para que elijas el estilo que mejor represente tu marca, sin demoras ni costos extra.",
           howWorks: "¿Cómo funciona?",
           steps: [
             "Te mostramos un catálogo de diseños modernos y profesionales",
@@ -172,7 +172,7 @@ function ComoTrabajamos() {
         templates: {
           title: "Design with Pre-built Templates",
           tagline: "Professional beauty, fast delivery",
-          intro: "We work with a carefully curated template system. We present you a catalog of pre-built themes and designs so you can choose the style that best represents your brand — no delays, no extra costs.",
+          intro: "We work with a carefully curated template system. We present you a list of themes, designs and colors so you can choose the style that best represents your brand, with no delays or extra costs.",
           howWorks: "How does it work?",
           steps: [
             "We show you a catalog of modern, professional designs",
