@@ -111,11 +111,11 @@ function Planes() {
         "description": language === 'es'
           ? "Solución completa para negocios establecidos y tiendas online"
           : "Complete solution for established businesses and online stores",
-        "price": "250000",
+        "price": "350000",
         "priceCurrency": "CRC",
         "priceSpecification": {
           "@type": "UnitPriceSpecification",
-          "price": "250000",
+          "price": "350000",
           "priceCurrency": "CRC",
           "unitText": "MONTH"
         },

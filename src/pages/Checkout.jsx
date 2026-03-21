@@ -50,7 +50,7 @@ export default function Checkout() {
         }
       },
       [PLAN_IDS.BUSINESS]: { 
-        fullPrice: 250000, 
+        fullPrice: 350000, 
         displayName: { es: "Plan Empresa", en: "Business Plan" },
         description: { 
           es: "Solución completa para negocios establecidos y tiendas online", 

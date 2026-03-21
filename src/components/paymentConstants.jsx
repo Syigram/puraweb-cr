@@ -1,4 +1,3 @@
-
 // Constantes estandarizadas para tipos de pago y planes
 // Usar estos valores en toda la aplicación para evitar inconsistencias
 
@@ -31,7 +30,7 @@ export const STRIPE_PRICE_IDS = {
 export const PLAN_AMOUNTS = {
   [PLAN_IDS.BASIC]: 10000000,      // 100,000 CRC
   [PLAN_IDS.PROFESSIONAL]: 15000000, // 150,000 CRC
-  [PLAN_IDS.BUSINESS]: 25000000   // 250,000 CRC
+  [PLAN_IDS.BUSINESS]: 35000000   // 350,000 CRC
 };
 
 // Traducciones de modos de pago para UI
