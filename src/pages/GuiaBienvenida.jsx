@@ -169,6 +169,32 @@ function ComoTrabajamos() {
           benefitDesc: "Because if something technical breaks, it's our problem, not yours. You don't pay for server repairs."
         },
         
+        templates: {
+          title: "Design with Pre-built Templates",
+          tagline: "Professional beauty, fast delivery",
+          intro: "We work with a carefully curated template system. We present you a catalog of pre-built themes and designs so you can choose the style that best represents your brand — no delays, no extra costs.",
+          howWorks: "How does it work?",
+          steps: [
+            "We show you a catalog of modern, professional designs",
+            "You choose the one you like most (or give us style references)",
+            "We customize it with your colors, logo, and content"
+          ],
+          customTitle: "Want a 100% custom design?",
+          customOptions: [
+            {
+              icon: "enterprise",
+              title: "Enterprise Plan",
+              desc: "Includes custom design from scratch. Ideal for brands that need a unique and differentiated visual identity."
+            },
+            {
+              icon: "addon",
+              title: "Custom Design as Add-on",
+              desc: "You can also add a fully custom design as a one-time fee on top of any plan."
+            }
+          ],
+          note: "Most clients are completely satisfied with our templates, which are optimized for conversion and user experience."
+        },
+
         support: {
           title: "Support and Monthly Changes",
           intro: "We know businesses evolve. That's why your plan includes hours for making changes.",
