@@ -562,7 +562,7 @@ function ComoTrabajamos() {
             </Card>
           </motion.div>
 
-          {/* 3. Payments Section */}
+          {/* 4. Payments Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
@@ -619,7 +619,7 @@ function ComoTrabajamos() {
             </div>
           </motion.div>
 
-          {/* 4. Fair Use Section */}
+          {/* 5. Fair Use Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
@@ -666,7 +666,7 @@ function ComoTrabajamos() {
             </div>
           </motion.div>
 
-          {/* 5. Freedom Section */}
+          {/* 6. Freedom Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center">
@@ -708,7 +708,7 @@ function ComoTrabajamos() {
             </div>
           </motion.div>
 
-          {/* 6. Contact Section */}
+          {/* 7. Contact Section */}
           <motion.div {...fadeInUp}>
             <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center flex-shrink-0">
