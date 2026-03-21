@@ -143,41 +143,52 @@ function Planes() {
       <div className="pt-20">
       <Pricing compact />
       
-      {/* VARIANTE A — Banner cinematográfico con imagen de fondo y overlay */}
+      {/* Portfolio CTA Banner */}
       <div className="pb-8 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80"
-                alt="Portfolio"
-                className="w-full h-56 md:h-64 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/75 to-transparent flex items-center px-8 md:px-14">
-                <div className="text-white max-w-sm">
-                  <p className="text-sm font-semibold uppercase tracking-widest text-blue-300 mb-1">
-                    {language === 'es' ? 'Nuestro trabajo' : 'Our work'}
-                  </p>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3">
-                    {language === 'es' ? '¿Cómo luce en la práctica?' : 'What does it look like in practice?'}
-                  </h3>
-                  <Link to={createPageUrl("Portafolio")}>
-                    <Button className="bg-white text-blue-900 hover:bg-blue-50 font-semibold">
-                      {language === 'es' ? 'Ver Portafolio' : 'View Portfolio'}
-                      <ExternalLink className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+      <div className="max-w-7xl mx-auto px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="max-w-4xl mx-auto"
+      >
+        <div className="rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-r from-[#001A4D] via-[#002B7F] to-[#0a3fa8]">
+          <div className="flex flex-col md:flex-row items-center gap-0">
+            {/* Left: text */}
+            <div className="flex-1 px-8 md:px-12 py-10 md:py-12">
+              <p className="text-sm font-bold uppercase tracking-widest text-blue-300 mb-2">
+                {language === 'es' ? 'Nuestro trabajo' : 'Our work'}
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                {language === 'es' ? '¿Cómo luce en la práctica?' : 'What does it look like in practice?'}
+              </h3>
+              <p className="text-blue-200 text-sm md:text-base mb-6">
+                {language === 'es'
+                  ? 'Conoce los proyectos que hemos desarrollado antes de elegir tu plan.'
+                  : 'Explore the projects we have built before choosing your plan.'}
+              </p>
+              <Link to={createPageUrl("Portafolio")}>
+                <Button className="bg-white text-[#002B7F] hover:bg-yellow-400 hover:text-[#002B7F] font-bold px-7 py-5 text-base shadow-lg transition-all">
+                  {language === 'es' ? 'Ver Portafolio' : 'View Portfolio'}
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
             </div>
-          </motion.div>
+            {/* Right: accent image strip */}
+            <div className="hidden md:block w-64 h-full self-stretch relative overflow-hidden flex-shrink-0">
+              <img
+                src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80"
+                alt="Portfolio"
+                className="w-full h-full object-cover opacity-40"
+                style={{ minHeight: "220px" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#002B7F] to-transparent" />
+            </div>
+          </div>
         </div>
+      </motion.div>
+      </div>
       </div>
 
       {/* VARIANTE B — Card con íconos y tres mini-puntos de valor */}
