@@ -72,6 +72,11 @@ const translations = {
         category: "plans",
         question: "¿Puedo probar el servicio antes de pagar?",
         answer: "Ofrecemos una consulta gratuita donde analizamos tus necesidades y te mostramos ejemplos de nuestro trabajo."
+      },
+      {
+        category: "general",
+        question: "¿Cómo es trabajar con ustedes?",
+        answer: "Tenemos un proceso de trabajo claro y establecido, diseñado para que tu experiencia sea fluida desde el primer contacto hasta la entrega final. Puedes conocer todos los detalles en nuestra página <a href='/ComoTrabajamos' class='text-blue-700 underline font-medium hover:text-blue-900'>Cómo Trabajamos</a>."
       }
     ]
   },
@@ -136,6 +141,11 @@ const translations = {
         category: "plans",
         question: "Can I try the service before paying?",
         answer: "We offer a free consultation where we analyze your needs and show you examples of our work."
+      },
+      {
+        category: "general",
+        question: "What is it like to work with you?",
+        answer: "We have a clear and established work process, designed to make your experience smooth from the first contact to final delivery. You can find all the details on our <a href='/ComoTrabajamos' class='text-blue-700 underline font-medium hover:text-blue-900'>How We Work</a> page."
       }
     ]
   }
