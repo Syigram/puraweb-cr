@@ -7,8 +7,8 @@ import { heroVariants } from "./PortfolioHeroVariants";
 const HeroSelectorWidget = memo(function HeroSelectorWidget({ activeId, onChange }) {
   const [open, setOpen] = useState(false);
 
-  return (
-    <div className="fixed bottom-6 left-4 z-50 flex flex-col items-start">
+  return createPortal(
+    <div className="fixed bottom-6 left-4 z-[9999] flex flex-col items-start">
       {/* Panel */}
       <AnimatePresence>
         {open && (
