@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import { heroVariants } from "./PortfolioHeroVariants";
+import HeroSelectorWidget from "./HeroSelectorWidget";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
