@@ -1,4 +1,5 @@
 import React, { useState, memo } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, ChevronUp, ChevronDown } from "lucide-react";
 import { heroVariants } from "./PortfolioHeroVariants";
