@@ -52,7 +52,8 @@ const PortfolioHeroSelector = memo(function PortfolioHeroSelector({ current, onC
         <span>Hero {current + 1}</span>
         {open ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
       </button>
-    </div>
+    </div>,
+    document.body
   );
 });
 
