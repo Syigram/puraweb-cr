@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import PortfolioHero from "./PortfolioHeroSections";
-import PortfolioHeroSelector from "./PortfolioHeroSelector";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -214,7 +212,6 @@ const PortfolioCard = memo(function PortfolioCard({ project, language }) {
 export default function PortfolioExpandablePage() {
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
-  const [heroIndex, setHeroIndex] = useState(0);
 
   const content = useMemo(() => ({
     es: {
@@ -242,8 +239,16 @@ export default function PortfolioExpandablePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <PortfolioHero index={heroIndex} language={language} />
-      <PortfolioHeroSelector current={heroIndex} onChange={setHeroIndex} />
+      <section className="pt-28 pb-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center">
+            <h1 className="mb-3 text-3xl font-bold text-transparent bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text md:text-4xl">
+              {t.subtitle}
+            </h1>
+            <p className="mx-auto max-w-2xl text-gray-600">{t.description}</p>
+          </motion.div>
+        </div>
+      </section>
 
       <section className="sticky top-16 z-40 border-y border-gray-100 bg-white/85 py-6 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6">
