@@ -1,4 +1,5 @@
 import React, { useState, memo } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, ChevronUp, ChevronDown } from "lucide-react";
 import { heroCount } from "./PortfolioHeroSections";
@@ -6,8 +7,8 @@ import { heroCount } from "./PortfolioHeroSections";
 const PortfolioHeroSelector = memo(function PortfolioHeroSelector({ current, onChange }) {
   const [open, setOpen] = useState(false);
 
-  return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-2">
+  return createPortal(
+    <div className="fixed bottom-6 left-6 z-[9999] flex flex-col items-start gap-2">
       <AnimatePresence>
         {open && (
           <motion.div
