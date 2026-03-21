@@ -214,6 +214,7 @@ const PortfolioCard = memo(function PortfolioCard({ project, language }) {
 export default function PortfolioExpandablePage() {
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
+  const [heroIndex, setHeroIndex] = useState(0);
 
   const content = useMemo(() => ({
     es: {
