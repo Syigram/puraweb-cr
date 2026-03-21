@@ -214,6 +214,11 @@ const PortfolioCard = memo(function PortfolioCard({ project, language }) {
 export default function PortfolioExpandablePage() {
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
+  const [activeHeroId, setActiveHeroId] = useState(1);
+  const ActiveHero = useMemo(
+    () => heroVariants.find((v) => v.id === activeHeroId)?.component ?? heroVariants[0].component,
+    [activeHeroId]
+  );
 
   const content = useMemo(() => ({
     es: {
