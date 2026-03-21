@@ -64,6 +64,11 @@ const translations = {
         answer: "Idealmente sí, pero podemos ayudarte. Si tienes textos, imágenes y logos, genial. Si no, ofrecemos servicios de redacción de contenido y selección de imágenes de stock. Además, ofrecemos diseño de imágenes personalizadas y creación de logo por un costo adicional al plan, este es un servicio único que se realiza una sola vez."
       },
       {
+        category: "general",
+        question: "¿Cómo es trabajar con ustedes?",
+        answer: "Tenemos un proceso de trabajo claro y establecido, diseñado para que tu experiencia sea fluida desde el primer contacto hasta la entrega final. Puedes conocer todos los detalles en nuestra página <a href='/ComoTrabajamos' class='text-blue-700 underline font-medium hover:text-blue-900'>Cómo Trabajamos</a>."
+      },
+      {
         category: "plans",
         question: "¿Cuál es la diferencia entre los planes?",
         answer: "Los planes se diferencian principalmente por el alcance del proyecto y las funcionalidades incluidas. El Plan Básico (hasta 6 páginas) está orientado a establecer una presencia digital esencial; incluye landing page, blog y sistema de citas. El Plan Profesional (hasta 12 páginas) apunta al crecimiento y las ventas, sumando e-commerce y pagos en línea. El Plan Empresa (páginas ilimitadas) es una solución integral para negocios que necesitan más, con sitio web corporativo, soluciones a la medida e integración de tecnologías avanzadas."
@@ -131,6 +136,11 @@ const translations = {
         category: "general",
         question: "Do I need to provide content for my site?",
         answer: "Ideally yes, but we can help. If you have texts, images, and logos, great. If not, we offer content writing and stock image selection services. We also offer custom image design and logo creation for an additional fee on top of your plan — this is a one-time service."
+      },
+      {
+        category: "general",
+        question: "What is it like to work with you?",
+        answer: "We have a clear and established work process, designed to make your experience smooth from the first contact to final delivery. You can find all the details on our <a href='/ComoTrabajamos' class='text-blue-700 underline font-medium hover:text-blue-900'>How We Work</a> page."
       },
       {
         category: "plans",
