@@ -169,7 +169,7 @@ function Planes() {
                   : 'Explore the projects we have built before choosing your plan.'}
               </p>
               <Link to={createPageUrl("Portafolio")}>
-                <Button className="bg-white text-[#002B7F] hover:bg-yellow-400 hover:text-[#002B7F] font-bold px-7 py-5 text-base shadow-lg transition-all">
+                <Button className="bg-white text-[#002B7F] hover:bg-blue-50 hover:text-[#002B7F] font-bold px-7 py-5 text-base shadow-lg transition-all">
                   {language === 'es' ? 'Ver Portafolio' : 'View Portfolio'}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
