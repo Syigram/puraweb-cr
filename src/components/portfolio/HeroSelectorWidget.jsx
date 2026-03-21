@@ -54,7 +54,8 @@ const HeroSelectorWidget = memo(function HeroSelectorWidget({ activeId, onChange
         <span>Hero {activeId}</span>
         {open ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
       </button>
-    </div>
+    </div>,
+    document.body
   );
 });
 
