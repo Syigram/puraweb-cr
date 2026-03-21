@@ -415,7 +415,71 @@ function ComoTrabajamos() {
             </Card>
           </motion.div>
 
-          {/* 2. Support Section */}
+          {/* 2. Templates Section */}
+          <motion.div {...fadeInUp} className="mb-16">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+                <Layout className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  {t.sections.templates.title}
+                </h2>
+                <p className="text-blue-600 font-medium">{t.sections.templates.tagline}</p>
+              </div>
+            </div>
+
+            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              {t.sections.templates.intro}
+            </p>
+
+            <Card className="bg-white border border-blue-200 mb-6 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t.sections.templates.howWorks}</h3>
+                <div className="space-y-3">
+                  {t.sections.templates.steps.map((step, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                        {i + 1}
+                      </div>
+                      <span className="text-gray-700">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-4">{t.sections.templates.customTitle}</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              {t.sections.templates.customOptions.map((option, i) => (
+                <Card key={i} className={`bg-white border hover:shadow-lg transition-shadow ${i === 0 ? 'border-blue-900' : 'border-blue-300'}`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      {i === 0
+                        ? <Star className="w-7 h-7 text-blue-900" />
+                        : <Palette className="w-7 h-7 text-blue-600" />
+                      }
+                      <h4 className="text-lg font-bold text-gray-900">{option.title}</h4>
+                      {i === 0 && (
+                        <span className="ml-auto text-xs font-semibold bg-blue-900 text-white px-2 py-0.5 rounded-full">
+                          {language === 'es' ? 'Recomendado' : 'Recommended'}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-700">{option.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+              <p className="text-sm text-blue-900">
+                💡 {t.sections.templates.note}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* 3. Support Section */}
           <motion.div {...fadeInUp} className="mb-16">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
