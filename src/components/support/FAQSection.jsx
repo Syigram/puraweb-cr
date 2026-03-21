@@ -259,7 +259,7 @@ export default function FAQSection() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="pb-4 pl-11 text-gray-600">
-                  {faq.answer}
+                  <span dangerouslySetInnerHTML={{ __html: faq.answer }} />
                 </AccordionContent>
               </AccordionItem>
             );
