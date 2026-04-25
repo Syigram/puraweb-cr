@@ -237,7 +237,7 @@ export default function PortfolioExpandablePage() {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28">
       <section className="border-y border-gray-100 bg-white py-6 mb-2">
         <div className="max-w-7xl mx-auto px-6">
           <p className="mb-3 text-center text-sm font-medium text-gray-500 md:hidden">{t.themesLabel}</p>
