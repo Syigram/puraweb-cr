@@ -177,8 +177,8 @@ Deno.serve(async (req) => {
       // Mapear price_id a plan_id
       const PRICE_TO_PLAN = {
         'price_1Sl3etFA0Fkjjug3MNf5Sj9r': PLAN_IDS.BASIC,
-        'price_1SUE2DFA0Fkjjug3euWqaW5c': PLAN_IDS.PROFESSIONAL,
-        'price_1SUE32FA0Fkjjug3khKfal6N': PLAN_IDS.BUSINESS
+        'price_1SlDVZFA0Fkjjug3ZD17ovCC': PLAN_IDS.PROFESSIONAL,
+        'price_1SlDXAFA0Fkjjug3E3DsbzuG': PLAN_IDS.BUSINESS
       };
 
       const formattedSubscriptions = subscriptions.data.map(sub => {

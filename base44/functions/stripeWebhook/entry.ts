@@ -21,9 +21,9 @@ const PAYMENT_STATUS = {
 
 // Mapeo de Price IDs a Plan IDs estandarizados
 const PRICE_TO_PLAN = {
-  'price_1SUE0bFA0Fkjjug3eDCGxI4G': 'basic',
-  'price_1SUE2DFA0Fkjjug3euWqaW5c': 'professional',
-  'price_1SUE32FA0Fkjjug3khKfal6N': 'business'
+  'price_1Sl3etFA0Fkjjug3MNf5Sj9r': 'basic',
+  'price_1SlDVZFA0Fkjjug3ZD17ovCC': 'professional',
+  'price_1SlDXAFA0Fkjjug3E3DsbzuG': 'business'
 };
 
 // Montos de planes en centavos para determinar plan por monto
