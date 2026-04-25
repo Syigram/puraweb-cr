@@ -123,8 +123,8 @@ export const translations = {
       satisfaction: "Tasa de Satisfacción"
     },
     contact: {
-      title: "Contáctanos",
-      subtitle: "¿Tienes un proyecto en mente? Nos encantaría escucharte. Completa el formulario y te responderemos en menos de 24 horas.",
+      title: "Construyamos Algo Grandioso",
+      subtitle: "¿Listo para transformar su presencia digital? Contáctenos hoy",
       getInTouch: "Póngase en Contacto",
       description: "¿Tiene un proyecto en mente? Nos encantaría saber de usted. Nuestro equipo está listo para ayudar a dar vida a su visión con soluciones web de vanguardia.",
       form: {
@@ -499,8 +499,8 @@ export const translations = {
       satisfaction: "Satisfaction Rate"
     },
     contact: {
-      title: "Contact Us",
-      subtitle: "Have a project in mind? We'd love to hear from you. Fill out the form and we'll get back to you within 24 hours.",
+      title: "Let's Build Something Great",
+      subtitle: "Ready to transform your digital presence? Get in touch with us today",
       getInTouch: "Get in Touch",
       description: "Have a project in mind? We'd love to hear from you. Our team is ready to help bring your vision to life with cutting-edge web solutions.",
       form: {
