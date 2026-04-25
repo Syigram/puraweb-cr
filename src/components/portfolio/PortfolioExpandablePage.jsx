@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import Contact from "@/components/home/Contact";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -288,18 +289,8 @@ export default function PortfolioExpandablePage() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">{t.cta}</h2>
-            <Link to={createPageUrl("Contacto")}>
-              <Button size="lg" className="gap-2 bg-gradient-to-r from-red-600 to-red-700 px-8 py-6 text-lg text-white hover:from-red-700 hover:to-red-800">
-                {t.ctaButton}
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
+      <section className="py-16 md:py-24">
+        <Contact showContactTitle={true} />
       </section>
     </div>
   );
