@@ -289,9 +289,21 @@ export default function PortfolioExpandablePage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
-        <Contact showContactTitle={true} />
+      <section className="pt-16 pb-8 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+              {language === 'es' ? 'Contáctanos' : 'Contact Us'}
+            </span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {language === 'es'
+              ? '¿Tienes un proyecto en mente? Nos encantaría escucharte. Completa el formulario y te responderemos en menos de 24 horas.'
+              : 'Have a project in mind? We\'d love to hear from you. Fill out the form and we\'ll get back to you within 24 hours.'}
+          </p>
+        </div>
       </section>
+      <Contact transparent={true} showContactTitle={true} />
     </div>
   );
 }
