@@ -237,8 +237,8 @@ export default function PortfolioExpandablePage() {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28">
-      <section className="border-y border-gray-100 bg-white py-6 mb-2">
+    <div className="min-h-screen bg-white pt-28">
+      <section className="bg-white py-4 mb-0 mt-6">
         <div className="max-w-7xl mx-auto px-6">
           <p className="mb-3 text-center text-sm font-medium text-gray-500 md:hidden">{t.themesLabel}</p>
 
@@ -278,7 +278,7 @@ export default function PortfolioExpandablePage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div variants={staggerContainer} initial="initial" animate="animate" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
             {filteredProjects.map((project) => (
