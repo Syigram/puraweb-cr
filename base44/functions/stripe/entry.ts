@@ -19,7 +19,7 @@ const PLAN_IDS = {
 const PLAN_PRICES = {
   [PLAN_IDS.BASIC]: 'price_1Sl3etFA0Fkjjug3MNf5Sj9r',
   [PLAN_IDS.PROFESSIONAL]: 'price_1SUE2DFA0Fkjjug3euWqaW5c',
-  [PLAN_IDS.BUSINESS]: 'price_1SUE32FA0Fkjjug3khKfal6N'
+  [PLAN_IDS.BUSINESS]: 'price_1SlDXAFA0Fkjjug3E3DsbzuG'
 };
 
 // Precios en centavos CRC
