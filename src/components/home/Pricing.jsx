@@ -14,15 +14,18 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
   const isHighlighted = isSelected || (plan.recommended && !hasUserSelected);
   
   return (
-    <div className="h-full transition-all duration-300 ease-out">
+    <motion.div
+      className="h-full"
+      animate={{ y: isHighlighted ? -12 : 0 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+    >
       <Card
         onClick={() => onSelect(plan.name)}
-        className={`relative h-full flex flex-col cursor-pointer transition-all duration-300 ease-out ${
+        className={`relative h-full flex flex-col cursor-pointer transition-shadow duration-300 border-2 ${
           isHighlighted
-            ? "border-2 border-red-600 shadow-2xl"
-            : "border-gray-200 hover:shadow-xl"
+            ? "border-red-600 shadow-2xl"
+            : "border-transparent hover:shadow-xl"
         }`}
-        style={{ transform: isHighlighted ? 'scale(1.05) translateY(-16px)' : 'scale(1) translateY(0)' }}
       >
       {plan.recommended && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -85,7 +88,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
         </Button>
       </CardContent>
     </Card>
-  </div>
+    </motion.div>
 );
 });
 
@@ -136,7 +139,7 @@ const Pricing = memo(function Pricing({ onGetStarted, compact = false }) {
         {/* Cards */}
         <motion.div
           ref={gridRef}
-          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch"
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start pb-4"
           variants={staggerContainer(0.12)}
           initial="hidden"
           animate={gridInView ? "visible" : "hidden"}
