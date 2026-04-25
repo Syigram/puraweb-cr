@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { heroVariants } from "./PortfolioHeroVariants";
-import HeroSelectorWidget from "./HeroSelectorWidget";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -214,12 +212,6 @@ const PortfolioCard = memo(function PortfolioCard({ project, language }) {
 export default function PortfolioExpandablePage() {
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
-  const [activeHeroId, setActiveHeroId] = useState(1);
-  const ActiveHero = useMemo(
-    () => heroVariants.find((v) => v.id === activeHeroId)?.component ?? heroVariants[0].component,
-    [activeHeroId]
-  );
-
   const content = useMemo(() => ({
     es: {
       subtitle: "Proyectos que Inspiran",
@@ -245,10 +237,7 @@ export default function PortfolioExpandablePage() {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <ActiveHero language={language} />
-      <HeroSelectorWidget activeId={activeHeroId} onChange={setActiveHeroId} />
-
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
       <section className="sticky top-16 z-40 border-y border-gray-100 bg-white/85 py-6 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6">
           <p className="mb-3 text-center text-sm font-medium text-gray-500 md:hidden">{t.themesLabel}</p>

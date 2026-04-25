@@ -14,7 +14,7 @@ import {
 
 const SECTIONS = ["contact", "general", "social"];
 
-function useSettingsRecord(section, allRecords) {
+function getSettingsRecord(section, allRecords) {
   return allRecords?.find(r => r.section === section) ?? null;
 }
 
@@ -231,7 +231,7 @@ export default function AdminSiteSettings() {
               <CardContent>
                 <SectionForm
                   section={section}
-                  record={useSettingsRecord(section, records)}
+                  record={getSettingsRecord(section, records)}
                   onSave={handleSave}
                   isSaving={savingSection === section}
                   saved={savedSection === section}
