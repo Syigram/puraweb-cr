@@ -37,9 +37,27 @@ const portfolioProjects = [
       en: "We developed a complete real estate website for Torre Serenity, an exclusive condominium project in Costa Rica. The site features a high-quality interactive gallery that allows potential buyers to explore every detail of the available units. We implemented an integrated visit scheduling system that facilitates coordination between clients and sales agents, significantly improving the project's conversion rate."
     },
     tags: ["Bienes Raíces", "Galería", "Agendamiento"],
-    year: "2024",
+    year: "2026",
     plan: "Profesional",
     demoUrl: "https://torreserenity.com/"
+  },
+  {
+    id: 7,
+    name: "ÉLARA",
+    category: "ecommerce",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/ec61fff60_web_design.png",
+    description: {
+      es: "Tienda de moda femenina con estilos florales y casuales, catálogo completo de ropa y pagos integrados con Stripe.",
+      en: "Women's fashion store featuring floral and casual styles, complete clothing catalog, and Stripe integrated payments."
+    },
+    fullDescription: {
+      es: "ÉLARA es una elegante tienda de ropa femenina que captura la esencia de la moda casual con un toque floral y romántico. Desarrollamos una experiencia de compra online completa con catálogo dinámico de blusas, vestidos y pantalones, sistema de carrito y pagos seguros con Stripe. El diseño refleja la identidad de la marca: limpio, sofisticado y pensado para la mujer moderna que busca prendas con personalidad.",
+      en: "ÉLARA is an elegant women's clothing store that captures the essence of casual fashion with a floral and romantic touch. We developed a complete online shopping experience with a dynamic catalog of blouses, dresses, and pants, a cart system, and secure Stripe payments. The design reflects the brand's identity: clean, sophisticated, and designed for the modern woman who seeks garments with personality."
+    },
+    tags: ["E-Commerce", "Tienda", "Ropa", "Mujer", "Stripe"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://elaracr.com/"
   },
   {
     id: 2,
@@ -123,7 +141,7 @@ const portfolioProjects = [
       en: "ÉLARA is an elegant women's clothing store that captures the essence of casual fashion with a floral and romantic touch. We developed a complete online shopping experience with a dynamic catalog of blouses, dresses, and pants, a cart system, and secure Stripe payments. The design reflects the brand's identity: clean, sophisticated, and designed for the modern woman who seeks garments with personality."
     },
     tags: ["E-Commerce", "Tienda", "Ropa", "Mujer", "Stripe"],
-    year: "2025",
+    year: "2026",
     plan: "Profesional",
     demoUrl: "https://elaracr.com/"
   },
