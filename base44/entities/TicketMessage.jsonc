@@ -1,0 +1,37 @@
+{
+  "name": "TicketMessage",
+  "type": "object",
+  "properties": {
+    "ticket_id": {
+      "type": "string",
+      "description": "ID del ticket al que pertenece el mensaje"
+    },
+    "sender_type": {
+      "type": "string",
+      "enum": [
+        "user",
+        "admin"
+      ],
+      "description": "Tipo de remitente del mensaje"
+    },
+    "sender_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email del remitente"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Nombre del remitente"
+    },
+    "message": {
+      "type": "string",
+      "description": "Contenido del mensaje"
+    }
+  },
+  "required": [
+    "ticket_id",
+    "sender_type",
+    "sender_email",
+    "message"
+  ]
+}

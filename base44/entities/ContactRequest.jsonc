@@ -1,0 +1,58 @@
+{
+  "name": "ContactRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Client's full name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "maxLength": 150,
+      "description": "Client's email address"
+    },
+    "company": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Client's company name"
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 20,
+      "description": "Client's phone number"
+    },
+    "service_interest": {
+      "type": "string",
+      "enum": [
+        "web_development",
+        "ecommerce",
+        "both",
+        "custom"
+      ],
+      "description": "Type of service interested in"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Client's message or requirements"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "in_progress",
+        "closed"
+      ],
+      "default": "new",
+      "description": "Status of the contact request"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ]
+}

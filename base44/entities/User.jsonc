@@ -1,0 +1,13 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "phone": {
+      "type": "string",
+      "description": "N\u00famero de tel\u00e9fono con c\u00f3digo de pa\u00eds (ej: +50688888888)"
+    }
+  },
+  "required": [
+    "phone"
+  ]
+}
