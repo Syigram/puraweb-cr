@@ -146,6 +146,24 @@ const portfolioProjects = [
     demoUrl: "https://elaracr.com/"
   },
   {
+    id: 8,
+    name: "AquaLuxe",
+    category: "ecommerce",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/de63e87cb_design.png",
+    description: {
+      es: "Tienda de trajes de baño femeninos con colecciones exclusivas de bikinis y enterizos, catálogo completo y pagos integrados.",
+      en: "Women's swimwear store with exclusive bikini and one-piece collections, complete catalog, and integrated payments."
+    },
+    fullDescription: {
+      es: "AquaLuxe es una elegante tienda de trajes de baño femeninos diseñada para la mujer que busca sofisticación y confort bajo el sol. Desarrollamos una experiencia de compra completa con catálogo dinámico de bikinis, enterizos y salidas de playa, navegación por categorías, y sistema de pagos seguro. El diseño captura la esencia de la marca: sofisticado, sensual y orientado a la moda de playa premium.",
+      en: "AquaLuxe is an elegant women's swimwear store designed for the woman who seeks sophistication and comfort under the sun. We developed a complete shopping experience with a dynamic catalog of bikinis, one-pieces, and cover-ups, category navigation, and a secure payment system. The design captures the brand's essence: sophisticated, sensual, and focused on premium beachwear fashion."
+    },
+    tags: ["E-Commerce", "Swimwear", "Mujer", "Bikinis", "Moda"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://aqualuxecr.com/"
+  },
+  {
     id: 6,
     name: "Fitness Pro Gym",
     category: "fitness",
