@@ -78,6 +78,24 @@ const portfolioProjects = [
     demoUrl: "https://aqualuxecr.com/"
   },
   {
+    id: 9,
+    name: "FisioSalud",
+    category: "health",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/256be82e9_fisio.png",
+    description: {
+      es: "Sitio web para fisioterapeuta profesional con servicios de terapias, masajes, rehabilitación, tratamientos post-quirúrgicos y atención de lesiones.",
+      en: "Website for a professional physiotherapist offering therapy, massage, rehabilitation, post-surgical treatments, and injury care services."
+    },
+    fullDescription: {
+      es: "FisioSalud es el sitio web del Dr. Jordan Brenes, fisioterapeuta con más de 10 años de experiencia brindando tratamientos especializados. Desarrollamos una plataforma profesional que presenta sus servicios de fisioterapia, masajes terapéuticos, rehabilitación, tratamientos post-quirúrgicos y atención de lesiones deportivas. El sitio incluye sistema de agendamiento de citas online, sección de testimonios de pacientes y mapa de ubicación, facilitando que los pacientes accedan a atención especializada de forma rápida y sencilla.",
+      en: "FisioSalud is the website of Dr. Jordan Brenes, a physiotherapist with over 10 years of experience providing specialized treatments. We developed a professional platform showcasing his physiotherapy services, therapeutic massages, rehabilitation, post-surgical treatments, and sports injury care. The site includes an online appointment booking system, patient testimonials section, and location map, making it easy for patients to access specialized care quickly and conveniently."
+    },
+    tags: ["Salud", "Fisioterapia", "Citas Online", "Rehabilitación"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://jordanbrenes.com/"
+  },
+  {
     id: 2,
     name: "TechSolutions CR",
     category: "corporate",
