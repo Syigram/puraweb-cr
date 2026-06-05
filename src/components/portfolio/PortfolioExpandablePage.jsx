@@ -81,7 +81,7 @@ const portfolioProjects = [
     id: 9,
     name: "FisioSalud",
     category: "health",
-    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/256be82e9_fisio.png",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/5e987ce37_fisio2.png",
     description: {
       es: "Sitio web para fisioterapeuta profesional con servicios de terapias, masajes, rehabilitación, tratamientos post-quirúrgicos y atención de lesiones.",
       en: "Website for a professional physiotherapist offering therapy, massage, rehabilitation, post-surgical treatments, and injury care services."
