@@ -96,6 +96,24 @@ const portfolioProjects = [
     demoUrl: "https://jordanbrenes.com/"
   },
   {
+    id: 10,
+    name: "Yours",
+    category: "ecommerce",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/dd858ecbc_image.png",
+    description: {
+      es: "Perfumería premium online con colecciones exclusivas de fragancias para hombre y mujer de las mejores marcas del mundo.",
+      en: "Premium online perfumery featuring exclusive fragrance collections for men and women from the world's finest brands."
+    },
+    fullDescription: {
+      es: "Yours es una elegante tienda de perfumería premium diseñada para los amantes de las fragancias exclusivas. Desarrollamos una experiencia de compra sofisticada con catálogo completo de perfumes para hombre y mujer, decants y colecciones especiales de las mejores marcas internacionales. El diseño oscuro y dorado refleja la esencia de la marca: lujo, exclusividad y distinción. La tienda incluye navegación por categorías, sistema de carrito y pagos integrados.",
+      en: "Yours is an elegant premium perfumery store designed for lovers of exclusive fragrances. We developed a sophisticated shopping experience with a complete catalog of men's and women's perfumes, decants, and special collections from the world's finest international brands. The dark and gold design reflects the brand's essence: luxury, exclusivity, and distinction. The store includes category navigation, cart system, and integrated payments."
+    },
+    tags: ["E-Commerce", "Perfumería", "Lujo", "Fragancias", "Premium"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://yourscr.com/"
+  },
+  {
     id: 2,
     name: "TechSolutions CR",
     category: "corporate",
