@@ -113,57 +113,9 @@ const portfolioProjects = [
     plan: "Profesional",
     demoUrl: "https://yourscr.com/"
   },
-  {
-    id: 2,
-    name: "TechSolutions CR",
-    category: "corporate",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    description: {
-      es: "Portal corporativo moderno para empresa de tecnología con integración de CRM y formularios avanzados.",
-      en: "Modern corporate portal for technology company with CRM integration and advanced forms."
-    },
-    fullDescription: {
-      es: "Creamos un portal corporativo de última generación para TechSolutions CR que integra perfectamente su sistema CRM existente. La plataforma incluye formularios avanzados de contacto y cotización, seguimiento de leads en tiempo real, y un sistema de gestión de contenidos que permite al equipo actualizar información sin conocimientos técnicos.",
-      en: "We created a state-of-the-art corporate portal for TechSolutions CR that seamlessly integrates with their existing CRM system. The platform includes advanced contact and quote forms, real-time lead tracking, and a content management system that allows the team to update information without technical knowledge."
-    },
-    tags: ["Corporativo", "CRM", "APIs"],
-    year: "2024",
-    plan: "Empresa"
-  },
-  {
-    id: 3,
-    name: "Boutique Luna",
-    category: "ecommerce",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
-    description: {
-      es: "Tienda online de moda con catálogo dinámico, carrito de compras y pagos con Stripe integrados.",
-      en: "Online fashion store with dynamic catalog, shopping cart, and integrated Stripe payments."
-    },
-    fullDescription: {
-      es: "Boutique Luna es una tienda online de moda que revolucionó su modelo de negocio con nuestra solución e-commerce. Implementamos un catálogo dinámico con filtros avanzados, carrito de compras intuitivo, y sistema de pagos con Stripe que acepta todas las tarjetas principales. La plataforma incluye gestión de inventario en tiempo real, notificaciones automáticas de pedidos, y un sistema de envíos integrado.",
-      en: "Boutique Luna is an online fashion store that revolutionized its business model with our e-commerce solution. We implemented a dynamic catalog with advanced filters, intuitive shopping cart, and Stripe payment system that accepts all major cards. The platform includes real-time inventory management, automatic order notifications, and an integrated shipping system."
-    },
-    tags: ["E-Commerce", "Stripe", "Catálogo"],
-    year: "2024",
-    plan: "Profesional"
-  },
-  {
-    id: 4,
-    name: "Dr. Rodríguez Dental",
-    category: "health",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
-    description: {
-      es: "Sitio profesional para clínica dental con sistema de citas online y portal de pacientes.",
-      en: "Professional website for dental clinic with online appointment system and patient portal."
-    },
-    fullDescription: {
-      es: "Desarrollamos una solución digital completa para la Clínica Dental del Dr. Rodríguez, incluyendo un sistema de citas online que reduce el trabajo administrativo en un 60%. El portal de pacientes permite acceder a historiales médicos, resultados de exámenes y recordatorios automáticos de citas. Integramos un sistema de pagos online para tratamientos y consultas, mejorando significativamente la experiencia del paciente y la eficiencia operativa de la clínica.",
-      en: "We developed a complete digital solution for Dr. Rodríguez Dental Clinic, including an online appointment system that reduces administrative work by 60%. The patient portal allows access to medical records, exam results, and automatic appointment reminders. We integrated an online payment system for treatments and consultations, significantly improving patient experience and clinic operational efficiency."
-    },
-    tags: ["Salud", "Citas Online", "Portal"],
-    year: "2025",
-    plan: "Profesional"
-  },
+
+
+
   {
     id: 5,
     name: "Aventuras Pura Vida",
@@ -181,23 +133,7 @@ const portfolioProjects = [
     year: "2025",
     plan: "Empresa"
   },
-  {
-    id: 6,
-    name: "Fitness Pro Gym",
-    category: "fitness",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
-    description: {
-      es: "Web dinámica para gimnasio con membresías online, horarios de clases y seguimiento de progreso.",
-      en: "Dynamic website for gym with online memberships, class schedules, and progress tracking."
-    },
-    fullDescription: {
-      es: "Fitness Pro Gym transformó su operación con nuestra plataforma digital integral. Los miembros pueden comprar y gestionar membresías online, reservar clases grupales, hacer seguimiento de su progreso con gráficas personalizadas, y recibir planes de entrenamiento personalizados. Implementamos un sistema de check-in con código QR.",
-      en: "Fitness Pro Gym transformed its operation with our comprehensive digital platform. Members can purchase and manage memberships online, book group classes, track their progress with personalized graphs, and receive customized training plans. We implemented a QR code check-in system."
-    },
-    tags: ["Membresías", "Calendario", "Pagos"],
-    year: "2025",
-    plan: "Profesional"
-  }
+
 ];
 
 const categories = [
