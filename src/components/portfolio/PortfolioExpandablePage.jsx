@@ -113,9 +113,24 @@ const portfolioProjects = [
     plan: "Profesional",
     demoUrl: "https://yourscr.com/"
   },
-
-
-
+  {
+    id: 11,
+    name: "MastersAcademyMMA",
+    category: "fitness",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/4e6fe5d31_image.png",
+    description: {
+      es: "Gimnasio de artes marciales mixtas con clases de Jiu-Jitsu, Boxeo, Kickboxing y MMA, dirigido por entrenadores profesionales.",
+      en: "Mixed martial arts gym offering classes in Jiu-Jitsu, Boxing, Kickboxing, and MMA, led by professional trainers."
+    },
+    fullDescription: {
+      es: "Masters Academy MMA es un gimnasio de artes marciales mixtas de élite que ofrece entrenamientos especializados en Jiu-Jitsu, Boxeo, Kickboxing y MMA. Dirigido por entrenadores profesionales con más de 10 años de experiencia, la academia cuenta con más de 50 miembros activos y una comunidad apasionada. Desarrollamos un sitio web moderno que refleja la intensidad y profesionalismo de la academia, con galerías dinámicas, información de clases, perfiles de entrenadores y sistema de reservas para clases.",
+      en: "Masters Academy MMA is an elite mixed martial arts gym offering specialized training in Jiu-Jitsu, Boxing, Kickboxing, and MMA. Led by professional trainers with over 10 years of experience, the academy boasts more than 50 active members and a passionate community. We developed a modern website that reflects the intensity and professionalism of the academy, with dynamic galleries, class information, trainer profiles, and a booking system for classes."
+    },
+    tags: ["MMA", "Artes Marciales", "Gimnasio", "Jiu-Jitsu", "Boxeo"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://mastersacademymma.com/"
+  },
   {
     id: 5,
     name: "Aventuras Pura Vida",
