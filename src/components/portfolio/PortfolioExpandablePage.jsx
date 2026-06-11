@@ -132,6 +132,24 @@ const portfolioProjects = [
     demoUrl: "https://mastersacademymma.com/"
   },
   {
+    id: 12,
+    name: "VertigoTropical",
+    category: "tourism",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/c4d6de122_image.png",
+    description: {
+      es: "Plataforma de expediciones de cliff jumping con reservas de tours, galería de aventuras y testimonios de participantes.",
+      en: "Cliff jumping expeditions platform with tour bookings, adventure gallery, and participant testimonials."
+    },
+    fullDescription: {
+      es: "VertigoTropical es una plataforma de aventura extrema especializada en expediciones de cliff jumping. Desarrollamos un sitio web dinámico que captura la adrenalina y emoción de saltar desde acantilados espectaculares. La plataforma incluye un sistema completo de reservas en línea, galería inmersiva con fotos y videos de las aventuras, información detallada de cada expedición, perfiles de guías certificados, y un sistema de testimonios de participantes. También integramos un calendario de disponibilidad dinámico y opciones de reserva flexible para diferentes niveles de experiencia.",
+      en: "VertigoTropical is an extreme adventure platform specialized in cliff jumping expeditions. We developed a dynamic website that captures the adrenaline and excitement of jumping from spectacular cliffs. The platform includes a complete online booking system, immersive gallery with photos and videos of adventures, detailed information for each expedition, certified guide profiles, and a participant testimonials system. We also integrated a dynamic availability calendar and flexible booking options for different experience levels."
+    },
+    tags: ["Aventura", "Cliff Jumping", "Turismo Extremo", "Reservas"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://vertigotropical.com/"
+  },
+  {
     id: 5,
     name: "Aventuras Pura Vida",
     category: "tourism",
