@@ -111,7 +111,7 @@ const portfolioProjects = [
     tags: ["Enfermería", "Salud", "Domicilio", "Cuidado", "Servicios"],
     year: "2026",
     plan: "Profesional",
-    demoUrl: "https://enfermeriacr.base44.app/"
+    demoUrl: "https://kmsenfermeria.com/"
   },
   {
     id: 10,
