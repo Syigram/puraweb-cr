@@ -96,6 +96,24 @@ const portfolioProjects = [
     demoUrl: "https://jordanbrenes.com/"
   },
   {
+    id: 13,
+    name: "KMSEnfermería",
+    category: "health",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/24902a10f_image.png",
+    description: {
+      es: "Plataforma de servicios de enfermería a domicilio con cuidado personalizado y atención excepcional para pacientes en su hogar.",
+      en: "Home nursing services platform offering personalized care and exceptional attention for patients at home."
+    },
+    fullDescription: {
+      es: "KMS Enfermería es una plataforma especializada en servicios de enfermería premium a domicilio. Ofrece cuidado de enfermería personalizado con los más altos estándares clínicos, llevando atención excepcional directamente al hogar del paciente. Desarrollamos un sitio web profesional que destaca la excelencia clínica y compasión de los servicios, con información detallada de servicios disponibles, calendarios de disponibilidad, testimonios de pacientes y sistema de reserva de consultas.",
+      en: "KMS Enfermería is a platform specialized in premium home nursing services. It offers personalized nursing care with the highest clinical standards, bringing exceptional attention directly to the patient's home. We developed a professional website that highlights the clinical excellence and compassion of the services, with detailed information about available services, availability schedules, patient testimonials, and appointment booking system."
+    },
+    tags: ["Enfermería", "Salud", "Domicilio", "Cuidado", "Servicios"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://enfermeriacr.base44.app/"
+  },
+  {
     id: 10,
     name: "Yours",
     category: "ecommerce",
