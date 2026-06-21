@@ -65,6 +65,20 @@ export default function Checkout() {
 
     const selectedPlan = plans[planId] || plans[PLAN_IDS.BASIC];
 
+    // Configuración dinámica del plan (precio y % depósito) desde PlanConfig
+    const [planConfig, setPlanConfig] = useState(null);
+    useEffect(() => {
+      let active = true;
+      base44.entities.PlanConfig.filter({ plan_id: planId })
+        .then((rows) => { if (active && rows.length > 0) setPlanConfig(rows[0]); })
+        .catch(() => {});
+      return () => { active = false; };
+    }, [planId]);
+
+    // Precio total y % depósito: BD si existe, fallback a valores por defecto del plan
+    const fullPrice = planConfig?.total_price_crc ?? selectedPlan.fullPrice;
+    const depositPercentage = planConfig?.deposit_percentage ?? 0.5;
+
     // State - usando constantes estandarizadas
     const [paymentMode, setPaymentMode] = useState(initialPaymentMode);
   const [loading, setLoading] = useState(true);
@@ -95,9 +109,9 @@ export default function Checkout() {
   const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
   const t = translations[language].checkout;
 
-  // Calculate amounts
-  const subscriptionAmount = selectedPlan.fullPrice;
-  const oneTimeAmount = selectedPlan.fullPrice * 0.5;
+  // Calculate amounts (basados en configuración dinámica)
+  const subscriptionAmount = fullPrice;
+  const oneTimeAmount = Math.round(fullPrice * depositPercentage);
   const currentAmount = paymentMode === PAYMENT_MODES.SUBSCRIPTION ? subscriptionAmount : oneTimeAmount;
 
   // Load User Info on mount
@@ -333,7 +347,7 @@ export default function Checkout() {
                 </div>
                 <div className="text-right">
                   <span className="block text-2xl font-bold text-gray-900">
-                    ₡{selectedPlan.fullPrice.toLocaleString()}
+                    ₡{fullPrice.toLocaleString()}
                   </span>
                   <span className="text-xs text-gray-500">{t.totalPriceLabel}</span>
                 </div>

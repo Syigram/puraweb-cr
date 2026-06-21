@@ -19,37 +19,56 @@ const PAYMENT_STATUS = {
   CANCELED: 'canceled'
 };
 
-// Mapeo de Price IDs a Plan IDs estandarizados
-const PRICE_TO_PLAN = {
-  'price_1Sl3etFA0Fkjjug3MNf5Sj9r': 'basic',
-  'price_1SlDVZFA0Fkjjug3ZD17ovCC': 'professional',
-  'price_1SlDXAFA0Fkjjug3E3DsbzuG': 'business'
+// Configuración de respaldo (fallback). La fuente de verdad es la entidad PlanConfig.
+const FALLBACK_PLANS = {
+  basic: { stripe_price_id: 'price_1Tkc6uFA0Fkjjug3yvYaw5nb', total_price_crc: 100000, deposit_percentage: 0.5 },
+  professional: { stripe_price_id: 'price_1Tkc7aFA0Fkjjug3tckUSNUv', total_price_crc: 150000, deposit_percentage: 0.5 },
+  business: { stripe_price_id: 'price_1Tkc7yFA0Fkjjug3a1cEZpz3', total_price_crc: 350000, deposit_percentage: 0.5 }
 };
 
-// Montos de planes en centavos para determinar plan por monto
-// Suscripción: monto completo, Pago único: 50%
-const PLAN_AMOUNTS = {
-  basic: { subscription: 6000000, onetime: 3000000 },
-  professional: { subscription: 10000000, onetime: 5000000 },
-  business: { subscription: 15000000, onetime: 7500000 }
-};
+// Carga la configuración de planes desde PlanConfig (con fallback).
+// Devuelve { priceToPlan: {price_id: plan_id}, amounts: {plan_id: {subscription, onetime}} }
+async function loadPlanData(base44) {
+  const priceToPlan = {};
+  const amounts = {};
+  let configs = [];
+  try {
+    configs = await base44.asServiceRole.entities.PlanConfig.list();
+  } catch (e) {
+    console.log(`⚠️ Could not load PlanConfig: ${e.message}`);
+  }
 
-// Función para determinar el plan basándose en el monto
-function getPlanIdFromAmount(amount) {
-  // Verificar montos de suscripción (completos)
-  if (amount === PLAN_AMOUNTS.basic.subscription) return 'basic';
-  if (amount === PLAN_AMOUNTS.professional.subscription) return 'professional';
-  if (amount === PLAN_AMOUNTS.business.subscription) return 'business';
-  
-  // Verificar montos de pago único (50%)
-  if (amount === PLAN_AMOUNTS.basic.onetime) return 'basic';
-  if (amount === PLAN_AMOUNTS.professional.onetime) return 'professional';
-  if (amount === PLAN_AMOUNTS.business.onetime) return 'business';
-  
-  // Fallback: determinar por rango de montos
-  if (amount <= 4000000) return 'basic';
-  if (amount <= 8000000) return 'professional';
-  return 'business';
+  const source = configs.length > 0
+    ? configs.map(c => ({
+        plan_id: c.plan_id,
+        stripe_price_id: c.stripe_price_id,
+        total_price_crc: c.total_price_crc,
+        deposit_percentage: typeof c.deposit_percentage === 'number' ? c.deposit_percentage : 0.5
+      }))
+    : Object.entries(FALLBACK_PLANS).map(([plan_id, c]) => ({ plan_id, ...c }));
+
+  for (const c of source) {
+    if (c.stripe_price_id) priceToPlan[c.stripe_price_id] = c.plan_id;
+    const full = Math.round((c.total_price_crc || 0) * 100);
+    amounts[c.plan_id] = {
+      subscription: full,
+      onetime: Math.round(full * c.deposit_percentage)
+    };
+  }
+  return { priceToPlan, amounts };
+}
+
+// Determina el plan basándose en el monto pagado (en centavos)
+function getPlanIdFromAmount(amount, amounts) {
+  for (const [planId, vals] of Object.entries(amounts)) {
+    if (amount === vals.subscription || amount === vals.onetime) return planId;
+  }
+  // Fallback aproximado por rango si no hay coincidencia exacta
+  const entries = Object.entries(amounts).sort((a, b) => a[1].subscription - b[1].subscription);
+  for (const [planId, vals] of entries) {
+    if (amount <= vals.subscription) return planId;
+  }
+  return entries.length > 0 ? entries[entries.length - 1][0] : 'basic';
 }
 
 Deno.serve(async (req) => {
@@ -187,7 +206,8 @@ async function handlePaymentIntentSucceeded(base44, paymentIntent) {
   // Determine plan from metadata or amount
   let planId = metadata?.planId;
   if (!planId) {
-    planId = getPlanIdFromAmount(amount);
+    const { amounts } = await loadPlanData(base44);
+    planId = getPlanIdFromAmount(amount, amounts);
   }
   
   // Check if payment record exists
@@ -285,7 +305,8 @@ async function handleInvoicePaid(base44, invoice) {
   const customerData = await stripe.customers.retrieve(customer);
   const subscriptionData = await stripe.subscriptions.retrieve(subscription);
   const priceId = subscriptionData.items.data[0]?.price?.id;
-  const planId = subscriptionData.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+  const { priceToPlan } = await loadPlanData(base44);
+  const planId = subscriptionData.metadata?.planId || priceToPlan[priceId] || 'basic';
   const subscriptionName = subscriptionData.metadata?.subscriptionName || null;
 
   // Get phone number for WhatsApp notification FIRST
@@ -402,7 +423,8 @@ async function handleSubscriptionCreated(base44, subscription) {
   if (status === 'active') {
     const customerData = customer ? await stripe.customers.retrieve(customer) : null;
     const priceId = subscription.items?.data[0]?.price?.id;
-    const planId = subscription.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+    const { priceToPlan } = await loadPlanData(base44);
+    const planId = subscription.metadata?.planId || priceToPlan[priceId] || 'basic';
     const subscriptionName = subscription.metadata?.subscriptionName || null;
     
     // Verificar si ya existe
@@ -445,7 +467,8 @@ async function handleSubscriptionUpdated(base44, subscription) {
   // Obtener datos adicionales
   const customerData = customer ? await stripe.customers.retrieve(customer) : null;
   const priceId = subscription.items?.data[0]?.price?.id;
-  const planId = subscription.metadata?.planId || PRICE_TO_PLAN[priceId] || 'basic';
+  const { priceToPlan } = await loadPlanData(base44);
+  const planId = subscription.metadata?.planId || priceToPlan[priceId] || 'basic';
   const subscriptionName = subscription.metadata?.subscriptionName || null;
 
   let paymentStatus = PAYMENT_STATUS.PENDING;
@@ -543,7 +566,8 @@ async function handleSubscriptionCanceled(base44, subscription) {
     
     if (customerData?.email) {
       const priceId = subscription.items?.data[0]?.price?.id;
-      const planId = PRICE_TO_PLAN[priceId] || subscription.metadata?.planId || 'basic';
+      const { priceToPlan } = await loadPlanData(base44);
+      const planId = priceToPlan[priceId] || subscription.metadata?.planId || 'basic';
       
       await base44.asServiceRole.entities.Payment.create({
         customer_email: customerData.email,

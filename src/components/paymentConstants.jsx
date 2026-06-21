@@ -19,19 +19,9 @@ export const PAYMENT_STATUS = {
   CANCELED: 'canceled'
 };
 
-// Mapeo de IDs de plan a Price IDs de Stripe
-export const STRIPE_PRICE_IDS = {
-  [PLAN_IDS.BASIC]: 'price_1Sl3etFA0Fkjjug3MNf5Sj9r',
-  [PLAN_IDS.PROFESSIONAL]: 'price_1SlDVZFA0Fkjjug3ZD17ovCC',
-  [PLAN_IDS.BUSINESS]: 'price_1SlDXAFA0Fkjjug3E3DsbzuG'
-};
-
-// Precios de planes en centavos CRC
-export const PLAN_AMOUNTS = {
-  [PLAN_IDS.BASIC]: 10000000,      // 100,000 CRC
-  [PLAN_IDS.PROFESSIONAL]: 15000000, // 150,000 CRC
-  [PLAN_IDS.BUSINESS]: 35000000   // 350,000 CRC
-};
+// NOTA: Los precios y Stripe Price IDs ahora son administrables desde el panel
+// de administración y se almacenan en la entidad PlanConfig (fuente única de verdad).
+// No definir precios hardcodeados aquí para evitar inconsistencias.
 
 // Traducciones de modos de pago para UI
 export const PAYMENT_MODE_LABELS = {

@@ -15,19 +15,33 @@ const PLAN_IDS = {
   BUSINESS: 'business'
 };
 
-// Mapeo de Plan IDs estandarizados a Stripe Price IDs
-const PLAN_PRICES = {
-  [PLAN_IDS.BASIC]: 'price_1Tkc6uFA0Fkjjug3yvYaw5nb',
-  [PLAN_IDS.PROFESSIONAL]: 'price_1Tkc7aFA0Fkjjug3tckUSNUv',
-  [PLAN_IDS.BUSINESS]: 'price_1Tkc7yFA0Fkjjug3a1cEZpz3'
+// Configuración de respaldo (fallback) si la entidad PlanConfig está vacía.
+// La fuente de verdad es la entidad PlanConfig administrable desde el panel.
+const FALLBACK_PLANS = {
+  [PLAN_IDS.BASIC]: { stripe_price_id: 'price_1Tkc6uFA0Fkjjug3yvYaw5nb', total_price_crc: 100000, deposit_percentage: 0.5 },
+  [PLAN_IDS.PROFESSIONAL]: { stripe_price_id: 'price_1Tkc7aFA0Fkjjug3tckUSNUv', total_price_crc: 150000, deposit_percentage: 0.5 },
+  [PLAN_IDS.BUSINESS]: { stripe_price_id: 'price_1Tkc7yFA0Fkjjug3a1cEZpz3', total_price_crc: 350000, deposit_percentage: 0.5 }
 };
 
-// Precios en centavos CRC
-const PLAN_AMOUNTS = {
-  [PLAN_IDS.BASIC]: 6000000,      // 60,000 CRC
-  [PLAN_IDS.PROFESSIONAL]: 10000000, // 100,000 CRC
-  [PLAN_IDS.BUSINESS]: 35000000   // 350,000 CRC
-};
+// Obtiene la configuración de un plan desde la base de datos (PlanConfig),
+// con respaldo a los valores por defecto si no existe.
+async function getPlanConfig(base44, planId) {
+  const normalizedId = planId || PLAN_IDS.BASIC;
+  try {
+    const configs = await base44.asServiceRole.entities.PlanConfig.filter({ plan_id: normalizedId });
+    if (configs.length > 0) {
+      const c = configs[0];
+      return {
+        stripe_price_id: c.stripe_price_id,
+        total_price_crc: c.total_price_crc,
+        deposit_percentage: typeof c.deposit_percentage === 'number' ? c.deposit_percentage : 0.5
+      };
+    }
+  } catch (e) {
+    console.log(`⚠️ Could not load PlanConfig for ${normalizedId}, using fallback: ${e.message}`);
+  }
+  return FALLBACK_PLANS[normalizedId] || FALLBACK_PLANS[PLAN_IDS.BASIC];
+}
 
 Deno.serve(async (req) => {
   try {
@@ -58,7 +72,9 @@ Deno.serve(async (req) => {
       
       // Usar planId estandarizado, con fallback a basic
       const normalizedPlanId = planId || PLAN_IDS.BASIC;
-      const priceId = PLAN_PRICES[normalizedPlanId] || PLAN_PRICES[PLAN_IDS.BASIC];
+      // Cargar configuración dinámica del plan (precio, price_id, % depósito) desde PlanConfig
+      const planConfig = await getPlanConfig(base44, normalizedPlanId);
+      const priceId = planConfig.stripe_price_id;
       
       // 1. Find or Create Customer
       let customerId;
@@ -109,9 +125,11 @@ Deno.serve(async (req) => {
         });
 
       } else {
-        // One-time payment (50%)
-        const fullAmount = PLAN_AMOUNTS[normalizedPlanId];
-        const chargeAmount = Math.round(fullAmount * 0.5); // 50%
+        // One-time payment: depósito según deposit_percentage configurado
+        // total_price_crc está en colones; Stripe usa la unidad mínima (centavos) => x100
+        const fullAmount = Math.round(planConfig.total_price_crc * 100);
+        const depositPercentage = planConfig.deposit_percentage;
+        const chargeAmount = Math.round(fullAmount * depositPercentage);
 
         const paymentIntent = await stripe.paymentIntents.create({
           amount: chargeAmount,
@@ -121,7 +139,7 @@ Deno.serve(async (req) => {
           metadata: {
             planId: normalizedPlanId,
             paymentMode: PAYMENT_MODES.ONETIME,
-            type: 'down_payment_50_percent',
+            type: `down_payment_${Math.round(depositPercentage * 100)}_percent`,
             email: userEmail,
             name: userName
           }
@@ -174,12 +192,19 @@ Deno.serve(async (req) => {
         expand: ['data.items.data.price']
       });
 
-      // Mapear price_id a plan_id
-      const PRICE_TO_PLAN = {
-        'price_1Tkc6uFA0Fkjjug3yvYaw5nb': PLAN_IDS.BASIC,
-        'price_1Tkc7aFA0Fkjjug3tckUSNUv': PLAN_IDS.PROFESSIONAL,
-        'price_1Tkc7yFA0Fkjjug3a1cEZpz3': PLAN_IDS.BUSINESS
-      };
+      // Mapear price_id a plan_id dinámicamente desde PlanConfig (con fallback)
+      const PRICE_TO_PLAN = {};
+      try {
+        const allConfigs = await base44.asServiceRole.entities.PlanConfig.list();
+        for (const c of allConfigs) {
+          if (c.stripe_price_id) PRICE_TO_PLAN[c.stripe_price_id] = c.plan_id;
+        }
+      } catch (e) {
+        console.log(`⚠️ Could not load PlanConfig list: ${e.message}`);
+      }
+      for (const [pid, cfg] of Object.entries(FALLBACK_PLANS)) {
+        if (!PRICE_TO_PLAN[cfg.stripe_price_id]) PRICE_TO_PLAN[cfg.stripe_price_id] = pid;
+      }
 
       const formattedSubscriptions = subscriptions.data.map(sub => {
         const priceId = sub.items.data[0]?.price?.id;
