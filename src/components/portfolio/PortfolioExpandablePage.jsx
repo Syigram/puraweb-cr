@@ -168,6 +168,24 @@ const portfolioProjects = [
     demoUrl: "https://vertigotropical.com/"
   },
   {
+    id: 14,
+    name: "Monteverde Aventuras",
+    category: "tourism",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/d670cec2f_image.png",
+    description: {
+      es: "Plataforma de reserva de tours en Monteverde con expediciones premium en el bosque nuboso, tirolesas, senderismo y avistamiento de fauna.",
+      en: "Tour booking platform in Monteverde featuring premium cloud forest expeditions, zip-lining, hiking, and wildlife watching."
+    },
+    fullDescription: {
+      es: "Monteverde Aventuras es una plataforma de turismo de aventura ubicada a 1,448m de altitud en el corazón del bosque nuboso de Monteverde, Puntarenas. Desarrollamos un sitio web inmersivo que captura la majestuosidad del ecosistema nuboso y facilita la reserva de expediciones premium. La plataforma incluye catálogo detallado de tours como tirolesas, senderismo nocturno y avistamiento de fauna, sistema de reservas en línea, galería fotográfica de alta calidad, testimonios de visitantes y sección informativa sobre el ecosistema único de la región.",
+      en: "Monteverde Aventuras is an adventure tourism platform located at 1,448m altitude in the heart of the Monteverde cloud forest, Puntarenas. We developed an immersive website that captures the majesty of the cloud forest ecosystem and facilitates booking premium expeditions. The platform includes a detailed tour catalog featuring zip-lining, night hiking, and wildlife watching, an online booking system, high-quality photo gallery, visitor testimonials, and an informative section about the region's unique ecosystem."
+    },
+    tags: ["Turismo", "Aventura", "Bosque Nuboso", "Tours", "Monteverde"],
+    year: "2026",
+    plan: "Profesional",
+    demoUrl: "https://monteaventuras.purawebcr.dev/"
+  },
+  {
     id: 5,
     name: "Aventuras Pura Vida",
     category: "tourism",
