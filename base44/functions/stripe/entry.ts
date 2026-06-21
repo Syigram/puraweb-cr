@@ -17,9 +17,9 @@ const PLAN_IDS = {
 
 // Mapeo de Plan IDs estandarizados a Stripe Price IDs
 const PLAN_PRICES = {
-  [PLAN_IDS.BASIC]: 'price_1Sl3etFA0Fkjjug3MNf5Sj9r',
-  [PLAN_IDS.PROFESSIONAL]: 'price_1SlDVZFA0Fkjjug3ZD17ovCC',
-  [PLAN_IDS.BUSINESS]: 'price_1SlDXAFA0Fkjjug3E3DsbzuG'
+  [PLAN_IDS.BASIC]: 'price_1Tkc6uFA0Fkjjug3yvYaw5nb',
+  [PLAN_IDS.PROFESSIONAL]: 'price_1Tkc7aFA0Fkjjug3tckUSNUv',
+  [PLAN_IDS.BUSINESS]: 'price_1Tkc7yFA0Fkjjug3a1cEZpz3'
 };
 
 // Precios en centavos CRC
@@ -176,9 +176,9 @@ Deno.serve(async (req) => {
 
       // Mapear price_id a plan_id
       const PRICE_TO_PLAN = {
-        'price_1Sl3etFA0Fkjjug3MNf5Sj9r': PLAN_IDS.BASIC,
-        'price_1SlDVZFA0Fkjjug3ZD17ovCC': PLAN_IDS.PROFESSIONAL,
-        'price_1SlDXAFA0Fkjjug3E3DsbzuG': PLAN_IDS.BUSINESS
+        'price_1Tkc6uFA0Fkjjug3yvYaw5nb': PLAN_IDS.BASIC,
+        'price_1Tkc7aFA0Fkjjug3tckUSNUv': PLAN_IDS.PROFESSIONAL,
+        'price_1Tkc7yFA0Fkjjug3a1cEZpz3': PLAN_IDS.BUSINESS
       };
 
       const formattedSubscriptions = subscriptions.data.map(sub => {
