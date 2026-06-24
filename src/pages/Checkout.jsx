@@ -21,49 +21,9 @@ export default function Checkout() {
     const initialPaymentMode = searchParams.get("mode") || PAYMENT_MODES.SUBSCRIPTION;
     const existingSubscriptionId = searchParams.get("subscriptionId"); // Para suscripciones incompletas
 
-    // Configuration for plans using plan IDs estandarizados
-    // Stripe stores amounts in smallest currency unit (centavos for CRC)
-    // Display prices: 100,000 / 150,000 / 350,000 CRC
-    const plans = {
-      [PLAN_IDS.BASIC]: { 
-        fullPrice: 100000, 
-        displayName: { es: "Plan Básico", en: "Basic Plan" },
-        description: { 
-          es: "Perfecto para pequeños negocios que inician su presencia digital", 
-          en: "Perfect for small businesses starting their digital journey" 
-        },
-        features: {
-          es: ["Sitio Web Responsive", "SEO Básico", "Hasta 5 Páginas", "Formulario de Contacto", "Soporte por Email"],
-          en: ["Responsive Website", "Basic SEO", "Up to 5 Pages", "Contact Form", "Email Support"]
-        }
-      },
-      [PLAN_IDS.PROFESSIONAL]: { 
-        fullPrice: 150000, 
-        displayName: { es: "Plan Profesional", en: "Professional Plan" },
-        description: { 
-          es: "Ideal para empresas en crecimiento que necesitan más potencia", 
-          en: "Ideal for growing companies needing more power and flexibility" 
-        },
-        features: {
-          es: ["Todo lo del Básico", "CMS Autoadministrable", "Hasta 10 Páginas", "Optimización de Velocidad", "Integración de Redes Sociales", "Soporte Prioritario"],
-          en: ["Everything in Basic", "Self-managed CMS", "Up to 10 Pages", "Speed Optimization", "Social Media Integration", "Priority Support"]
-        }
-      },
-      [PLAN_IDS.BUSINESS]: { 
-        fullPrice: 350000, 
-        displayName: { es: "Plan Empresa", en: "Business Plan" },
-        description: { 
-          es: "Solución completa para negocios establecidos y tiendas online", 
-          en: "Complete solution for established businesses and online stores" 
-        },
-        features: {
-          es: ["Todo lo del Profesional", "E-commerce Completo", "Páginas Ilimitadas", "Pasarela de Pagos", "Integraciones Personalizadas", "Soporte 24/7 Dedicado"],
-          en: ["Everything in Professional", "Full E-commerce", "Unlimited Pages", "Payment Gateway", "Custom Integrations", "24/7 Dedicated Support"]
-        }
-      },
-    };
-
-    const selectedPlan = plans[planId] || plans[PLAN_IDS.BASIC];
+    // Obtenemos los planes en el idioma activo
+    const availablePlans = translations[language].pricing.plans;
+    const selectedPlan = availablePlans.find(p => p.id === planId) || availablePlans[0];
 
     // Configuración dinámica del plan (precio y % depósito) desde PlanConfig
     const [planConfig, setPlanConfig] = useState(null);
@@ -76,7 +36,7 @@ export default function Checkout() {
     }, [planId]);
 
     // Precio total y % depósito: BD si existe, fallback a valores por defecto del plan
-    const fullPrice = planConfig?.total_price_crc ?? selectedPlan.fullPrice;
+    const fullPrice = planConfig?.total_price_crc ?? selectedPlan.numericPrice;
     const depositPercentage = planConfig?.deposit_percentage ?? 0.5;
 
     // State - usando constantes estandarizadas
@@ -95,18 +55,18 @@ export default function Checkout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   // Subscription Name State
-  const defaultSubscriptionName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
+  const defaultSubscriptionName = selectedPlan.name;
   const [subscriptionName, setSubscriptionName] = useState(defaultSubscriptionName);
   const [hasCustomName, setHasCustomName] = useState(false);
 
   // Update subscription name when language changes (only if user hasn't customized it)
   useEffect(() => {
     if (!hasCustomName) {
-      setSubscriptionName(selectedPlan.displayName[language] || selectedPlan.displayName.es);
+      setSubscriptionName(selectedPlan.name);
     }
   }, [language, selectedPlan, hasCustomName]);
 
-  const displayName = selectedPlan.displayName[language] || selectedPlan.displayName.es;
+  const displayName = selectedPlan.name;
   const t = translations[language].checkout;
 
   // Calculate amounts (basados en configuración dinámica)
@@ -343,7 +303,7 @@ export default function Checkout() {
               <div className="flex justify-between items-start">
                 <div>
                    <CardTitle className="text-xl text-blue-900">{displayName}</CardTitle>
-                   <CardDescription className="mt-1">{selectedPlan.description[language]}</CardDescription>
+                   <CardDescription className="mt-1">{selectedPlan.description}</CardDescription>
                 </div>
                 <div className="text-right">
                   <span className="block text-2xl font-bold text-gray-900">
@@ -359,7 +319,7 @@ export default function Checkout() {
               <div className="space-y-2">
                 <h4 className="font-medium text-gray-900 text-sm">{t.includedFeatures}</h4>
                 <ul className="space-y-2">
-                  {selectedPlan.features[language].map((feature, index) => (
+                  {selectedPlan.features.map((feature, index) => (
                     <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
                       <Check className="w-4 h-4 text-green-600 shrink-0" />
                       <span>{feature}</span>
