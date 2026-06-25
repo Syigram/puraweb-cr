@@ -56,7 +56,7 @@ const translations = {
       {
         category: "general",
         question: "¿Cómo inicio el proceso de desarrollo?",
-        answer: "Si es la primera vez que utilizas nuestro servicio, el proceso comienza seleccionando un plan y realizando el pago bajo la modalidad 'Pago Único'. Con esta modalidad pagas únicamente el 50% del primer mes para dar inicio a los trabajos; una vez entregado el sitio, se liquida el 50% restante. Tras confirmar el pago, nos pondremos en contacto contigo en 24-48 horas para agendar una reunión inicial donde discutiremos tus necesidades, objetivos y diseño deseado."
+        answer: "Si es la primera vez que utilizas nuestro servicio, el proceso comienza seleccionando un plan y realizando el pago bajo la modalidad 'Adelanto (50%)'. Con esta modalidad pagas únicamente el 50% del primer mes para dar inicio a los trabajos; una vez entregado el sitio, se liquida el 50% restante. Tras confirmar el pago, nos pondremos en contacto contigo en 24-48 horas para agendar una reunión inicial donde discutiremos tus necesidades, objetivos y diseño deseado."
       },
       {
         category: "general",
@@ -125,7 +125,7 @@ const translations = {
       {
         category: "general",
         question: "How do I start the development process?",
-        answer: "If it's your first time using our service, the process starts by selecting a plan and completing payment under the 'One-Time Payment' option. With this option, you pay only 50% upfront to kick off the work; once the site is delivered, you pay the remaining 50%. After confirming payment, we'll reach out within 24-48 hours to schedule an initial meeting to discuss your needs, goals, and desired design."
+        answer: "If it's your first time using our service, the process starts by selecting a plan and completing payment under the 'Deposit (50%)' option. With this option, you pay only 50% upfront to kick off the work; once the site is delivered, you pay the remaining 50%. After confirming payment, we'll reach out within 24-48 hours to schedule an initial meeting to discuss your needs, goals, and desired design."
       },
       {
         category: "general",

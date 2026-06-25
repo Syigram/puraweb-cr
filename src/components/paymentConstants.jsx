@@ -27,11 +27,11 @@ export const PAYMENT_STATUS = {
 export const PAYMENT_MODE_LABELS = {
   es: {
     [PAYMENT_MODES.SUBSCRIPTION]: 'Suscripción',
-    [PAYMENT_MODES.ONETIME]: 'Pago Único'
+    [PAYMENT_MODES.ONETIME]: 'Adelanto (50%)'
   },
   en: {
     [PAYMENT_MODES.SUBSCRIPTION]: 'Subscription',
-    [PAYMENT_MODES.ONETIME]: 'One-Time'
+    [PAYMENT_MODES.ONETIME]: 'Deposit (50%)'
   }
 };
 

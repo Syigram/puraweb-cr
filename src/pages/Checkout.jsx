@@ -343,14 +343,37 @@ export default function Checkout() {
                 </div>
 
               <div className="space-y-3 pt-4 border-t">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t.subtotal}</span>
-                  <span>₡{currentAmount.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t.taxes}</span>
-                  <span>₡0</span>
-                </div>
+                {paymentMode === PAYMENT_MODES.SUBSCRIPTION ? (
+                  <>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">{t.subtotal}</span>
+                      <span>₡{subscriptionAmount.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">{t.taxes}</span>
+                      <span>₡0</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">
+                        {language === 'es' ? 'Mensualidad Estándar' : 'Standard Monthly Fee'}
+                      </span>
+                      <span>₡{fullPrice.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">
+                        {language === 'es' ? 'Adelanto del Proyecto (50%)' : 'Project Deposit (50%)'}
+                      </span>
+                      <span>₡{oneTimeAmount.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-green-700 font-medium bg-green-50/50 p-2 rounded border border-green-100">
+                      <span>{language === 'es' ? 'Pendiente contra entrega' : 'Due upon delivery'}</span>
+                      <span>₡{oneTimeAmount.toLocaleString()}</span>
+                    </div>
+                  </>
+                )}
                 <div className="flex justify-between items-center pt-3 border-t">
                   <span className="font-bold text-lg">{t.totalToday}</span>
                   <span className="font-bold text-3xl text-blue-900">
