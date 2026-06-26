@@ -46,38 +46,42 @@ function PlanComparisonTable() {
         {
           title: "Funcionalidades Web",
           rows: [
-            { label: "Landing Page", values: [true, true, true] },
-            { label: "Web básica", values: [true, true, true] },
+            { label: "Web con portada premium", values: [true, true, true] },
             { label: "Blog", values: [true, true, true] },
             { label: "Portafolio", values: [true, true, true] },
             { label: "Galería de imágenes", values: [true, true, true] },
-            { label: "Redes sociales y WhatsApp", values: [true, true, true] },
+            { label: "Iconos Redes sociales", values: [true, true, true] },
             { label: "Formulario de contacto", values: [true, true, true] },
             { label: "Sistema citas o reservas", values: [true, true, true] },
             { label: "Integración con Gmail", values: [true, true, true] },
-            { label: "Notificaciones WhatsApp", values: [true, true, true] }
+            { label: "Notificaciones WhatsApp", values: [true, true, true] },
+            { label: "Asistente virtual o chatbot (IA)", values: [true, true, true] }
           ]
         },
         {
           title: "E-Commerce y Pagos",
           rows: [
             { label: "E-Commerce", values: [false, true, true] },
+            { label: "Dashboard", values: [false, true, true] },
+            { label: "Inventario", values: [false, true, true] },
+            { label: "Control de pedidos", values: [false, true, true] },
             { label: "Cupones y descuentos", values: [false, true, true] },
             { label: "Integración con Stripe", values: [false, true, true] },
             { label: "Pagos locales e internacionales", values: [false, true, true] },
             { label: "Suscripciones y membresías", values: [false, true, true] },
-            { label: "Inventario", values: [false, true, true] }
           ]
         },
         {
           title: "Funcionalidades Avanzadas",
           rows: [
             { label: "Sitio web corporativo", values: [false, false, true] },
-            { label: "Ecosistema digital completo", values: [false, false, true] },
+            { label: "Ecosistema digital", values: [false, false, true] },
+            { label: "Automatización de procesos", values: [false, false, true] },
+            { label: "Soluciones a la medida", values: [false, false, true] },
             { label: "Formularios personalizados", values: [false, false, true] },
-            { label: "Asistente virtual o chatbot (IA)", values: [false, false, true] },
+            { label: "Integración con agentes de IA", values: [false, false, true] },
             { label: "Integración con APIs", values: [false, false, true] },
-            { label: "Integración con DBs externas", values: [false, false, true] }
+            { label: "Integración con DBs externas", values: [false, false, true] },
           ]
         }
       ]
@@ -120,38 +124,42 @@ function PlanComparisonTable() {
         {
           title: "Web Features",
           rows: [
-            { label: "Landing Page", values: [true, true, true] },
-            { label: "Basic website", values: [true, true, true] },
+            { label: "Premium Landing Page", values: [true, true, true] },
             { label: "Blog", values: [true, true, true] },
             { label: "Portfolio", values: [true, true, true] },
             { label: "Image gallery", values: [true, true, true] },
-            { label: "Social media and WhatsApp", values: [true, true, true] },
+            { label: "Social media icons", values: [true, true, true] },
             { label: "Contact form", values: [true, true, true] },
             { label: "Appointments or booking system", values: [true, true, true] },
             { label: "Gmail integration", values: [true, true, true] },
-            { label: "WhatsApp notifications", values: [true, true, true] }
+            { label: "WhatsApp notifications", values: [true, true, true] },
+            { label: "Virtual Assistant or chatbot (AI)", values: [true, true, true] }
           ]
         },
         {
           title: "E-Commerce and Payments",
           rows: [
             { label: "E-Commerce", values: [false, true, true] },
+            { label: "Dashboard", values: [false, true, true] },
+            { label: "Inventory", values: [false, true, true] },
+            { label: "Order tracking", values: [false, true, true] },
             { label: "Coupons and discounts", values: [false, true, true] },
             { label: "Stripe integration", values: [false, true, true] },
             { label: "Local and international payments", values: [false, true, true] },
             { label: "Subscriptions and memberships", values: [false, true, true] },
-            { label: "Inventory", values: [false, true, true] }
           ]
         },
         {
           title: "Advanced Features",
           rows: [
             { label: "Corporate website", values: [false, false, true] },
-            { label: "Complete digital ecosystem", values: [false, false, true] },
+            { label: "Digital ecosystem", values: [false, false, true] },
+            { label: "Process automation", values: [false, false, true] },
+            { label: "Tailored solutions", values: [false, false, true] },
             { label: "Custom forms", values: [false, false, true] },
-            { label: "Virtual Assistant or chatbot (AI)", values: [false, false, true] },
+            { label: "AI Agents integration", values: [false, false, true] },
             { label: "API integration", values: [false, false, true] },
-            { label: "External DB integration", values: [false, false, true] }
+            { label: "External DB integration", values: [false, false, true] },
           ]
         }
       ]

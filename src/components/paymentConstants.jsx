@@ -38,13 +38,13 @@ export const PAYMENT_MODE_LABELS = {
 // Traducciones de nombres de planes para UI
 export const PLAN_LABELS = {
   es: {
-    [PLAN_IDS.BASIC]: 'Básico',
-    [PLAN_IDS.PROFESSIONAL]: 'Profesional',
+    [PLAN_IDS.BASIC]: 'Profesional',
+    [PLAN_IDS.PROFESSIONAL]: 'E-Commerce',
     [PLAN_IDS.BUSINESS]: 'Empresa'
   },
   en: {
-    [PLAN_IDS.BASIC]: 'Basic',
-    [PLAN_IDS.PROFESSIONAL]: 'Professional',
+    [PLAN_IDS.BASIC]: 'Professional',
+    [PLAN_IDS.PROFESSIONAL]: 'E-Commerce',
     [PLAN_IDS.BUSINESS]: 'Business'
   }
 };

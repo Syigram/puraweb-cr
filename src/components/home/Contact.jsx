@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useLanguage } from "@/components/LanguageContext";
 import { translations } from "@/components/translations";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/components/utils/sanitize";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const VALID_SERVICE_OPTIONS = ["web_development", "ecommerce", "both", "custom"];
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,6 +67,7 @@ const contactFadeReveal = {
 const Contact = memo(function Contact({ transparent = false, showContactTitle = true }) {
   const { language } = useLanguage();
   const t = useMemo(() => translations[language].contact, [language]);
+  const { data: siteSettings } = useSiteSettings();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -388,7 +390,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
                 </div>
                 <div className="min-w-0">
                   <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.email}</h4>
-                  <p className="text-gray-600 text-sm break-all">purawebsoluciones@gmail.com</p>
+                  <p className="text-gray-600 text-sm break-all">{siteSettings?.contact?.contact_email || "purawebsoluciones@gmail.com"}</p>
                 </div>
               </div>
 
@@ -398,8 +400,8 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.phone}</h4>
-                  <p className="text-gray-600 text-sm">+506 8402 7214</p>
-                  <p className="text-gray-600 text-sm">{t.info.phoneAvailable}</p>
+                  <p className="text-gray-600 text-sm">{siteSettings?.contact?.contact_phone || "+506 8402 7214"}</p>
+                  <p className="text-gray-600 text-sm">{siteSettings?.contact?.business_hours || t.info.phoneAvailable}</p>
                 </div>
               </div>
 
@@ -409,7 +411,7 @@ const Contact = memo(function Contact({ transparent = false, showContactTitle = 
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t.info.location}</h4>
-                  <p className="text-gray-600 text-sm">{t.info.locationCity}</p>
+                  <p className="text-gray-600 text-sm">{siteSettings?.contact?.location_city || t.info.locationCity}</p>
                   <p className="text-gray-600 text-sm">{t.info.locationServing}</p>
                 </div>
               </div>

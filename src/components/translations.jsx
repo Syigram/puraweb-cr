@@ -69,33 +69,33 @@ export const translations = {
       plans: [
         {
           id: "basic",
-          name: "Básico",
+          name: "Profesional",
           price: "100,000",
           numericPrice: 100000,
           originalPrice: "150,000",
-          description: "Perfecto para pequeños negocios que inician su presencia digital",
-          features: ["Web básica", "Galería de imágenes", "Landing page", "Blog", "Portafolio", "Sitio Web Responsive", "Hasta 6 páginas/secciones"],
+          description: "Profesionales o PYMEs que necesitan lanzar un servicio y obtener clientes rápidamente",
+          features: ["Web con portada premium", "Galería de imágenes", "Blog/Portafolio", "Sistema de citas o reservas", "Notificaciones por WhatsApp", "Asistente Virtual o Chatbot"],
           recommended: false,
-          cta_text: "Elegir Básico"
+          cta_text: "Elegir Profesional"
         },
         {
           id: "professional",
-          name: "Profesional",
+          name: "E-Commerce",
           price: "150,000",
           numericPrice: 150000,
           originalPrice: "200,000",
-          description: "Ideal para empresas en crecimiento que necesitan más potencia",
-          features: ["E-Commerce o tienda online", "Sistema de citas o reservas", "Pagos con tarjeta", "Suscripciones y membresías", "Integración con Gmail", "Notificaciones por WhatsApp", "Hasta 10 páginas/secciones"],
+          description: "Ideal para negocios que buscan vender en línea y automatizar su operación comercial",
+          features: ["Incluye Plan Profesional", "E-Commerce o tienda online", "Dashboard de negocio", "Control de ventas", "Pagos con tarjeta", "Suscripciones y membresías" ],
           recommended: true,
-          cta_text: "Elegir Profesional"
+          cta_text: "Elegir E-Commerce"
         },
         {
           id: "business",
           name: "Empresa",
           price: "350,000",
           numericPrice: 350000,
-          description: "Solución completa para negocios establecidos y tiendas online",
-          features: ["Sitio web corporativo", "Ecosistema digital completo", "Formularios personalizados", "Integración con APIs", "Integración con DBs externas", "Asistente virtual", "Páginas ilimitadas (uso justo)"],
+          description: "Desarrollo a la medida para empresas que requieren automatización de procesos y soluciones avanzadas",
+          features: ["Incluye Plan E-Commerce", "Sitio web corporativo", "Ecosistema digital", "Integración con APIs", "Integración con Bases de Datos", "Integración con agentes de IA"],
           recommended: false,
           cta_text: "Elegir Empresa"
         }
@@ -448,33 +448,33 @@ export const translations = {
       plans: [
         {
           id: "basic",
-          name: "Basic",
+          name: "Professional",
           price: "100,000",
           numericPrice: 100000,
           originalPrice: "150,000",
-          description: "Perfect for small businesses starting their digital journey",
-          features: ["Basic website", "Image gallery", "Landing page", "Blog", "Portfolio", "Responsive Website", "Up to 6 pages/sections"],
+          description: "Intended for professionals or businesses looking to launch a service and capture leads quickly",
+          features: ["Premium landing page", "Image gallery", "Blog/Portafolio", "Booking or appointments system", "WhatsApp notifications", "Virtual Assistant or Chatbot"],
           recommended: false,
-          cta_text: "Choose Basic"
+          cta_text: "Choose Professional"
         },
         {
           id: "professional",
-          name: "Professional",
+          name: "E-Commerce",
           price: "150,000",
           numericPrice: 150000,
           originalPrice: "200,000",
-          description: "Ideal for growing companies needing more power and flexibility",
-          features: ["E-Commerce or online store", "Appointment or booking system", "Card payments", "Subscriptions and memberships", "Gmail integration", "WhatsApp notifications", "Up to 10 pages/sections"],
+          description: "Ideal for businesses looking to sell online and automate their commercial operations",
+          features: ["Includes Professional Plan", "E-Commerce or online store", "Business dashboard", "Order tracking", "Card payments", "Subscriptions and memberships"],
           recommended: true,
-          cta_text: "Choose Professional"
+          cta_text: "Choose E-Commerce"
         },
         {
           id: "business",
           name: "Business",
           price: "350,000",
           numericPrice: 350000,
-          description: "Complete solution for established businesses and online stores",
-          features: ["Corporate website", "Complete digital ecosystem", "Custom forms", "API integration", "External DB integration", "Virtual assistant", "Unlimited pages (fair use)"],
+          description: "Digital infrastructure and custom development for enterprises requiring process automation and advanced integrations",
+          features: ["Includes E-Commerce Plan", "Corporate website", "Digital ecosystem", "API integration", "Databases integration", "AI Agents integration"],
           recommended: false,
           cta_text: "Choose Business"
         }
