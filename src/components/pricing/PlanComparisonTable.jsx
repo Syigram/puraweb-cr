@@ -11,7 +11,7 @@ function PlanComparisonTable() {
     es: {
       title: "Comparación Detallada de Planes",
       subtitle: "Todas las características y beneficios de cada plan",
-      plans: ["Básico", "Profesional", "Empresa"],
+      plans: ["Profesional", "E-Commerce", "Empresa"],
       sections: [
         {
           title: "Información General",
@@ -89,7 +89,7 @@ function PlanComparisonTable() {
     en: {
       title: "Detailed Plan Comparison",
       subtitle: "All features and benefits of each plan",
-      plans: ["Basic", "Professional", "Business"],
+      plans: ["Professional", "E-Commerce", "Business"],
       sections: [
         {
           title: "General Information",

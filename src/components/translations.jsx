@@ -86,7 +86,7 @@ export const translations = {
           originalPrice: "200,000",
           description: "Ideal para negocios que buscan vender en línea y automatizar su operación comercial",
           features: ["Incluye Plan Profesional", "E-Commerce o tienda online", "Dashboard de negocio", "Control de ventas", "Pagos con tarjeta", "Suscripciones y membresías" ],
-          recommended: true,
+          recommended: false,
           cta_text: "Elegir E-Commerce"
         },
         {
@@ -465,7 +465,7 @@ export const translations = {
           originalPrice: "200,000",
           description: "Ideal for businesses looking to sell online and automate their commercial operations",
           features: ["Includes Professional Plan", "E-Commerce or online store", "Business dashboard", "Order tracking", "Card payments", "Subscriptions and memberships"],
-          recommended: true,
+          recommended: false,
           cta_text: "Choose E-Commerce"
         },
         {

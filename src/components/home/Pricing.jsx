@@ -21,10 +21,10 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
     >
       <Card
         onClick={() => onSelect(plan.name)}
-        className={`relative h-full flex flex-col cursor-pointer transition-shadow duration-300 border-2 ${
+        className={`relative h-full flex flex-col cursor-pointer transition-all duration-300 border-2 ${
           isHighlighted
             ? "border-red-600 shadow-2xl"
-            : "border-transparent hover:shadow-xl"
+            : "border-rose-100/70 hover:border-rose-200 lg:border-red-600 lg:hover:border-red-600 hover:shadow-xl"
         }`}
       >
       {plan.recommended && (
@@ -79,7 +79,7 @@ const PricingCard = memo(({ plan, isSelected, onSelect, onNavigate, mostPopularT
             onNavigate(plan.id);
           }}
           className={`w-full text-lg py-6 ${
-            plan.recommended
+            (plan.recommended || plan.id === "professional")
               ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
               : "bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-800 hover:to-blue-600 text-white"
           }`}
