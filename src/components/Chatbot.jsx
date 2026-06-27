@@ -33,8 +33,8 @@ const Chatbot = memo(function Chatbot({ disabled = false }) {
 
   const welcomeMessage = useMemo(() => {
     return language === "es"
-      ? "¡Hola! 👋 Soy el asistente virtual de PuraWeb CR. Respondo usando la base de conocimiento actual del sitio. ¿En qué puedo ayudarte hoy?"
-      : "Hello! 👋 I’m the PuraWeb CR virtual assistant. I answer using the website’s current knowledge base. How can I help you today?";
+      ? "¡Hola! 👋 Soy el asistente virtual de PuraWeb CR. ¿En qué puedo ayudarte hoy?"
+      : "Hello! 👋 I’m the PuraWeb CR virtual assistant. How can I help you today?";
   }, [language]);
 
   const isChatReady = knowledgeBaseEntries.length > 0;
