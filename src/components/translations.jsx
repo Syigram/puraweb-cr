@@ -172,7 +172,7 @@ export const translations = {
       contactTitle: "Contacto",
       location: "San José, Costa Rica",
       serving: "Atendiendo clientes a nivel nacional",
-      copyright: "© 2025 PuraWeb CR. Todos los derechos reservados. Hecho con ❤️ en Costa Rica"
+      copyright: "© 2026 PuraWeb CR. Todos los derechos reservados. Operado por PuraWeb CR Soluciones Empresa Individual de Responsabilidad Limitada. Hecho con ❤️ en Costa Rica"
     },
     checkout: {
       title: "Finalizar Compra",
@@ -551,7 +551,7 @@ export const translations = {
       contactTitle: "Contact",
       location: "San José, Costa Rica",
       serving: "Serving clients nationwide",
-      copyright: "© 2025 PuraWeb CR. All rights reserved. Built with ❤️ in Costa Rica"
+      copyright: "© 2026 PuraWeb CR. All rights reserved. Operated by PuraWeb CR Soluciones Empresa Individual de Responsabilidad Limitada. Built with ❤️ in Costa Rica"
     },
     checkout: {
       title: "Complete Your Purchase",
