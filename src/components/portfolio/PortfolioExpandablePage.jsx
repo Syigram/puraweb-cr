@@ -56,7 +56,7 @@ const portfolioProjects = [
     },
     tags: ["E-Commerce", "Tienda", "Ropa", "Mujer", "Stripe"],
     year: "2026",
-    plan: "Profesional",
+    plan: "E-Commerce",
     demoUrl: "https://elaracr.com/"
   },
   {
@@ -74,7 +74,7 @@ const portfolioProjects = [
     },
     tags: ["E-Commerce", "Swimwear", "Mujer", "Bikinis", "Moda"],
     year: "2026",
-    plan: "Profesional",
+    plan: "E-Commerce",
     demoUrl: "https://aqualuxecr.com/"
   },
   {
@@ -92,7 +92,7 @@ const portfolioProjects = [
     },
     tags: ["Salud", "Clínica", "Especialidades", "Citas Online", "Medicina"],
     year: "2026",
-    plan: "Empresa",
+    plan: "Profesional",
     demoUrl: "https://vitalclinic.purawebcr.dev/"
   },
   {
@@ -146,7 +146,7 @@ const portfolioProjects = [
     },
     tags: ["E-Commerce", "Perfumería", "Lujo", "Fragancias", "Premium"],
     year: "2026",
-    plan: "Profesional",
+    plan: "E-Commerce",
     demoUrl: "https://yourscr.com/"
   },
   {
@@ -203,25 +203,13 @@ const portfolioProjects = [
     plan: "Profesional",
     demoUrl: "https://monteaventuras.purawebcr.dev/"
   },
-  {
-    id: 5,
-    name: "Aventuras Pura Vida",
-    category: "tourism",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    description: {
-      es: "Plataforma de turismo con reservas de tours, galería inmersiva y testimonios de viajeros.",
-      en: "Tourism platform with tour bookings, immersive gallery, and traveler testimonials."
-    },
-    fullDescription: {
-      es: "Aventuras Pura Vida es una plataforma de turismo que conecta a viajeros con experiencias auténticas en Costa Rica. Desarrollamos un sistema completo de reservas de tours en tiempo real, galería inmersiva con fotos y videos 360°, calendario de disponibilidad dinámico, y sección de testimonios verificados. La plataforma incluye integración con WhatsApp para consultas instantáneas.",
-      en: "Aventuras Pura Vida is a tourism platform that connects travelers with authentic experiences in Costa Rica. We developed a complete real-time tour booking system, immersive gallery with 360° photos and videos, dynamic availability calendar, and verified testimonials section. The platform includes WhatsApp integration for instant queries."
-    },
-    tags: ["Turismo", "Reservas", "Galería"],
-    year: "2025",
-    plan: "Empresa"
-  },
-
 ];
+
+const planLabels = {
+  "Profesional": { es: "Profesional", en: "Professional" },
+  "Empresa": { es: "Empresa", en: "Business" },
+  "E-Commerce": { es: "E-Commerce", en: "E-Commerce" }
+};
 
 const categories = [
   { id: "all", label: { es: "Todos", en: "All" } },
@@ -265,7 +253,7 @@ const PortfolioCard = memo(function PortfolioCard({ project, language }) {
           </div>
         )}
         <div className="absolute right-4 top-4">
-          <Badge className="bg-gradient-to-r from-red-600 to-red-700 text-white">{project.plan}</Badge>
+          <Badge className="bg-gradient-to-r from-red-600 to-red-700 text-white">{(planLabels[project.plan] && planLabels[project.plan][language]) || project.plan}</Badge>
         </div>
       </div>
 
