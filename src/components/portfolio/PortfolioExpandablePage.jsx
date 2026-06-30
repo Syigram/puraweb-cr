@@ -78,6 +78,24 @@ const portfolioProjects = [
     demoUrl: "https://aqualuxecr.com/"
   },
   {
+    id: 15,
+    name: "VitalClinic",
+    category: "health",
+    image: "https://media.base44.com/images/public/6901cf191d3736d23a1ebf19/b47a46019_image.png",
+    description: {
+      es: "Sitio web para clínica médica integral con múltiples especialidades, agendamiento de citas en línea y atención de primer nivel.",
+      en: "Website for a comprehensive medical clinic with multiple specialties, online appointment booking, and top-tier care."
+    },
+    fullDescription: {
+      es: "VitalClinic es una clínica integral de salud ubicada en Escazú, Costa Rica, con más de 15 años cuidando la salud de los costarricenses. Desarrollamos un sitio web profesional que presenta sus múltiples especialidades médicas —Medicina General, Cardiología, Pediatría, Ginecología, Dermatología y Neurología— con un equipo de profesionales altamente calificados. La plataforma incluye sistema de agendamiento de citas en línea, sección de servicios por especialidad, testimonios de pacientes e información de contacto, facilitando que los pacientes accedan a atención médica de primer nivel de forma rápida y sencilla.",
+      en: "VitalClinic is a comprehensive health clinic located in Escazú, Costa Rica, with over 15 years caring for the health of Costa Ricans. We developed a professional website that showcases its multiple medical specialties —General Medicine, Cardiology, Pediatrics, Gynecology, Dermatology, and Neurology— with a team of highly qualified professionals. The platform includes an online appointment booking system, services section by specialty, patient testimonials, and contact information, making it easy for patients to access top-tier medical care quickly and conveniently."
+    },
+    tags: ["Salud", "Clínica", "Especialidades", "Citas Online", "Medicina"],
+    year: "2026",
+    plan: "Empresa",
+    demoUrl: "https://vitalclinic.purawebcr.dev/"
+  },
+  {
     id: 9,
     name: "FisioSalud",
     category: "health",
